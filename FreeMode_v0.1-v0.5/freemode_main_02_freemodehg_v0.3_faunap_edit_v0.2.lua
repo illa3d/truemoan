@@ -1,0 +1,1597 @@
+init = false
+-- FreemodeHG version 0.3 - faunap_edit_0.2
+
+--	HeadLookAt(BoneMesh(TargetActor.A, "Bone_Head", 0, 0, 0.03)),
+--<color=red><b>text</b></color>
+--<color=#890000><i>
+-- nil (?<=index:\s*)\d+
+
+-- Variables
+activeloops = {}
+CL_SMult = 1 --Speed multiplier
+--CL_Imult = 0.5 --Intensity multiplier
+HG_UIvis = true
+
+label Start()
+	init = true
+	ResetTimer("GenericChat", math.random(-10, 0))
+	--game.CreateHuman(game.GetRandomGirlName())
+	--game.CreateHuman(game.GetRandomGirlName())
+		-- PlaySound ("SDTIntro", 0.5)
+	--IntroPose(game.GetHumans()[1], game.GetHumans()[2])
+
+	local speaker = game.GetRandomHuman(|h| h.CanSpeak)
+	if speaker ~= nil
+		speaker.Say("Greeting")
+
+	-- Varibles --
+	boobsize = 0
+	buttsize = 0
+	penissize = 0
+	penislength = 0
+	bodysize = 0
+
+
+	Jump("FreeMode")
+stop
+
+label TalkMenu(human, hitTri)
+	+ "Options.."[gold]
+		+ if human.Penis.IsActive
+			+ "Auto Cumming.."[gold]
+				+ if human.Penis.IsActive and game.HasAnim(human.Penis)
+					+ "Stop auto cumming."
+						game.RemoveAnim(human.Penis)
+				+ else
+					+ "Start auto cumming - 1 sec."
+						game.AddRepeatAnim(1, || human.Shoot(), human.Penis)
+					+ "Start auto cumming - 2 sec."
+						game.AddRepeatAnim(2, || human.Shoot(), human.Penis)
+					+ "Start auto cumming - 4 sec."
+						game.AddRepeatAnim(4, || human.Shoot(), human.Penis)
+					+ "Start auto cumming - 8 sec."
+						game.AddRepeatAnim(8, || human.Shoot(), human.Penis)
+					+ "Start auto cumming - 16 sec."
+						game.AddRepeatAnim(16, || human.Shoot(), human.Penis)
+					+ "Start auto cumming - 32 sec."
+						game.AddRepeatAnim(32, || human.Shoot(), human.Penis)
+					+ "Back."
+						Return(2)
+					+ "Done."
+		+ if human.Penis.IsActive
+			+ "Auto Sex"[gold]
+				+ "Auto Sex Speed" .. human.Penis.Interaction.m_autoSpeed [gold]
+					Return()
+				+ "FASTER"
+					human.Penis.Interaction.m_autoSpeed = human.Penis.Interaction.m_autoSpeed*1.1
+					Return()
+				+ "SLOWER"
+					human.Penis.Interaction.m_autoSpeed = human.Penis.Interaction.m_autoSpeed*0.9
+					Return()
+				+ "PAUSE"
+					human.Penis.Interaction.m_autoSpeed = 0.0001
+					Return()
+				+ "RESET SPEED"
+					human.Penis.Interaction.m_autoSpeed = 0.10
+					Return()
+				+ "Back."
+					Return(2)
+				+ "Done."
+		+ "" .. human.Name .. ".. you should wear.."[gold]
+			+ "less..."
+				human.CustomizeAll(99)
+				if (human.m_isMale == false)
+					human.Customize("Penis", 0)
+			+ "more..."
+				human.CustomizeAll(0)
+			+ "Back."
+				Return(2)
+			+ "Done."
+			+ "^"
+				Return()
+			+ "^"
+				Return()
+			+ "^"
+				Return()
+		+ "Music.."[gold]
+			local tracklist = {"01_Dreamy_Whisper", "02_Moon-blind", "03_OpenMeBabe", "04_What_an_Easy_Good-bye", "05_Somtimes", "06_Love_in_Fareast", "07_Tender_Passion", "08_Orbit", "09_Dancing_Queen", "10_Memories_of_Childhood", "11_Raggae_Fever", "12_Why", "13_Comma", "14_NoWar", "15_Special_Light", "16_Enjoy_Yaslef", "17_Lyve_Live", "18_Aquabelle", "19_1st_Mission", "20_Time_to_Groove", "21_Love_is_Bubble", "22_Flower_Bearing", "23_Secret_Garden_Before", "24_X-ray", "25_CallousCall", "26_Order_Circle", "27_This_is_My_Stage", "28_Wait_4_U", "29_Welcome_to_Radux_World", "30_Journey_to_You"}
+			--game "Choose a track"
+			+ "Back."
+				Return (2)
+			+ for i, track in ipairs(tracklist)
+				+ "Play " .. track
+					Music(track , 0.05, 0)
+			+ "Stop Music"
+				StopMusic()
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "Illegal character customization.." [gold]
+			+ "Bigger boobs"
+				boobsize = boobsize + 1
+				human.Body("Breasts size", 0.5+boobsize*0.1)
+				Return()
+			+ "Reset boobs"
+				boobsize = 0
+				human.Body("Breasts size", 0)
+				Return()
+			+ "Bigger butt"
+				buttsize = buttsize + 1
+				human.Body("Ass size", 0.5+buttsize*0.1)
+				Return()
+			+ "Reset butt"
+				buttsize = 0
+				human.Body("Ass size", 0)
+				Return()
+			+ "Shrink body"
+				bodysize = bodysize + 1
+				human.Body("Body size", -(1-1/bodysize))
+				Return()
+			+ "Reset body"
+				bodysize = 0
+				human.Body("Body size", 0)
+				Return()
+			+ if human.m_isMale == true
+				+ "Time to bottom, " .. human.Name
+					human.m_isMale = false
+					human "Alright"
+					Return(2)
+			+ if human.Penis.IsActive
+				+ "Penis customization.."[gold]
+					+ "Longer dick"
+						penislength = penislength + 1
+						human.Body("Penis length", 0.5+penislength*0.1)
+						Return()
+					+ "Bigger dick"
+						penissize = penissize + 1
+						human.Body("Penis size", 0.5+penissize*0.1)
+						Return()
+					+ "Reset dick size"
+						penislength = 0
+						penissize = 0
+						human.Body("Penis size", 0, "Penis length", 0)
+						Return()
+					+ "Reset foreskin"
+						human.Penis.m_penisSkinOut = 0
+					+ "Back."
+						Return(2)
+					+ "Done."
+			+ "Remove pussy wetness"
+				human.m_vagina.m_wetness = 0
+			+ "Increase pussy wetness"
+				human.m_vagina.m_wetness = 1000
+			+ "Super fast autosex" [if human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == true]
+				human.Penis.Interaction.m_autoSpeed = 2
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "Speed.. x  " .. CL_SMult [gold]
+			+ "Animation Speed x " .. CL_SMult [gold]
+				Return()
+			+ "Increase speed"
+				CL_SMult = CL_SMult*1.1
+				Return()
+			+ "Decrease speed"
+				CL_SMult = CL_SMult*0.9
+				Return()
+			+ "Reset speed"
+				CL_SMult = 1
+				Return()
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ if game.PovHuman ~= human
+			+ "POV."
+				game.PovHuman = human
+		+ if game.PovHuman ~= nil
+			+ "Exit POV."
+				game.PovHuman = nil
+		+ "Back."
+			Return(2)
+		+ "Done."
+	+ "Poses.."[gold]
+		+ "Original HG Poses.."[gold]
+			+ "Stand up straight."
+				human.Pose(StandUp())
+				Return()
+			+ "Kneel down."
+				human.Pose(KneelDown())
+				Return()
+			+ "Sit down."
+				human.Pose(SitDown())
+				Return()
+			+ "Sit down and spread your legs."
+				human.Pose(SitDownSpreadLegs())
+				Return()
+			+ "Lay down on your back."
+				human.Pose(LayDownBack())
+				Return()
+			+ "Lay down on your side."
+				human.Pose(LayDownSide())
+				Return()
+			+ "Lay down on your stomach."
+				human.Pose(LaydownStomach())
+				Return()
+			+ "Get down on all fours."
+				human.Pose(GetdownAll4())
+				Return()
+			+ "Bend over."
+				human.Pose(BendOver())
+				Return()
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "Sit.."[gold]
+			+ "Sit down."
+				human.Pose(SitDown1())
+				Return()
+			+ "Scared."
+				human.Pose(SitDown2())
+				Return()
+			+ "Sit down and spread your legs."
+				human.Pose(SitDownSpreadLegs())
+				Return()
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "Lay Down.."[gold]
+			+ "On your Back."
+				human.Pose(LayDownBack1())
+				Return()
+			+ "On your side - Right."
+				human.Pose(LayDownSideR())
+				Return()
+			+ "On your side - Left."
+				human.Pose(LayDownSideL())
+				Return()
+			+ "On your stomach."
+				human.Pose(LaydownStomach1())
+				Return()
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "Stand Up.."[gold]
+			+ "Stand up!"
+				human.Pose(StandUp1())
+				Return()
+			+ "Bend over."
+				human.Pose(BendOver1())
+				Return()
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "Kneel.."[gold]
+			+ "All Four."
+				human.Pose(All41())
+				Return()
+			+ "All Four - 2."
+				human.Pose(All42())
+				Return()
+			+ "Kneel down."
+				human.Pose(KneelDown1())
+				Return()
+			+ "Kneel down - 2."
+				human.Pose(KneelDown2())
+				Return()
+			+ "Kneel down - 3."
+				human.Pose(KneelDown3())
+				Return()
+			+ "Kneel down - 4."
+				human.Pose(KneelDown4())
+				Return()
+			+ "Neutral face."
+				human.Pose(FaceNeutral())
+				Return()
+			+ "Back. ^^^ Click twice! ^^^"
+				Return(2)
+			+ "Done."
+		+ "Arms.."[gold]
+			+ for i, pres in ipairs (bodystr)
+				+ " " .. pres
+					human.Pose(bodypresets[i]())
+					Return()
+			+ "Hands.."
+				+ "Peace L"
+					human.Pose(PeaceL())
+					Return()
+				+ "Peace R"
+					human.Pose(PeaceR())
+					Return()
+				+ "Shush R"
+					human.Pose(Shush())
+					Return()
+				+ "Hands Open."
+					human.Pose(HandsOpen())
+					Return()
+				+ "Hands Open - 2"
+					human.Pose(HandsOpen2())
+					Return()
+				+ "Hands Closed."
+					human.Pose(HandsClosed())
+					Return()
+				+ "Grab Head"
+					human.Pose(GrabHead())
+					Return()
+				+ "Back."
+					Return(2)
+				+ "Done."
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "Back."
+			Return(2)
+		+ "Done."
+	+ "Face.."[gold]
+		+ "Neutral face."
+			human.Pose(FaceNeutral())
+			Return()
+		+ "Default.."[gold]
+			+ "Back."
+				Return(2)
+			+ "Happy face."
+				human.Pose(FaceSmile())
+				Return()
+			+ "Angry face."
+				human.Pose(FaceAngry())
+				Return()
+			+ "Sad face."
+				human.Pose(FaceSad())
+				Return()
+			+ "Ahegao!"
+				human.Pose(FaceAhegao())
+				Return()
+			+ "Ahegao! x 2"
+				human.Pose(FaceAhegao2())
+				Return()
+			+ "Surprised face."
+				human.Pose(FaceSurprised())
+				Return()
+			+ "Scared face."
+				human.Pose(FaceScared())
+				Return()
+			+ "Disgusted face."
+				human.Pose(FaceDisgusted())
+				Return()
+			+ "Neutral face."
+				human.Pose(FaceNeutral())
+				Return()
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "Custom.."[gold]
+			+ "Back."
+				Return(2)
+			+ for i, pres in ipairs (facestr)
+				+ " " .. pres
+					human.Pose(facepresets[i]())
+					Return()
+			+ "kiss/tongue.."[gold]
+				+ for i, pres in ipairs (kissstr)
+					+ " " .. pres
+						human.Pose(kisspresets[i]())
+						Return()
+				+ "Back."
+					Return(2)
+				+ "Done."
+			+ "Neutral face."
+				human.Pose(FaceNeutral())
+				Return()
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "Loops.. WIP"[gold]
+			+ "Neutral face."
+				human.Pose(FaceNeutral())
+				Return()
+			+ "Smile > Ahegao"
+				game.AddRepeatAnim(2, || CustomLoops(human, FaceSmile, FaceAhegao, "Smile > Ahegao"), human)
+				Return()
+			+ "WIP - Idle Anim Test"
+				game.AddRepeatAnim((math.random(5,20)), || CustomLoops3(human, Lipbite, Kiss2, Pursedlips, "Test"), human)
+			-- + "WIP - Smile > Kiss"
+			-- 	game.AddRepeatAnim(2, || CustomLoops4(human, FaceSmile, Kiss2, FaceSmile, FaceSmile, "Smile > Kiss"), human)
+			-- 	Return()
+			+ "Neutral > Scared"
+				game.AddRepeatAnim(3, || CustomLoops(human, FaceNeutral, FaceScared, "Neutral > Scared"), human)
+				Return()
+			+ "Angry > Surprised"
+				game.AddRepeatAnim(4, || CustomLoops(human, FaceAngry, FaceSurprised, "Angry > Surprised"), human) 
+				Return()
+			+ "Look Actor > Look Camera"
+				game.AddRepeatAnim((math.random(5, 20)), || CustomLoops(human, LookActorA, LookCam, "Look Actor > Look Camera"), human) 
+				Return()
+			+ "Stop" [if game.HasAnim(human.m_mouth) == true]
+				game.RemoveAnim(human.m_mouth)
+				Return()
+			+ "STOP LOOPING" [if game.HasAnim(human) == true]
+				game.RemoveAnim(human)
+				Return()
+			+ "Back. **EYE BUG during movement**"
+				Return(2)
+			+ "Done."
+		+ "Look!.."[gold]
+			-- + "WIP - Face & Look at Actor:A"
+			-- 	human.Pose(FaceLookActorA())
+			-- 	Return()
+			-- + "WIP - Face & Look at Actor:B"
+			-- 	human.Pose(FaceLookActorB())
+			-- 	Return()
+			-- + "WIP - Face & Look at Actor:C"
+			-- 	human.Pose(FaceLookActorC())
+			-- 	Return()
+			+ "LOOP - Look: Actor > Camera"
+				game.AddRepeatAnim((math.random(5, 20)), || CustomLoops(human, LookActorA, LookCam, "Look Actor > Camera"), human) 
+				Return()
+			+ "WIP - Face ActorA"
+				human.Pose(FaceActorA())
+				Return()
+			+ "Face Camera"
+				human.Pose(FaceCam())
+				Return()
+			+ "Look Camera"
+				human.Pose(LookCam())
+				Return()
+			+ "Look actorA"
+				human.Pose(LookActorA())
+				Return()
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "STOP LOOPING" [if game.HasAnim(human) == true]
+			game.RemoveAnim(human)
+			Return()
+		+ "Back."
+			Return(2)
+		+ "Done."
+	+ "Animations.." [gold]
+		+ "Done."
+		+ "Back."
+			Return(2)
+		+ "Bouncing.." [if game.HasAnim(human.breastNames) == false][gold]
+			+ "Bouncing = 0.97 > 1"
+				activeloops[human.breastNames] = 0.3/CL_SMult*1.5
+				game.AddRepeatAnim(0.5/CL_SMult, || CustomLoopsV2(human, "Bouncing", activeloops[human.breastNames], Hips(0, 0.97, 0), Hips(0, 1, 0)), human.breastNames)
+				Return()
+			+ "Bouncing"
+				activeloops[human.breastNames] = 0.5/CL_SMult*2.5
+				game.AddRepeatAnim(0.5/CL_SMult, || CustomLoopsV2(human, "Bouncing", activeloops[human.breastNames], Hips(0, 0.95, 0.0), Hips(0, 0.90, 0.0)), human.breastNames)
+				Return()
+			+ "Small Bouncing"
+				activeloops[human.breastNames] = 0.5/CL_SMult*2.5
+				game.AddRepeatAnim(0.5/CL_SMult, || CustomLoopsV2(human, "Bouncing", activeloops[human.breastNames], Hips(0, 0.95, 0.0), Hips(0, 0.92, 0.0)), human.breastNames)
+				Return()
+			+ "Stop Bouncing" [if game.HasAnim(human.breastNames) == true]
+				game.RemoveAnim(human.breastNames)
+				Return()
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "Legs.."[if game.HasAnim(human.footNames) == false][gold]
+			+ "Footjob.Stand.Right"
+				game.AddRepeatAnim(0.3/CL_SMult, || CustomLoops(human, Footjob_1Ra, Footjob_1Rb, "FJ.Stand.R"), human.Anus)
+				Return()
+			+ "WIP - Leg Sway L"
+				human.Pose(LaydownStomach1())
+				activeloops[human.footNames] = 0.6/CL_SMult*2.7
+				game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "legswayL", activeloops[human.footNames], FootL(WPos(-0.15, 0.577, -0.62)), FootL(WPos(-0.15, 0.639, -0.4))), human.footNames)
+				Return()
+			+ "WIP - Leg Sway R"
+				human.Pose(LaydownStomach1())
+				activeloops[human.footNames] = 0.6/CL_SMult*2.7		
+				game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "legswayR", activeloops[human.footNames], FootR(WPos(0.007, 0.577, -0.7)), FootR(WPos(0.043, 0.639, -0.4))), human.footNames)
+				Return()
+			+ "WIP - Leg Sway Both"
+				human.Pose(LaydownStomach1())
+				activeloops[human.footNames] = 0.6/CL_SMult*3		
+				game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV4(human, "legsway", activeloops[human.footNames], FootR(WPos(0.055, 0.629, -0.32)), FootL(WPos(-0.084, 0.602, -0.537)), FootR(WPos(0.084, 0.624, -0.537)), FootL(WPos(-0.055, 0.605, -0.198))), human.footNames)
+				Return()
+			-- + "WIP - Leg Sway?" -- no knee lock makes this rough
+			-- 	human.Pose(LaydownStomach1())
+			-- 	activeloops[human.footNames] = 0.6/CL_SMult*3		
+			-- 	game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV6(human, "legsway", activeloops[human.footNames], FootR(WPos(0.05, 0.55, -0.79)), FootL(WPos(-0.055, 0.605, -0.198)), FootR(WPos(0.084, 0.624, -0.537)), FootL(WPos(-0.084, 0.602, -0.537)), FootR(WPos(0.055, 0.629, -0.32)), FootL(WPos(-0.05, 0.463, -0.79))), human.footNames)
+			-- 	Return()
+			+ "Stand up straight."
+				human.Pose(StandUp())
+				Return()
+			+ "Stop Legs" [if game.HasAnim(human.footNames) == true]
+				game.RemoveAnim(human.footNames)
+				Return()
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "Breast Shaking.."[if game.HasAnim(human.chestNames) == false][gold]
+			+ "Shake - 7-25"
+				activeloops[human.chestNames] = 0.4/CL_SMult*2
+				game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "Shaking", activeloops[human.chestNames], SpineRot((math.random(7, 25))), SpineRot((math.random(-7, -25)))), human.chestNames)
+				Return()
+			+ "Shake - 15"
+				activeloops[human.chestNames] = 0.4/CL_SMult*1.5
+				game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "Shaking", activeloops[human.chestNames], SpineRot(15), SpineRot(-15)), human.chestNames)
+				Return()
+			+ "Shake - 10"
+				activeloops[human.chestNames] = 0.5/CL_SMult*1.5
+				game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "Shaking", activeloops[human.chestNames], SpineRot(10), SpineRot(-10)), human.chestNames)
+				Return()
+			+ "Shake - 5-9"
+				activeloops[human.chestNames] = 0.4/CL_SMult*2.5
+				game.AddRepeatAnim(0.5/CL_SMult, || CustomLoopsV2(human, "Shaking", activeloops[human.chestNames], SpineRot((math.random(9, 5))), SpineRot((math.random(-9, -5)))), human.chestNames)
+				Return()
+			+ "Shake - 7"
+				activeloops[human.chestNames] = 0.5/CL_SMult*2.5
+				game.AddRepeatAnim(0.5/CL_SMult, || CustomLoopsV2(human, "Shaking", activeloops[human.chestNames], SpineRot(7), SpineRot(-7)), human.chestNames)
+				Return()
+			+ "Stop Shaking" [if game.HasAnim(human.chestNames) == true]
+				game.RemoveAnim(human.chestNames)
+				Return()
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "Licking.."[if game.HasAnim(human.m_mouth) == false][gold]
+			+ "Tongue"
+				activeloops[human.m_mouth] = 0.3/CL_SMult*2.5
+				game.AddRepeatAnim(0.3/CL_SMult, || CustomLoopsV2(human, "Default", activeloops[human.m_mouth], Mouth(-0.68, 0.377, 0, 0.504, 0.504, -0.062, -0.062, 0.664, 0.664, 0.57, 0.57, 0, 0, 0.9, 0, 0.45), Mouth(-0.737, 0.377, 0, 0.504, 0.504, -0.062, -0.062, 0.664, 0.664, 0.57, 0.57, 0, 0, 0.97, 0, -0.10)), human.m_mouth)
+				Return()
+			+ "Vertical"
+				activeloops[human.m_mouth] = 0.3/CL_SMult*2.5
+				game.AddRepeatAnim(0.3/CL_SMult, || CustomLoopsV2(human, "vertical", activeloops[human.m_mouth], Mouth(-0.5, 0, 0, 0.504, 0.504, -1, -1, 0.675, 0.675, 1, 1, 0, 0, 1, 0, 1), Mouth(-0.8, 0, 0, 0.504, 0.504, -1, -1, 0.675, 0.675, 0.999, 0.999, 0, 0, 1, 0, -1)), human.m_mouth)
+				Return()
+			+ "Vertical - 2"
+				activeloops[human.m_mouth] = 0.3/CL_SMult*2.5
+				game.AddRepeatAnim(0.3/CL_SMult, || CustomLoopsV2(human, "vertical", activeloops[human.m_mouth], Mouth(-0.5, 0, 0, 0.504, 0.504, -1, -1, 0.675, 0.675, 1, 1, 0, 0, 1.5, 0, 1), Mouth(-0.8, 0, 0, 0.504, 0.504, -1, -1, 0.675, 0.675, 0.999, 0.999, 0, 0, 1.5, 0, -1)), human.m_mouth)
+				Return()
+			+ "Horizontal"
+				activeloops[human.m_mouth] = 0.3/CL_SMult*2.5
+				game.AddRepeatAnim(0.3/CL_SMult, || CustomLoopsV2(human, "horizontal", activeloops[human.m_mouth], Mouth(-1, 0, 0, 0.504, 0.504, -1, -1, 0.675, 0.675, 1, 1, 0, 0, 1, -1, 0.2), Mouth(-1, 0, 0, 0.504, 0.504, -1, -1, 0.675, 0.675, 0.999, 0.999, 0, 0, 1, 1, 0.2)), human.m_mouth)
+				Return()
+			+ "Horizontal - 2"
+				activeloops[human.m_mouth] = 0.3/CL_SMult*2.5
+				game.AddRepeatAnim(0.3/CL_SMult, || CustomLoopsV2(human, "horizontal", activeloops[human.m_mouth], Mouth(-1, 0, 0, 0.504, 0.504, -1, -1, 0.675, 0.675, 1, 1, 0, 0, 1.5, -1.3, 0.2), Mouth(-1, 0, 0, 0.504, 0.504, -1, -1, 0.675, 0.675, 0.999, 0.999, 0, 0, 1.5, 1.3, 0.2)), human.m_mouth)
+				Return()
+			+ "Rotate"
+				activeloops[human.m_mouth] = 0.3/CL_SMult*2.5
+				game.AddRepeatAnim(0.3/CL_SMult, || CustomLoopsV4(human, "rotate", activeloops[human.m_mouth], Mouth(-1, 0, 0, 0.504, 0.504, -1, -1, 0.675, 0.675, 1, 1, 0, 0, 1, 0, 1), Mouth(-1, 0, 0, 0.504, 0.504, -1, -1, 0.675, 0.675, 1, 1, 0, 0, 1, -1, 0.2), Mouth(-1, 0, 0, 0.504, 0.504, -1, -1, 0.675, 0.675, 0.999, 0.999, 0, 0, 1, 0, -1), Mouth(-1, 0, 0, 0.504, 0.504, -1, -1, 0.675, 0.675, 0.999, 0.999, 0, 0, 1, 1, 0.2)), human.m_mouth)
+				Return()
+			+ "Rotate - 2"
+				activeloops[human.m_mouth] = 0.3/CL_SMult*2.5
+				game.AddRepeatAnim(0.3/CL_SMult, || CustomLoopsV4(human, "rotate", activeloops[human.m_mouth], Mouth(-1, 0, 0, 0.504, 0.504, -1, -1, 0.675, 0.675, 1, 1, 0, 0, 1.5, 0, 1), Mouth(-1, 0, 0, 0.504, 0.504, -1, -1, 0.675, 0.675, 1, 1, 0, 0, 1.5, -1, 0.2), Mouth(-1, 0, 0, 0.504, 0.504, -1, -1, 0.675, 0.675, 0.999, 0.999, 0, 0, 1.5, 0, -1), Mouth(-1, 0, 0, 0.504, 0.504, -1, -1, 0.675, 0.675, 0.999, 0.999, 0, 0, 1.5, 1, 0.2)), human.m_mouth)
+				Return()
+			+ "Stop Licking" [if game.HasAnim(human.m_mouth) == true]
+				game.RemoveAnim(human.m_mouth)
+				Return()
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "BJ Randomizer.."[gold]
+			+ "Face Upward BJ"
+				activeloops[human.Mouth] = 0.6/CL_SMult*3.7
+				game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "Face Upward BJ", activeloops[human.Mouth], HeadRot(-98, 355, 320), HeadRot(-90, 5, 40)), human.Mouth)
+				Return()
+			+ "Face Downward BJ"
+				activeloops[human.Mouth] = 0.6/CL_SMult*3.7
+				game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "Face Downward BJ", activeloops[human.Mouth], HeadRot(60, 355, 320), HeadRot(52, 5, 40)), human.Mouth)
+				Return()
+			+ "Face Forward BJ"
+				activeloops[human.Mouth] = 0.6/CL_SMult*3.7
+				game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "Face Forward BJ", activeloops[human.Mouth], HeadRot(-35, 350, 320), HeadRot(-30, 10, 40)), human.Mouth) --HeadRot(-35, 355, 320), HeadRot(-30, 5, 40))
+				Return()
+			+ "Face Forward BJ - Random"
+				activeloops[human.Mouth] = 0.6/CL_SMult*3.7 --0.6/CL_SMult*3.7
+				game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "Face Forward BJ", activeloops[human.Mouth], HeadRot((math.random(-40, -35)), (math.random(350, 359)), (math.random(310, 330))), HeadRot((math.random(-30, -25)), (math.random(1, 10)), (math.random(30, 50)))), human.Mouth) --HeadRot(-35, 355, (math.random(310, 330))), HeadRot(-30, 5, (math.random(30, 50)))), human.Mouth)
+				Return()
+			+ "Random"
+				activeloops[human.Mouth] = 0.6/CL_SMult*3
+				game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "Head", activeloops[human.Mouth], HeadRot((math.random(-20, -10)), (math.random(30, 20)), -20), HeadRot((math.random(20, 10)), (math.random(330, 340)), 20)), human.Mouth)
+				Return()
+			+ "Stop BJ" [if game.HasAnim(human.Mouth) == true][gold]
+				game.RemoveAnim(human.Mouth)
+				Return()
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "Hands.."[gold]
+			-- + "WIP - Grope Breasts"
+			-- 	game.AddRepeatAnim(0.3/CL_SMult, || CustomLoops(human, GropebreastBoth1a, GropebreastBoth1b, "Grope Breasts"), human.forearmNames)
+			-- 	Return(2)
+			+ "Right hand.."[if game.HasAnim(human.handNames) == false][gold]
+				+ "BJ Gesture"
+					human.pose(BJGesture())
+					human.pose(TongueOut2())
+					game.AddRepeatAnim(0.2/CL_SMult*1.4, || CustomLoops(human, Bjgesture_Ra, Bjgesture_Rb, "BJ Gesture"), human.handNames)
+					Return()
+				+ "WIP - Spank"
+					game.AddRepeatAnim(0.3/CL_SMult, || CustomLoops(human, Slap_Ra, Slap_Rb, "Spank"), human.handNames)
+					Return()
+				+ "Beckon"
+					human.Pose(Beckon())
+					game.AddRepeatAnim(0.3/CL_SMult, || CustomLoops(human, Beckon_Ra, Beckon_Rb, "Beckon"), human.handNames)
+					Return()
+				+ "Touch Herself"
+					game.AddRepeatAnim(0.3/CL_SMult, || CustomLoops(human, TouchHerself_Ra, TouchHerself_Rb, "Touch Herself R"), human.handNames)
+					Return()
+				+ "WIP - Grope Breast Topless"
+					game.AddRepeatAnim(0.2/CL_SMult*1.5, || CustomLoops6(human, Gropebreast_Ra, Gropebreast_Rb, Gropebreast_Rc, Gropebreast_Rd, Gropebreast_Re, Gropebreast_Rf, "Grope Breast"), human.handNames)
+					Return()
+				+ "WIP - Grope Breast - 2"
+					game.AddRepeatAnim(0.3/CL_SMult*2, || CustomLoops(human, Gropebreast_2Ra, Gropebreast_2Rb, "Grope Breast 2 R"), human.handNames)
+					Return()
+				+ "Fingering index"
+					game.AddRepeatAnim(0.3/CL_SMult, || CustomLoops(human, FingeringIMr1, FingeringIMr2, "Rhand"), human.handNames)
+					Return()
+				+ "Fingering middle"
+					game.AddRepeatAnim(0.3/CL_SMult, || CustomLoops(human, FingeringMRr1, FingeringMRr2, "Rhand"), human.handNames)
+					Return()
+				+ "Fingering middle - 2"
+					game.AddRepeatAnim(0.3/CL_SMult, || CustomLoops(human, FingeringMRr3, FingeringMRr4, "Rhand"), human.handNames)
+					Return()
+				+ "Stop right hand" [if game.HasAnim(human.handNames) == true]
+					game.RemoveAnim(human.handNames)
+					Return()
+				+ "Back."
+					Return(2)
+				+ "Done."
+			+ "Left hand.."[if game.HasAnim(human.forearmNames) == false][gold]
+				+ "WIP - Grope Breast Topless"
+					game.AddRepeatAnim(0.3/CL_SMult*1.5, || CustomLoops6(human, Gropebreast_La, Gropebreast_Lb, Gropebreast_Lc, Gropebreast_Ld, Gropebreast_Le, Gropebreast_Lf, "Grope Breast"), human.forearmNames)
+					Return()
+				+ "WIP - Grope Breast - 2"
+					game.AddRepeatAnim(0.3/CL_SMult*2, || CustomLoopsV2(human, "WIP - Grope Breast - 2", 0.9,
+					HandL(BoneMesh(TargetActor.Main, "Bone_Chest", 0.182, -0.312, 0.03), Wrist(HPoint(0, -0.3, 0.7, 90), 0, 35)),
+					HandL(BoneMesh(TargetActor.Main, "Bone_Breast_L", 0.957, 0.401, 0.03), Wrist(HPoint(0, -0.3, 0.7, 90), 0, 35))), human.forearmNames)
+					Return()
+				+ "WIP - Touch Herself"
+					game.AddRepeatAnim(0.3/CL_SMult, || CustomLoops(human, TouchHerself_La, TouchHerself_Lb, "Touch Herself L"), human.forearmNames)
+					Return()
+				+ "Fingering index"
+					game.AddRepeatAnim(0.3/CL_SMult, || CustomLoops(human, FingeringIMl1, FingeringIMl2, "Lhand"), human.forearmNames)
+					Return()
+				+ "Fingering middle"
+					game.AddRepeatAnim(0.3/CL_SMult, || CustomLoops(human, FingeringMRl1, FingeringMRl2, "Lhand"), human.forearmNames)
+					Return()
+				+ "Fingering middle - 2"
+					game.AddRepeatAnim(0.3/CL_SMult, || CustomLoops(human, FingeringMRl3, FingeringMRl4, "Rhand"), human.forearmNames)
+					Return()
+				+ "Stop left hand" [if game.HasAnim(human.forearmNames) == true]
+					game.RemoveAnim(human.forearmNames)
+					Return()
+				+ "Back."
+					Return(2)
+				+ "Done."
+			+ "Stop left hand" [if game.HasAnim(human.forearmNames) == true]
+				game.RemoveAnim(human.forearmNames)
+				Return()
+			+ "Stop right hand" [if game.HasAnim(human.handNames) == true]
+				game.RemoveAnim(human.handNames)
+				Return()
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "Head.."[if game.HasAnim(human.headNames) == false][gold]
+			+ "Nod - Yes"
+				activeloops[human.headNames] = 0.5/CL_SMult*2 -- 325,.,.)(20,.,.)
+				game.AddRepeatAnim(0.4/CL_SMult, || CustomLoopsV2(human, "Head", activeloops[human.headNames], HeadRot(325, nil, nil), HeadRot(20, nil, nil)), human.headNames) --HeadRot(-15, nil, nil), HeadRot(15, nil, nil)), human.headNames)
+				Return()
+			+ "Nod - lick"
+				activeloops[human.headNames] = 0.6/CL_SMult*2
+				game.AddRepeatAnim(0.3/CL_SMult, || CustomLoopsV2(human, "Head", activeloops[human.headNames], HeadRot(320, nil, nil), HeadRot(280, nil, nil)), human.headNames)
+				Return()
+			+ "Nod - Jam - Randomized"
+				activeloops[human.headNames] = 0.5/CL_SMult*2
+				game.AddRepeatAnim(0.3/CL_SMult, || CustomLoopsV2(human, "Head", activeloops[human.headNames], HeadRot((math.random(-20, -10)), nil, nil), HeadRot((math.random(20, 10)), nil, nil)), human.headNames)
+				Return()
+			+ "Shake - No"
+				activeloops[human.headNames] = 0.6/CL_SMult*3
+				game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "Head", activeloops[human.headNames], HeadRot(nil, 40, nil), HeadRot(nil, 320, nil)), human.headNames)
+				Return()
+			+ "Shake - lick"
+				activeloops[human.headNames] = 0.6/CL_SMult*2
+				game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "Head", activeloops[human.headNames], HeadRot(nil, 325, nil), HeadRot(nil, 15, nil)), human.headNames)
+				Return()
+			+ "Shake - No - Randomized"
+				activeloops[human.headNames] = 0.6/CL_SMult*3
+				game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "Head", activeloops[human.headNames], HeadRot(nil, (math.random(50, 25)), nil), HeadRot(nil, (math.random(310, 335)), nil)), human.headNames)
+				Return()
+			+ "Stop Head"[if game.HasAnim(human.headNames) == true]
+				game.RemoveAnim(human.headNames)
+				Return()
+			+ "Back."
+				Return(2)
+			+ "Done."
+
+		+ "Hips.."[gold]
+			+ "Full Rotation" [if game.HasAnim(human.Anus) == false]
+				activeloops[human.Anus] = 0.6/CL_SMult*1.5
+				game.AddRepeatAnim(0.4/CL_SMult, || CustomLoopsV4(human, "Rotate Hips", activeloops[human.Anus], HipsRot(35, 0, -25), HipsRot(35, 0, 25), HipsRot(-35, 0, -25), HipsRot(-35, 0, 25)), human.Anus)
+				Return()
+			+ "Full Rotation - 2" [if game.HasAnim(human.Anus) == false]
+				activeloops[human.Anus] = 0.6/CL_SMult*1.5
+				game.AddRepeatAnim(0.4/CL_SMult, || CustomLoopsV4(human, "Rotate Hips 2", activeloops[human.Anus], HipsRot(35, 0, -25), HipsRot(35, 0, 25), HipsRot(-35, 0, 25), HipsRot(-35, 0, -25)), human.Anus)
+				Return()
+			+ "Sway.."[gold]
+				+ "WIP - Sway Hips - Bent Over"
+					activeloops[human] = 0.6/CL_SMult*2.5
+					game.AddRepeatAnim(0.6/CL_SMult, || CustomLoops(human, HipSway_A, HipSway_B, "Swaying"), human)
+					Return()
+				+ "Back."
+					Return(2)
+				+ "Done."
+			+ "Twist.."[if game.HasAnim(human.thighNames) == false][gold]
+				+ "Twist = 20"
+					activeloops[human.thighNames] = 0.6/CL_SMult*1.5
+					game.AddRepeatAnim(0.4/CL_SMult, || CustomLoopsV2(human, "Twisting", activeloops[human.thighNames], HipsRot(0, -20, -0), HipsRot(0, 20, 0)), human.thighNames)
+					Return()
+				+ "Twist = 10"
+					activeloops[human.thighNames] = 0.6/CL_SMult*1.5
+					game.AddRepeatAnim(0.4/CL_SMult, || CustomLoopsV2(human, "Twisting", activeloops[human.thighNames], HipsRot(0, -10, -0), HipsRot(0, 10, 0)), human.thighNames)
+					Return()
+				+ "Twist - 5"
+					activeloops[human.thighNames] = 0.6/CL_SMult*1.5
+					game.AddRepeatAnim(0.4/CL_SMult, || CustomLoopsV2(human, "Twisting", activeloops[human.thighNames], HipsRot(0, -5, -0), HipsRot(0, 5, 0)), human.thighNames)
+					Return()
+				+ "Back."
+					Return(2)
+				+ "Done."
+			+ "Tilt.."[if game.HasAnim(human.Anus) == false][gold]
+				+ "Tilt = 35,  -25 > 25"
+					activeloops[human.Anus] = 0.6/CL_SMult*2
+					game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "HipMov", activeloops[human.Anus], HipsRot(35, 0, 25), HipsRot(35, 0, -25)), human.Anus)
+					Return()
+				+ "Tilt = -35,  -25 > 25"
+					activeloops[human.Anus] = 0.6/CL_SMult*2
+					game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "HipMov", activeloops[human.Anus], HipsRot(-35, 0, 25), HipsRot(-35, 0, -25)), human.Anus)
+					Return()
+				+ "Tilt - 10-24"
+					activeloops[human.Anus] = 0.6/CL_SMult*2
+					game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "HipMov", activeloops[human.Anus], HipsRot(10, 0, (math.random(24, 10))), HipsRot(10, 0, (math.random(-10, -24)))), human.Anus)
+					Return()
+				+ "Tilt - 17"
+					activeloops[human.Anus] = 0.6/CL_SMult*2
+					game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "HipMov", activeloops[human.Anus], HipsRot(10, 0, 17), HipsRot(10, 0, -17)), human.Anus)
+					Return()
+				+ "Tilt - 13"
+					activeloops[human.Anus] = 0.6/CL_SMult*2
+					game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "HipMov", activeloops[human.Anus], HipsRot(10, 0, 13), HipsRot(10, 0, -13)), human.Anus)
+					Return()
+				+ "Tilt - 5-10"
+					activeloops[human.Anus] = 0.6/CL_SMult*2
+					game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "HipMov", activeloops[human.Anus], HipsRot(10, 0, (math.random(5, 10))), HipsRot(10, 0, (math.random(-5, -10)))), human.Anus)
+					Return()
+				+ "Back."
+					Return(2)
+				+ "Done."
+			+ "Thrust.."[if game.HasAnim(human) == false][gold]
+				+ "Humping = 35"
+					activeloops[human] = 0.5/CL_SMult*1.5
+					game.AddRepeatAnim(0.4/CL_SMult, || CustomLoopsV2(human, "Humping", activeloops[human], HipsRot(-35, 0, 0), HipsRot(35, 0, 0)), human)
+					Return()
+				+ "Humping = 10 > 35"
+					activeloops[human] = 0.6/CL_SMult*2
+					game.AddRepeatAnim(0.4/CL_SMult, || CustomLoopsV2(human, "Humping", activeloops[human], HipsRot(-35, 0, 0), HipsRot(10, 0, 0)), human)
+					Return()
+				+ "Humping = 0-20 > 30-40"
+					activeloops[human] = 0.5/CL_SMult*1.5
+					game.AddRepeatAnim(0.4/CL_SMult, || CustomLoopsV2(human, "Humping", activeloops[human], HipsRot((math.random(-40, -30)), 0, 0), HipsRot((math.random(20, 0)), 0, 0)), human)
+					Return()
+				+ "Humping = 0 > 20-35"
+					activeloops[human] = 0.5/CL_SMult*3
+					game.AddRepeatAnim(0.7/CL_SMult, || CustomLoopsV2(human, "Humping", activeloops[human], HipsRot((math.random(-20, -35)), 0, 0), HipsRot(0, 0, 0)), human)
+					Return()
+				+ "Humping = -10 > 0-35 "
+					activeloops[human] = 0.5/CL_SMult*2
+					game.AddRepeatAnim(0.4/CL_SMult, || CustomLoopsV2(human, "Humping", activeloops[human], HipsRot((math.random(0, -35)), 0, 0), HipsRot(-10, 0, 0)), human)
+					Return()
+				+ "Hard Humping"
+					activeloops[human] = 0.3/CL_SMult*3
+					game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "Humping", activeloops[human], HipsRot(-55, 0, 0), HipsRot(-10, 0, 0)), human)
+					Return()
+				+ "Hump front"
+					activeloops[human] = 0.6/CL_SMult*2.5
+					game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "Humping", activeloops[human], HipsRot(-30, 0, 0), HipsRot(-20, 0, 0)), human)
+					Return()
+				+ "Twerk"
+					activeloops[human] = 0.3/CL_SMult*1.5
+					game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "Humping", activeloops[human], HipsRot(45, 0, 0), HipsRot(10, 0, 0)), human)
+					Return()
+				+ "Back."
+					Return(2)
+				+ "Done."
+			+ "Stop Hip moves" [if game.HasAnim(human.Anus) == true]
+				game.RemoveAnim(human.Anus)
+				Return()
+			+ "Stop Twisting/Swaying" [if game.HasAnim(human.thighNames) == true]
+				game.RemoveAnim(human.thighNames)
+				Return()
+			+ "Stop Humping"[if game.HasAnim(human) == true]
+				game.RemoveAnim(human)
+				Return()
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "Speedlab x " .. CL_SMult [gold]
+			+ "Ease In = ".. CLV2_A ..".. Reset?"[gold]
+				CLV2_A = 2
+			+ "Increase Ease In"
+				CLV2_A = CLV2_A + EaseIncrement_A
+				Return()
+			+ "Decrease Ease In"
+				CLV2_A = CLV2_A - EaseIncrement_A
+				Return()
+			+ "Ease Out = ".. CLV2_B ..".. Reset?"[gold]
+				CLV2_A = 2
+			+ "Increase Ease Out"
+				CLV2_B = CLV2_B + EaseIncrement_A
+				Return()
+			+ "Decrease Ease Out"
+				CLV2_B = CLV2_B - EaseIncrement_A
+				Return()
+			+ "Increase speed"
+				CL_SMult = CL_SMult + SpeedIncrement_A
+				Return()
+			+ "Decrease speed"
+				CL_SMult = CL_SMult - SpeedIncrement_A
+				Return()
+			+ "Anim Speed = "  .. CL_SMult .. ".. Reset?"[gold]
+				CL_SMult = 1
+				Return()
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "Stop shaking" [if game.HasAnim(human.chestNames) == true]
+			game.RemoveAnim(human.chestNames)
+			Return()
+		+ "Stop Bouncing" [if game.HasAnim(human.breastNames) == true]
+			game.RemoveAnim(human.breastNames)
+			Return()
+		+ "Stop left hand" [if game.HasAnim(human.forearmNames) == true]
+			game.RemoveAnim(human.forearmNames)
+			Return()
+		+ "Stop right hand" [if game.HasAnim(human.handNames) == true]
+			game.RemoveAnim(human.handNames)
+			Return()
+		+ "Stop Licking" [if game.HasAnim(human.m_mouth) == true]
+			game.RemoveAnim(human.m_mouth)
+			Return()
+		+ "Stop Head"[if game.HasAnim(human.headNames) == true]
+			game.RemoveAnim(human.headNames)
+			Return()
+		+ "Stop Hip moves" [if game.HasAnim(human.Anus) == true]
+			game.RemoveAnim(human.Anus)
+			Return()
+		+ "Stop Legs" [if game.HasAnim(human.footNames) == true]
+			game.RemoveAnim(human.footNames)
+			Return()
+		+ "Stop twisting" [if game.HasAnim(human.thighNames) == true]
+			game.RemoveAnim(human.thighNames)
+			Return(2)
+		+ "Stop humping"[if game.HasAnim(human) == true]
+			game.RemoveAnim(human)
+			Return()
+	+ "Stop Legs" [if game.HasAnim(human.footNames) == true]
+		game.RemoveAnim(human.footNames)
+		Return()
+	+ "Stop humping"[if game.HasAnim(human) == true]
+		game.RemoveAnim(human)
+		Return()
+	+ "Stop Hip moves" [if game.HasAnim(human.Anus) == true]
+		game.RemoveAnim(human.Anus)
+		Return()
+	+ "Stop shaking" [if game.HasAnim(human.chestNames) == true]
+		game.RemoveAnim(human.chestNames)
+		Return()
+	+ "Stop Bouncing" [if game.HasAnim(human.breastNames) == true]
+		game.RemoveAnim(human.breastNames)
+		Return()
+	+ "Stop Licking" [if game.HasAnim(human.m_mouth) == true]
+		game.RemoveAnim(human.m_mouth)
+		Return()
+	+ "Stop right hand" [if game.HasAnim(human.handNames) == true]
+		game.RemoveAnim(human.handNames)
+		Return()
+	+ "Stop left hand" [if game.HasAnim(human.forearmNames) == true]
+		game.RemoveAnim(human.forearmNames)
+		Return()
+	+ "Stop Head"[if game.HasAnim(human.headNames) == true]
+		game.RemoveAnim(human.headNames)
+		Return()
+	+ "Stop twisting" [if game.HasAnim(human.thighNames) == true]
+		game.RemoveAnim(human.thighNames)
+		Return()
+	+ "".. human.Name ..".."[gold]
+		+ "Summon.."[gold]
+			+ "".. human.Name ..", summon Tifa!"
+				actorA = Human(actorA, "tifa")
+				Return()
+			+ "".. human.Name ..", summon Aerith!"
+				actorC = Human(actorC, "aerith", "pharah")
+				Return()
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "Hands Behind."
+			human.Pose(HandsBehind1())
+			Return()
+		+ "Hands Open."
+			human.Pose(HandsOpen())
+			Return()
+		+ "Hands Close."
+			human.Pose(HandsClosed())
+			Return()
+		+ "Kneel!"
+			human.Pose(KneelDown1())
+			Return()
+		+ "Stand!"
+			human.Pose(StandUp1())
+			Return()
+		+ "Look!"[gold]
+			+ "Face A - 3"
+				human.Pose(FaceActorC())
+				Return()
+			+ "Face A - 2"
+				human.Pose(FaceActorB())
+				Return()
+			+ "Face A"
+				human.Pose(FaceActorA())
+				Return()
+			+ "Face Cam"
+				human.Pose(FaceCam())
+				Return()
+			+ "Look Cam"
+				human.Pose(LookCam())
+				Return()
+			+ "Look A"
+				human.Pose(LookActorA())
+				Return()
+			+ "Done."
+		+ "Back."
+			Return(2)
+		+ "Done."
+	+ "testlab"[gold]
+		+ "facelab"[gold]
+			+ "Cheeks"[gold]
+				+ "Done."
+				+ "Back."
+					Return(2)
+				+ "1. Left + 0.25"[gold]
+					human.Pose(Cheekspar1_A())
+					Return()
+				+ "1. Left - 0.25"
+					human.Pose(Cheekspar1_B())
+					Return()
+				+ "Reset Cheek Parameter 1"
+					human.Pose(ResetCheeksParam(1))
+					Return()
+				+ "2. Right + 0.25"[gold]
+					human.Pose(Cheekspar2_A())
+					Return()
+				+ "2. Right - 0.25"
+					human.Pose(Cheekspar2_B())
+					Return()
+				+ "Reset Cheek Parameter 2"
+					human.Pose(ResetCheeksParam(2))
+					Return()
+			+ "Brows"[gold]
+				+ "Right Brow"[gold]
+					+ "Done."
+					+ "Back."
+						Return(2)
+					+ "1. Right Inner + 0.25"[gold]
+						human.Pose(Browspar1_A())
+						Return()
+					+ "1. Right Inner - 0.25"
+						human.Pose(Browspar1_B())
+						Return()
+					+ "Reset Brows Parameter 1"
+						human.Pose(ResetBrowsParam(1))
+						Return()
+					+ "3. Right Outer + 0.25"[gold]
+						human.Pose(Browspar3_A())
+						Return()
+					+ "3. Right Outer - 0.25"
+						human.Pose(Browspar3_B())
+						Return()
+					+ "Reset Brows Parameter 3"
+						ResetBrowsParam(3)
+						Return()
+				+ "Left Brow"[gold]
+					+ "Done."
+					+ "Back."
+						Return(2)
+					+ "2. Left Inner + 0.25"[gold]
+						human.Pose(Browspar2_A())
+						Return()
+					+ "2. Left Inner - 0.25"
+						human.Pose(Browspar2_B())
+						Return()
+					+ "Reset Brows Parameter 2"
+						human.Pose(ResetBrowsParam(2))
+						Return()
+					+ "4. Left Outer + 0.25"[gold]
+						human.Pose(Browspar4_A())
+						Return()
+					+ "4. Left Outer - 0.25"
+						human.Pose(Browspar4_B())
+						Return()
+					+ "Reset Brows Parameter 4"
+						ResetBrowsParam(4)
+						Return()
+				+ "Both"[gold]
+					+ "Done."
+					+ "Back."
+						Return(2)
+					+ "Left + 0.25"[gold]
+						human.Pose(Browspar4_A())
+						human.Pose(Browspar2_A())
+						Return()
+					+ "Left - 0.25"
+						human.Pose(Browspar4_B())
+						human.Pose(Browspar2_B())
+						Return()
+					+ "Right + 0.25"[gold]
+						human.Pose(Browspar1_A())
+						human.Pose(Browspar3_A())
+						Return()
+					+ "Right - 0.25"
+						human.Pose(Browspar1_B())
+						human.Pose(Browspar3_B())
+						Return()
+					+ " Inner + 0.25"[gold]
+						human.Pose(Browspar1_A())
+						human.Pose(Browspar2_A())
+						Return()
+					+ " Inner - 0.25"
+						human.Pose(Browspar1_B())
+						human.Pose(Browspar2_B())
+						Return()
+					+ " Outer + 0.25"[gold]
+						human.Pose(Browspar3_A())
+						human.Pose(Browspar4_A())
+						Return()
+					+ " Outer - 0.25"
+						human.Pose(Browspar3_B())
+						human.Pose(Browspar4_B())
+						Return()
+				+ "Raise"[gold]
+					human.Pose(Browspar1_A())
+					human.Pose(Browspar2_A())
+					human.Pose(Browspar3_A())
+					human.Pose(Browspar4_A())
+					Return()
+				+ "Lower"
+					human.Pose(Browspar1_B())
+					human.Pose(Browspar2_B())
+					human.Pose(Browspar3_B())
+					human.Pose(Browspar4_B())
+					Return()
+				+ "Back."
+					Return(2)
+				+ "Done."
+			+ "Mouth"[gold]
+				+ "Back."
+					Return(2)
+				+ "Jaw V/H"[gold]
+					+ "1. Jaw V + 0.25"[gold]
+						human.Pose(Mouthpar1_A())
+						Return()
+					+ "1. Jaw V - 0.25"
+						human.Pose(Mouthpar1_B())
+						Return()
+					+ "Reset Mouth Parameter 1"
+						human.Pose(ResetMouthParam(1))
+						Return()
+					+ "2. Jaw H + 0.25"[gold]
+						human.Pose(Mouthpar2_A())
+						Return()
+					+ "2. Jaw H - 0.25"
+						human.Pose(Mouthpar2_B())
+						Return()
+					+ "Reset Mouth Parameter 2"
+						human.Pose(ResetMouthParam(2))
+						Return()
+					+ "Back."
+						Return(2)
+					+ "Done."
+				+ "Jaw Length"[gold]
+					+ "3. Jaw L + 0.25"[gold]
+						human.Pose(Mouthpar3_A())
+						Return()
+					+ "3. Jaw L - 0.25"
+						human.Pose(Mouthpar3_B())
+						Return()
+					+ "Reset Mouth Parameter 3"
+						ResetMouthParam(3)
+						Return()
+					+ "Back."
+						Return(2)
+					+ "Done."
+				+ "Lip Top"[gold]
+					+ "4. Lip TR + 0.25"[gold]
+						human.Pose(Mouthpar4_A())
+						Return()
+					+ "4. Lip TR - 0.25"
+						human.Pose(Mouthpar4_B())
+						Return()
+					+ "Reset Mouth Parameter 4"
+						ResetMouthParam(4)
+						Return()
+					+ "5. Lip TL + 0.25"[gold]
+						human.Pose(Mouthpar5_A())
+						Return()
+					+ "5. Lip TL - 0.25"
+						human.Pose(Mouthpar5_B())
+						Return()
+					+ "Reset Mouth Parameter 5"
+						ResetMouthParam(5)
+						Return()
+					+ "Back."
+						Return(2)
+					+ "Done."
+				+ "Lip Bot"[gold]
+					+ "6. Lip BR + 0.25"[gold]
+						human.Pose(Mouthpar6_A())
+						Return()
+					+ "6. Lip BR - 0.25"
+						human.Pose(Mouthpar6_B())
+						Return()
+					+ "Reset Mouth Parameter 6"
+						ResetMouthParam(6)
+						Return()
+					+ "7. Lip BL + 0.25"[gold]
+						human.Pose(Mouthpar7_A())
+						Return()
+					+ "7. Lip BL - 0.25"
+						human.Pose(Mouthpar7_B())
+						Return()
+					+ "Reset Mouth Parameter 7"
+						ResetMouthParam(7)
+						Return()
+					+ "Back."
+						Return(2)
+					+ "Done."
+				+ "Smile"[gold]
+					+ "8. Smile R + 0.25"[gold]
+						human.Pose(Mouthpar8_A())
+						Return()
+					+ "8. Smile R - 0.25"
+						human.Pose(Mouthpar8_B())
+						Return()
+					+ "Reset Mouth Parameter 8"
+						ResetMouthParam(8)
+						Return()
+					+ "9. Smile L + 0.25"[gold]
+						human.Pose(Mouthpar9_A())
+						Return()
+					+ "9. Smile L - 0.25"
+						human.Pose(Mouthpar9_B())
+						Return()
+					+ "Reset Mouth Parameter 9"
+						ResetMouthParam(9)
+						Return()
+					+ "Back."
+						Return(2)
+					+ "Done."
+				+ "Lip Width"[gold]
+					+ "10. Lip WR + 0.25"[gold]
+						human.Pose(Mouthpar10_A())
+						Return()
+					+ "10. Lip WR - 0.25"
+						human.Pose(Mouthpar10_B())
+						Return()
+					+ "Reset Mouth Parameter 10"
+						ResetMouthParam(10)
+						Return()
+					+ "11. Lip WL + 0.25"[gold]
+						human.Pose(Mouthpar11_A())
+						Return()
+					+ "11. Lip WL - 0.25"
+						human.Pose(Mouthpar11_B())
+						Return()
+					+ "Reset Mouth Parameter 11"
+						ResetMouthParam(11)
+						Return()
+					+ "Back."
+						Return(2)
+					+ "Done."
+				+ "Lip Height"[gold]
+					+ "12. Pursed + 0.25"[gold]
+						human.Pose(Mouthpar12_A())
+						Return()
+					+ "12. Pursed - 0.25"
+						human.Pose(Mouthpar12_B())
+						Return()
+					+ "Reset Mouth Parameter 12"
+						ResetMouthParam(12)
+						Return()
+					+ "Back."
+						Return(2)
+					+ "Done."
+				+ "Kiss"[gold]
+					+ "13. Pucker + 0.25"[gold]
+						human.Pose(Mouthpar13_A())
+						Return()
+					+ "13. Pucker - 0.25"
+						human.Pose(Mouthpar13_B())
+						Return()
+					+ "Reset Mouth Parameter 13"
+						ResetMouthParam(13)
+						Return()
+					+ "Back."
+						Return(2)
+					+ "Done."
+				+ "Tongue Length"[gold]
+					+ "14. Tongue L + 0.25"[gold]
+						human.Pose(Mouthpar14_A())
+						Return()
+					+ "14. Tongue L - 0.25"
+						human.Pose(Mouthpar14_B())
+						Return()
+					+ "Reset Mouth Parameter 14"
+						ResetMouthParam(14)
+						Return()
+					+ "Back."
+						Return(2)
+					+ "Done."
+				+ "Tongue V/H"[gold]
+					+ "15. Tongue H + 0.25"[gold]
+						human.Pose(Mouthpar15_A())
+						Return()
+					+ "15. Tongue H - 0.25"
+						human.Pose(Mouthpar15_B())
+						Return()
+					+ "Reset Mouth Parameter 15"
+						ResetMouthParam(15)
+						Return()
+					+ "16. Tongue V + 0.25"[gold]
+						human.Pose(Mouthpar16_A())
+						Return()
+					+ "16. Tongue V - 0.25"
+						human.Pose(Mouthpar16_B())
+						Return()
+					+ "Reset Mouth Parameter 16"
+						ResetMouthParam(16)
+					+ "Back."
+						Return(2)
+					+ "Done."
+				+ "Neutral"
+					play.pose(ResetALLMouthParam())
+				+ "Back."
+					Return(2)
+				+ "Done."
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "SPEEDLAB"[gold]
+			+ "Ease In = ".. CLV2_A ..".. Reset?"[gold]
+				CLV2_A = 2
+			+ "Increase Ease In"[gold]
+				CLV2_A = CLV2_A + EaseIncrement_A
+				Return()
+			+ "Decrease Ease In"
+				CLV2_A = CLV2_A - EaseIncrement_A
+				Return()
+			+ "Ease Out = ".. CLV2_B ..".. Reset?"[gold]
+				CLV2_A = 2
+			+ "Increase Ease Out"[gold]
+				CLV2_B = CLV2_B + EaseIncrement_A
+				Return()
+			+ "Decrease Ease Out"
+				CLV2_B = CLV2_B - EaseIncrement_A
+				Return()
+			+ "Increase speed"[gold]
+				CL_SMult = CL_SMult + SpeedIncrement_A
+				Return()
+			+ "Decrease speed"
+				CL_SMult = CL_SMult + SpeedIncrement_A
+				Return()
+			+ "Anim Speed = "  .. CL_SMult .. ".. Reset?"[gold]
+				CL_SMult = 1
+				Return()
+			+ "Nod - Yes"
+				activeloops[human.headNames] = 0.5/CL_SMult*2 -- 325,.,.)(20,.,.)
+				game.AddRepeatAnim(0.4/CL_SMult, || CustomLoopsV2(human, "Head", activeloops[human.headNames], HeadRot(325, nil, nil), HeadRot(20, nil, nil)), human.headNames) --HeadRot(-15, nil, nil), HeadRot(15, nil, nil)), human.headNames)
+				Return()
+			+ "Stop Head"[if game.HasAnim(human.headNames) == true]
+				game.RemoveAnim(human.headNames)
+				Return()
+		+ "Look!"[gold]
+			+ "Look at the Camera"
+				human.Pose(LookCam())
+				Return()
+			+ "Look at Actor:A"
+				human.Pose(LookActorA())
+				Return()
+			+ "Face Cam"
+				human.Pose(FaceCam())
+				Return()
+			+ "WIP - Face Actor:A"
+				human.Pose(FaceActorA())
+				Return()
+			+ "WIP - Face Actor:B"
+				human.Pose(FaceActorB())
+				Return()
+			+ "WIP - Face Actor:C"
+				human.Pose(FaceActorC())
+				Return()
+			+ "Back."
+				Return(2)
+			+ "Done."
+		+ "Back."
+			Return(2)
+		+ "Done."
+	+ "Start thrusting!" [if human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == false]
+		human.Penis.Interaction.AutoActive = true
+		human.Penis.Interaction.AutoPenisWeight = 1
+		Return()
+	+ "Stop thrusting!" [if human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == true]
+		human.Penis.Interaction.AutoActive = false
+		Return()
+	+ "Start sucking!" [if human.Mouth.Fucker ~= nil and human.Mouth.Fucker.Penis.Interaction.AutoActive == false]
+		human.Mouth.Fucker.Penis.Interaction.AutoActive = true
+		human.Mouth.Fucker.Penis.Interaction.AutoPenisWeight = 0
+		Return()
+	+ "Stop sucking!" [if human.Mouth.Fucker ~= nil and human.Mouth.Fucker.Penis.Interaction.AutoActive == true]
+		human.Mouth.Fucker.Penis.Interaction.AutoActive = false
+		Return()
+	+ "Start handjob" [if human.Penis.m_holdDepth ~= 0 and human.Penis.Interaction.m_autoHandActive == false]
+		human.Penis.Interaction.m_autoHandActive = true
+		Return()
+	+ "Stop handjob" [if human.Penis.m_holdDepth ~= 0 and human.Penis.Interaction.m_autoHandActive == true]
+		human.Penis.Interaction.m_autoHandActive = false
+		Return()
+	+ "Hide UI" [if HG_UIvis == true]
+		HG_UIvis = false
+		game.m_controlsUI.Show(false)
+		Return()
+	+ "Show UI" [if HG_UIvis == false]
+		HG_UIvis = true
+		game.m_controlsUI.Show()
+		Return()
+	-- + "Crash Tests"[gold]
+	-- 	+ "Neutral"
+	-- 		ResetALLMouthParam()
+	-- 		human.Pose(Mouthpar14_A())
+	-- 		Delayed(2)human.Pose(Mouthpar14_B())
+	-- 		Return()
+	-- 	+ "1. Jaw V + 0.25"
+	-- 		human.Pose(Mouthpar1_A())
+	-- 		Return()
+	-- 	+ "1. Jaw V - 0.25"
+	-- 		human.Pose(Mouthpar1_B())
+	-- 		Return()
+	-- 	+ "Reset Mouth Parameter 1"
+	-- 		human.Pose(ResetMouthParam(1))
+	-- 		Return()
+	+ "Done."
+
+stop
+
+label FreeMode()
+	Play_FreeMode()
+stop
+
+
+
+function CustomLoops(human, loop1, loop2, id)
+	if activeloops[human.Name..id] == loop2 then
+		activeloops[human.Name..id] = loop1
+		human.Pose(loop1())
+	else
+		activeloops[human.Name..id] = loop2
+		human.Pose(loop2())
+	end
+end
+
+function CustomLoops3(human, loop1, loop2, loop3, id)
+	local key = human.Name..id
+	if activeloops[key] == loop1 then
+		activeloops[key] = loop2
+		human.Pose(loop2())
+	elseif
+		activeloops[key] == loop2 then
+		activeloops[key] = loop3
+		human.Pose(loop3())
+	else
+		activeloops[key] = loop1
+		human.Pose(loop1())
+	end
+end
+
+function CustomLoops4(human, loop1, loop2, loop3, loop4, id)
+	local key = human.Name..id
+	if activeloops[key] == loop1 then
+		activeloops[key] = loop2
+		human.Pose(loop2())
+	elseif
+		activeloops[key] == loop2 then
+		activeloops[key] = loop3
+		human.Pose(loop3())
+	elseif
+		activeloops[key] == loop3 then
+		activeloops[key] = loop4
+		human.Pose(loop4())
+	else
+		activeloops[key] = loop1
+		human.Pose(loop1())
+	end
+end
+
+function CustomLoops6(human, loop1, loop2, loop3, loop4, loop5, loop6, id)
+	local key = human.Name..id
+	if activeloops[key] == loop1 then
+		activeloops[key] = loop2
+		human.Pose(loop2())
+	elseif
+		activeloops[key] == loop2 then
+		activeloops[key] = loop3
+		human.Pose(loop3())
+	elseif
+		activeloops[key] == loop3 then
+		activeloops[key] = loop4
+		human.Pose(loop4())
+	elseif
+		activeloops[key] == loop4 then
+		activeloops[key] = loop5
+		human.Pose(loop5())
+	elseif
+		activeloops[key] == loop5 then
+		activeloops[key] = loop6
+		human.Pose(loop6())
+	else
+		activeloops[key] = loop1
+		human.Pose(loop1())
+	end
+end
+
+SpeedIncrement_A = 0.1
+EaseIncrement_A = 0.2
+CLV2_A = 2 + EaseIncrement_A
+CLV2_B = 2 + EaseIncrement_A
+
+function CustomLoopsV2(actor, id, duration, effect1, effect2)
+	if activeloops[actor.Name..id] == 2 then
+		activeloops[actor.Name..id] = 1
+		actor.AddInvoluntaryAnim(id, duration, (duration/CLV2_A), duration/CLV2_A, effect1)
+	else
+		activeloops[actor.Name..id] = 2
+		actor.AddInvoluntaryAnim(id, duration, (duration/CLV2_B), duration/CLV2_B,  effect2)
+	end
+end
+
+function CustomLoopsV3(actor, id, duration, effect1, effect2, effect3,)
+    local key = actor.Name..id
+    if activeloops[key] == 1 then
+        activeloops[key] = 2
+        actor.AddInvoluntaryAnim(id, duration, (duration/EaseIncrement_A), duration/EaseIncrement_B, effect2)
+    elseif activeloops[key] == 2 then
+        activeloops[key] = 3
+        actor.AddInvoluntaryAnim(id, duration, (duration/EaseIncrement_A), duration/EaseIncrement_B, effect3)
+    else
+        activeloops[key] = 1
+        actor.AddInvoluntaryAnim(id, duration, (duration/EaseIncrement_A), duration/EaseIncrement_B, effect1)
+    end
+end
+
+function CustomLoopsV4(actor, id, duration, effect1, effect2, effect3, effect4)
+    local key = actor.Name..id
+    if activeloops[key] == 1 then
+        activeloops[key] = 2
+        actor.AddInvoluntaryAnim(id, duration, (duration/EaseIncrement_A), duration/EaseIncrement_B, effect2)
+    elseif activeloops[key] == 2 then
+        activeloops[key] = 3
+        actor.AddInvoluntaryAnim(id, duration, (duration/EaseIncrement_A), duration/EaseIncrement_B, effect3)
+    elseif activeloops[key] == 3 then
+        activeloops[key] = 4
+        actor.AddInvoluntaryAnim(id, duration, (duration/EaseIncrement_A), duration/EaseIncrement_B, effect4)
+    else
+        activeloops[key] = 1
+        actor.AddInvoluntaryAnim(id, duration, (duration/EaseIncrement_A), duration/EaseIncrement_B, effect1)
+    end
+end
+
+function CustomLoopsV6(actor, id, duration, effect1, effect2, effect3, effect4)
+    local key = actor.Name..id
+    if activeloops[key] == 1 then
+        activeloops[key] = 2
+        actor.AddInvoluntaryAnim(id, duration, (duration/EaseIncrement_A), duration/EaseIncrement_B, effect2)
+    elseif activeloops[key] == 2 then
+        activeloops[key] = 3
+        actor.AddInvoluntaryAnim(id, duration, (duration/EaseIncrement_A), duration/EaseIncrement_B, effect3)
+    elseif activeloops[key] == 3 then
+        activeloops[key] = 4
+        actor.AddInvoluntaryAnim(id, duration, (duration/EaseIncrement_A), duration/EaseIncrement_B, effect4)
+	elseif activeloops[key] == 4 then
+        activeloops[key] = 5
+        actor.AddInvoluntaryAnim(id, duration, (duration/EaseIncrement_A), duration/EaseIncrement_B, effect5)
+	elseif activeloops[key] == 5 then
+        activeloops[key] = 6
+        actor.AddInvoluntaryAnim(id, duration, (duration/EaseIncrement_A), duration/EaseIncrement_B, effect6)
+    else
+        activeloops[key] = 1
+        actor.AddInvoluntaryAnim(id, duration, (duration/EaseIncrement_A), duration/EaseIncrement_B, effect1)
+    end
+end
+
+local ThisAnim = {}	
+function CustomAnimationV2(actor, anim1, anim2, duration, effect1, effect2)								
+	if ThisAnim[anim1] == anim2 then
+		ThisAnim[anim1] = anim1
+		actor.AddInvoluntaryAnim(anim1, duration, (duration / 2), (duration / 2), effect1)				
+	else																
+		ThisAnim[anim1] = anim2																			
+		actor.AddInvoluntaryAnim(anim2, duration, (duration / 2), (duration / 2), effect2)
+	end
+end
+
+function OnHumanClick(human, hitTri)
+	Jump("TalkMenu", human, hitTri)
+end
+
+function OnCreateHuman(human)
+	game.PlayCharacterMusic(human)
+
+	if init == true then
+		human.Say("Greeting")
+	end
+end
+
+function OnRemoveHuman(human)
+	game.PlayRandomCharacterMusic()
+end
+
+function OnGameUpdate()
+	if init == false then return end
+
+	local lastChatTime = Timer("GenericChat")
+	if lastChatTime > game.ChatIntervals then
+		ResetTimer("GenericChat", math.random(-7, 0))
+
+		local speaker = game.GetRandomHuman(|h| h.CanSpeak and ((h.FaceMood >= 0 and h.HasVoice("Like") == true) or (h.FaceMood < 0 and h.HasVoice("Dislike") == true)))
+		if speaker ~= nil then
+			speaker.SayCustom(speaker.Name.."_idle")
+			speaker.SayCustom("gen_idle")
+			speaker.Say(speaker.FaceMood >= 0 and "Like" or "Dislike")
+			--speaker.Animate("ChatLookAt", MotionLayer.Interactions, 3.8, 1, 1.3, HeadLookAt(CameraPos(), 0.6, 60))
+		end
+	end
+end
+
+function OnFluidHit(hitActor, bodyArea, shootActor)
+	if hitActor == shootActor or shootActor == nil then return end
+
+	local timerKey = "FluidHit_" .. hitActor.Name .. bodyArea
+	local lastHitTime = Timer(timerKey)
+
+	if bodyArea == "L_Eye" and lastHitTime > 1 then 
+		hitActor.AddInvoluntaryAnim("L_Eye_HitClose", 1, 0.7, 0.7, EyelidL(1))
+		ResetTimer(timerKey)
+	elseif bodyArea == "R_Eye" and lastHitTime > 1 then 
+		hitActor.AddInvoluntaryAnim("R_Eye_HitClose", 1, 0.7, 0.7, EyelidR(1))
+		ResetTimer(timerKey)
+	elseif bodyArea == "Lips" and lastHitTime > 10 then 
+		hitActor.AddInvoluntaryAnim("OpenMouth", 5, 0.4, 0.4, Mouth(-0.83, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.73, 0, 0.39))
+		Delayed(5, function()
+			hitActor.Swallow()
+		end)
+		ResetTimer(timerKey)
+	else
+		local genericVoiceKey = "FluidHit_Generic_" .. hitActor.Name
+		local lastGenericVoiceTime = Timer(genericVoiceKey)
+
+		if lastGenericVoiceTime > 2 and game.FluidReaction == true then
+			hitActor.SayCustom(hitActor.Name.."_cumshot")
+			hitActor.SayCustom("gen_cumshot")
+			hitActor.Say(hitActor.FaceMood >= 0 and "Like" or "Dislike")
+			ResetTimer(genericVoiceKey)
+		end
+	end
+end
+
+function OnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
+	local key = "PenetrationMoan_" .. girl.Name .. holeName
+	local lastMoanTime = Timer(key)
+
+	if inVelocity > 0.3 and lastMoanTime > 6 then 
+		girl.SayCustom(girl.Name.."_moan")
+		girl.SayCustom("gen_moan")
+		girl.Say(girl.FaceMood >= 0 and "Pleasure" or "Pain")
+		ResetTimer(key)
+	end
+end
