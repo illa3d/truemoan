@@ -50,11 +50,17 @@ label TalkMenu(human, hitTri)
 			+ "| BACK"
 				Return(2)
 			+ "| CLOSE"
-		+ "Moaning | ON" [if moaning == true]
+		+ "Sex Moan | ON" [if moaning == true]
 			moaning = false
 			Return()
-		+ "Moaning | OFF" [if moaning == false]
+		+ "Sex Moan | OFF" [if moaning == false]
 			moaning = true
+			Return()
+		+ "Cum Moan | ON" [if game.FluidReaction == true]
+			game.FluidReaction = false
+			Return()
+		+ "Cum Moan | OFF" [if game.FluidReaction == false]
+			game.FluidReaction = true
 			Return()
 		+ "Hide UI" [if HG_UIvis == true]
 			HG_UIvis = false

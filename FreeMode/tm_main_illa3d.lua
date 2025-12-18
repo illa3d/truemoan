@@ -10,6 +10,9 @@ tracklist = {"01_Dreamy_Whisper", "02_Moon-blind", "03_OpenMeBabe", "04_What_an_
 sexspeedmin = 0.001
 sexspeedmax = 2
 wetstep = 200
+moancumeyetimeout = 1
+moancumlipstimeout = 3
+moancumbodytimeout = 5
 -- Moan Tier config - Tresholds by speed (0-2)
 climaxtreshold = 1.3
 orgasmtreshold = 0.9
@@ -118,30 +121,29 @@ function SetInteractionSpeedStep(interaction, increase)
 	interaction.m_autoSpeed = speed
 end
 
+function PlayMoan(actor, tier)
+	if actor == nil then return end
+	actor.SayCustom("tm_" .. tier)
+end
+
 -------------------------------------------------------------------------------------------------
 
 function OnFluidHit(hitActor, bodyArea, shootActor)
-	if hitActor == shootActor or shootActor == nil then return end
+	if game.FluidReaction == false or hitActor == shootActor or shootActor == nil then return end
 
 	local timerKey = "FluidHit_" .. hitActor.Name .. bodyArea
 	local lastHitTime = Timer(timerKey)
 
-	if bodyArea == "L_Eye" and lastHitTime > 1 then 
-		if game.FluidReaction == true then
-			hitActor.SayCustom("gen_moan_faster")
-		end
+	if bodyArea == "L_Eye" and lastHitTime > moancumeyetimeout then 
+		PlayMoan(hitActor, "faster")
 		hitActor.AddInvoluntaryAnim("L_Eye_HitClose", 1, 0.7, 0.7, EyelidL(1))
 		ResetTimer(timerKey)
-	elseif bodyArea == "R_Eye" and lastHitTime > 1 then 
-		if game.FluidReaction == true then
-			hitActor.SayCustom("gen_moan_faster")
-		end
+	elseif bodyArea == "R_Eye" and lastHitTime > moancumeyetimeout then 
+		PlayMoan(hitActor, "faster")
 		hitActor.AddInvoluntaryAnim("R_Eye_HitClose", 1, 0.7, 0.7, EyelidR(1))
 		ResetTimer(timerKey)
-	elseif bodyArea == "Lips" and lastHitTime > 1 then 
-		if game.FluidReaction == true then
-			hitActor.SayCustom("gen_moan_fast")
-		end
+	elseif bodyArea == "Lips" and lastHitTime > moancumlipstimeout then 
+		PlayMoan(hitActor, "fast")
 		hitActor.AddInvoluntaryAnim("OpenMouth", 5, 0.4, 0.4, Mouth(-0.83, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.73, 0, 0.39))
 		Delayed(1, function()
 			hitActor.Swallow()
@@ -150,13 +152,12 @@ function OnFluidHit(hitActor, bodyArea, shootActor)
 	else
 		local genericVoiceKey = "FluidHit_Generic_" .. hitActor.Name
 		local lastGenericVoiceTime = Timer(genericVoiceKey)
-		if lastGenericVoiceTime > 500 and game.FluidReaction == true then
+		if lastGenericVoiceTime > 500 then
 			hitActor.SayCustom("gen_cumshot")
 			hitActor.Say(hitActor.FaceMood >= 0 and "Like" or "Dislike")
 			ResetTimer(genericVoiceKey)
-		end
-		if lastHitTime > 3 and game.FluidReaction == true then
-			hitActor.SayCustom("gen_moan_slow")
+		elseif lastHitTime > moancumbodytimeout then
+			PlayMoan(hitActor, "slow")
 			ResetTimer(timerKey)
 		end
 	end
@@ -219,7 +220,7 @@ function OnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 
 	-- Play
 	if lastMoanTime > cooldown then
-		girl.SayCustom("tm_" .. tier)
+		PlayMoan(girl, tier)
 		ResetTimer(key)
 	end
 end
