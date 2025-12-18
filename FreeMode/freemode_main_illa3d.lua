@@ -1,23 +1,31 @@
 -- TrueMoan v0.6 by illa3d
+-------------------------------------------------------------------------------------------------
+-- freemode_main.lua is not required, these functions are overrides (even if it exists in folder)
+-- happens automagically - same function in multiple files, alphabetically last one used!
+-------------------------------------------------------------------------------------------------
 
 -- Music
 tracklist = {"01_Dreamy_Whisper", "02_Moon-blind", "03_OpenMeBabe", "04_What_an_Easy_Good-bye", "05_Somtimes", "06_Love_in_Fareast", "07_Tender_Passion", "08_Orbit", "09_Dancing_Queen", "10_Memories_of_Childhood", "11_Raggae_Fever", "12_Why", "13_Comma", "14_NoWar", "15_Special_Light", "16_Enjoy_Yaslef", "17_Lyve_Live", "18_Aquabelle", "19_1st_Mission", "20_Time_to_Groove", "21_Love_is_Bubble", "22_Flower_Bearing", "23_Secret_Garden_Before", "24_X-ray", "25_CallousCall", "26_Order_Circle", "27_This_is_My_Stage", "28_Wait_4_U", "29_Welcome_to_Radux_World", "30_Journey_to_You"}
--- Sex Variables
+-- Sex Config - UI slider values (0-0.5)
 sexspeedmin = 0.001
 sexspeedmax = 2
 wetstep = 200
--- Moan Tier tresholds by speed (0-2)
+-- Moan Tier config - Tresholds by speed (0-2)
 climaxtreshold = 1.3
 orgasmtreshold = 0.9
 fastertreshold = 0.6
 fasttreshold = 0.3
 normaltreshold = 0.1
--- Edit Body Increments
+-- Edit Body Config - Increments
 sizestep03 = 0.3 -- nipples
 sizestep01 = 0.1 -- hip, waist, ass, breast, muscle
 sizestep005 = 0.05 -- neck, forearm, upperarm, calf, thigh, penis-length, penis-size
 sizestep002 = 0.02 -- body
+
+-------------------------------------------------------------------------------------------------
+
 -- Variables
+init = false
 moaning = true
 cumevery = 0
 necksize = 0
@@ -35,10 +43,82 @@ penislength = 0
 musclesize = 0
 bodysize = 0
 
------------------------------------------------------------------------------------------------
--- freemode_main.lua function overrides
--- happens automagically because latest file containing the function with same name is executed
------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
+-- FREE MODE STARTS HERE, freemode_main.lua's Start() is ignored
+-------------------------------------------------------------------------------------------------
+
+label Start()
+	init = true
+	ResetTimer("GenericChat", math.random(-10, 0))
+	local speaker = game.GetRandomHuman(|h| h.CanSpeak)
+	if speaker ~= nil
+		speaker.Say("Greeting")
+	Play_FreeMode()
+stop
+
+function OnGameUpdate()
+	if init == false then return end
+	local lastChatTime = Timer("GenericChat")
+	if lastChatTime > game.ChatIntervals then
+		ResetTimer("GenericChat", math.random(-7, 0))
+		local speaker = game.GetRandomHuman(|h| h.CanSpeak and ((h.FaceMood >= 0 and h.HasVoice("Like") == true) or (h.FaceMood < 0 and h.HasVoice("Dislike") == true)))
+		if speaker ~= nil then
+			speaker.Say(speaker.FaceMood >= 0 and "Like" or "Dislike")
+		end
+	end
+end
+
+-------------------------------------------------------------------------------------------------
+
+function OnHumanClick(human, hitTri)
+	Jump("TalkMenu", human, hitTri)
+end
+
+function OnCreateHuman(human)
+	game.PlayCharacterMusic(human)
+	if init then human.Say("Greeting") end
+end
+
+function OnRemoveHuman(human)
+	game.PlayRandomCharacterMusic()
+end
+
+-------------------------------------------------------------------------------------------------
+
+function ResetPose(human)
+	human.Pose(StandUp())
+	human.Pose(FaceNeutral())
+	game.RemoveAnim(human)
+	game.RemoveAnim(human.chestNames)
+	game.RemoveAnim(human.breastNames)
+	game.RemoveAnim(human.forearmNames)
+	game.RemoveAnim(human.handNames)
+	game.RemoveAnim(human.m_mouth)
+	game.RemoveAnim(human.headNames)
+	game.RemoveAnim(human.Anus)
+	game.RemoveAnim(human.footNames)
+	game.RemoveAnim(human.thighNames)
+	human.Penis.Interaction.AutoActive = false
+	human.Mouth.Fucker.Penis.Interaction.AutoActive = false
+end
+
+function SetInteractionSpeed(interaction, speed)
+	speed = math.max(sexspeedmin, math.min(speed, sexspeedmax)) -- clamp min max
+	interaction.AutoActive = true
+	interaction.m_autoSpeed = speed
+end
+
+function SetInteractionSpeedStep(interaction, increase)
+	local speed = interaction.m_autoSpeed
+	local increment = 1 + (0.05 / (speed ^ 0.6)) -- 1 + (speed multiplier / (speed / curve))
+	if increase then speed = speed * increment
+	else speed = speed / increment end
+	speed = math.max(sexspeedmin, math.min(speed, sexspeedmax)) -- clamp min max
+	interaction.AutoActive = true
+	interaction.m_autoSpeed = speed
+end
+
+-------------------------------------------------------------------------------------------------
 
 function OnFluidHit(hitActor, bodyArea, shootActor)
 	if hitActor == shootActor or shootActor == nil then return end
