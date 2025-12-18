@@ -219,8 +219,7 @@ function OnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 
 	-- Play
 	if lastMoanTime > cooldown then
-		girl.SayCustom(girl.Name .. "_moan_" .. tier)
-		girl.SayCustom("gen_moan_" .. tier)
+		girl.SayCustom("tm_" .. tier)
 		ResetTimer(key)
 	end
 end
