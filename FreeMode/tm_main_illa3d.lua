@@ -129,7 +129,7 @@ end
 -------------------------------------------------------------------------------------------------
 
 function OnFluidHit(hitActor, bodyArea, shootActor)
-	if game.FluidReaction == false or hitActor == shootActor or shootActor == nil then return end
+	if game.FluidReaction == false or shootActor == nil or hitActor.m_isMale == true then return end
 
 	local timerKey = "FluidHit_" .. hitActor.Name .. bodyArea
 	local lastHitTime = Timer(timerKey)
