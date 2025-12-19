@@ -12,8 +12,9 @@ REALISTIC MOANING
 FEATURES
 - Slick Menu UX - Complete menu re-edit
 - Body Edit
-	- reduce/enlarge beyond slider values for all body parts
-	- Apply same values to multiple actors quickly
+	- Presets (Skinny, Slim, Normal, Curvy, Obese)
+	- Reduce/enlarge beyond slider values for all body parts
+	- Apply chosen values to multiple actors quickly
 - Sex controls
 	- Natural / Auto BJ / Auto Thrust
 	- Thrusting (Presets, Slower and Faster)
@@ -57,6 +58,8 @@ HOW TO UNINSTALL (folder: Mods/Scripts/FreeMode)
 ---------------------------------------------------------------------------------------------------------
 
 [ v0.6 ]
+- BodyEdit presets (skinny, slim, normal, curvy, obese)
+- BodyEdit Safe edit option (breasts below -0.8 crash the game on some characters)
 - Renamed mod to "TrueMoan" from "FreemodeHG v0.3 - faunap_edit_0.2 - GenSound01 - Auto ThrustBJ - illa3d_edit"
 - Split files for easier updating
 - Renamed files so it doesn't overwrite other mods
