@@ -50,6 +50,12 @@ label TalkMenu(human, hitTri)
 			+ "| BACK"
 				Return(2)
 			+ "| CLOSE"
+		+ "Safe Body Edit | ON" [if editsafe == true]
+			editsafe = false
+			Return()
+		+ "Safe Body Edit | OFF (could crash app)" [if editsafe == false]
+			editsafe = true
+			Return()
 		+ "Sex Moan | ON" [if moaning == true]
 			moaning = false
 			Return()
@@ -74,167 +80,94 @@ label TalkMenu(human, hitTri)
 			Return(2)
 		+ "| CLOSE"
 	+ "BODY.."[gold]
-		+ "RESET values"
-			cumevery = 0
-			necksize = 0
-			forearmsize = 0
-			uperarmsize = 0
-			calfsize = 0
-			thighsize = 0
-			waistsize = 0
-			hipssize = 0
-			asssize = 0
-			nipplesize = 0
-			breastsize = 0
-			penissize = 0
-			penislength = 0
-			musclesize = 0
-			bodysize = 0
-			Return()
 		+ "Neck.. | " .. necksize [gold]
 			+ "Neck >"
-				necksize = necksize + sizestep005
-				if (necksize > 2)
-					necksize = 2
-				human.Body("Neck size", necksize)
+				necksize = EditUp(human, "Neck size", necksize, sizestep005, 2)
 				Return()
 			+ "< Neck"
-				necksize = necksize - sizestep005
-				if (necksize < -1)
-					necksize = -1
-				human.Body("Neck size", necksize)
+				necksize = EditDown(human, "Neck size", necksize, sizestep005, -1)
 				Return()
 			+ "RESET | " .. necksize [gold]
-				necksize = 0
-				human.Body("Neck size", necksize)
+				necksize = EditSet(human, "Neck size", 0)
 				Return()
 			+ "| BACK"
 				Return(2)
 			+ "| CLOSE"
 		+ "Arms.. | T" .. forearmsize .. " | C" .. uperarmsize [gold]
 			+ "Forearms >"
-				forearmsize = forearmsize + sizestep005
-				if (forearmsize > 2)
-					forearmsize = 2
-				human.Body("Forearms size", forearmsize)
+				forearmsize = EditUp(human, "Forearms size", forearmsize, sizestep005, 2)
 				Return()
 			+ "< Forearms"
-				forearmsize = forearmsize - sizestep005
-				if (forearmsize < -0.5)
-					forearmsize = -0.5
-				human.Body("Forearms size", forearmsize)
+				forearmsize = EditDown(human, "Forearms size", forearmsize, sizestep005, -0.5)
 				Return()
 			+ "RESET Forearms | " .. forearmsize [gold]
-				forearmsize = 0
-				human.Body("Forearms size", forearmsize)
+				forearmsize = EditSet(human, "Forearms size", 0)
 				Return()
 			+ "Upper arms >"
-				uperarmsize = uperarmsize + sizestep005
-				if (uperarmsize > 2)
-					uperarmsize = 2
-				human.Body("Upper arms size", uperarmsize)
+				uperarmsize = EditUp(human, "Upper arms size", uperarmsize, sizestep005, 2)
 				Return()
 			+ "< Upper arms"
-				uperarmsize = uperarmsize - sizestep005
-				if (uperarmsize < -0.5)
-					uperarmsize = -0.5
-				human.Body("Upper arms size", uperarmsize)
+				uperarmsize = EditDown(human, "Upper arms size", uperarmsize, sizestep005, -0.5)
 				Return()
 			+ "RESET Upper arms | " .. uperarmsize [gold]
-				uperarmsize = 0
-				human.Body("Upper arms size", uperarmsize)
+				uperarmsize = EditSet(human, "Upper arms size", 0)
 				Return()
 			+ "| BACK"
 				Return(2)
 			+ "| CLOSE"
 		+ "Legs.. | T" .. thighsize .. " | C" .. calfsize [gold]
 			+ "Calf >"
-				calfsize = calfsize + sizestep005
-				if (calfsize > 2)
-					calfsize = 2
-				human.Body("Calf size", calfsize)
+				calfsize = EditUp(human, "Calf size", calfsize, sizestep005, 2)
 				Return()
 			+ "< Calf"
-				calfsize = calfsize - sizestep005
-				if (calfsize < -0.5)
-					calfsize = -0.5
-				human.Body("Calf size", calfsize)
+				calfsize = EditDown(human, "Calf size", calfsize, sizestep005, -0.5)
 				Return()
 			+ "RESET Calf | " .. calfsize [gold]
-				calfsize = 0
-				human.Body("Calf size", calfsize)
+				calfsize = EditSet(human, "Calf size", 0)
 				Return()
 			+ "Thigh >"
-				thighsize = thighsize + sizestep005
-				if (thighsize > 2)
-					thighsize = 2
-				human.Body("Thigh size", thighsize)
+				thighsize = EditUp(human, "Thigh size", thighsize, sizestep005, 2)
 				Return()
 			+ "< Thigh"
-				thighsize = thighsize - sizestep005
-				if (thighsize < -1)
-					thighsize = -1
-				human.Body("Thigh size", thighsize)
+				thighsize = EditDown(human, "Thigh size", thighsize, sizestep005, -1)
 				Return()
 			+ "RESET Thigh | " .. thighsize [gold]
-				thighsize = 0
-				human.Body("Thigh size", thighsize)
+				thighsize = EditSet(human, "Thigh size", 0)
 				Return()
 			+ "| BACK"
 				Return(2)
 			+ "| CLOSE"
 		+ "Waist.. | W" .. waistsize .. " | H" .. hipssize [gold]
 			+ "Hips >"
-				hipssize = hipssize + sizestep01
-				if (hipssize > 5)
-					hipssize = 5
-				human.Body("Hips size", hipssize)
+				hipssize = EditUp(human, "Hips size", hipssize, sizestep01, 5)
 				Return()
 			+ "< Hips"
-				hipssize = hipssize - sizestep01
-				if (hipssize < -2)
-					hipssize = -2
-				human.Body("Hips size", hipssize)
+				hipssize = EditDown(human, "Hips size", hipssize, sizestep01, -2)
 				Return()
 			+ "RESET Hips | " .. hipssize [gold]
-				hipssize = 0
-				human.Body("Hips size", hipssize)
+				hipssize = EditSet(human, "Hips size", 0)
 				Return()
 			+ "Waist >"
-				waistsize = waistsize + sizestep01
-				if (waistsize > 5)
-					waistsize = 10
-				human.Body("Waist size", waistsize)
+				waistsize = EditUp(human, "Waist size", waistsize, sizestep01, 5)
 				Return()
 			+ "< Waist"
-				waistsize = waistsize - sizestep01
-				if (waistsize < -1)
-					waistsize = -1
-				human.Body("Waist size", waistsize)
+				waistsize = EditDown(human, "Waist size", waistsize, sizestep01, -1)
 				Return()
 			+ "RESET Waist | " .. waistsize [gold]
-				waistsize = 0
-				human.Body("Waist size", waistsize)
+				waistsize = EditSet(human, "Waist size", 0)
 				Return()
 			+ "| BACK"
 				Return(2)
 			+ "| CLOSE"
 		+ "Ass.. | " .. asssize [gold]
 			+ "Ass >"
-				asssize = asssize + sizestep01
-				if (asssize > 10)
-					asssize = 10
-				human.Body("Ass size", asssize)
+				asssize = EditUp(human, "Ass size", asssize, sizestep01, 10)
 				Return()
 			+ "< Ass"
-				asssize = asssize - sizestep01
-				if (asssize < -1)
-					asssize = -1
-				human.Body("Ass size", asssize)
+				asssize = EditDown(human, "Ass size", asssize, sizestep01, -1)
 				Return()
 			+ "RESET | " .. asssize [gold]
-				asssize = 0
-				human.Body("Ass size", asssize)
+				asssize = EditSet(human, "Ass size", 0)
 				Return()
 			+ "| BACK"
 				Return(2)
@@ -242,35 +175,22 @@ label TalkMenu(human, hitTri)
 		+ if human.m_isMale == false
 			+ "Breasts.. | B" .. breastsize .. " | N" .. nipplesize [gold]
 				+ "Nipples >"
-					nipplesize = nipplesize + sizestep03
-					if (nipplesize > 10)
-						nipplesize = 10
-					human.Body("Nipples size", nipplesize)
+					nipplesize = EditUp(human, "Nipples size", nipplesize, sizestep03, 10)
 					Return()
 				+ "< Nipples"
-					nipplesize = nipplesize - sizestep03
-					if (nipplesize < -5)
-						nipplesize = -5
-					human.Body("Nipples size", nipplesize)
+					nipplesize = EditDown(human, "Nipples size", nipplesize, sizestep03, -5)
 					Return()
 				+ "RESET Nipples | " .. nipplesize [gold]
-					nipplesize = 0
-					human.Body("Nipples size", nipplesize)
+					nipplesize = EditSet(human, "Nipples size", 0)
 					Return()
 				+ "Breasts >"
-					breastsize = BodyEditUp(human, "Breasts size", breastsize, sizestep01, 10)
+					breastsize = EditUp(human, "Breasts size", breastsize, sizestep01, 10)
 					Return()
 				+ "< Breasts"
-					breastsize = BodyEditDown(human, "Breasts size", breastsize, sizestep01, -2, breastsafemin)
+					breastsize = EditDown(human, "Breasts size", breastsize, sizestep01, -2, breastsafemin)
 					Return()
 				+ "RESET Breasts | " .. breastsize [gold]
-					breastsize = BodyReset(human, "Breasts size", breastsize)
-					Return()
-				+ "Safe Edit | ON" [if editsafe == true]
-					editsafe = false
-					Return()
-				+ "Safe Edit | OFF" [if editsafe == false]
-					editsafe = true
+					breastsize = EditSet(human, "Breasts size", 0)
 					Return()
 				+ "| BACK"
 					Return(2)
@@ -278,36 +198,22 @@ label TalkMenu(human, hitTri)
 		+ if human.Penis.IsActive
 			+ "Penis.. | L" .. penislength .. " | S" .. penissize [gold]
 				+ "Length >"
-					penislength = penislength + sizestep005
-					if (penislength > 4)
-						penislength = 4
-					human.Body("Penis length", penislength)
+					penislength = EditUp(human, "Penis length", penislength, sizestep005, 4)
 					Return()
 				+ "< Length"
-					penislength = penislength - sizestep005
-					if (penislength < -0.7)
-						penislength = -0.7
-					human.Body("Penis length", penislength)
+					penislength = EditDown(human, "Penis length", penislength, sizestep005, -0.7)
 					Return()
 				+ "RESET Length | " .. penislength [gold]
-					penislength = 0
-					human.Body("Penis length", penislength)
+					penislength = EditSet(human, "Penis length", 0)
 					Return()
 				+ "Size >"
-					penissize = penissize + sizestep005
-					if (penissize > 4)
-						penissize = 4
-					human.Body("Penis size", penissize)
+					penissize = EditUp(human, "Penis size", penissize, sizestep005, 4)
 					Return()
 				+ "< Size"
-					penissize = penissize - sizestep005
-					if (penissize < -0.7)
-						penissize = -0.7
-					human.Body("Penis size", penissize)
+					penissize = EditDown(human, "Penis size", penissize, sizestep005, -0.7)
 					Return()
 				+ "RESET size | " .. penissize [gold]
-					penissize = 0
-					human.Body("Penis size", penissize)
+					penissize = EditSet(human, "Penis size", 0)
 					Return()
 				+ "RESET Foreskin"
 					human.Penis.m_penisSkinOut = 0
@@ -317,55 +223,50 @@ label TalkMenu(human, hitTri)
 				+ "| CLOSE"
 		+ "Body.. | B" .. bodysize .. " | M ".. musclesize [gold]
 			+ "Muscle >"
-				musclesize = musclesize + sizestep01
-				if (musclesize > 1)
-					musclesize = 1
-				human.Body("Muscle tone", musclesize)
+				musclesize = EditUp(human, "Muscle tone", musclesize, sizestep01, 1)
 				Return()
 			+ "< Muscle"
-				musclesize = musclesize - sizestep01
-				if (musclesize < -0.3)
-					musclesize = -0.3
-				human.Body("Muscle tone", musclesize)
+				musclesize = EditDown(human, "Muscle tone", musclesize, sizestep01, -0.3)
 				Return()
 			+ "RESET Muscle | " .. musclesize [gold]
-				musclesize = 0
-				human.Body("Muscle tone", 0)
+				musclesize = EditSet(human, "Muscle tone", 0)
 				Return()
 			+ "Body >"
-				bodysize = bodysize + sizestep002
-				human.Body("Body size", bodysize)
+				bodysize = EditUp(human, "Body size", bodysize, sizestep002, 1)
 				Return()
 			+ "< Body"
-				bodysize = bodysize - sizestep002
-				if (bodysize < -0.9)
-					bodysize = -0.9
-				human.Body("Body size", bodysize)
+				bodysize = EditDown(human, "Body size", bodysize, sizestep002, -0.9)
 				Return()
 			+ "RESET Body | " .. bodysize [gold]
-				bodysize = 0
-				human.Body("Body size", 0)
+				bodysize = EditSet(human, "Body size", 0)
 				Return()
 			+ "| BACK"
 				Return(2)
 			+ "| CLOSE"
-		+ "Apply All"
-			human.Body("Neck size", necksize)
-			human.Body("Forearms size", forearmsize)
-			human.Body("Upper arms size", uperarmsize)
-			human.Body("Calf size", calfsize)
-			human.Body("Thigh size", thighsize)
-			human.Body("Hips size", hipssize)
-			human.Body("Waist size", waistsize)
-			human.Body("Ass size", asssize)
-			human.Body("Nipples size", nipplesize)
-			human.Body("Breasts size", breastsize)
-			human.Body("Penis length", penislength)
-			human.Body("Penis size", penissize)
-			human.Body("Muscle tone", musclesize)
-			human.Body("Body size", bodysize)
-			human.Penis.m_penisSkinOut = 0
+		+ "Apply values"
+			EditApplyValues(human)
 			Return()
+		+ "Preset.." [gold]
+			+ "Fat"
+				EditPreset_Fat(human)
+				Return()
+			+ "Normal"
+				EditPreset_Normal(human)
+				Return()
+			+ "Slim"
+				EditPreset_Slim(human)
+				Return()
+			+ "| BACK"
+				Return(2)
+			+ "| CLOSE"
+		+ "Reset values"
+			+ "Reset values?"
+				Return()
+			+ "Ok"
+				EditResetValues()
+				Return(2)
+			+ "Cancel"
+				Return(2)
 		+ "| BACK"
 			Return(2)
 		+ "| CLOSE"
