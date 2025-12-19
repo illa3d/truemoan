@@ -1308,9 +1308,15 @@ label TalkMenu(human, hitTri)
 			+ "| BACK"
 				Return(2)
 			+ "| CLOSE"
+		+ "Apply values"
+			EditApplyValues(human)
+			Return()
 		+ "Preset.." [gold]
-			+ "Fat"
-				EditPreset_Fat(human)
+			+ "Obese"
+				EditPreset_Obese(human)
+				Return()
+			+ "Curvy"
+				EditPreset_Curvy(human)
 				Return()
 			+ "Normal"
 				EditPreset_Normal(human)
@@ -1318,12 +1324,12 @@ label TalkMenu(human, hitTri)
 			+ "Slim"
 				EditPreset_Slim(human)
 				Return()
+			+ "Skinny"
+				EditPreset_Skinny(human)
+				Return()
 			+ "| BACK"
 				Return(2)
 			+ "| CLOSE"
-		+ "Apply values"
-			EditApplyValues(human)
-			Return()
 		+ "| BACK"
 			Return(2)
 		+ "| CLOSE"
