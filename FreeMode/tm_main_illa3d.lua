@@ -20,6 +20,8 @@ fastertreshold = 0.6
 fasttreshold = 0.3
 normaltreshold = 0.1
 -- Edit Body Config - Increments
+editsafe = true
+breastsafemin = -0.8 -- some characters fall apart below this value and game crashes
 sizestep03 = 0.3 -- nipples
 sizestep01 = 0.1 -- hip, waist, ass, breast, muscle
 sizestep005 = 0.05 -- neck, forearm, upperarm, calf, thigh, penis-length, penis-size
@@ -40,7 +42,7 @@ waistsize = 0
 hipssize = 0
 asssize = 0
 nipplesize = 0
-breastssize = 0
+breastsize = 0
 penissize = 0
 penislength = 0
 musclesize = 0
@@ -125,6 +127,35 @@ function PlayMoan(actor, tier)
 	if actor == nil then return end
 	actor.SayCustom("tm_" .. tier)
 end
+
+function BodyEditUp(human, bodypart, value, step, valuemax, valuesafe)
+	value = value + step
+	if editsafe and valuesafe ~= nil and valuesafe ~= 0 and value > valuesafe then 
+		value = valuesafe
+	elseif value > valuemax then
+		value = valuemax
+	end
+	human.Body(bodypart, value)
+	return value
+end
+
+function BodyEditDown(human, bodypart, value, step, valuemin, valuesafe)
+	value = value - step
+	if editsafe and valuesafe ~= nil and valuesafe ~= 0 and value < valuesafe then 
+		value = valuesafe
+	elseif value < valuemin then
+		value = valuemin
+	end
+	human.Body(bodypart, value)
+	return value
+end
+
+function BodyReset(human, bodypart, value)
+	value = 0
+	human.Body(bodypart, value)
+	return value
+end
+
 
 -------------------------------------------------------------------------------------------------
 

@@ -85,7 +85,7 @@ label TalkMenu(human, hitTri)
 			hipssize = 0
 			asssize = 0
 			nipplesize = 0
-			breastssize = 0
+			breastsize = 0
 			penissize = 0
 			penislength = 0
 			musclesize = 0
@@ -240,7 +240,7 @@ label TalkMenu(human, hitTri)
 				Return(2)
 			+ "| CLOSE"
 		+ if human.m_isMale == false
-			+ "Breasts.. | B" .. breastssize .. " | N" .. nipplesize [gold]
+			+ "Breasts.. | B" .. breastsize .. " | N" .. nipplesize [gold]
 				+ "Nipples >"
 					nipplesize = nipplesize + sizestep03
 					if (nipplesize > 10)
@@ -258,20 +258,19 @@ label TalkMenu(human, hitTri)
 					human.Body("Nipples size", nipplesize)
 					Return()
 				+ "Breasts >"
-					breastssize = breastssize + sizestep01
-					if (breastssize > 10)
-						breastssize = 10
-					human.Body("Breasts size", breastssize)
+					breastsize = BodyEditUp(human, "Breasts size", breastsize, sizestep01, 10)
 					Return()
 				+ "< Breasts"
-					breastssize = breastssize - sizestep01
-					if (breastssize < -2)
-						breastssize = -2
-					human.Body("Breasts size", breastssize)
+					breastsize = BodyEditDown(human, "Breasts size", breastsize, sizestep01, -2, breastsafemin)
 					Return()
-				+ "RESET Breasts | " .. breastssize [gold]
-					breastssize = 0
-					human.Body("Breasts size", breastssize)
+				+ "RESET Breasts | " .. breastsize [gold]
+					breastsize = BodyReset(human, "Breasts size", breastsize)
+					Return()
+				+ "Safe Edit | ON" [if editsafe == true]
+					editsafe = false
+					Return()
+				+ "Safe Edit | OFF" [if editsafe == false]
+					editsafe = true
 					Return()
 				+ "| BACK"
 					Return(2)
@@ -360,7 +359,7 @@ label TalkMenu(human, hitTri)
 			human.Body("Waist size", waistsize)
 			human.Body("Ass size", asssize)
 			human.Body("Nipples size", nipplesize)
-			human.Body("Breasts size", breastssize)
+			human.Body("Breasts size", breastsize)
 			human.Body("Penis length", penislength)
 			human.Body("Penis size", penissize)
 			human.Body("Muscle tone", musclesize)
