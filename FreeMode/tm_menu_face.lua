@@ -2,7 +2,15 @@
 label TMMenuFace(human)
 	+ "Edit Face.." [gold]
 		TMMenuFaceLab(human)
-	+ "Loops.. (WIP)"[gold]
+	+ "Kiss/Tongue.."[gold]
+		+ for i, pres in ipairs (kissstr)
+			+ " " .. pres
+				human.Pose(kisspresets[i]())
+				Return()
+		+ MenuBack
+			Return(2)
+		+ MenuClose
+	+ "Anim.."[gold] --Face expression looping @callmedrjones6911 https://discord.com/channels/620113492208517120/1312401584910631054/1349562400105431090
 		+ "Smile > Ahegao"
 			game.AddRepeatAnim(2, || CustomLoops(human, FaceSmile, FaceAhegao, "Smile > Ahegao"), human)
 			Return()
@@ -24,14 +32,6 @@ label TMMenuFace(human)
 			game.RemoveAnim(human)
 			Return()
 		+ MenuBack.." (EYE BUG during movement)"
-			Return(2)
-		+ MenuClose
-	+ "Kiss/Tongue.."[gold]
-		+ for i, pres in ipairs (kissstr)
-			+ " " .. pres
-				human.Pose(kisspresets[i]())
-				Return()
-		+ MenuBack
 			Return(2)
 		+ MenuClose
 	+ "Custom.."[gold]

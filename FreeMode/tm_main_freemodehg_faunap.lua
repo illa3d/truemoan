@@ -1,6 +1,10 @@
 -- FreemodeHG version 0.3 - faunap_edit_0.2
 -- https://discord.com/channels/620113492208517120/1312401584910631054/1355724274224205984
 
+-- Also dependancies in following files:
+-- tm_a_presets_faunap.lua
+-- tm_menu_facelab_faunap.lua
+
 -- Variables
 activeloops = {}
 CL_SMult = 1 --Speed multiplier

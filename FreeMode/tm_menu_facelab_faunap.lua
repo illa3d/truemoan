@@ -1,3 +1,5 @@
+-- FreemodeHG version 0.3 - faunap_edit_0.2
+
 label TMMenuFaceLab(human)
 	+ "Edit Cheeks.."[gold]
 		+ "1. Left + 0.25"
