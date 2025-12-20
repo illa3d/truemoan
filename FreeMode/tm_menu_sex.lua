@@ -35,9 +35,9 @@ label TMMenuSex(human)
 		+ "STOP | " .. human.Penis.Interaction.m_autoSpeed [gold]
 			SetInteractionSpeed(human.Penis.Interaction, 0)
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Suck.. | " .. human.Mouth.Fucker.Penis.Interaction.m_autoSpeed [if human.Mouth.Fucker ~= nil] [gold]
 		+ "5 Max"
 			SetInteractionSpeed(human.Mouth.Fucker.Penis.Interaction, 2);
@@ -63,9 +63,9 @@ label TMMenuSex(human)
 		+ "STOP | " .. human.Mouth.Fucker.Penis.Interaction.m_autoSpeed [gold]
 			SetInteractionSpeed(human.Mouth.Fucker.Penis.Interaction, 0)
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Start Thrusting" [if human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == false]
 		human.Penis.Interaction.AutoActive = true
 		human.Penis.Interaction.AutoPenisWeight = 1
@@ -117,9 +117,9 @@ label TMMenuSex(human)
 				cumevery = 32
 				game.AddRepeatAnim(32, || human.Shoot(), human.Penis)
 				Return(2)
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ if game.HasAnim(human.Penis)
 			+ "Stop Cumming"
 				cumevery = 0
@@ -153,9 +153,9 @@ label TMMenuSex(human)
 			+ "RESET | " .. human.m_vagina.m_wetness [gold]
 				human.m_vagina.m_wetness = 0
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ if human.m_vagina.m_wetness > 0
 			+ "Stop Squirting"
 				human.m_vagina.m_wetness = 0
@@ -164,7 +164,7 @@ label TMMenuSex(human)
 			+ "Start Squirting"
 				human.m_vagina.m_wetness = 10000
 				Return()
-	+ "| BACK"
+	+ MenuBack
 		Return(2)
-	+ "| CLOSE"
+	+ MenuClose
 stop

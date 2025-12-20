@@ -1,4 +1,8 @@
 -- TrueMoan v0.6 by illa3d
+-- labels
+MenuBack = "| BACK"
+MenuClose = "| CLOSE"
+
 label TalkMenu(human, hitTri)
 	+ "OPTIONS.." [gold]
 		TMMenuOptions(human)
@@ -22,5 +26,5 @@ label TalkMenu(human, hitTri)
 		+ "Exit POV"
 			game.PovHuman = nil
 			Return()
-	+ "| CLOSE"
+	+ MenuClose
 stop

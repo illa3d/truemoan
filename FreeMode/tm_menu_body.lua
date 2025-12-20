@@ -18,9 +18,9 @@ label TMMenuBody(human)
 		+ "RESET | " .. necksize [gold]
 			necksize = EditSet(human, "Neck size", 0)
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Arms.. | T" .. forearmsize .. " | C" .. uperarmsize [gold]
 		+ "Forearms >"
 			forearmsize = EditUp(human, "Forearms size", forearmsize, sizestep005, 2)
@@ -40,9 +40,9 @@ label TMMenuBody(human)
 		+ "RESET Upper arms | " .. uperarmsize [gold]
 			uperarmsize = EditSet(human, "Upper arms size", 0)
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Legs.. | T" .. thighsize .. " | C" .. calfsize [gold]
 		+ "Calf >"
 			calfsize = EditUp(human, "Calf size", calfsize, sizestep005, 2)
@@ -62,9 +62,9 @@ label TMMenuBody(human)
 		+ "RESET Thigh | " .. thighsize [gold]
 			thighsize = EditSet(human, "Thigh size", 0)
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Waist.. | W" .. waistsize .. " | H" .. hipssize [gold]
 		+ "Hips >"
 			hipssize = EditUp(human, "Hips size", hipssize, sizestep01, 5)
@@ -84,9 +84,9 @@ label TMMenuBody(human)
 		+ "RESET Waist | " .. waistsize [gold]
 			waistsize = EditSet(human, "Waist size", 0)
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Ass.. | " .. asssize [gold]
 		+ "Ass >"
 			asssize = EditUp(human, "Ass size", asssize, sizestep01, 10)
@@ -97,9 +97,9 @@ label TMMenuBody(human)
 		+ "RESET | " .. asssize [gold]
 			asssize = EditSet(human, "Ass size", 0)
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ if human.m_isMale == false
 		+ "Breasts.. | B" .. breastsize .. " | N" .. nipplesize [gold]
 			+ "Nipples >"
@@ -120,9 +120,9 @@ label TMMenuBody(human)
 			+ "RESET Breasts | " .. breastsize [gold]
 				breastsize = EditSet(human, "Breasts size", 0)
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 	+ if human.Penis.IsActive
 		+ "Penis.. | L" .. penislength .. " | S" .. penissize [gold]
 			+ "Length >"
@@ -146,9 +146,9 @@ label TMMenuBody(human)
 			+ "RESET Foreskin"
 				human.Penis.m_penisSkinOut = 0
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 	+ "Body.. | B" .. bodysize .. " | M ".. musclesize [gold]
 		+ "Muscle >"
 			musclesize = EditUp(human, "Muscle tone", musclesize, sizestep01, 1)
@@ -168,9 +168,9 @@ label TMMenuBody(human)
 		+ "RESET Body | " .. bodysize [gold]
 			bodysize = EditSet(human, "Body size", 0)
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Apply values"
 		EditApplyValues(human)
 		Return()
@@ -190,10 +190,10 @@ label TMMenuBody(human)
 		+ "Skinny"
 			EditPreset_Skinny(human)
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
-	+ "| BACK"
+		+ MenuClose
+	+ MenuBack
 		Return(2)
-	+ "| CLOSE"
+	+ MenuClose
 stop

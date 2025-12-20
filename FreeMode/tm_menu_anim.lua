@@ -32,9 +32,9 @@ label TMMenuAnim(human)
 		+ "Stop Licking" [if game.HasAnim(human.m_mouth) == true]
 			game.RemoveAnim(human.m_mouth)
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "BJ Randomizer.." [gold]
 		+ "Face Upward BJ"
 			activeloops[human.Mouth] = 0.6/CL_SMult*3.7
@@ -59,9 +59,9 @@ label TMMenuAnim(human)
 		+ "Stop BJ" [if game.HasAnim(human.Mouth) == true][gold]
 			game.RemoveAnim(human.Mouth)
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Head.."[if game.HasAnim(human.headNames) == false][gold]
 		+ "Nod - Yes"
 			activeloops[human.headNames] = 0.5/CL_SMult*2 -- 325,.,.)(20,.,.)
@@ -90,9 +90,9 @@ label TMMenuAnim(human)
 		+ "Stop Head"[if game.HasAnim(human.headNames) == true]
 			game.RemoveAnim(human.headNames)
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Hands.." [gold]
 		-- + "WIP - Grope Breasts"
 		-- 	game.AddRepeatAnim(0.3/CL_SMult, || CustomLoops(human, GropebreastBoth1a, GropebreastBoth1b, "Grope Breasts"), human.forearmNames)
@@ -131,9 +131,9 @@ label TMMenuAnim(human)
 			+ "Stop right hand" [if game.HasAnim(human.handNames) == true]
 				game.RemoveAnim(human.handNames)
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ "Left hand.."[if game.HasAnim(human.forearmNames) == false][gold]
 			+ "Grope Breast Topless (WIP)"
 				game.AddRepeatAnim(0.3/CL_SMult*1.5, || CustomLoops6(human, Gropebreast_La, Gropebreast_Lb, Gropebreast_Lc, Gropebreast_Ld, Gropebreast_Le, Gropebreast_Lf, "Grope Breast"), human.forearmNames)
@@ -158,18 +158,18 @@ label TMMenuAnim(human)
 			+ "Stop left hand" [if game.HasAnim(human.forearmNames) == true]
 				game.RemoveAnim(human.forearmNames)
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ "Stop left hand" [if game.HasAnim(human.forearmNames) == true]
 			game.RemoveAnim(human.forearmNames)
 			Return()
 		+ "Stop right hand" [if game.HasAnim(human.handNames) == true]
 			game.RemoveAnim(human.handNames)
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Legs.."[if game.HasAnim(human.footNames) == false][gold]
 		+ "Footjob.Stand.Right"
 			game.AddRepeatAnim(0.3/CL_SMult, || CustomLoops(human, Footjob_1Ra, Footjob_1Rb, "FJ.Stand.R"), human.Anus)
@@ -200,18 +200,18 @@ label TMMenuAnim(human)
 		+ "Stop Legs" [if game.HasAnim(human.footNames) == true]
 			game.RemoveAnim(human.footNames)
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Hips.." [gold]
 		+ "Sway.." [gold]
 			+ "Sway Hips - Bent Over (WIP)"
 				activeloops[human] = 0.6/CL_SMult*2.5
 				game.AddRepeatAnim(0.6/CL_SMult, || CustomLoops(human, HipSway_A, HipSway_B, "Swaying"), human)
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ "Twist.."[if game.HasAnim(human.thighNames) == false][gold]
 			+ "Twist = 20"
 				activeloops[human.thighNames] = 0.6/CL_SMult*1.5
@@ -225,9 +225,9 @@ label TMMenuAnim(human)
 				activeloops[human.thighNames] = 0.6/CL_SMult*1.5
 				game.AddRepeatAnim(0.4/CL_SMult, || CustomLoopsV2(human, "Twisting", activeloops[human.thighNames], HipsRot(0, -5, -0), HipsRot(0, 5, 0)), human.thighNames)
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ "Tilt.."[if game.HasAnim(human.Anus) == false][gold]
 			+ "Tilt = 35,  -25 > 25"
 				activeloops[human.Anus] = 0.6/CL_SMult*2
@@ -253,9 +253,9 @@ label TMMenuAnim(human)
 				activeloops[human.Anus] = 0.6/CL_SMult*2
 				game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "HipMov", activeloops[human.Anus], HipsRot(10, 0, (math.random(5, 10))), HipsRot(10, 0, (math.random(-5, -10)))), human.Anus)
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ "Humping.."[if game.HasAnim(human) == false][gold]
 			+ "Humping = 35"
 				activeloops[human] = 0.5/CL_SMult*1.5
@@ -289,9 +289,9 @@ label TMMenuAnim(human)
 				activeloops[human] = 0.3/CL_SMult*1.5
 				game.AddRepeatAnim(0.6/CL_SMult, || CustomLoopsV2(human, "Humping", activeloops[human], HipsRot(45, 0, 0), HipsRot(10, 0, 0)), human)
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ "Stop Hip moves" [if game.HasAnim(human.Anus) == true]
 			game.RemoveAnim(human.Anus)
 			Return()
@@ -301,9 +301,9 @@ label TMMenuAnim(human)
 		+ "Stop Humping"[if game.HasAnim(human) == true]
 			game.RemoveAnim(human)
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Bouncing.." [if game.HasAnim(human.breastNames) == false][gold]
 		+ "Bouncing = 0.97 > 1"
 			activeloops[human.breastNames] = 0.3/CL_SMult*1.5
@@ -320,9 +320,9 @@ label TMMenuAnim(human)
 		+ "Stop Bouncing" [if game.HasAnim(human.breastNames) == true]
 			game.RemoveAnim(human.breastNames)
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Breast Shaking.."[if game.HasAnim(human.chestNames) == false][gold]
 		+ "Shake - 7-25"
 			activeloops[human.chestNames] = 0.4/CL_SMult*2
@@ -347,9 +347,9 @@ label TMMenuAnim(human)
 		+ "Stop Shaking" [if game.HasAnim(human.chestNames) == true]
 			game.RemoveAnim(human.chestNames)
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Stop Shaking" [if game.HasAnim(human.chestNames) == true]
 		game.RemoveAnim(human.chestNames)
 		Return()
@@ -380,7 +380,7 @@ label TMMenuAnim(human)
 	+ "Stop Humping"[if game.HasAnim(human) == true]
 		game.RemoveAnim(human)
 		Return()
-	+ "| BACK"
+	+ MenuBack
 		Return(2)
-	+ "| CLOSE"
+	+ MenuClose
 stop

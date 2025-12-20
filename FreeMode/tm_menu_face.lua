@@ -23,25 +23,25 @@ label TMMenuFace(human)
 		+ "Stop Looping" [if game.HasAnim(human) == true]
 			game.RemoveAnim(human)
 			Return()
-		+ "< BACK (EYE BUG during movement)"
+		+ MenuBack.." (EYE BUG during movement)"
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Kiss/Tongue.."[gold]
 		+ for i, pres in ipairs (kissstr)
 			+ " " .. pres
 				human.Pose(kisspresets[i]())
 				Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Custom.."[gold]
 		+ for i, pres in ipairs (facestr)
 			+ " " .. pres
 				human.Pose(facepresets[i]())
 				Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Original.."[gold]
 		+ "Ahegao!"
 			human.Pose(FaceAhegao())
@@ -76,16 +76,16 @@ label TMMenuFace(human)
 		+ "Close your eyes."
 			human.Pose(EyesClose())
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Stop Looping" [if game.HasAnim(human) == true]
 		game.RemoveAnim(human)
 		Return()
 	+ "RESET Face" [gold]
 		human.Pose(FaceNeutral())
 		Return()
-	+ "| BACK"
+	+ MenuBack
 		Return(2)
-	+ "| CLOSE"
+	+ MenuClose
 stop

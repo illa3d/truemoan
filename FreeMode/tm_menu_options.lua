@@ -10,9 +10,9 @@ label TMMenuOptions(human)
 		+ "RESET | "  .. CL_SMult [gold]
 			CL_SMult = 1
 			Return()
-		+ "< BACK (applied to new anims)"
+		+ MenuBack.." (applied to new anims)"
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Anim Ease.. | " .. CLV2_A .. "/" .. CLV2_B [gold]
 		+ "Ease In >"
 			CLV2_A = CLV2_A + EaseIncrement_A
@@ -32,11 +32,11 @@ label TMMenuOptions(human)
 		+ "RESET Ease Out | ".. CLV2_B [gold]
 			CLV2_B = 2
 			Return()
-		+ "< BACK (applied to new anims)"
+		+ MenuBack.." (applied to new anims)"
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Music.." [gold]
-		+ "| BACK"
+		+ MenuBack
 			Return (2)
 		+ for i, track in ipairs(tracklist)
 			+ "Play " .. track
@@ -45,9 +45,9 @@ label TMMenuOptions(human)
 		+ "Stop Music"
 			StopMusic()
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Safe Body Edit | ON" [if editsafe == true]
 		editsafe = false
 		Return()
@@ -74,7 +74,7 @@ label TMMenuOptions(human)
 		HG_UIvis = true
 		game.m_controlsUI.Show()
 		Return()
-	+ "| BACK"
+	+ MenuBack
 		Return(2)
-	+ "| CLOSE"
+	+ MenuClose
 stop

@@ -61,9 +61,9 @@ label TMMenuHeyActor(human)
 		+ "Grab Head"
 			human.Pose(GrabHead())
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Look at me"
 		human.Pose(LookCam())
 		Return()
@@ -88,7 +88,7 @@ label TMMenuHeyActor(human)
 		else 
 			human.Customize("Penis", 0)
 		Return()
-	+ "| BACK"
+	+ MenuBack
 		Return(2)
-	+ "| CLOSE"
+	+ MenuClose
 stop

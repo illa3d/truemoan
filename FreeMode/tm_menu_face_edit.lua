@@ -18,9 +18,9 @@ label TMMenuFaceEdit(human)
 		+ "Reset Cheek Parameter 2" [gold]
 			human.Pose(ResetCheeksParam(2))
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Edit Brows.."[gold]
 		+ "Right Brow.."[gold]
 			+ "1. Right Inner + 0.25"
@@ -41,9 +41,9 @@ label TMMenuFaceEdit(human)
 			+ "Reset Brows Parameter 3" [gold]
 				ResetBrowsParam(3)
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ "Left Brow.."[gold]
 			+ "2. Left Inner + 0.25"
 				human.Pose(Browspar2_A())
@@ -63,9 +63,9 @@ label TMMenuFaceEdit(human)
 			+ "Reset Brows Parameter 4" [gold]
 				ResetBrowsParam(4)
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ "Both Brows.."[gold]
 			+ "Left + 0.25"
 				human.Pose(Browspar4_A())
@@ -99,9 +99,9 @@ label TMMenuFaceEdit(human)
 				human.Pose(Browspar3_B())
 				human.Pose(Browspar4_B())
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ "Raise"
 			human.Pose(Browspar1_A())
 			human.Pose(Browspar2_A())
@@ -114,9 +114,9 @@ label TMMenuFaceEdit(human)
 			human.Pose(Browspar3_B())
 			human.Pose(Browspar4_B())
 			Return()
-		+ "| BACK"
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
+		+ MenuClose
 	+ "Edit Mouth.."[gold]
 		+ "Jaw V/H.."[gold]
 			+ "1. Jaw V + 0.25"
@@ -137,9 +137,9 @@ label TMMenuFaceEdit(human)
 			+ "Reset Mouth Parameter 2" [gold]
 				human.Pose(ResetMouthParam(2))
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ "Jaw Length.."[gold]
 			+ "3. Jaw L + 0.25"
 				human.Pose(Mouthpar3_A())
@@ -150,9 +150,9 @@ label TMMenuFaceEdit(human)
 			+ "Reset Mouth Parameter 3" [gold]
 				ResetMouthParam(3)
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ "Lip Top.."[gold]
 			+ "4. Lip TR + 0.25"
 				human.Pose(Mouthpar4_A())
@@ -172,9 +172,9 @@ label TMMenuFaceEdit(human)
 			+ "Reset Mouth Parameter 5" [gold]
 				ResetMouthParam(5)
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ "Lip Bot.."[gold]
 			+ "6. Lip BR + 0.25"
 				human.Pose(Mouthpar6_A())
@@ -194,9 +194,9 @@ label TMMenuFaceEdit(human)
 			+ "Reset Mouth Parameter 7" [gold]
 				ResetMouthParam(7)
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ "Lip Width.."[gold]
 			+ "10. Lip WR + 0.25"
 				human.Pose(Mouthpar10_A())
@@ -216,9 +216,9 @@ label TMMenuFaceEdit(human)
 			+ "Reset Mouth Parameter 11" [gold]
 				ResetMouthParam(11)
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ "Lip Height.."[gold]
 			+ "12. Pursed + 0.25"
 				human.Pose(Mouthpar12_A())
@@ -229,9 +229,9 @@ label TMMenuFaceEdit(human)
 			+ "Reset Mouth Parameter 12" [gold]
 				ResetMouthParam(12)
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ "Tongue Length.."[gold]
 			+ "14. Tongue L + 0.25"
 				human.Pose(Mouthpar14_A())
@@ -242,9 +242,9 @@ label TMMenuFaceEdit(human)
 			+ "Reset Mouth Parameter 14" [gold]
 				ResetMouthParam(14)
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ "Tongue V/H.."[gold]
 			+ "15. Tongue H + 0.25"
 				human.Pose(Mouthpar15_A())
@@ -263,9 +263,9 @@ label TMMenuFaceEdit(human)
 				Return()
 			+ "Reset Mouth Parameter 16" [gold]
 				ResetMouthParam(16)
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ "Kiss.."[gold]
 			+ "13. Pucker + 0.25"
 				human.Pose(Mouthpar13_A())
@@ -276,9 +276,9 @@ label TMMenuFaceEdit(human)
 			+ "Reset Mouth Parameter 13" [gold]
 				ResetMouthParam(13)
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 		+ "Smile.."[gold]
 			+ "8. Smile R + 0.25"
 				human.Pose(Mouthpar8_A())
@@ -298,19 +298,19 @@ label TMMenuFaceEdit(human)
 			+ "Reset Mouth Parameter 9" [gold]
 				ResetMouthParam(9)
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
+			+ MenuClose
 			+ "Neutral"
 				play.pose(ResetALLMouthParam())
 				Return()
-			+ "| BACK"
+			+ MenuBack
 				Return(2)
-			+ "| CLOSE"
-		+ "| BACK"
+			+ MenuClose
+		+ MenuBack
 			Return(2)
-		+ "| CLOSE"
-	+ "| BACK"
+		+ MenuClose
+	+ MenuBack
 		Return(2)
-	+ "| CLOSE"
+	+ MenuClose
 stop
