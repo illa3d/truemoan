@@ -175,24 +175,7 @@ label TMMenuBody(human)
 		EditApplyValues(human)
 		Return()
 	+ "Preset.." [gold]
-		+ "Obese"
-			EditPreset_Obese(human)
-			Return()
-		+ "Curvy"
-			EditPreset_Curvy(human)
-			Return()
-		+ "Normal"
-			EditPreset_Normal(human)
-			Return()
-		+ "Slim"
-			EditPreset_Slim(human)
-			Return()
-		+ "Skinny"
-			EditPreset_Skinny(human)
-			Return()
-		+ MenuBack
-			Return(2)
-		+ MenuClose
+		TMMenuBodyPreset(human)
 	+ MenuBack
 		Return(2)
 	+ MenuClose

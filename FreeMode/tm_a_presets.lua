@@ -3,6 +3,29 @@
 -- WARNING: Breasts values below -0.8 can crash the game
 -------------------------------------------------------------------------------------------------
 
+-- MENU
+label TMMenuBodyPreset(human)
+	+ "Obese"
+		EditPreset_Obese(human)
+		Return()
+	+ "Curvy"
+		EditPreset_Curvy(human)
+		Return()
+	+ "Normal"
+		EditPreset_Normal(human)
+		Return()
+	+ "Slim"
+		EditPreset_Slim(human)
+		Return()
+	+ "Skinny"
+		EditPreset_Skinny(human)
+		Return()
+	+ MenuBack
+		Return(2)
+	+ MenuClose
+stop
+
+-- PRESETS
 function EditPreset_Obese(human)
 	necksize = EditSet(human,"Neck size", 0.2)
 	forearmsize = EditSet(human,"Forearms size", 0.2)
