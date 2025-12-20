@@ -1,4 +1,4 @@
--- TrueMoan v0.6 by illa3d
+-- TrueMoan v0.7 by illa3d
 label TMMenuOptions(human)
 	+ "Anim Speed.. | " .. CL_SMult [gold]
 		+ "Speed >"

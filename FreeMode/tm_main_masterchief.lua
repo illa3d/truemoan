@@ -1,4 +1,4 @@
--- Natural AutoBJ AutoThrust @masterchief_87971 https://discord.com/channels/620113492208517120/1312401584910631054/1355675724932972634
+-- `Natural AutoBJ AutoThrust` @masterchief_87971 https://discord.com/channels/620113492208517120/1312401584910631054/1355675724932972634
 -- written on top of "FreemodeHG version 0.3"
 
 -- Variables

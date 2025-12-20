@@ -1,4 +1,4 @@
--- TrueMoan v0.6 by illa3d
+-- TrueMoan v0.7 by illa3d
 label TMMenuBody(human)
 	+ "RESET values.." [gold]
 		+ "Reset values?"

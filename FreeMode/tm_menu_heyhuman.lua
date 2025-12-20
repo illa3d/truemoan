@@ -1,4 +1,4 @@
--- TrueMoan v0.6 by illa3d
+-- TrueMoan v0.7 by illa3d
 label TMMenuHeyHuman(human)
 	+ "Stop Shaking" [if game.HasAnim(human.chestNames) == true]
 		game.RemoveAnim(human.chestNames)

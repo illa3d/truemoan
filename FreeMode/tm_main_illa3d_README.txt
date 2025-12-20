@@ -57,6 +57,10 @@ HOW TO UNINSTALL (folder: Mods/Scripts/FreeMode)
 -- CHANGELOG
 ---------------------------------------------------------------------------------------------------------
 
+[ v0.7 ]
+- Split the menu files for easier editing / updating
+- Extracted Close & Back labels to tm_menu.lua
+
 [ v0.6 ]
 - BodyEdit presets (skinny, slim, normal, curvy, obese)
 - BodyEdit Safe edit option (breasts below -0.8 crash the game on some characters)

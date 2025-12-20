@@ -1,4 +1,4 @@
--- TrueMoan v0.6 by illa3d
+-- TrueMoan v0.7 by illa3d
 -------------------------------------------------------------------------------------------------
 -- freemode_main.lua is not required, these functions are overrides (even if it exists in folder)
 -- happens automagically - same function in multiple files, alphabetically last one used!
