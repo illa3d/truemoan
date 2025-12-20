@@ -48,23 +48,29 @@ label TMMenuOptions(human)
 		+ MenuBack
 			Return(2)
 		+ MenuClose
-	+ "Safe Body Edit | ON" [if editsafe == true]
+	+ "BodyEdit Safe | ON" [if editsafe == true]
 		editsafe = false
 		Return()
-	+ "Safe Body Edit | OFF (could crash app)" [if editsafe == false]
+	+ "BodyEdit Safe | OFF (could crash app)" [if editsafe == false]
 		editsafe = true
 		Return()
-	+ "Sex Moan | ON" [if moaning == true]
+	+ "Moan Sex | ON" [if moaning == true]
 		moaning = false
 		Return()
-	+ "Sex Moan | OFF" [if moaning == false]
+	+ "Moan Sex | OFF" [if moaning == false]
 		moaning = true
 		Return()
-	+ "Cum Moan | ON" [if game.FluidReaction == true]
+	+ "Moan Cum | ON" [if game.FluidReaction == true]
 		game.FluidReaction = false
 		Return()
-	+ "Cum Moan | OFF" [if game.FluidReaction == false]
+	+ "Moan Cum | OFF" [if game.FluidReaction == false]
 		game.FluidReaction = true
+		Return()
+	+ "Wet Sex | ON" [if wetsex == true]
+		wetsex = false
+		Return()
+	+ "Wet Sex | OFF" [if wetsex == false]
+		wetsex = true
 		Return()
 	+ "Hide UI" [if HG_UIvis == true]
 		HG_UIvis = false

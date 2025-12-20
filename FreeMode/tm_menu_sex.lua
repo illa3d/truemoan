@@ -131,38 +131,39 @@ label TMMenuSex(human)
 				game.AddRepeatAnim(4, || human.Shoot(), human.Penis)
 				Return()
 	+ if human.Penis.IsActive == false
-		+ "Wet.. | " .. human.m_vagina.m_wetness [gold]
+		+ "Wet.. | V" .. human.m_vagina.m_wetness .. " | A" ..human.m_anus.m_wetness.. " | M" .. human.m_mouth.m_wetness [gold]
 			+ "3 Squirt"
-				human.m_vagina.m_wetness = 10000
+				SetGirlWetness(human, 10000, "Vagina")
 				Return()
 			+ "2 Wet"
-				human.m_vagina.m_wetness = 2000
+				SetGirlWetness(human, 2000, "Vagina")
 				Return()
 			+ "1 Default"
-				human.m_vagina.m_wetness = 500
+				SetGirlWetness(human, 500, "Vagina")
 				Return()
 			+ "Wetness >"
-				human.m_vagina.m_wetness = human.m_vagina.m_wetness + wetstep
+				wett = human.m_vagina.m_wetness + wetstep
+				SetGirlWetness(human, wett, "Vagina")
 				Return()
 			+ "< Wetness"
 				wett = human.m_vagina.m_wetness - wetstep
 				if wett < 0
 					wett = 0
-				human.m_vagina.m_wetness = wett
+				SetGirlWetness(human, wett, "Vagina")
 				Return()
-			+ "RESET | " .. human.m_vagina.m_wetness [gold]
-				human.m_vagina.m_wetness = 0
+			+ "RESET | V" .. human.m_vagina.m_wetness .. " | A" ..human.m_anus.m_wetness.. " | M" .. human.m_mouth.m_wetness [gold]
+				ResetGirlWetness(human)	
 				Return()
 			+ MenuBack
 				Return(2)
 			+ MenuClose
-		+ if human.m_vagina.m_wetness > 0
-			+ "Stop Squirting"
-				human.m_vagina.m_wetness = 0
+		+ if human.m_vagina.m_wetness > 0 or human.m_anus.m_wetness > 0 or human.m_mouth.m_wetness > 0
+			+ "Stop Wetness"
+				ResetGirlWetness(human)	
 				Return()
 		+ else
 			+ "Start Squirting"
-				human.m_vagina.m_wetness = 10000
+				SetGirlWetness(human, 10000, "Vagina")
 				Return()
 	+ MenuBack
 		Return(2)

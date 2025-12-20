@@ -58,6 +58,7 @@ HOW TO UNINSTALL (folder: Mods/Scripts/FreeMode)
 ---------------------------------------------------------------------------------------------------------
 
 [ v0.7 ]
+- WetSex option
 - Split the menu files for easier editing / updating
 - Extracted Close & Back labels to tm_menu.lua
 

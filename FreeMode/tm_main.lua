@@ -16,7 +16,6 @@ moancumlipstimeout = 3
 moancumbodytimeout = 5
 
 -- Moan Tier config - Tresholds by speed (0-2)
-moaning = true -- switched from options menu
 climaxtreshold = 1.3
 orgasmtreshold = 0.9
 fastertreshold = 0.6
@@ -31,7 +30,6 @@ sizestep005 = 0.05 -- neck, forearm, upperarm, calf, thigh, penis-length, penis-
 sizestep002 = 0.02 -- body
 
 -- Edit Body Variables
-editsafe = true
 necksize = 0
 forearmsize = 0
 uperarmsize = 0
@@ -46,6 +44,11 @@ penissize = 0
 penislength = 0
 musclesize = 0
 bodysize = 0
+
+-- Options
+editsafe = true
+moaning = true
+wetsex = true
 
 -- Variables
 init = false
@@ -83,6 +86,7 @@ function OnHumanClick(human, hitTri)
 end
 
 function OnCreateHuman(human)
+	ResetGirlWetness(human)
 	game.PlayCharacterMusic(human)
 	if init then human.Say("Greeting") end
 end
@@ -102,15 +106,15 @@ function OnFluidHit(hitActor, bodyArea, shootActor)
 	local lastHitTime = Timer(timerKey)
 
 	if bodyArea == "L_Eye" and lastHitTime > moancumeyetimeout then 
-		PlayMoan(hitActor, "faster")
+		PlayGirlMoan(hitActor, "faster")
 		hitActor.AddInvoluntaryAnim("L_Eye_HitClose", 1, 0.7, 0.7, EyelidL(1))
 		ResetTimer(timerKey)
 	elseif bodyArea == "R_Eye" and lastHitTime > moancumeyetimeout then 
-		PlayMoan(hitActor, "faster")
+		PlayGirlMoan(hitActor, "faster")
 		hitActor.AddInvoluntaryAnim("R_Eye_HitClose", 1, 0.7, 0.7, EyelidR(1))
 		ResetTimer(timerKey)
 	elseif bodyArea == "Lips" and lastHitTime > moancumlipstimeout then 
-		PlayMoan(hitActor, "fast")
+		PlayGirlMoan(hitActor, "fast")
 		hitActor.AddInvoluntaryAnim("OpenMouth", 5, 0.4, 0.4, Mouth(-0.83, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.73, 0, 0.39))
 		Delayed(1, function()
 			hitActor.Swallow()
@@ -124,14 +128,15 @@ function OnFluidHit(hitActor, bodyArea, shootActor)
 			hitActor.Say(hitActor.FaceMood >= 0 and "Like" or "Dislike")
 			ResetTimer(genericVoiceKey)
 		elseif lastHitTime > moancumbodytimeout then
-			PlayMoan(hitActor, "slow")
+			PlayGirlMoan(hitActor, "slow")
 			ResetTimer(timerKey)
 		end
 	end
 end
 
 function OnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
-	if inVelocity < outVelocity or moaning == false then return end
+	-- holeName:"Vagina" "Anus" Mouth"
+	if inVelocity < outVelocity or moaning == false  then return end
 
 	-- Variables
 	local key = "PenetrationMoan_" .. girl.Name .. holeName
@@ -140,6 +145,7 @@ function OnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	local pauseMax = 0
 	local tierMin = 0
 	local tierMax = 0
+	local wetness = 0
 
 	-- Tier selection + boundary detection
 	if inVelocity > climaxtreshold then
@@ -147,31 +153,37 @@ function OnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 		pauseMax = 0.1 -- Audio files: ~0.3s + pause
 		tierMax = climaxtreshold + 1
 		tierMin = climaxtreshold
+		wetness = 10000
 	elseif inVelocity > orgasmtreshold then
 		tier = "orgasm"
 		pauseMax = 0.4 -- Audio files: ~0.4s + pause
 		tierMax = climaxtreshold
 		tierMin = orgasmtreshold
+		wetness = 1000
 	elseif inVelocity > fastertreshold then
 		tier = "faster"
 		pauseMax = 0.5 -- Audio files: ~0.5s + pause
 		tierMax = orgasmtreshold
 		tierMin = fastertreshold
+		wetness = 100
 	elseif inVelocity > fasttreshold then
 		tier = "fast"
 		pauseMax = 0.6 -- Audio files: ~0.5s + pause
 		tierMax = fastertreshold
 		tierMin = fasttreshold
+		wetness = 10
 	elseif inVelocity > normaltreshold then
 		tier = "normal"
 		pauseMax = 1.3 -- Audio files: ~0.8s + pause
 		tierMax = fasttreshold
 		tierMin = normaltreshold
+		wetness = 5
 	else
 		tier = "slow"
 		pauseMax = 10.0 -- VERY long pauses when not moving
 		tierMax = normaltreshold
 		tierMin = 0.0
+		wetness = 1
 	end
 
 	-- Organic Speed-based pause scaling: longer to zero near tier end
@@ -187,7 +199,13 @@ function OnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 
 	-- Play
 	if lastMoanTime > cooldown then
-		PlayMoan(girl, tier)
+		PlayGirlMoan(girl, tier)
+		-- Auto Wetness
+		if wetsex then
+			SetGirlWetness(girl, wetness, holeName)
+		else
+			SetGirlWetness(girl, 0, holeName)
+		end
 		ResetTimer(key)
 	end
 end
@@ -196,9 +214,27 @@ end
 -- VARIOUS
 -------------------------------------------------------------------------------------------------
 
-function PlayMoan(actor, tier)
+function PlayGirlMoan(actor, tier)
 	if actor == nil then return end
 	actor.SayCustom("tm_" .. tier)
+end
+
+function ResetGirlWetness(girl)
+	SetGirlWetness(girl, 0, "Vagina")
+	SetGirlWetness(girl, 0, "Anus")
+	SetGirlWetness(girl, 0, "Mouth")
+end
+
+function SetGirlWetness(girl, value, holename)
+	--holeName:"Vagina" "Anus" Mouth"
+	if girl == nil or value == nil or girl.m_isMale == true then return end
+	if holename ~= nil and holename == "Mouth" then
+		girl.m_mouth.m_wetness = value
+	elseif holename ~= nil and holename == "Anus" then
+		girl.m_anus.m_wetness = value
+	else
+		girl.m_vagina.m_wetness = value
+	end
 end
 
 function SetInteractionSpeed(interaction, speed)
