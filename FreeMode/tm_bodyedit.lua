@@ -4,7 +4,7 @@
 -- BODY EDIT
 -------------------------------------------------------------------------------------------------
 
-function EditUp(human, bodypart, value, step, valuemax, valuesafe)
+function BodyEditUp(human, bodypart, value, step, valuemax, valuesafe)
 	value = value + step
 	if editsafe and valuesafe ~= nil and valuesafe ~= 0 and value > valuesafe then 
 		value = valuesafe
@@ -15,7 +15,7 @@ function EditUp(human, bodypart, value, step, valuemax, valuesafe)
 	return value
 end
 
-function EditDown(human, bodypart, value, step, valuemin, valuesafe)
+function BodyEditDown(human, bodypart, value, step, valuemin, valuesafe)
 	value = value - step
 	if editsafe and valuesafe ~= nil and valuesafe ~= 0 and value < valuesafe then 
 		value = valuesafe
@@ -26,12 +26,12 @@ function EditDown(human, bodypart, value, step, valuemin, valuesafe)
 	return value
 end
 
-function EditSet(human, bodypart, value)
+function BodyEditSet(human, bodypart, value)
 	human.Body(bodypart, value)
 	return value
 end
 
-function EditResetValues()
+function BodyEditResetValues()
 	necksize = 0
 	forearmsize = 0
 	uperarmsize = 0
@@ -48,7 +48,7 @@ function EditResetValues()
 	bodysize = 0
 end
 
-function EditApplyValues(human)
+function BodyEditApplyValues(human)
 	human.Body("Neck size", necksize)
 	human.Body("Forearms size", forearmsize)
 	human.Body("Upper arms size", uperarmsize)
