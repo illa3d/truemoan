@@ -1,7 +1,7 @@
 -- TrueMoan v0.6 by illa3d
 label TMMenuFace(human)
 	+ "Edit Face.." [gold]
-		TMMenuFaceEdit(human)
+		TMMenuFaceLab(human)
 	+ "Loops.. (WIP)"[gold]
 		+ "Smile > Ahegao"
 			game.AddRepeatAnim(2, || CustomLoops(human, FaceSmile, FaceAhegao, "Smile > Ahegao"), human)

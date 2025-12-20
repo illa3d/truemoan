@@ -1,4 +1,4 @@
-label TMMenuFaceEdit(human)
+label TMMenuFaceLab(human)
 	+ "Edit Cheeks.."[gold]
 		+ "1. Left + 0.25"
 			human.Pose(Cheekspar1_A())

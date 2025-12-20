@@ -17,7 +17,7 @@ label TalkMenu(human, hitTri)
 	+ "BODY.." [gold]
 		TMMenuBody(human)
 	+ "HEY, " .. human.Name ..".." [gold]
-		TMMenuHeyActor(human)
+		TMMenuHeyHuman(human)
 	+ if game.PovHuman ~= human
 		+ "POV"
 			game.PovHuman = human
