@@ -2,56 +2,50 @@
 --                                               TRUE MOAN                                             --
 ---------------------------------------------------------------------------------------------------------
 
-REALISTIC MOANING
-- 950+ unique moans (thx Chiyoru, Spicy Sounds Bundle)
-- 6 moan tiers: Slow, Normal, Fast, Faster, Orgasm, Climax
-- Organic speed dependant moaning
-- Fluid reaction moaning
-- Togglable in talk menu/options/moaning and game options/fluid reactions
-
 FEATURES
-- Slick Menu UX - Complete menu re-edit
+- Realistic Moans
+  - Generic Voice for all characters
+  - 950+ unique moans
+  - 6 moan tiers: Slow, Normal, Fast, Faster, Orgasm, Climax
+  - Togglable organic speed dependant moans
+  - Fluid reaction moans
+- Wet Sex (moisting used holes Vag, Anl, Orl)
+- Improved Menu UX
 - Body Edit
-	- Presets (Skinny, Slim, Normal, Curvy, Obese)
-	- Reduce/enlarge beyond slider values for all body parts
-	- Apply chosen values to multiple actors quickly
-- Sex controls
-	- Natural / Auto BJ / Auto Thrust
-	- Thrusting (Presets, Slower and Faster)
-	- Cum frequency
-	- Wetness (Presets, Less and More)
-- Animation and poses
-- Character Reset - stand up, stop all animations, normal face
+  - Reduce/enlarge body beyond slider limits
+  - Presets (Skinny, Slim, Normal, Curvy, Obese)
+  - Apply to/reset multiple actors quickly
+- Sex Control
+  - Thrusting (Presets, Slower/Faster)
+  - Natural Auto BJ / Thrust
+  - Cum frequency
+  - Wetness (Presets, Less and More)
+- Animation & Poses
 
 INTEGRATED MODS
-- @heartgrenade: FreeModeHG v0.3.zip - https://discord.com/channels/620113492208517120/1312401584910631054/1349491994510233661
-- @faunap: FreeModeHG v0.3 - faunap_edit_0.2.zip - https://discord.com/channels/620113492208517120/1312401584910631054/1355724274224205984
-- @masterchief_87971: Natural AutoBJ AutoThrust - https://discord.com/channels/620113492208517120/1312401584910631054/1355675724932972634
-- @callmedrjones6911: Face expression looping - https://discord.com/channels/620113492208517120/1312401584910631054/1349562400105431090
-
+- `FreeModeHG v0.3.zip` @.heartgrenade https://discord.com/channels/620113492208517120/1312401584910631054/1349491994510233661
+- `FreeModeHG v0.3 - faunap_edit_0.2.zip` @faunap https://discord.com/channels/620113492208517120/1312401584910631054/1355724274224205984
+- `Natural AutoBJ AutoThrust` @masterchief_87971 https://discord.com/channels/620113492208517120/1312401584910631054/1355675724932972634
+- `Face expression looping` @callmedrjones6911 https://discord.com/channels/620113492208517120/1312401584910631054/1349562400105431090
 Thanks everyone for the effort, pretty slick mods! <3
+Thanks Chiyoru, Spicy Sounds Bundle <3
 
 ---------------------------------------------------------------------------------------------------------
 -- INSTALLATION
 ---------------------------------------------------------------------------------------------------------
 
 REQUIREMENTS
-- True Facials v0.59
-- No mod dependancies
+- TrueFacials v0.59
+- No other mods required
 
-COMPATIBILITY
-- *NOT* compatible with other mods that do FreeMode folder scripting (ie: nf123 Voice Mod)
-- if mod is installed with other mods, they will not work until TrueMoan is deleted
+INSTALL
+- :warning:WILL BREAK MODS USING FREEMODE (ie: other Voice Mods)
+- Backup/rename existing`Mods/Scripts/FreeMode`
+- Extract archive to game folder (overwrite all files)
 
-HOW TO INSTALL
-- (if you have mods) backup/rename folder: "Mods/Scripts/FreeMode"
-- backup/rename "Mods/Scripts/FreeMode/Image.png"
-- extract TrueMoan_v#.#.zip to TrueFacials game folder (should be no overwrites)
-
-HOW TO UNINSTALL (folder: Mods/Scripts/FreeMode)
-- restore backed up "Image.png" (if you backed it up before install)
-- delete all "tm_*.lua" and "tm_*.txt" files
-- delete all "Voice/tm_*.mp3" audio files
+UNINSTALL
+- If backed up `Mods/Scripts/FreeMode`: Delete TrueMoan `FreeMode` folder and restore yours
+- Or delete TrueMoan files in `Mods/Scripts/FreeMode` | `tm_*.lua` | `tm_*.txt` | `Voice/tm_*.mp3`
 
 ---------------------------------------------------------------------------------------------------------
 -- CHANGELOG
