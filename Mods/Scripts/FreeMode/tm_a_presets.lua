@@ -1,32 +1,62 @@
 -------------------------------------------------------------------------------------------------
--- BODY PRESET VALUES
+-- PRESETS for True Moan Body Edit (TMBE)
 -- WARNING: Breasts values below -0.8 can crash the game
 -------------------------------------------------------------------------------------------------
 
--- MENU
+-- MENU: BODY.. / Presets
 label TMMenuBodyPreset(human)
 	+ "Obese"
-		EditPreset_Obese(human)
+		TMBEPreset_Obese(human)
 		Return()
 	+ "Curvy"
-		EditPreset_Curvy(human)
+		TMBEPreset_Curvy(human)
 		Return()
 	+ "Normal"
-		EditPreset_Normal(human)
+		TMBEPreset_Normal(human)
 		Return()
 	+ "Slim"
-		EditPreset_Slim(human)
+		TMBEPreset_Slim(human)
 		Return()
 	+ "Skinny"
-		EditPreset_Skinny(human)
+		TMBEPreset_Skinny(human)
+		Return()
+	+ "Random!" [gold]
+		TMBEPreset_Random(human)
 		Return()
 	+ MenuBack
 		Return(2)
 	+ MenuClose
 stop
 
+-------------------------------------------------------------------------------------------------
 -- PRESETS
-function EditPreset_Obese(human)
+-------------------------------------------------------------------------------------------------
+
+-- Called from tm_main on character creation
+function TMBEPreset_RandomStart(human)
+	local randomPresets = {
+		TMBEPreset_Skinny,
+		TMBEPreset_Slim,
+		TMBEPreset_Normal,
+		--TMBEPreset_Curvy,
+		--TMBEPreset_Obese,
+	}
+	(randomPresets[math.random(#randomPresets)] or TMBEPreset_Normal)(human)
+end
+
+-- Called from BodyEdit menu
+function TMBEPreset_Random(human)
+	local randomPresets = {
+		TMBEPreset_Skinny,
+		TMBEPreset_Slim,
+		TMBEPreset_Normal,
+		TMBEPreset_Curvy,
+		TMBEPreset_Obese,
+	}
+	(randomPresets[math.random(#randomPresets)] or TMBEPreset_Normal)(human)
+end
+
+function TMBEPreset_Obese(human)
 	necksize = BodyEditSet(human,"Neck size", 0.2)
 	forearmsize = BodyEditSet(human,"Forearms size", 0.2)
 	uperarmsize = BodyEditSet(human,"Upper arms size", 0.4)
@@ -44,7 +74,7 @@ function EditPreset_Obese(human)
 	human.Penis.m_penisSkinOut = 0
 end
 
-function EditPreset_Curvy(human)
+function TMBEPreset_Curvy(human)
 	necksize = BodyEditSet(human,"Neck size", 0.1)
 	forearmsize = BodyEditSet(human,"Forearms size", 0.1)
 	uperarmsize = BodyEditSet(human,"Upper arms size", 0.2)
@@ -62,7 +92,7 @@ function EditPreset_Curvy(human)
 	human.Penis.m_penisSkinOut = 0
 end
 
-function EditPreset_Normal(human)
+function TMBEPreset_Normal(human)
 	necksize = BodyEditSet(human,"Neck size", 0)
 	forearmsize = BodyEditSet(human,"Forearms size", 0)
 	uperarmsize = BodyEditSet(human,"Upper arms size", 0)
@@ -80,25 +110,25 @@ function EditPreset_Normal(human)
 	human.Penis.m_penisSkinOut = 0
 end
 
-function EditPreset_Slim(human)
-    necksize = BodyEditSet(human, "Neck size", 0)
-    forearmsize = BodyEditSet(human, "Forearms size", -0.05)
-    uperarmsize = BodyEditSet(human, "Upper arms size", -0.05)
-    calfsize = BodyEditSet(human, "Calf size", -0.05)
-    thighsize = BodyEditSet(human, "Thigh size", -0.05)
-    hipssize = BodyEditSet(human, "Hips size", -0.1)
-    waistsize = BodyEditSet(human, "Waist size", 0)
-    asssize = BodyEditSet(human, "Ass size", -0.5)
-    nipplesize = BodyEditSet(human, "Nipples size", 0)
-    breastsize = BodyEditSet(human, "Breasts size", -0.4)
-    -- penislength = EditSet(human,"Penis length", 0)
-    -- penissize = EditSet(human,"Penis size", 0)
-    musclesize = BodyEditSet(human, "Muscle tone", 0)
-    -- bodysize = EditSet(human,"Body size", 0)
-    human.Penis.m_penisSkinOut = 0
+function TMBEPreset_Slim(human)
+	necksize = BodyEditSet(human, "Neck size", 0)
+	forearmsize = BodyEditSet(human, "Forearms size", -0.05)
+	uperarmsize = BodyEditSet(human, "Upper arms size", -0.05)
+	calfsize = BodyEditSet(human, "Calf size", -0.05)
+	thighsize = BodyEditSet(human, "Thigh size", -0.05)
+	hipssize = BodyEditSet(human, "Hips size", -0.1)
+	waistsize = BodyEditSet(human, "Waist size", 0)
+	asssize = BodyEditSet(human, "Ass size", -0.5)
+	nipplesize = BodyEditSet(human, "Nipples size", 0)
+	breastsize = BodyEditSet(human, "Breasts size", -0.4)
+	-- penislength = EditSet(human,"Penis length", 0)
+	-- penissize = EditSet(human,"Penis size", 0)
+	musclesize = BodyEditSet(human, "Muscle tone", 0)
+	-- bodysize = EditSet(human,"Body size", 0)
+	human.Penis.m_penisSkinOut = 0
 end
 
-function EditPreset_Skinny(human)
+function TMBEPreset_Skinny(human)
 	necksize = BodyEditSet(human,"Neck size", 0)
 	forearmsize = BodyEditSet(human,"Forearms size", -0.1)
 	uperarmsize = BodyEditSet(human,"Upper arms size", -0.1)

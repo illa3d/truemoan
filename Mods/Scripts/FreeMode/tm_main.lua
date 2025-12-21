@@ -87,6 +87,7 @@ end
 
 function OnCreateHuman(human)
 	ResetGirlWetness(human)
+	TMBEPreset_RandomStart(human)
 	game.PlayCharacterMusic(human)
 	if init then human.Say("Greeting") end
 end
