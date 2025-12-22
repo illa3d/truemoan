@@ -86,6 +86,12 @@ label TMMenuOptions(human)
 		+ MenuBack
 			Return(2)
 		+ MenuClose
+	+ "New people | Naked" [if NakedOnSpawn == true]
+		NakedOnSpawn = false
+		Return()
+	+ "New people | Clothed" [if NakedOnSpawn == false]
+		NakedOnSpawn = true
+		Return()
 	+ "Hide UI" [if HG_UIvis == true]
 		HG_UIvis = false
 		game.m_controlsUI.Show(false)
