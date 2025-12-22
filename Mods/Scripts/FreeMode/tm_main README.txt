@@ -37,7 +37,7 @@ Thanks everyone for the effort, pretty slick mods! :heart:
 Thanks Chiyoru, Spicy Sounds Bundle :heart:
 
 **LATEST DOWNLOAD**
-**TrueMoan v0.8** [2025-12-22]
+**TrueMoan v0.9** [2025-12-22]
 **TrueMoan Addon Skyboxes v1.0** [2025-12-22]
 (Skyboxes - 8/**4**/2k are separate downloads, in-game no visual difference between 8/**4**k) 
 https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c

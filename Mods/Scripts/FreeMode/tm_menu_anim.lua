@@ -1,4 +1,4 @@
--- TrueMoan v0.8 by illa3d
+-- TrueMoan v0.9 by illa3d
 label TMMenuAnim(human)
 	+ "Licking.."[if game.HasAnim(human.m_mouth) == false][gold]
 		+ "Tongue"

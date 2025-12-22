@@ -1,4 +1,4 @@
--- TrueMoan v0.8 by illa3d
+-- TrueMoan v0.9 by illa3d
 -- Sex speed constants (UI slider values: 0.001 - 0.5)
 sexspeedmin = 0.001
 sexspeedmax = 2
