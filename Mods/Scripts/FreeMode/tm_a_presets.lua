@@ -7,11 +7,9 @@
 
 -- MENU: BODY.. / Size..
 label TMMenuBodySize(human)
-	+ "Fairy Dildo"
+	+ "Fairy Dildo" [if human.Penis.IsActive]
 		human "Wtf is this, I feel funny...\nSweet idea void.branding :)"
-		ShowPenis(human, true)
-		TMBEPreset_Dildo(human)
-		ResetPose(human)
+		TMBEPreset_Dildo(human)	
 		Return()
 	+ "5 Giant"
 		bodysize = BodyEditSet(human,"Body size", 1)
@@ -93,23 +91,11 @@ function TMBEPreset_Random(human)
 end
 
 function TMBEPreset_Dildo(human)
-	necksize = BodyEditSet(human,"Neck size", 0)
-	forearmsize = BodyEditSet(human,"Forearms size", 0)
-	uperarmsize = BodyEditSet(human,"Upper arms size", 0)
-	calfsize = BodyEditSet(human,"Calf size", 0)
-	thighsize = BodyEditSet(human,"Thigh size", 0)
-	hipssize = BodyEditSet(human,"Hips size", 0)
-	waistsize = BodyEditSet(human,"Waist size", 0)
-	asssize = BodyEditSet(human,"Ass size", 0)
-	nipplesize = BodyEditSet(human,"Nipples size", 0)
-	breastsize = BodyEditSet(human,"Breasts size", 0)
-	penislength = BodyEditSet(human,"Penis length", 0)
-	penissize = BodyEditSet(human,"Penis size", 8)
-	musclesize = BodyEditSet(human,"Muscle tone", 0)
-	bodysize = BodyEditSet(human,"Body size", -0.9)
-	human.Customize("Penis", 1)
-	human.Penis.m_penisSkinOut = 0
 	ShowClothes(human, false)
+	TMBEPreset_Normal(human)
+	penissize = BodyEditSet(human,"Penis size", 8)
+	bodysize = BodyEditSet(human,"Body size", -0.9)
+	ResetPose(human)
 end
 
 function TMBEPreset_Obese(human)
