@@ -1,12 +1,7 @@
--- TrueMoan v0.7 by illa3d
-
--------------------------------------------------------------------------------------------------
--- BODY EDIT
--------------------------------------------------------------------------------------------------
-
+-- TrueMoan v0.8 by illa3d
 function BodyEditUp(human, bodypart, value, step, valuemax, valuesafe)
 	value = value + step
-	if editsafe and valuesafe ~= nil and valuesafe ~= 0 and value > valuesafe then 
+	if EditSafe and valuesafe ~= nil and valuesafe ~= 0 and value > valuesafe then 
 		value = valuesafe
 	elseif value > valuemax then
 		value = valuemax
@@ -17,7 +12,7 @@ end
 
 function BodyEditDown(human, bodypart, value, step, valuemin, valuesafe)
 	value = value - step
-	if editsafe and valuesafe ~= nil and valuesafe ~= 0 and value < valuesafe then 
+	if EditSafe and valuesafe ~= nil and valuesafe ~= 0 and value < valuesafe then 
 		value = valuesafe
 	elseif value < valuemin then
 		value = valuemin

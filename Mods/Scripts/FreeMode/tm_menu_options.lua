@@ -1,5 +1,4 @@
--- TrueMoan v0.7 by illa3d
-
+-- TrueMoan v0.8 by illa3d
 label TMMenuOptions(human)
 	+ "Anim Speed.. | " .. CL_SMult [gold]
 		+ "Speed >"
@@ -37,14 +36,14 @@ label TMMenuOptions(human)
 			Return(2)
 		+ MenuClose
 	+ "Ambience.." [gold]
-		+ "Next (change in ~2 min)" [if tmAllowAmbience ]
+		+ "Next (change in ~2 min)" [if AllowAmbience ]
 			TMPlayAmbienceNext()
 			Return()
-		+ "Ambience " .. tmAmbienceTrack .. " | ON" [if tmAllowAmbience == true]
-			tmAllowAmbience = false
+		+ "Ambience " .. tmAmbienceTrack .. " | ON" [if AllowAmbience == true]
+			AllowAmbience = false
 			Return()
-		+ "Ambience | OFF" [if tmAllowAmbience == false]
-			tmAllowAmbience = true
+		+ "Ambience | OFF" [if AllowAmbience == false]
+			AllowAmbience = true
 			TMPlayAmbienceCurrent()
 			Return()
 		+ MenuBack
@@ -53,7 +52,7 @@ label TMMenuOptions(human)
 	+ "Music.." [gold]
 		+ MenuBack
 			Return (2)
-		+ for i, track in ipairs(tracklist)
+		+ for i, track in ipairs(MusicTracks)
 			+ "Play " .. track
 				Music(track , 0.05, 0)
 				Return()
@@ -64,11 +63,11 @@ label TMMenuOptions(human)
 			Return(2)
 		+ MenuClose
 	+ "Sex.." [gold]
-		+ "Moan Sex | ON" [if moaning == true]
-			moaning = false
+		+ "Moan Sex | ON" [if Moaning == true]
+			Moaning = false
 			Return()
-		+ "Moan Sex | OFF" [if moaning == false]
-			moaning = true
+		+ "Moan Sex | OFF" [if Moaning == false]
+			Moaning = true
 			Return()
 		+ "Moan Cum | ON" [if game.FluidReaction == true]
 			game.FluidReaction = false
@@ -76,20 +75,20 @@ label TMMenuOptions(human)
 		+ "Moan Cum | OFF" [if game.FluidReaction == false]
 			game.FluidReaction = true
 			Return()
-		+ "Wet Sex | ON" [if wetsex == true]
-			wetsex = false
+		+ "Wet Sex | ON" [if WetSex == true]
+			WetSex = false
 			Return()
-		+ "Wet Sex | OFF" [if wetsex == false]
-			wetsex = true
+		+ "Wet Sex | OFF" [if WetSex == false]
+			WetSex = true
 			Return()
 		+ MenuBack
 			Return(2)
 		+ MenuClose
-	+ "BodyEdit Safe | ON" [if editsafe == true]
-		editsafe = false
+	+ "BodyEdit Safe | ON" [if EditSafe == true]
+		EditSafe = false
 		Return()
-	+ "BodyEdit Safe | OFF (could crash app)" [if editsafe == false]
-		editsafe = true
+	+ "BodyEdit Safe | OFF (could crash app)" [if EditSafe == false]
+		EditSafe = true
 		Return()
 	+ "Hide UI" [if HG_UIvis == true]
 		HG_UIvis = false

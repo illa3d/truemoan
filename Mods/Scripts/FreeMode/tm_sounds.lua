@@ -1,11 +1,8 @@
--- Ambience settings
-tmAllowAmbience = true
-tmAmbienceVolume = 0.4
-
+-- TrueMoan v0.8 by illa3d
+-- Ambience Constants
+tmAmbienceTrackSec = 140	-- depends on the mp3 file length (all files must be of same length)
+tmAmbienceTracks = 6		-- number of files: Sounds/tm_ambience (N).mp3 (modify this to add your own)
 -- Ambience Variables
-tmAmbienceTracks = 6
-tmAmbienceTrackSec = 140
-tmAmbienceName = "tm_ambience"
 tmPlayingAmbience = false
 tmLoopingAmbience = false
 tmAmbienceTrack = 0
@@ -35,7 +32,7 @@ function TMPlayAmbienceRandom()
 end
 
 function TMPlayAmbience(track)
-	if tmAllowAmbience == false then return end
+	if AllowAmbience == false then return end
 
 	-- set next ambience to play
 	track = math.max(1, math.min(track, tmAmbienceTracks)) -- Clamp
@@ -45,9 +42,9 @@ function TMPlayAmbience(track)
 	-- Loop playback
 	if tmLoopingAmbience then return end
 	tmLoopingAmbience = true
-	PlaySound(tmAmbienceName .. " (" .. track .. ")", tmAmbienceVolume)
+	PlaySound("tm_ambience" .. " (" .. track .. ")", AmbienceVolume)
 	Delayed(tmAmbienceTrackSec, function()
 		tmLoopingAmbience = false
-		if tmAllowAmbience and tmPlayingAmbience then TMPlayAmbience(tmAmbienceTrack) end
+		if AllowAmbience and tmPlayingAmbience then TMPlayAmbience(tmAmbienceTrack) end
 	end)
 end

@@ -53,6 +53,7 @@ UNINSTALL
 
 [ v0.8 ]
 - Scene ambience sounds
+- Cenralized config in tm_CONFIG.lua
 
 [ v0.7 ]
 - WetSex option

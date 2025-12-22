@@ -1,34 +1,11 @@
--- TrueMoan v0.7 by illa3d
+-- TrueMoan v0.8 by illa3d
 -------------------------------------------------------------------------------------------------
 -- freemode_main.lua is not required, these functions are overrides (even if it exists in folder)
 -- happens automagically - same function in multiple files, alphabetically last one used!
 -------------------------------------------------------------------------------------------------
-
--- Music Config
-tracklist = {"01_Dreamy_Whisper", "02_Moon-blind", "03_OpenMeBabe", "04_What_an_Easy_Good-bye", "05_Somtimes", "06_Love_in_Fareast", "07_Tender_Passion", "08_Orbit", "09_Dancing_Queen", "10_Memories_of_Childhood", "11_Raggae_Fever", "12_Why", "13_Comma", "14_NoWar", "15_Special_Light", "16_Enjoy_Yaslef", "17_Lyve_Live", "18_Aquabelle", "19_1st_Mission", "20_Time_to_Groove", "21_Love_is_Bubble", "22_Flower_Bearing", "23_Secret_Garden_Before", "24_X-ray", "25_CallousCall", "26_Order_Circle", "27_This_is_My_Stage", "28_Wait_4_U", "29_Welcome_to_Radux_World", "30_Journey_to_You"}
-
--- Sex Config - UI slider values (0-0.5)
+-- Sex speed constants (UI slider values: 0.001 - 0.5)
 sexspeedmin = 0.001
 sexspeedmax = 2
-wetstep = 200
-moancumeyetimeout = 1
-moancumlipstimeout = 3
-moancumbodytimeout = 5
-
--- Moan Tier config - Tresholds by speed (0-2)
-climaxtreshold = 1.3
-orgasmtreshold = 0.9
-fastertreshold = 0.6
-fasttreshold = 0.3
-normaltreshold = 0.1
-
--- Edit Body Config - Increments
-breastsafemin = -0.8 -- some characters fall apart below this value and game crashes
-sizestep03 = 0.3 -- nipples
-sizestep01 = 0.1 -- hip, waist, ass, breast, muscle
-sizestep005 = 0.05 -- neck, forearm, upperarm, calf, thigh, penis-length, penis-size
-sizestep002 = 0.02 -- body
-
 -- Edit Body Variables
 necksize = 0
 forearmsize = 0
@@ -44,16 +21,9 @@ penissize = 0
 penislength = 0
 musclesize = 0
 bodysize = 0
-
--- Options
-editsafe = true
-moaning = true
-wetsex = true
-
 -- Variables
 init = false
 cumevery = 0
-
 
 -------------------------------------------------------------------------------------------------
 -- FREE MODE STARTS HERE (called from TrueFacials)
@@ -107,15 +77,15 @@ function OnFluidHit(hitActor, bodyArea, shootActor)
 	local timerKey = "FluidHit_" .. hitActor.Name .. bodyArea
 	local lastHitTime = Timer(timerKey)
 
-	if bodyArea == "L_Eye" and lastHitTime > moancumeyetimeout then 
+	if bodyArea == "L_Eye" and lastHitTime > MoanCumEyeTime then 
 		PlayGirlMoan(hitActor, "faster")
 		hitActor.AddInvoluntaryAnim("L_Eye_HitClose", 1, 0.7, 0.7, EyelidL(1))
 		ResetTimer(timerKey)
-	elseif bodyArea == "R_Eye" and lastHitTime > moancumeyetimeout then 
+	elseif bodyArea == "R_Eye" and lastHitTime > MoanCumEyeTime then 
 		PlayGirlMoan(hitActor, "faster")
 		hitActor.AddInvoluntaryAnim("R_Eye_HitClose", 1, 0.7, 0.7, EyelidR(1))
 		ResetTimer(timerKey)
-	elseif bodyArea == "Lips" and lastHitTime > moancumlipstimeout then 
+	elseif bodyArea == "Lips" and lastHitTime > MoanCumLipsTime then 
 		PlayGirlMoan(hitActor, "fast")
 		hitActor.AddInvoluntaryAnim("OpenMouth", 5, 0.4, 0.4, Mouth(-0.83, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.73, 0, 0.39))
 		Delayed(1, function()
@@ -129,7 +99,7 @@ function OnFluidHit(hitActor, bodyArea, shootActor)
 			hitActor.SayCustom("gen_cumshot")
 			hitActor.Say(hitActor.FaceMood >= 0 and "Like" or "Dislike")
 			ResetTimer(genericVoiceKey)
-		elseif lastHitTime > moancumbodytimeout then
+		elseif lastHitTime > MoanCumBodyTime then
 			PlayGirlMoan(hitActor, "slow")
 			ResetTimer(timerKey)
 		end
@@ -138,7 +108,7 @@ end
 
 function OnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	-- holeName:"Vagina" "Anus" Mouth"
-	if inVelocity < outVelocity or moaning == false  then return end
+	if inVelocity < outVelocity or Moaning == false  then return end
 
 	-- Variables
 	local key = "PenetrationMoan_" .. girl.Name .. holeName
@@ -150,40 +120,40 @@ function OnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	local wetness = 0
 
 	-- Tier selection + boundary detection
-	if inVelocity > climaxtreshold then
+	if inVelocity > ClimaxTreshold then
 		tier = "climax"
 		pauseMax = 0.1 -- Audio files: ~0.3s + pause
-		tierMax = climaxtreshold + 1
-		tierMin = climaxtreshold
+		tierMax = ClimaxTreshold + 1
+		tierMin = ClimaxTreshold
 		wetness = 10000
-	elseif inVelocity > orgasmtreshold then
+	elseif inVelocity > OrgasmTreshold then
 		tier = "orgasm"
 		pauseMax = 0.4 -- Audio files: ~0.4s + pause
-		tierMax = climaxtreshold
-		tierMin = orgasmtreshold
+		tierMax = ClimaxTreshold
+		tierMin = OrgasmTreshold
 		wetness = 1000
-	elseif inVelocity > fastertreshold then
+	elseif inVelocity > FasterTreshold then
 		tier = "faster"
 		pauseMax = 0.5 -- Audio files: ~0.5s + pause
-		tierMax = orgasmtreshold
-		tierMin = fastertreshold
+		tierMax = OrgasmTreshold
+		tierMin = FasterTreshold
 		wetness = 100
-	elseif inVelocity > fasttreshold then
+	elseif inVelocity > FastTreshold then
 		tier = "fast"
 		pauseMax = 0.6 -- Audio files: ~0.5s + pause
-		tierMax = fastertreshold
-		tierMin = fasttreshold
+		tierMax = FasterTreshold
+		tierMin = FastTreshold
 		wetness = 10
-	elseif inVelocity > normaltreshold then
+	elseif inVelocity > NormalTreshold then
 		tier = "normal"
 		pauseMax = 1.3 -- Audio files: ~0.8s + pause
-		tierMax = fasttreshold
-		tierMin = normaltreshold
+		tierMax = FastTreshold
+		tierMin = NormalTreshold
 		wetness = 5
 	else
 		tier = "slow"
 		pauseMax = 10.0 -- VERY long pauses when not moving
-		tierMax = normaltreshold
+		tierMax = NormalTreshold
 		tierMin = 0.0
 		wetness = 1
 	end
@@ -203,7 +173,7 @@ function OnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	if lastMoanTime > cooldown then
 		PlayGirlMoan(girl, tier)
 		-- Auto Wetness
-		if wetsex then
+		if WetSex then
 			SetGirlWetness(girl, wetness, holeName)
 		else
 			SetGirlWetness(girl, 0, holeName)

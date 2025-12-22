@@ -1,8 +1,4 @@
--- TrueMoan v0.7 by illa3d
--- labels
-MenuBack = "| BACK"
-MenuClose = "| CLOSE"
-
+-- TrueMoan v0.8 by illa3d
 label TalkMenu(human, hitTri)
 	+ "OPTIONS.." [gold]
 		TMMenuOptions(human)

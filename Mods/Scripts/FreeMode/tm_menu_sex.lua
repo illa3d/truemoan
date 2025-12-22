@@ -1,4 +1,4 @@
--- TrueMoan v0.7 by illa3d
+-- TrueMoan v0.8 by illa3d
 label TMMenuSex(human)
 	+ "Auto Thrust" [if human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == false]
 		--function GradualSpeedUpAutoThrusting(human, duration, step, startSpeed, endSpeed, startDepth, endDepth, autoDisableAfter)
@@ -142,11 +142,11 @@ label TMMenuSex(human)
 				SetGirlWetness(human, 500, "Vagina")
 				Return()
 			+ "Wetness >"
-				wett = human.m_vagina.m_wetness + wetstep
+				wett = human.m_vagina.m_wetness + WetnessStep
 				SetGirlWetness(human, wett, "Vagina")
 				Return()
 			+ "< Wetness"
-				wett = human.m_vagina.m_wetness - wetstep
+				wett = human.m_vagina.m_wetness - WetnessStep
 				if wett < 0
 					wett = 0
 				SetGirlWetness(human, wett, "Vagina")
