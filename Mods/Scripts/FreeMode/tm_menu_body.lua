@@ -7,7 +7,7 @@ label TMMenuBody(human)
 		BodyEditSafe = false
 		human "Warning: Game can crash for Breasts <-0.8 and BodySize <-0.9!\nMake sure you save before :)"
 		Return()
-	+ "BodyEdit Safe | OFF (can crash app)" [if BodyEditSafe == false]
+	+ "Edit Safe | OFF (can crash app)" [if BodyEditSafe == false]
 		BodyEditSafe = true
 		Return()
 	+ "RESET values.." [gold]
@@ -188,7 +188,7 @@ label TMMenuBody(human)
 	+ "Apply values" [if BodyEditSafe]
 		BodyEditApplyValues(human)
 		Return()
-	+ "Apply values (unsafe)" [if not BodyEditSafe]
+	+ "Apply values (safe off!)" [if not BodyEditSafe]
 		BodyEditApplyValues(human)
 		Return()
 	+ MenuBack
