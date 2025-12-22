@@ -7,6 +7,11 @@ sexspeedmax = 2
 -- COMMON FUNCTIONS
 -------------------------------------------------------------------------------------------------
 
+function NumLabel(value, decimals)
+	return math.floor(value * 10^decimals + 0.5) / 10^decimals
+	--return string.format("%.".. decimals .."f", value)
+end
+
 function ShowClothes(human, show)
 	if show then
 		human.CustomizeAll(0)

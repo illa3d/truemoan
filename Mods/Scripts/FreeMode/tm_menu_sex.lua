@@ -1,6 +1,8 @@
 -- TrueMoan v0.8 by illa3d
 -- Variables
 cumevery = 0
+-- Sex speed decimals
+sdec = 3
 
 label TMMenuSex(human)
 	+ "Auto Thrust" [if human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == false]
@@ -13,7 +15,7 @@ label TMMenuSex(human)
 		GradualSpeedUpAutoBJ(human, 30, 0, 0.35, 0.1, 0.3, 1.5, 25)
 		activeAutoBJ = true
 		Return()
-	+ "Thrust.. | " .. human.Penis.Interaction.m_autoSpeed [if human.Penis.Hole ~= nil] [gold]
+	+ "Thrust.. | " .. NumLabel(human.Penis.Interaction.m_autoSpeed, sdec) [if human.Penis.Hole ~= nil] [gold]
 		+ "5 Max"
 			SetInteractionSpeed(human.Penis.Interaction, 2);
 			Return()
@@ -35,13 +37,13 @@ label TMMenuSex(human)
 		+ "< Slower"
 			SetInteractionSpeedStep(human.Penis.Interaction, false)
 			Return()
-		+ "STOP | " .. human.Penis.Interaction.m_autoSpeed [gold]
+		+ "STOP | " .. NumLabel(human.Penis.Interaction.m_autoSpeed, sdec) [gold]
 			SetInteractionSpeed(human.Penis.Interaction, 0)
 			Return()
 		+ MenuBack
 			Return(2)
 		+ MenuClose
-	+ "Suck.. | " .. human.Mouth.Fucker.Penis.Interaction.m_autoSpeed [if human.Mouth.Fucker ~= nil] [gold]
+	+ "Suck.. | " .. NumLabel(human.Mouth.Fucker.Penis.Interaction.m_autoSpeed, sdec) [if human.Mouth.Fucker ~= nil] [gold]
 		+ "5 Max"
 			SetInteractionSpeed(human.Mouth.Fucker.Penis.Interaction, 2);
 			Return()
@@ -63,7 +65,7 @@ label TMMenuSex(human)
 		+ "< Slower"
 			SetInteractionSpeedStep(human.Mouth.Fucker.Penis.Interaction, false)
 			Return()
-		+ "STOP | " .. human.Mouth.Fucker.Penis.Interaction.m_autoSpeed [gold]
+		+ "STOP | " .. NumLabel(human.Mouth.Fucker.Penis.Interaction.m_autoSpeed, sdec) [gold]
 			SetInteractionSpeed(human.Mouth.Fucker.Penis.Interaction, 0)
 			Return()
 		+ MenuBack

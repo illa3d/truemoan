@@ -10,14 +10,17 @@ init = false
 -- FREE MODE START (called from TrueFacials)
 -------------------------------------------------------------------------------------------------
 label Start()
+	OnStart()
+stop
+
+function OnStart()
 	init = true
 	TMStartSound()
 	ResetTimer("GenericChat", math.random(-10, 0))
 	local speaker = game.GetRandomHuman(|h| h.CanSpeak)
-	if speaker ~= nil
-		speaker.Say("Greeting")
-	Play_FreeMode() --wtf does this do lol
-stop
+	if speaker ~= nil then speaker.Say("Greeting") end
+	Play_FreeMode() -- this makes TalkMenu visible and 3d interactable
+end
 
 -- Updated every frame
 function OnGameUpdate()

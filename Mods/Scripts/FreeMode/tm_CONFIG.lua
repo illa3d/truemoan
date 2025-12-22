@@ -8,7 +8,7 @@ NakedOnSpawn = false	-- default value on scene change
 
 -- Body Edit
 BodyEditSafe = true	-- default value on scene change
-BreastSafeMin = -0.8	-- most characters fall apart below this value and game crashes
+BreastSafeMin = -0.8	-- some characters fall apart below this value and game crashes
 
 -- Body Edit Increments
 BodyStepA = 0.1		-- nipples hip, waist, muscle
@@ -33,8 +33,8 @@ FastTreshold = 0.3
 NormalTreshold = 0.1
 
 -- Menu labels
-MenuBack = "| BACK"
-MenuClose = "| CLOSE"
+MenuBack = "<color=#e87435>« BACK"
+MenuClose = "<color=#e84235>× CLOSE"
 
 -- Ambience
 AllowAmbience = true
