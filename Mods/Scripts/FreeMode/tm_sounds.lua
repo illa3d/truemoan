@@ -6,6 +6,11 @@ tmAmbienceTracks = 6		-- number of files: Sounds/tm_ambience (N).mp3 (modify thi
 tmPlayingAmbience = false
 tmLoopingAmbience = false
 tmAmbienceTrack = 0
+ambienceTimer = "AmbienceTimer"
+
+function TMAmbienceLeftSec()
+	return NumLabel(tmAmbienceTrackSec - Timer(ambienceTimer))
+end
 
 function TMStartSound()
 	TMPlayAmbienceRandom()
@@ -41,6 +46,7 @@ function TMPlayAmbience(track)
 
 	-- Loop playback
 	if tmLoopingAmbience then return end
+	ResetTimer(ambienceTimer)
 	tmLoopingAmbience = true
 	PlaySound("tm_ambience" .. " (" .. track .. ")", AmbienceVolume)
 	Delayed(tmAmbienceTrackSec, function()

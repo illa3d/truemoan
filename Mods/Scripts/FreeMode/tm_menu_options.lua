@@ -36,10 +36,12 @@ label TMMenuOptions(human)
 			Return(2)
 		+ MenuClose
 	+ "Ambience.." [gold]
-		+ "Next (change in ~2 min)" [if AllowAmbience ]
+		+ "Refresh" [if AllowAmbience == true]
+			Return()
+		+ "Next track | Ambience " .. tmAmbienceTrack [if AllowAmbience]
 			TMPlayAmbienceNext()
 			Return()
-		+ "Ambience " .. tmAmbienceTrack .. " | ON" [if AllowAmbience == true]
+		+ "Ambience | ON (loop in ".. TMAmbienceLeftSec() .. "s)" [if AllowAmbience == true]
 			AllowAmbience = false
 			Return()
 		+ "Ambience | OFF" [if AllowAmbience == false]

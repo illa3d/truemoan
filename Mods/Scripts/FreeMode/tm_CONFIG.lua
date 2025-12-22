@@ -3,6 +3,10 @@
 -- MAIN CONFIG FILE, MODIFY TO YOOUR LIKING! --
 -----------------------------------------------
 
+-- Ambience
+AllowAmbience = true
+AmbienceVolume = 0.5 -- 0 to 1
+
 -- Characters spawn naked
 NakedOnSpawn = false	-- default value on scene change
 
@@ -35,10 +39,6 @@ NormalTreshold = 0.1
 -- Menu labels
 MenuBack = "<color=#e87435>« BACK"
 MenuClose = "<color=#e84235>× CLOSE"
-
--- Ambience
-AllowAmbience = true
-AmbienceVolume = 0.4 -- 0 to 1
 
 -- Music tracks displayed in Options/Music
 MusicTracks = {

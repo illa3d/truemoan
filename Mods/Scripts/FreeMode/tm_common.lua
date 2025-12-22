@@ -8,8 +8,8 @@ sexspeedmax = 2
 -------------------------------------------------------------------------------------------------
 
 function NumLabel(value, decimals)
-	return math.floor(value * 10^decimals + 0.5) / 10^decimals
-	--return string.format("%.".. decimals .."f", value)
+	if decimals == nil then return math.floor(value)
+	else return math.floor(value * 10^decimals + 0.5) / 10^decimals end
 end
 
 function ShowClothes(human, show)

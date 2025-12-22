@@ -180,14 +180,14 @@ label TMMenuBody(human)
 		+ MenuBack
 			Return(2)
 		+ MenuClose
+	+ "Preset.." [gold]
+		TMMenuBodyPreset(human)
 	+ "Apply values" [if BodyEditSafe]
 		BodyEditApplyValues(human)
 		Return()
 	+ "Apply values (unsafe)" [if not BodyEditSafe]
 		BodyEditApplyValues(human)
 		Return()
-	+ "Preset.." [gold]
-		TMMenuBodyPreset(human)
 	+ MenuBack
 		Return(2)
 	+ MenuClose
