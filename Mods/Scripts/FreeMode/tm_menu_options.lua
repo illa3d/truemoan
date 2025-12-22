@@ -84,12 +84,6 @@ label TMMenuOptions(human)
 		+ MenuBack
 			Return(2)
 		+ MenuClose
-	+ "BodyEdit Safe | ON" [if EditSafe == true]
-		EditSafe = false
-		Return()
-	+ "BodyEdit Safe | OFF (could crash app)" [if EditSafe == false]
-		EditSafe = true
-		Return()
 	+ "Hide UI" [if HG_UIvis == true]
 		HG_UIvis = false
 		game.m_controlsUI.Show(false)

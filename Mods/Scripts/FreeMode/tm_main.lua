@@ -37,7 +37,7 @@ label Start()
 	local speaker = game.GetRandomHuman(|h| h.CanSpeak)
 	if speaker ~= nil
 		speaker.Say("Greeting")
-	Play_FreeMode()
+	Play_FreeMode() --wtf does this do lol
 stop
 
 function OnGameUpdate()
@@ -59,6 +59,10 @@ end
 function OnCreateHuman(human)
 	ResetGirlWetness(human)
 	TMBEPreset_RandomStart(human)
+	if NakedOnSpawn then
+		ShowClothes(human)
+		ShowPenis(human, false)
+	end
 	game.PlayCharacterMusic(human)
 	if init then human.Say("Greeting") end
 end
@@ -182,13 +186,35 @@ function OnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	end
 end
 
--------------------------------------------------------------------------------------------------
--- VARIOUS
--------------------------------------------------------------------------------------------------
-
 function PlayGirlMoan(actor, tier)
 	if actor == nil then return end
 	actor.SayCustom("tm_" .. tier)
+end
+
+-------------------------------------------------------------------------------------------------
+-- COMMON
+-------------------------------------------------------------------------------------------------
+
+function ShowClothes(human, show)
+	if show then
+		human.CustomizeAll(0)
+		-- no simple way of keeping futa penis
+		-- dictionary of characters and their hadpenis
+	else
+		hadpenis = human.Penis.IsActive
+		human.CustomizeAll(99)
+		if hadpenis then ShowPenis(human, true)
+		else ShowPenis(human, false) end
+	end
+end
+
+function ShowPenis(girl, show)
+	if show then girl.Customize("Penis", 1)
+	else girl.Customize("Penis", 0) end
+end
+
+function SetMaleBottomable(human)
+	human.m_isMale = false
 end
 
 function ResetGirlWetness(girl)
@@ -240,21 +266,4 @@ function ResetPose(human)
 	game.RemoveAnim(human.thighNames)
 	human.Penis.Interaction.AutoActive = false
 	human.Mouth.Fucker.Penis.Interaction.AutoActive = false
-end
-
-function SetClothesOn(human)
-	human.CustomizeAll(0)
-	-- no simple way of keeping futa penis
-	-- dictionary of characters and their hadpenis
-end
-
-function SetClothesOff(human)
-	hadpenis = human.Penis.IsActive
-	human.CustomizeAll(99)
-	if hadpenis then human.Customize("Penis", 1)
-	else human.Customize("Penis", 0) end
-end
-
-function SetMaleBottomable(human)
-	human.m_isMale = false
 end

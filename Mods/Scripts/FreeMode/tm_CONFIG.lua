@@ -3,25 +3,27 @@
 -- MAIN CONFIG FILE, MODIFY TO YOOUR LIKING! --
 -----------------------------------------------
 
+-- Characters spawn naked
+NakedOnSpawn = false	-- default value on scene change
+
 -- Body Edit
-EditSafe = true		 -- default value on scene change
-BreastSafeMin = -0.8 -- some characters fall apart below this value and game crashes
+BodyEditSafe = true	-- default value on scene change
+BreastSafeMin = -0.8	-- most characters fall apart below this value and game crashes
 
 -- Body Edit Increments
-BodyStepA = 0.3		-- nipples
-BodyStepB = 0.1		-- hip, waist, ass, breast, muscle
-BodyStepC = 0.05	-- neck, forearm, upperarm, calf, thigh, penis-length, penis-size
-BodyStepD = 0.02	-- body
+BodyStepA = 0.1		-- nipples hip, waist, muscle
+BodyStepB = 0.05	-- ass, penis-length, penis-size, forearm, upperarm, calf, thigh, neck
+BodyStepC = 0.025	-- breast, body
 
 -- Sex/Moan Tier config
 WetSex = true		-- default value on scene change
 Moaning = true		-- default value on scene change
 WetnessStep = 200	-- Umm. Try lol.
 
--- Cum moan frequency
-MoanCumEyeTime = 1	-- seconds
-MoanCumLipsTime = 3	-- seconds
-MoanCumBodyTime = 5	-- seconds
+-- Cum moan frequency (seconds)
+MoanCumEyeTime = 1
+MoanCumLipsTime = 3
+MoanCumBodyTime = 5
 
 -- Sex Moan Tresholds (speed 0-2)
 ClimaxTreshold = 1.3
@@ -36,7 +38,7 @@ MenuClose = "| CLOSE"
 
 -- Ambience
 AllowAmbience = true
-AmbienceVolume = 0.4	-- 0 to 1
+AmbienceVolume = 0.4 -- 0 to 1
 
 -- Music tracks displayed in Options/Music
 MusicTracks = {

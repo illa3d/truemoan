@@ -76,10 +76,10 @@ label TMMenuHeyHuman(human)
 			SetMaleBottomable(human)
 			Return(2)
 	+ "Clothes ON"
-		SetClothesOn(human)
+		ShowClothes(human, true)
 		Return()
 	+ "Clothes OFF"
-		SetClothesOff(human)	
+		ShowClothes(human, false)	
 		Return()
 	+ MenuBack
 		Return(2)

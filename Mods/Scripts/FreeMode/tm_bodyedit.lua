@@ -1,7 +1,9 @@
 -- TrueMoan v0.8 by illa3d
+-- Menu in: tm_menu_body.lua
 function BodyEditUp(human, bodypart, value, step, valuemax, valuesafe)
-	value = value + step
-	if EditSafe and valuesafe ~= nil and valuesafe ~= 0 and value > valuesafe then 
+	local mult = 1 + math.floor(math.abs(value) / 2) -- step function to multiply step for bigger values
+	value = value + step * mult
+	if BodyEditSafe and valuesafe ~= nil and valuesafe ~= 0 and value > valuesafe then 
 		value = valuesafe
 	elseif value > valuemax then
 		value = valuemax
@@ -11,8 +13,9 @@ function BodyEditUp(human, bodypart, value, step, valuemax, valuesafe)
 end
 
 function BodyEditDown(human, bodypart, value, step, valuemin, valuesafe)
-	value = value - step
-	if EditSafe and valuesafe ~= nil and valuesafe ~= 0 and value < valuesafe then 
+	local mult = 1 + math.floor(math.abs(value) / 2) -- step function to multiply step for bigger values
+	value = value - step * mult
+	if BodyEditSafe and valuesafe ~= nil and valuesafe ~= 0 and value < valuesafe then 
 		value = valuesafe
 	elseif value < valuemin then
 		value = valuemin

@@ -81,7 +81,7 @@ function TMBEPreset_Dildo(human)
 	bodysize = BodyEditSet(human,"Body size", -0.9)
 	human.Customize("Penis", 1)
 	human.Penis.m_penisSkinOut = 0
-	SetClothesOff(human)
+	ShowClothes(human, false)
 end
 
 function TMBEPreset_Obese(human)
