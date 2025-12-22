@@ -1,4 +1,5 @@
 -- TrueMoan v0.7 by illa3d
+
 label TMMenuOptions(human)
 	+ "Anim Speed.. | " .. CL_SMult [gold]
 		+ "Speed >"
@@ -35,6 +36,20 @@ label TMMenuOptions(human)
 		+ MenuBack.." (applied to new anims)"
 			Return(2)
 		+ MenuClose
+	+ "Ambience.." [gold]
+		+ "Next (change in ~2 min)" [if tmAllowAmbience ]
+			TMPlayAmbienceNext()
+			Return()
+		+ "Ambience " .. tmAmbienceTrack .. " | ON" [if tmAllowAmbience == true]
+			tmAllowAmbience = false
+			Return()
+		+ "Ambience | OFF" [if tmAllowAmbience == false]
+			tmAllowAmbience = true
+			TMPlayAmbienceCurrent()
+			Return()
+		+ MenuBack
+			Return(2)
+		+ MenuClose
 	+ "Music.." [gold]
 		+ MenuBack
 			Return (2)
@@ -48,29 +63,33 @@ label TMMenuOptions(human)
 		+ MenuBack
 			Return(2)
 		+ MenuClose
+	+ "Sex.." [gold]
+		+ "Moan Sex | ON" [if moaning == true]
+			moaning = false
+			Return()
+		+ "Moan Sex | OFF" [if moaning == false]
+			moaning = true
+			Return()
+		+ "Moan Cum | ON" [if game.FluidReaction == true]
+			game.FluidReaction = false
+			Return()
+		+ "Moan Cum | OFF" [if game.FluidReaction == false]
+			game.FluidReaction = true
+			Return()
+		+ "Wet Sex | ON" [if wetsex == true]
+			wetsex = false
+			Return()
+		+ "Wet Sex | OFF" [if wetsex == false]
+			wetsex = true
+			Return()
+		+ MenuBack
+			Return(2)
+		+ MenuClose
 	+ "BodyEdit Safe | ON" [if editsafe == true]
 		editsafe = false
 		Return()
 	+ "BodyEdit Safe | OFF (could crash app)" [if editsafe == false]
 		editsafe = true
-		Return()
-	+ "Moan Sex | ON" [if moaning == true]
-		moaning = false
-		Return()
-	+ "Moan Sex | OFF" [if moaning == false]
-		moaning = true
-		Return()
-	+ "Moan Cum | ON" [if game.FluidReaction == true]
-		game.FluidReaction = false
-		Return()
-	+ "Moan Cum | OFF" [if game.FluidReaction == false]
-		game.FluidReaction = true
-		Return()
-	+ "Wet Sex | ON" [if wetsex == true]
-		wetsex = false
-		Return()
-	+ "Wet Sex | OFF" [if wetsex == false]
-		wetsex = true
 		Return()
 	+ "Hide UI" [if HG_UIvis == true]
 		HG_UIvis = false

@@ -62,6 +62,7 @@ cumevery = 0
 
 label Start()
 	init = true
+	TMStartSound()
 	ResetTimer("GenericChat", math.random(-10, 0))
 	local speaker = game.GetRandomHuman(|h| h.CanSpeak)
 	if speaker ~= nil

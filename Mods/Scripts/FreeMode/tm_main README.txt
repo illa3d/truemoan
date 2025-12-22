@@ -51,6 +51,9 @@ UNINSTALL
 -- CHANGELOG
 ---------------------------------------------------------------------------------------------------------
 
+[ v0.8 ]
+- Scene ambience sounds
+
 [ v0.7 ]
 - WetSex option
 - Split the menu files for easier editing / updating
