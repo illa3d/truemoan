@@ -75,10 +75,11 @@ GitHub Repository - https://github.com/illa3d/truemoan
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_main%20README.txt
 
 [ v0.9 ]
-- NakedOnSpawn option
-- BodyEdit limit tweaks
-- BodyEdit increment non-linear
-- BodyEdit presets: Dildo, Reset
+- Option to Spawn new characters naked
+- BodyEdit presets by size (Fairy, Small, Normal, Huge, Giant, Fairy Dildo)
+- BodyEdit presets by type (Skinny, Slim, Normal, Curvy, Obese)
+- BodyEdit limit tweaks, increments non-linear
+- Menu UX polish
 
 [ v0.8 ]
 - 6 Scene ambience sounds

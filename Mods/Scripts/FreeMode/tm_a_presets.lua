@@ -5,30 +5,58 @@
 -- Body values below -0.9 crash the game
 -------------------------------------------------------------------------------------------------
 
--- MENU: BODY.. / Presets
-label TMMenuBodyPreset(human)
-	+ "Dildo"
+-- MENU: BODY.. / Size..
+label TMMenuBodySize(human)
+	+ "Fairy Dildo"
+		human "Wtf is this, I feel funny...\nSweet idea void.branding :)"
+		ShowPenis(human, true)
 		TMBEPreset_Dildo(human)
+		ResetPose(human)
 		Return()
-	+ "Obese"
+	+ "5 Giant"
+		bodysize = BodyEditSet(human,"Body size", 1)
+		Return()
+	+ "4 Huge"
+		bodysize = BodyEditSet(human,"Body size", 0.5)
+		Return()
+	+ "3 Normal"
+		bodysize = BodyEditSet(human,"Body size", 1)
+		Return()
+	+ "2 Small"
+		bodysize = BodyEditSet(human,"Body size", -0.1)
+		Return()
+	+ "1 Fairy"
+		bodysize = BodyEditSet(human,"Body size", -0.8)
+		Return()
+	+ "RESET Size" [gold]
+		bodysize = BodyEditSet(human,"Body size", 0)
+		Return()
+	+ MenuBack
+		Return(2)
+	+ MenuClose
+stop
+
+-- MENU: BODY.. / Type..
+label TMMenuBodyType(human)
+	+ "5 Obese"
 		TMBEPreset_Obese(human)
 		Return()
-	+ "Curvy"
+	+ "4 Curvy"
 		TMBEPreset_Curvy(human)
 		Return()
-	+ "Normal"
+	+ "3 Normal"
 		TMBEPreset_Normal(human)
 		Return()
-	+ "Slim"
+	+ "2 Slim"
 		TMBEPreset_Slim(human)
 		Return()
-	+ "Skinny"
+	+ "1 Skinny"
 		TMBEPreset_Skinny(human)
 		Return()
 	+ "Random" [gold]
 		TMBEPreset_Random(human)
 		Return()
-	+ "Reset" [gold]
+	+ "RESET Type" [gold]
 		TMBEPreset_Reset(human)
 		Return()
 	+ MenuBack
