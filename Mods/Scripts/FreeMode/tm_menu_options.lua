@@ -35,7 +35,7 @@ label TMMenuOptions(human)
 		+ MenuBack.." (applied to new anims)"
 			Return(2)
 		+ MenuClose
-	+ "Ambience.." [gold]
+	+ "Ambience.. | " ..BoolLabel(AllowAmbience) [gold]
 		+ "Refresh" [if AllowAmbience == true]
 			Return()
 		+ "Next track | Ambience " .. tmAmbienceTrack [if AllowAmbience]
@@ -95,7 +95,6 @@ label TMMenuOptions(human)
 	+ "Hide UI" [if HG_UIvis == true]
 		HG_UIvis = false
 		game.m_controlsUI.Show(false)
-		Return()
 	+ "Show UI" [if HG_UIvis == false]
 		HG_UIvis = true
 		game.m_controlsUI.Show()

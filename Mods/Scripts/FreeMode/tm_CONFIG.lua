@@ -36,9 +36,10 @@ FasterTreshold = 0.6
 FastTreshold = 0.3
 NormalTreshold = 0.1
 
--- Menu labels
-MenuBack = "<color=#e87435>« BACK"
-MenuClose = "<color=#e84235>× CLOSE"
+-- Menu
+RootHideShowUI = false					-- Display show/hide UI option in TalkMenu first page
+MenuBack = "<color=#e87435>« BACK"		-- Back button style
+MenuClose = "<color=#e84235>× CLOSE"	-- Close button style
 
 -- Music tracks displayed in Options/Music
 MusicTracks = {

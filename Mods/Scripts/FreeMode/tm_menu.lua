@@ -1,5 +1,13 @@
 -- TrueMoan v0.9 by illa3d
 label TalkMenu(human, hitTri)
+	+ if RootHideShowUI
+		+ "Hide UI" [if HG_UIvis == true]
+			HG_UIvis = false
+			game.m_controlsUI.Show(false)
+		+ "Show UI" [if HG_UIvis == false]
+			HG_UIvis = true
+			game.m_controlsUI.Show()
+			Return()
 	+ "OPTIONS.." [gold]
 		TMMenuOptions(human)
 	+ "POSE.." [gold]

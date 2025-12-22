@@ -12,6 +12,10 @@ function NumLabel(value, decimals)
 	else return math.floor(value * 10^decimals + 0.5) / 10^decimals end
 end
 
+function BoolLabel(value)
+	 return value and "ON" or "OFF"
+end
+
 function ShowClothes(human, show)
 	if show then
 		human.CustomizeAll(0)
