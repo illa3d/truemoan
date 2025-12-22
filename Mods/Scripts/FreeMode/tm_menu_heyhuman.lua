@@ -72,21 +72,14 @@ label TMMenuHeyHuman(human)
 		human.Pose(LookCam())
 		Return()
 	+ if human.m_isMale == true
-		+ "Time to bottom, " .. human.Name .. "!"
-			human.m_isMale = false
-			human "Alright"
+		+ "Bottom time"
+			SetMaleBottomable(human)
 			Return(2)
 	+ "Clothes ON"
-		hadpenis = human.Penis.IsActive
-		human.CustomizeAll(0)
+		SetClothesOn(human)
 		Return()
 	+ "Clothes OFF"
-		hadpenis = human.Penis.IsActive
-		human.CustomizeAll(99)
-		if (hadpenis == true)
-			human.Customize("Penis", 1)
-		else 
-			human.Customize("Penis", 0)
+		SetClothesOff(human)	
 		Return()
 	+ MenuBack
 		Return(2)

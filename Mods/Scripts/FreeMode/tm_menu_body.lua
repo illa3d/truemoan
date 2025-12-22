@@ -126,7 +126,7 @@ label TMMenuBody(human)
 	+ if human.Penis.IsActive
 		+ "Penis.. | L" .. penislength .. " | S" .. penissize [gold]
 			+ "Length >"
-				penislength = BodyEditUp(human, "Penis length", penislength, BodyStepC, 4)
+				penislength = BodyEditUp(human, "Penis length", penislength, BodyStepC, 20)
 				Return()
 			+ "< Length"
 				penislength = BodyEditDown(human, "Penis length", penislength, BodyStepC, -0.7)
@@ -135,7 +135,7 @@ label TMMenuBody(human)
 				penislength = BodyEditSet(human, "Penis length", 0)
 				Return()
 			+ "Size >"
-				penissize = BodyEditUp(human, "Penis size", penissize, BodyStepC, 4)
+				penissize = BodyEditUp(human, "Penis size", penissize, BodyStepC, 20)
 				Return()
 			+ "< Size"
 				penissize = BodyEditDown(human, "Penis size", penissize, BodyStepC, -0.7)

@@ -1,10 +1,15 @@
 -------------------------------------------------------------------------------------------------
 -- PRESETS for True Moan Body Edit (TMBE)
--- WARNING: Breasts values below -0.8 can crash the game
+-- WARNING:
+-- Breasts values below -0.8 can crash the game on some characters
+-- Body values below -0.9 crash the game
 -------------------------------------------------------------------------------------------------
 
 -- MENU: BODY.. / Presets
 label TMMenuBodyPreset(human)
+	+ "Dildo"
+		TMBEPreset_Dildo(human)
+		Return()
 	+ "Obese"
 		TMBEPreset_Obese(human)
 		Return()
@@ -56,6 +61,26 @@ function TMBEPreset_Random(human)
 	(randomPresets[math.random(#randomPresets)] or TMBEPreset_Normal)(human)
 end
 
+function TMBEPreset_Dildo(human)
+	necksize = BodyEditSet(human,"Neck size", 0)
+	forearmsize = BodyEditSet(human,"Forearms size", 0)
+	uperarmsize = BodyEditSet(human,"Upper arms size", 0)
+	calfsize = BodyEditSet(human,"Calf size", 0)
+	thighsize = BodyEditSet(human,"Thigh size", 0)
+	hipssize = BodyEditSet(human,"Hips size", 0)
+	waistsize = BodyEditSet(human,"Waist size", 0)
+	asssize = BodyEditSet(human,"Ass size", 0)
+	nipplesize = BodyEditSet(human,"Nipples size", 0)
+	breastsize = BodyEditSet(human,"Breasts size", 0)
+	penislength = BodyEditSet(human,"Penis length", 0)
+	penissize = BodyEditSet(human,"Penis size", 8)
+	musclesize = BodyEditSet(human,"Muscle tone", 0)
+	bodysize = BodyEditSet(human,"Body size", -0.9)
+	human.Customize("Penis", 1)
+	human.Penis.m_penisSkinOut = 0
+	SetClothesOff(human)
+end
+
 function TMBEPreset_Obese(human)
 	necksize = BodyEditSet(human,"Neck size", 0.2)
 	forearmsize = BodyEditSet(human,"Forearms size", 0.2)
@@ -67,10 +92,10 @@ function TMBEPreset_Obese(human)
 	asssize = BodyEditSet(human,"Ass size", 2)
 	nipplesize = BodyEditSet(human,"Nipples size", 0)
 	breastsize = BodyEditSet(human,"Breasts size", 0.7)
-	-- penislength = EditSet(human,"Penis length", 0)
-	-- penissize = EditSet(human,"Penis size", 0)
+	-- penislength = BodyEditSet(human,"Penis length", 0)
+	-- penissize = BodyEditSet(human,"Penis size", 0)
 	musclesize = BodyEditSet(human,"Muscle tone", 0)
-	-- bodysize = EditSet(human,"Body size", 0)
+	-- bodysize = BodyEditSet(human,"Body size", 0)
 	human.Penis.m_penisSkinOut = 0
 end
 
@@ -85,10 +110,10 @@ function TMBEPreset_Curvy(human)
 	asssize = BodyEditSet(human,"Ass size", 1)
 	nipplesize = BodyEditSet(human,"Nipples size", 0)
 	breastsize = BodyEditSet(human,"Breasts size", 0.3)
-	-- penislength = EditSet(human,"Penis length", 0)
-	-- penissize = EditSet(human,"Penis size", 0)
+	-- penislength = BodyEditSet(human,"Penis length", 0)
+	-- penissize = BodyEditSet(human,"Penis size", 0)
 	musclesize = BodyEditSet(human,"Muscle tone", 0)
-	-- bodysize = EditSet(human,"Body size", 0)
+	-- bodysize = BodyEditSet(human,"Body size", 0)
 	human.Penis.m_penisSkinOut = 0
 end
 
@@ -103,10 +128,10 @@ function TMBEPreset_Normal(human)
 	asssize = BodyEditSet(human,"Ass size", 0)
 	nipplesize = BodyEditSet(human,"Nipples size", 0)
 	breastsize = BodyEditSet(human,"Breasts size", 0)
-	-- penislength = EditSet(human,"Penis length", 0)
-	-- penissize = EditSet(human,"Penis size", 0)
+	-- penislength = BodyEditSet(human,"Penis length", 0)
+	-- penissize = BodyEditSet(human,"Penis size", 0)
 	musclesize = BodyEditSet(human,"Muscle tone", 0)
-	-- bodysize = EditSet(human,"Body size", 0)
+	-- bodysize = BodyEditSet(human,"Body size", 0)
 	human.Penis.m_penisSkinOut = 0
 end
 
@@ -121,10 +146,10 @@ function TMBEPreset_Slim(human)
 	asssize = BodyEditSet(human, "Ass size", -0.5)
 	nipplesize = BodyEditSet(human, "Nipples size", 0)
 	breastsize = BodyEditSet(human, "Breasts size", -0.4)
-	-- penislength = EditSet(human,"Penis length", 0)
-	-- penissize = EditSet(human,"Penis size", 0)
+	-- penislength = BodyEditSet(human,"Penis length", 0)
+	-- penissize = BodyEditSet(human,"Penis size", 0)
 	musclesize = BodyEditSet(human, "Muscle tone", 0)
-	-- bodysize = EditSet(human,"Body size", 0)
+	-- bodysize = BodyEditSet(human,"Body size", 0)
 	human.Penis.m_penisSkinOut = 0
 end
 
@@ -139,9 +164,9 @@ function TMBEPreset_Skinny(human)
 	asssize = BodyEditSet(human,"Ass size", -1)
 	nipplesize = BodyEditSet(human,"Nipples size", 0)
 	breastsize = BodyEditSet(human,"Breasts size", -0.8)
-	-- penislength = EditSet(human,"Penis length", 0)
-	-- penissize = EditSet(human,"Penis size", 0)
+	-- penislength = BodyEditSet(human,"Penis length", 0)
+	-- penissize = BodyEditSet(human,"Penis size", 0)
 	musclesize = BodyEditSet(human,"Muscle tone", 0)
-	-- bodysize = EditSet(human,"Body size", 0)
+	-- bodysize = BodyEditSet(human,"Body size", 0)
 	human.Penis.m_penisSkinOut = 0
 end

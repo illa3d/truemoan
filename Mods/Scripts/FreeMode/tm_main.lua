@@ -241,3 +241,20 @@ function ResetPose(human)
 	human.Penis.Interaction.AutoActive = false
 	human.Mouth.Fucker.Penis.Interaction.AutoActive = false
 end
+
+function SetClothesOn(human)
+	human.CustomizeAll(0)
+	-- no simple way of keeping futa penis
+	-- dictionary of characters and their hadpenis
+end
+
+function SetClothesOff(human)
+	hadpenis = human.Penis.IsActive
+	human.CustomizeAll(99)
+	if hadpenis then human.Customize("Penis", 1)
+	else human.Customize("Penis", 0) end
+end
+
+function SetMaleBottomable(human)
+	human.m_isMale = false
+end
