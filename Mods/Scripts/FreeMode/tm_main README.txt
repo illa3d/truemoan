@@ -2,57 +2,82 @@
 --                                               TRUE MOAN                                             --
 ---------------------------------------------------------------------------------------------------------
 
-FEATURES
-- Realistic Moans
-  - Generic Voice for all characters
+**(FreeMode Replacer Mod) Realistic Moans | Wet Sex | BodyEdit | Sex Control | Animation | Poses | Skyboxes | Ambient Audio | Improved Menu |**
+
+**MOD FEATURES**
+- **Realistic Moans**
+  - **Generic Voice** for all characters
   - 950+ unique moans
   - 6 moan tiers: Slow, Normal, Fast, Faster, Orgasm, Climax
   - Togglable organic speed dependant moans
   - Fluid reaction moans
-- Wet Sex (moisting used holes Vag, Anl, Orl)
-- Improved Menu UX
-- Body Edit
+- **Wet Sex** (moisting used holes Vag, Anl, Orl)
+- **Improved Menu UX**
+- **Body Edit**
   - Reduce/enlarge body beyond slider limits
-  - Presets (Skinny, Slim, Normal, Curvy, Obese)
+  - Presets (Random, Skinny, Slim, Normal, Curvy, Obese)
   - Apply to/reset multiple actors quickly
-- Sex Control
+- **Sex Control**
   - Thrusting (Presets, Slower/Faster)
   - Natural Auto BJ / Thrust
   - Cum frequency
   - Wetness (Presets, Less and More)
-- Animation & Poses
+- **Animation & Poses**
+- **6x ambience audio backgrounds**
 
-INTEGRATED MODS
+**ADDONS** (separate downloads)
+- **7x skyboxes** (8/4/2k)
+
+**INTEGRATED MODS**
+- **FreeModeHG** by @.heartgrenade
+- **FreeModeHG v0.3 faunap edit 0.2** by @faunap
+- **Natural AutoBJ AutoThrust** by @masterchief_87971
+- **Face expression looping** by @callmedrjones6911
+Thanks everyone for the effort, pretty slick mods! :heart:
+Thanks Chiyoru, Spicy Sounds Bundle :heart:
+
+**LATEST DOWNLOAD**
+**TrueMoan v0.8** [2025-12-22]
+**TrueMoan Addon Skyboxes v1.0** [2025-12-22]
+(Skyboxes - 8/**4**/2k are separate downloads, in-game no visual difference between 8/**4**k) 
+https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
+
+**REQUIREMENTS**
+- TrueFacials v0.59
+- No other mods required
+
+**HOW TO INSTALL**
+- :warning:**WILL BREAK MODS USING FREEMODE** (ie: other Voice Mods)
+- Backup/rename existing`Mods/Scripts/FreeMode`
+- **Mod or Addons**: Extract archive to game folder (overwrite all files)
+
+**HOW TO UNINSTALL**
+- If backed up `Mods/Scripts/FreeMode`: Delete TrueMoan `FreeMode` folder and restore yours
+- Or delete TrueMoan files in `Mods/Scripts/FreeMode`: `tm_*.lua, tm_*.txt, Voice/tm_*.mp3, Sounds/tm_*.mp3`
+
+---------------------------------------------------------------------------------------------------------
+-- ADDITIONAL INFO
+---------------------------------------------------------------------------------------------------------
+
+**MOD CONFIG**
+- Tweak defaults & values `Mods/Scripts/FreeMode/tm_CONFIG.lua`
+
+**INTEGRATED MODS**
 - `FreeModeHG v0.3.zip` @.heartgrenade https://discord.com/channels/620113492208517120/1312401584910631054/1349491994510233661
 - `FreeModeHG v0.3 - faunap_edit_0.2.zip` @faunap https://discord.com/channels/620113492208517120/1312401584910631054/1355724274224205984
 - `Natural AutoBJ AutoThrust` @masterchief_87971 https://discord.com/channels/620113492208517120/1312401584910631054/1355675724932972634
 - `Face expression looping` @callmedrjones6911 https://discord.com/channels/620113492208517120/1312401584910631054/1349562400105431090
-Thanks everyone for the effort, pretty slick mods! <3
-Thanks Chiyoru, Spicy Sounds Bundle <3
 
----------------------------------------------------------------------------------------------------------
--- INSTALLATION
----------------------------------------------------------------------------------------------------------
+**SOURCE**
+GitHub Repository - https://github.com/illa3d/truemoan
 
-REQUIREMENTS
-- TrueFacials v0.59
-- No other mods required
-
-INSTALL
-- :warning:WILL BREAK MODS USING FREEMODE (ie: other Voice Mods)
-- Backup/rename existing`Mods/Scripts/FreeMode`
-- Extract archive to game folder (overwrite all files)
-
-UNINSTALL
-- If backed up `Mods/Scripts/FreeMode`: Delete TrueMoan `FreeMode` folder and restore yours
-- Or delete TrueMoan files in `Mods/Scripts/FreeMode` | `tm_*.lua` | `tm_*.txt` | `Voice/tm_*.mp3`
-
----------------------------------------------------------------------------------------------------------
--- CHANGELOG
----------------------------------------------------------------------------------------------------------
+**LATEST CHANGES**
+Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_main%20README.txt
 
 [ v0.8 ]
-- Scene ambience sounds
+- 6 Scene ambience sounds
+- 7 skyboxes
+- Random Body Size in Body editor and Scene start
 - Cenralized config in tm_CONFIG.lua
 
 [ v0.7 ]
