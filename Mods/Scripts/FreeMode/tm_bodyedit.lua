@@ -1,5 +1,21 @@
 -- TrueMoan v0.8 by illa3d
 -- Menu in: tm_menu_body.lua
+-- Edit Body Variables
+necksize = 0
+forearmsize = 0
+uperarmsize = 0
+calfsize = 0
+thighsize = 0
+waistsize = 0
+hipssize = 0
+asssize = 0
+nipplesize = 0
+breastsize = 0
+penissize = 0
+penislength = 0
+musclesize = 0
+bodysize = 0
+
 function BodyEditUp(human, bodypart, value, step, valuemax, valuesafe)
 	local mult = 1 + math.floor(math.abs(value) / 2) -- step function to multiply step for bigger values
 	value = value + step * mult

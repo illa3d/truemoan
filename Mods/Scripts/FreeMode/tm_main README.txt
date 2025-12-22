@@ -74,6 +74,12 @@ GitHub Repository - https://github.com/illa3d/truemoan
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_main%20README.txt
 
+[ v0.9 ]
+- NakedOnSpawn option
+- BodyEdit limit tweaks
+- BodyEdit increment non-linear
+- BodyEdit presets: Dildo, Reset
+
 [ v0.8 ]
 - 6 Scene ambience sounds
 - 7 skyboxes

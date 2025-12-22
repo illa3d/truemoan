@@ -1,4 +1,7 @@
 -- TrueMoan v0.8 by illa3d
+-- Variables
+cumevery = 0
+
 label TMMenuSex(human)
 	+ "Auto Thrust" [if human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == false]
 		--function GradualSpeedUpAutoThrusting(human, duration, step, startSpeed, endSpeed, startDepth, endDepth, autoDisableAfter)
