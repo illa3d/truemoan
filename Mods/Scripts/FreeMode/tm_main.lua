@@ -9,21 +9,27 @@ init = false
 -------------------------------------------------------------------------------------------------
 -- FREE MODE START (called from TrueFacials)
 -------------------------------------------------------------------------------------------------
-label Start()
-	OnStart()
-stop
+function TMOnStart()
+	Play_FreeMode() -- this makes TalkMenu visible and 3d interactable
+end 
 
-function OnStart()
-	init = true
+function TMOnStartAmbience()
 	TMStartSound()
+end
+
+function TMOnStartGenericChat()
+	init = true
 	ResetTimer("GenericChat", math.random(-10, 0))
 	local speaker = game.GetRandomHuman(|h| h.CanSpeak)
 	if speaker ~= nil then speaker.Say("Greeting") end
-	Play_FreeMode() -- this makes TalkMenu visible and 3d interactable
 end
 
+function TMOnGameUpdate()
+	-- unused for now
+end
+	
 -- Updated every frame
-function OnGameUpdate()
+function TMOnGameUpdateGenericChat()
 	if init == false then return end
 	local lastChatTime = Timer("GenericChat")
 	if lastChatTime > game.ChatIntervals then
@@ -36,12 +42,12 @@ function OnGameUpdate()
 end
 
 -- Updated on human click, Talk Menu Start
-function OnHumanClick(human, hitTri)
-	Jump("TalkMenu", human, hitTri)
+function TMOnHumanClick(human, hitTri)
+	Jump("TMTalkMenu", human, hitTri)
 end
 
 -- Updated on human creation
-function OnCreateHuman(human)
+function TMOnCreateHuman(human)
 	ResetGirlWetness(human)
 	TMBEPreset_RandomStart(human)
 	if NakedOnSpawn then
@@ -53,7 +59,7 @@ function OnCreateHuman(human)
 end
 
 -- Updated on human removal
-function OnRemoveHuman(human)
+function TMOnRemoveHuman(human)
 	game.PlayRandomCharacterMusic()
 end
 
@@ -61,7 +67,7 @@ end
 -- MOANING (called from TrueFacials)
 -------------------------------------------------------------------------------------------------
 -- Updated on fluid hit (cum)
-function OnFluidHit(hitActor, bodyArea, shootActor)
+function TMOnFluidHit(hitActor, bodyArea, shootActor)
 	if game.FluidReaction == false or shootActor == nil or hitActor.m_isMale == true then return end
 
 	local timerKey = "FluidHit_" .. hitActor.Name .. bodyArea
@@ -97,7 +103,7 @@ function OnFluidHit(hitActor, bodyArea, shootActor)
 end
 
 -- Updated on penetration (holeName: "Vagina" "Anus" Mouth")
-function OnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
+function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	if inVelocity < outVelocity or Moaning == false  then return end
 
 	-- Variables
