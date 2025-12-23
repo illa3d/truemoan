@@ -9,7 +9,7 @@ tmAmbienceTrack = 0
 ambienceTimer = "AmbienceTimer"
 
 function TMAmbienceLeftSec()
-	return NumLabel(tmAmbienceTrackSec - Timer(ambienceTimer))
+	return TruncDecimal(tmAmbienceTrackSec - Timer(ambienceTimer))
 end
 
 function TMStartSound()

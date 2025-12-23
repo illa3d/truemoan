@@ -1,17 +1,18 @@
 -- TrueMoan v1.0 by illa3d
 -- Sex speed constants (UI slider values: 0.001 - 0.5)
-sexspeedmin = 0.001
-sexspeedmax = 2
+
 
 -------------------------------------------------------------------------------------------------
 -- COMMON FUNCTIONS
 -------------------------------------------------------------------------------------------------
 
-function NumLabel(value, decimals)
+-- TRUNCATE DECIMAL PLACES (for UI number display without gazillion decimals)
+function TruncDecimal(value, decimals)
 	if decimals == nil then return math.floor(value)
 	else return math.floor(value * 10^decimals + 0.5) / 10^decimals end
 end
 
+-- CLOTHES STUFF
 function ShowClothes(human, show)
 	if show then
 		human.CustomizeAll(0)
@@ -25,6 +26,7 @@ function ShowClothes(human, show)
 	end
 end
 
+-- CROSS GENDER STUFF
 function ShowPenis(girl, show)
 	if show then girl.Customize("Penis", 1)
 	else girl.Customize("Penis", 0) end
@@ -34,6 +36,7 @@ function SetMaleBottomable(human)
 	human.m_isMale = false
 end
 
+-- CUM
 function SetCumEvery(human, sec)
 	game.AddRepeatAnim(sec, || human.Shoot(), human.Penis)
 	return sec
@@ -57,8 +60,17 @@ function SetGirlWetness(girl, value, holename)
 	end
 end
 
+-------------------------------------------------------------------------------------------------
+-- INTERACTION
+-------------------------------------------------------------------------------------------------
+
+-- INTERACTION SPEED (0.001-20)
+function GetInteractionSpeed(interaction, ishand)
+	return (ishand ~= nill and ishand) and interaction.m_autoHandSpeed or interaction.m_autoSpeed
+end
+
 function SetInteractionSpeed(interaction, speed, ishand)
-	speed = math.max(sexspeedmin, math.min(speed, sexspeedmax)) -- clamp min max
+	speed = math.max(0.001, math.min(speed, 2)) -- clamp min max
 	if ishand ~= nil and ishand then 
 		interaction.m_autoHandActive = true
 		interaction.m_autoHandSpeed = speed
@@ -73,7 +85,7 @@ function SetInteractionSpeedStep(interaction, speedStep, increase, ishand)
 	local increment = 1 + (speedStep / (speed ^ 0.6)) -- 1 + (speed multiplier / (speed / curve))
 	if increase then speed = speed * increment
 	else speed = speed / increment end
-	speed = math.max(sexspeedmin, math.min(speed, sexspeedmax)) -- clamp min max
+	speed = math.max(0.001, math.min(speed, 2)) -- clamp min max
 	if ishand ~= nil and ishand then 
 		interaction.m_autoHandActive = true
 		interaction.m_autoHandSpeed = speed
@@ -83,6 +95,62 @@ function SetInteractionSpeedStep(interaction, speedStep, increase, ishand)
 	end
 end
 
+-- INTERACTION WEIGHT (0-1)
+function GetInteractionWeight(interaction, ishand)
+	return (ishand ~= nil and ishand) and 0 or interaction.AutoPenisWeight -- no interaction weight in handjobs
+end
+
+function SetInteractionWeight(interaction, weight, ishand)
+	if ishand ~= nil and ishand then return end -- no interaction weight in handjobs
+	weight = math.max(0, math.min(weight, 1)) -- clamp min max
+
+	interaction.AutoActive = true
+	interaction.AutoPenisWeight = weight
+end
+
+function SetInteractionWeightStep(interaction, weightStep, increase, ishand)
+	if ishand ~= nil and ishand then return end -- no interaction weight in handjobs
+	local weight = interaction.AutoPenisWeight
+	if increase then weight = weight + weightStep
+	else weight = weight - weightStep end
+	weight = math.max(0, math.min(weight, 1)) -- clamp min max (0-1)
+
+	interaction.AutoActive = true
+	interaction.AutoPenisWeight = weight
+end
+
+-- INTERACTION THRUST WEIGHT (normalize 0-1 to actual 1-3)
+function GetInteractionThrustWeight(interaction, ishand)
+	return (ishand ~= nill and ishand) and ((interaction.m_autoHandThrustWeight-1)/2) or ((interaction.m_autoThrustWeight-1)/2) -- 3(max) - 1(min) = 2
+end
+
+function SetInteractionThrustWeight(interaction, weight, ishand)
+	weight = 2 * weight + 1 -- 3(max) - 1(min) = 2
+	weight = math.max(1, math.min(weight, 3)) -- clamp min max (1-3) ui slider range
+	if ishand ~= nil and ishand then 
+		interaction.m_autoHandActive = true
+		interaction.m_autoHandThrustWeight = weight
+	else
+		interaction.AutoActive = true
+		interaction.m_autoThrustWeight = weight
+	end
+end
+
+function SetInteractionThrustWeightStep(interaction, weightStep, increase, ishand)
+	local weight = (ishand ~= nill and ishand) and interaction.m_autoHandThrustWeight or interaction.m_autoThrustWeight
+	if increase then weight = weight + (2 * weightStep) -- 3(max) - 1(min) = 2
+	else weight = weight - (2 * weightStep) end
+	weight = math.max(1, math.min(weight, 3)) -- clamp min max (0-3) ui slider range
+	if ishand ~= nil and ishand then 
+		interaction.m_autoHandActive = true
+		interaction.m_autoHandThrustWeight = weight
+	else
+		interaction.AutoActive = true
+		interaction.m_autoThrustWeight = weight
+	end
+end
+
+-- RESET
 function ResetPose(human)
 	human.Pose(StandUp())
 	human.Pose(FaceNeutral())

@@ -4,31 +4,73 @@ cumevery = 0
 -- Sex speed decimals
 sdec = 3
 
-label SexControl(interaction, ishand)
-	+ "5 Max"
+label SexControl(human, interaction, ishand)
+	+ "• Max"
 		SetInteractionSpeed(interaction, SexSpeedMax, ishand)
 		Return()
-	+ "4 Fast"
+	+ "• Fast"
 		SetInteractionSpeed(interaction, SexSpeedFast, ishand)
 		Return()
-	+ "3 Normal"
+	+ "• Normal"
 		SetInteractionSpeed(interaction, SexSpeedNormal, ishand)
 		Return()
-	+ "2 Medium"
+	+ "• Medium"
 		SetInteractionSpeed(interaction, SexSpeedMedium, ishand)
 		Return()
-	+ "1 Slow"
+	+ "• Slow"
 		SetInteractionSpeed(interaction, SexSpeedSlow, ishand)
 		Return()
-	+ "Faster >"
+	+ "| Speed >"
 		SetInteractionSpeedStep(interaction, SexSpeedStep, true, ishand)
 		Return()
-	+ "< Slower"
+	+ "| Speed <"
 		SetInteractionSpeedStep(interaction, SexSpeedStep, false, ishand)
 		Return()
-	+ "STOP | " .. ValueLabel((ishand ~= nill and ishand) and interaction.m_autoHandSpeed or interaction.m_autoSpeed, sdec) [gold]
-		SetInteractionSpeed(interaction, 0)
+	+ "RESET Speed | " .. ValueLabel(GetInteractionSpeed(interaction, ishand), sdec)
+		SetInteractionSpeed(interaction, 0, ishand)
 		Return()
+	
+	-- handjob
+	+ if human.Penis.m_holdDepth ~= 0
+		+ "Style.. | T" .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), sdec) [if SexShowStyleControl] [gold]
+			+ "| Thrust >"
+				SetInteractionThrustWeightStep(interaction, SexThrustStep, true, ishand)
+				Return()
+			+ "| < Thrust"
+				SetInteractionThrustWeightStep(interaction, SexThrustStep, false, ishand)
+				Return()
+			+ "RESET Thrust | " .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), sdec)[gold]
+				SetInteractionThrustWeight(interaction, 0, ishand)
+				Return()
+			+ MenuBack
+				Return(2)
+			+ MenuClose
+
+	-- oral/vaginal/anal
+	+ else 
+		+ "Style.. | M" .. ValueLabel(GetInteractionWeight(interaction, ishand), sdec) .. " | T" .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), sdec) [if SexShowStyleControl] [gold]
+			+ "| Thrust >"
+				SetInteractionThrustWeightStep(interaction, SexThrustStep, true, ishand)
+				Return()
+			+ "| < Thrust"
+				SetInteractionThrustWeightStep(interaction, SexThrustStep, false, ishand)
+				Return()
+			+ "RESET Thrust | " .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), sdec)
+				SetInteractionThrustWeight(interaction, 0, ishand)
+				Return()
+			+ "| Male >"
+				SetInteractionWeightStep(interaction, SexMaleStep, true, ishand)
+				Return()
+			+ "| < Male"
+				SetInteractionWeightStep(interaction, SexMaleStep, false, ishand)
+				Return()
+			+ "RESET Male | " .. ValueLabel(GetInteractionWeight(interaction, ishand), sdec)
+				SetInteractionWeight(interaction, 0, ishand)
+				Return()
+			+ MenuBack
+				Return(2)
+			+ MenuClose
+
 	+ MenuBack
 		Return(2)
 	+ MenuClose
@@ -36,7 +78,7 @@ stop
 
 label TMMenuSex(human)
 	-- `Natural AutoBJ AutoThrust` @masterchief_87971
-	+ "Thrust auto" [if human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == false]
+	+ "Sex auto" [if human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == false]
 		--function GradualSpeedUpAutoThrusting(human, duration, step, startSpeed, endSpeed, startDepth, endDepth, autoDisableAfter)
 		GradualSpeedUpAutoThrusting(human, 30, 0, 0.6, 0.3, 0.1, 1, 30)
 		Return()
@@ -49,20 +91,20 @@ label TMMenuSex(human)
 
 	-- SEX CONTROL
 	-- GETTER HANDJOB
-	+ "Handjob.. | " .. ValueLabel(human.Penis.Interaction.m_autoSpeed, sdec) [if human.Penis.m_holdDepth ~= 0] [gold]
-		SexControl(human.Penis.Interaction, true)
+	+ "Handjob control.. | " .. ValueLabel(human.Penis.Interaction.m_autoSpeed, sdec) [if human.Penis.m_holdDepth ~= 0] [gold]
+		SexControl(human, human.Penis.Interaction, true)
 	-- GIVER (MOUTH, VAGINA, ANUS)
-	+ "Thrust.. | " .. ValueLabel(human.Penis.Interaction.m_autoSpeed, sdec) [if human.Penis.Hole ~= nil] [gold]
-		SexControl(human.Penis.Interaction)
+	+ "Sex control.. | " .. ValueLabel(human.Penis.Interaction.m_autoSpeed, sdec) [if human.Penis.Hole ~= nil] [gold]
+		SexControl(human, human.Penis.Interaction)
 	-- GETTER MOUTH
-	+ "Oral.. | " .. ValueLabel(human.Mouth.Fucker.Penis.Interaction.m_autoSpeed, sdec) [if human.Mouth.Fucker ~= nil] [gold]
-		SexControl(human.Mouth.Fucker.Penis.Interaction)
+	+ "Oral control.. | " .. ValueLabel(human.Mouth.Fucker.Penis.Interaction.m_autoSpeed, sdec) [if human.Mouth.Fucker ~= nil] [gold]
+		SexControl(human, human.Mouth.Fucker.Penis.Interaction)
 	-- GETTER ANUS
-	+ "Anal.. | " .. ValueLabel(human.Anus.Fucker.Penis.Interaction.m_autoSpeed, sdec) [if human.Anus.Fucker ~= nil] [gold]
-		SexControl(human.Anus.Fucker.Penis.Interaction)
+	+ "Anal control.. | " .. ValueLabel(human.Anus.Fucker.Penis.Interaction.m_autoSpeed, sdec) [if human.Anus.Fucker ~= nil] [gold]
+		SexControl(human, human.Anus.Fucker.Penis.Interaction)
 	-- GETTER VAGINA
-	+ "Sex.. | " .. ValueLabel(human.Vagina.Fucker.Penis.Interaction.m_autoSpeed, sdec) [if human.Vagina.Fucker ~= nil] [gold]
-		SexControl(human.Vagina.Fucker.Penis.Interaction)
+	+ "Vagi control.. | " .. ValueLabel(human.Vagina.Fucker.Penis.Interaction.m_autoSpeed, sdec) [if human.Vagina.Fucker ~= nil] [gold]
+		SexControl(human, human.Vagina.Fucker.Penis.Interaction)
 
 	-- START / STOP
 	-- GETTER HANDJOB
@@ -73,11 +115,11 @@ label TMMenuSex(human)
 		human.Penis.Interaction.m_autoHandActive = false
 		Return()
 	-- GIVER (MOUTH, VAGINA, ANUS)
-	+ "Thrust start" [if human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == false]
+	+ "Sex start" [if human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == false]
 		human.Penis.Interaction.AutoActive = true
 		human.Penis.Interaction.AutoPenisWeight = 0.8
 		Return()
-	+ "Thrust STOP" [if human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == true]
+	+ "Sex STOP" [if human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == true]
 		human.Penis.Interaction.AutoActive = false
 		Return()
 	-- GETTER MOUTH
@@ -102,11 +144,11 @@ label TMMenuSex(human)
 		human.Anus.Fucker.Penis.Interaction.AutoActive = false
 		Return()
 	-- GETTER VAGINA
-	+ "Sex start" [if human.Vagina.Fucker ~= nil and human.Vagina.Fucker.Penis.Interaction.AutoActive == false]
+	+ "Vagi start" [if human.Vagina.Fucker ~= nil and human.Vagina.Fucker.Penis.Interaction.AutoActive == false]
 		human.Vagina.Fucker.Penis.Interaction.AutoActive = true
 		human.Vagina.Fucker.Penis.Interaction.AutoPenisWeight = 0.2
 		Return()
-	+ "Sex STOP" [if human.Vagina.Fucker ~= nil and human.Vagina.Fucker.Penis.Interaction.AutoActive == true]
+	+ "Vagi STOP" [if human.Vagina.Fucker ~= nil and human.Vagina.Fucker.Penis.Interaction.AutoActive == true]
 		human.Vagina.Fucker.Penis.Interaction.AutoActive = false
 		Return()
 

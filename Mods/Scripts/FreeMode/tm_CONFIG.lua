@@ -19,8 +19,11 @@ BodyStepA = 0.1		-- nipples hip, waist, muscle
 BodyStepB = 0.05	-- ass, penis-length, penis-size, forearm, upperarm, calf, thigh, neck
 BodyStepC = 0.025	-- breast, body
 
--- Sex speed config
-SexSpeedStep = 0.05
+-- Sex speed config (0.001-2)
+SexShowStyleControl = true	-- Show/Hide Male and Thrust controls
+SexSpeedStep = 0.05		-- non-linear percent (increments: slow = small, fast = big)
+SexMaleStep = 0.1		-- giver/getter, linear percent (of UI slider)
+SexThrustStep = 0.1 	-- easier/harder, linear percent (of UI slider)
 SexSpeedMax = 2
 SexSpeedFast = 0.9
 SexSpeedNormal = 0.5
@@ -96,11 +99,11 @@ function WordLabel (svalue)
 	return  MenuNumColor .. svalue .. endcolor
 end
 function ValueLabel (value, decimals)
-	return  MenuNumColor .. NumLabel(value, decimals) .. endcolor
+	return  MenuNumColor .. TruncDecimal(value, decimals) .. endcolor
 end
 function ValueLabel1 (letter, value, decimals)
-	return  letter .. MenuNumColor .. NumLabel(value, decimals) .. endcolor
+	return  letter .. MenuNumColor .. TruncDecimal(value, decimals) .. endcolor
 end
 function ValueLabel2 (letter1, value1, letter2, value2, decimals)
-	return  letter1 .. MenuNumColor .. NumLabel(value1, decimals) .. endcolor .. " | " .. letter2 .. MenuNumColor .. NumLabel(value2, decimals) .. endcolor
+	return  letter1 .. MenuNumColor .. TruncDecimal(value1, decimals) .. endcolor .. " | " .. letter2 .. MenuNumColor .. TruncDecimal(value2, decimals) .. endcolor
 end
