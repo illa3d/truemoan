@@ -1,4 +1,4 @@
--- TrueMoan v0.9 by illa3d
+-- TrueMoan v1.0 by illa3d
 label TMMenuFace(human)
 	+ "Edit Face.." [gold]
 		TMMenuFaceLab(human)

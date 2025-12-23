@@ -1,4 +1,4 @@
--- TrueMoan v0.9 by illa3d
+-- TrueMoan v1.0 by illa3d
 label TalkMenu(human, hitTri)
 	+ if RootHideShowUI
 		+ "Hide UI" [if HG_UIvis == true]

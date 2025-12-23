@@ -1,4 +1,4 @@
--- TrueMoan v0.9 by illa3d
+-- TrueMoan v1.0 by illa3d
 adec = 1
 
 label TMMenuOptions(human)
@@ -16,23 +16,23 @@ label TMMenuOptions(human)
 		NakedOnSpawn = true
 		Return()
 	-- + "Sex.." [gold] --return when options fill up
-	+ "Moan Sex | " .. BoolLabel(Moaning) [if Moaning == true]
-		Moaning = false
-		Return()
-	+ "Moan Sex | " .. BoolLabel(Moaning) [if Moaning == false]
-		Moaning = true
-		Return()
-	+ "Moan Cum | " .. BoolLabel(game.FluidReaction) [if game.FluidReaction == true]
-		game.FluidReaction = false
-		Return()
-	+ "Moan Cum | " .. BoolLabel(game.FluidReaction) [if game.FluidReaction == false]
-		game.FluidReaction = true
-		Return()
-	+ "Wet Sex | " .. BoolLabel(WetSex) [if WetSex == true]
+	+ "Wet sex | " .. BoolLabel(WetSex) [if WetSex == true]
 		WetSex = false
 		Return()
-	+ "Wet Sex | " .. BoolLabel(WetSex) [if WetSex == false]
+	+ "Wet sex | " .. BoolLabel(WetSex) [if WetSex == false]
 		WetSex = true
+		Return()
+	+ "Moan sex | " .. BoolLabel(Moaning) [if Moaning == true]
+		Moaning = false
+		Return()
+	+ "Moan sex | " .. BoolLabel(Moaning) [if Moaning == false]
+		Moaning = true
+		Return()
+	+ "Moan cum | " .. BoolLabel(game.FluidReaction) [if game.FluidReaction == true]
+		game.FluidReaction = false
+		Return()
+	+ "Moan cum | " .. BoolLabel(game.FluidReaction) [if game.FluidReaction == false]
+		game.FluidReaction = true
 		Return()
 	-- + MenuBack
 	-- 	Return(2)
@@ -43,7 +43,7 @@ label TMMenuOptions(human)
 		+ "Next track | " .. WordLabel("Ambience " .. tmAmbienceTrack) [if AllowAmbience]
 			TMPlayAmbienceNext()
 			Return()
-		+ "Ambience | " .. BoolLabel(AllowAmbience) .. " (loops in ".. ValueLabel(TMAmbienceLeftSec()) .. "s)" [if AllowAmbience == true]
+		+ "Ambience | " .. BoolLabel(AllowAmbience) .. " (next in ".. ValueLabel(TMAmbienceLeftSec()) .. "s)" [if AllowAmbience == true]
 			AllowAmbience = false
 			Return()
 		+ "Ambience | " .. BoolLabel(AllowAmbience) [if AllowAmbience == false]
@@ -60,7 +60,7 @@ label TMMenuOptions(human)
 			+ "Play " .. track
 				Music(track , 0.05, 0)
 				Return()
-		+ "Stop Music"
+		+ "STOP Music" [gold]
 			StopMusic()
 			Return()
 		+ MenuBack

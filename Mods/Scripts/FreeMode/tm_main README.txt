@@ -37,7 +37,7 @@ Thanks everyone for the effort, pretty slick mods! :heart:
 Thanks Chiyoru, Spicy Sounds Bundle :heart:
 
 **LATEST DOWNLOAD**
-**TrueMoan v0.9** [2025-12-22]
+**TrueMoan v1.0** [2025-12-22]
 **TrueMoan Addon Skyboxes v1.0** [2025-12-22]
 (Skyboxes - 8/**4**/2k are separate downloads, in-game no visual difference between 8/**4**k) 
 https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
@@ -73,6 +73,10 @@ GitHub Repository - https://github.com/illa3d/truemoan
 
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_main%20README.txt
+
+[ v1.0 ]
+- SexControl - control all holes from menu
+- Menu UX, coloring & polish
 
 [ v0.9 ]
 - Option to Spawn new characters naked

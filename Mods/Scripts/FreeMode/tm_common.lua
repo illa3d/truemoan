@@ -1,4 +1,4 @@
--- TrueMoan v0.9 by illa3d
+-- TrueMoan v1.0 by illa3d
 -- Sex speed constants (UI slider values: 0.001 - 0.5)
 sexspeedmin = 0.001
 sexspeedmax = 2
@@ -34,6 +34,11 @@ function SetMaleBottomable(human)
 	human.m_isMale = false
 end
 
+function SetCumEvery(human, sec)
+	game.AddRepeatAnim(sec, || human.Shoot(), human.Penis)
+	return sec
+end
+
 function ResetGirlWetness(girl)
 	SetGirlWetness(girl, 0, "Vagina")
 	SetGirlWetness(girl, 0, "Anus")
@@ -52,20 +57,30 @@ function SetGirlWetness(girl, value, holename)
 	end
 end
 
-function SetInteractionSpeed(interaction, speed)
+function SetInteractionSpeed(interaction, speed, ishand)
 	speed = math.max(sexspeedmin, math.min(speed, sexspeedmax)) -- clamp min max
-	interaction.AutoActive = true
-	interaction.m_autoSpeed = speed
+	if ishand ~= nil and ishand then 
+		interaction.m_autoHandActive = true
+		interaction.m_autoHandSpeed = speed
+	else
+		interaction.AutoActive = true
+		interaction.m_autoSpeed = speed
+	end
 end
 
-function SetInteractionSpeedStep(interaction, increase)
-	local speed = interaction.m_autoSpeed
-	local increment = 1 + (0.05 / (speed ^ 0.6)) -- 1 + (speed multiplier / (speed / curve))
+function SetInteractionSpeedStep(interaction, speedStep, increase, ishand)
+	local speed = (ishand ~= nill and ishand) and interaction.m_autoHandSpeed or interaction.m_autoSpeed
+	local increment = 1 + (speedStep / (speed ^ 0.6)) -- 1 + (speed multiplier / (speed / curve))
 	if increase then speed = speed * increment
 	else speed = speed / increment end
 	speed = math.max(sexspeedmin, math.min(speed, sexspeedmax)) -- clamp min max
-	interaction.AutoActive = true
-	interaction.m_autoSpeed = speed
+	if ishand ~= nil and ishand then 
+		interaction.m_autoHandActive = true
+		interaction.m_autoHandSpeed = speed
+	else
+		interaction.AutoActive = true
+		interaction.m_autoSpeed = speed
+	end
 end
 
 function ResetPose(human)

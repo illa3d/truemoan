@@ -1,4 +1,4 @@
--- TrueMoan v0.9 by illa3d
+-- TrueMoan v1.0 by illa3d
 label TMMenuPose(human)
 	+ "Hands.."[gold]
 		+ for i, pres in ipairs (bodystr)

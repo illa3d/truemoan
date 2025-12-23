@@ -1,4 +1,4 @@
--- TrueMoan v0.9 by illa3d
+-- TrueMoan v1.0 by illa3d
 -----------------------------------------------
 -- MAIN CONFIG FILE, MODIFY TO YOOUR LIKING! --
 -----------------------------------------------
@@ -18,6 +18,14 @@ BreastSafeMin = -0.8	-- some characters fall apart below this value and game cra
 BodyStepA = 0.1		-- nipples hip, waist, muscle
 BodyStepB = 0.05	-- ass, penis-length, penis-size, forearm, upperarm, calf, thigh, neck
 BodyStepC = 0.025	-- breast, body
+
+-- Sex speed config
+SexSpeedStep = 0.05
+SexSpeedMax = 2
+SexSpeedFast = 0.9
+SexSpeedNormal = 0.5
+SexSpeedMedium = 0.25
+SexSpeedSlow = 0.1
 
 -- Sex/Moan Tier config
 WetSex = true		-- default value on scene change
