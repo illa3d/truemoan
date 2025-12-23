@@ -22,18 +22,19 @@ label TMMenuOptions(human)
 	+ "Wet sex | " .. TMBoolLabel(TM_WetSex) [if TM_WetSex == false]
 		TM_WetSex = true
 		Return()
-	+ "Moan sex | " .. TMBoolLabel(TM_Moaning) [if TM_Moaning == true]
+	+ "Moan sex | " .. TMBoolLabel(TM_Moaning) [if TM_Moaning == true and TM_AllowMoaning]
 		TM_Moaning = false
 		Return()
-	+ "Moan sex | " .. TMBoolLabel(TM_Moaning) [if TM_Moaning == false]
+	+ "Moan sex | " .. TMBoolLabel(TM_Moaning) [if TM_Moaning == false and TM_AllowMoaning]
 		TM_Moaning = true
 		Return()
-	+ "Moan cum | " .. TMBoolLabel(game.FluidReaction) [if game.FluidReaction == true]
+	+ "Moan cum | " .. TMBoolLabel(game.FluidReaction) [if game.FluidReaction == true and TM_AllowMoaning]
 		game.FluidReaction = false
 		Return()
-	+ "Moan cum | " .. TMBoolLabel(game.FluidReaction) [if game.FluidReaction == false]
+	+ "Moan cum | " .. TMBoolLabel(game.FluidReaction) [if game.FluidReaction == false and TM_AllowMoaning]
 		game.FluidReaction = true
 		Return()
+	+ "Moaning | OFF (VoiceMod detected)" [if not TM_AllowMoaning]
 	-- + MenuBack
 	-- 	Return(2)
 	-- + MenuClose

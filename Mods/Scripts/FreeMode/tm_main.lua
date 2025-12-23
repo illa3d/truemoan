@@ -7,9 +7,9 @@
 init = false
 
 -- VoiceMod detection (TrueMoan stops moaning functionality)
-tmVoiceModDetected = false
+TM_AllowMoaning = true
 function TMCheckForVoiceMod()
-	if type(VM_VoiceMod_Enable) == "function" then tmVoiceModDetected = true end
+	if type(VM_VoiceMod_Enable) == "function" then TM_AllowMoaning = false end
 end 
 
 -------------------------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ end
 
 function TMOnStart_GenericChat()
 	init = true
-	if tmVoiceModDetected then return end
+	if not TM_AllowMoaning then return end
 	ResetTimer("GenericChat", math.random(-10, 0))
 	local speaker = game.GetRandomHuman(|h| h.CanSpeak)
 	if speaker ~= nil then speaker.Say("Greeting") end
@@ -38,7 +38,8 @@ end
 	
 -- Updated every frame
 function TMOnGameUpdate_GenericChat()
-	if tmVoiceModDetected or init == false then return end
+	-- don't talk with other voice mods
+	if not TM_AllowMoaning or init == false then return end
 	local lastChatTime = Timer("GenericChat")
 	if lastChatTime > game.ChatIntervals then
 		ResetTimer("GenericChat", math.random(-7, 0))
@@ -188,7 +189,8 @@ end
 
 -- Function to play TM moans
 function TMPlayGirlMoan(actor, tier)
-	if tmVoiceModDetected then return end -- don't do moaning VoiceMod present
+	-- don't moan with other voice mods
+	if not TM_AllowMoaning then return end
 	if actor == nil then return end
 	actor.SayCustom("tm_" .. tier)
 end

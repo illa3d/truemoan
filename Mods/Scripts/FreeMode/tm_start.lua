@@ -2,7 +2,7 @@
 -------------------------------------------------------------------------------------------------
 -- freemode_main.lua is not required, these functions are overrides (even if it exists in folder)
 -- same function in multiple files, alphabetically last one is used
--- THIS FUNCTION IS NEEDED FOR THE FULL MOD TO WORK
+-- MODS SUPPORTED: TalkMenuModManager, nf123 VoiceMod
 -------------------------------------------------------------------------------------------------
 label Start()
 	-- TrueMoan: Enable clicking outside TalkMenu
