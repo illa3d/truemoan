@@ -75,8 +75,13 @@ GitHub Repository - https://github.com/illa3d/truemoan
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_main%20README.txt
 
 [ v1.0 ]
-- SexControl - control all holes (mouth, vagina, anus) from one character (speed, thrust, male vs female move)
+- SexControl
+  - control all holes from one character (mouth, vagina, anus)
+  - control speed, thrust and "male vs female move"
+  - responsive controls (some non-linear)
+- BodyEdit preset tweaks
 - Menu UX, coloring & polish
+- Scenes now packed with mod `Captures/TrueMoan`
 
 [ v0.9 ]
 - Option to Spawn new characters naked
