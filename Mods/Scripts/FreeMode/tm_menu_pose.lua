@@ -101,7 +101,7 @@ label TMMenuPose(human)
 			Return(2)
 		+ MenuClose
 	+ "RESET Pose" [gold]
-		ResetPose(human)
+		ResetHuman(human, false, false, true) --resetsex, resetanim, resetpose, resetface
 		Return()
 	+ MenuBack
 		Return(2)

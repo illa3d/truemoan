@@ -7,29 +7,29 @@
 
 -- MENU: BODY.. / Size..
 label TMMenuBodySize(human)
-	+ "Fairy Dildo" [if human.Penis.IsActive]
-		human "Wtf is this, I feel funny...\nSweet idea void.branding :)"
+	+ "• Fairy Dildo" [if human.Penis.IsActive] [gold]
+		human "Wtf is this, I feel funny... Weeeeee!\n(Sweet idea @void.branding)"
 		TMBEPreset_Dildo(human)	
 		Return()
-	+ "3 Giant"
+	+ "• Giant"
 		bodysize = BodyEditSet(human,"Body size", 0.7)
 		Return()
-	+ "2 Huge"
+	+ "• Huge"
 		bodysize = BodyEditSet(human,"Body size", 0.15)
 		Return()
-	+ "1 Big"
+	+ "• Big"
 		bodysize = BodyEditSet(human,"Body size", 0.075)
 		Return()
-	+ "0 Normal" [gold]
+	+ "• Normal" [gold]
 		bodysize = BodyEditSet(human,"Body size", 0)
 		Return()
-	+ "1 Medium"
+	+ "• Medium"
 		bodysize = BodyEditSet(human,"Body size", -0.075)
 		Return()
-	+ "2 Small"
+	+ "• Small"
 		bodysize = BodyEditSet(human,"Body size", -0.15)
 		Return()
-	+ "3 Tiny"
+	+ "• Tiny"
 		bodysize = BodyEditSet(human,"Body size", -0.7)
 		Return()
 	+ MenuBack
@@ -39,22 +39,22 @@ stop
 
 -- MENU: BODY.. / Type..
 label TMMenuBodyType(human)
-	+ "2 Obese"
+	+ "• Obese"
 		TMBEPreset_Obese(human)
 		Return()
-	+ "1 Curvy"
+	+ "• Curvy"
 		TMBEPreset_Curvy(human)
 		Return()
-	+ "0 Normal" [gold]
+	+ "• Normal" [gold]
 		TMBEPreset_Normal(human)
 		Return()
-	+ "1 Slim"
+	+ "• Slim"
 		TMBEPreset_Slim(human)
 		Return()
-	+ "2 Skinny"
+	+ "• Skinny"
 		TMBEPreset_Skinny(human)
 		Return()
-	+ "Random" [gold]
+	+ "Random"
 		TMBEPreset_Random(human)
 		Return()
 	+ MenuBack
@@ -95,7 +95,7 @@ function TMBEPreset_Dildo(human)
 	TMBEPreset_Normal(human)
 	penissize = BodyEditSet(human,"Penis size", 8)
 	bodysize = BodyEditSet(human,"Body size", -0.9)
-	ResetPose(human)
+	ResetHuman(human)
 end
 
 function TMBEPreset_Obese(human)

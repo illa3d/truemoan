@@ -30,8 +30,8 @@ label TMMenuHeyHuman(human)
 	+ "Stop Humping"[if game.HasAnim(human) == true]
 		game.RemoveAnim(human)
 		Return()
-	+ "RESET Pose" [gold]
-		ResetPose(human)
+	+ "RESET ALL" [gold]
+		ResetHuman(human)
 		Return()
 	+ "Hands.." [gold]
 		+ "Peace L"

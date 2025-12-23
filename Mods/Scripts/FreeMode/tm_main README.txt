@@ -75,7 +75,7 @@ GitHub Repository - https://github.com/illa3d/truemoan
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_main%20README.txt
 
 [ v1.0 ]
-- SexControl - control all holes from menu
+- SexControl - control all holes (mouth, vagina, anus) from one character (speed, thrust, male vs female move)
 - Menu UX, coloring & polish
 
 [ v0.9 ]

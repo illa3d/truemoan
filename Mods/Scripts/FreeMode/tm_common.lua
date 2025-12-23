@@ -60,6 +60,34 @@ function SetGirlWetness(girl, value, holename)
 	end
 end
 
+-- RESET
+function ResetHuman(human, resetsex, resetanim, resetpose, resetface)
+	if resetsex == nil or resetsex then
+		if human.Penis ~= nil and human.Penis.Interaction ~= nil then human.Penis.Interaction.AutoActive = false end
+		if human.Mouth.Fucker ~= nil and human.Mouth.Fucker.Penis ~= nil and human.Mouth.Fucker.Penis.Interaction ~= nil then human.Mouth.Fucker.Penis.Interaction.AutoActive = false end
+		if human.Vagina.Fucker ~= nil and human.Vagina.Fucker.Penis ~= nil and human.Vagina.Fucker.Penis.Interaction ~= nil then human.Vagina.Fucker.Penis.Interaction.AutoActive = false end
+		if human.Anus.Fucker ~= nil and human.Anus.Fucker.Penis ~= nil and human.Anus.Fucker.Penis.Interaction ~= nil then human.Anus.Fucker.Penis.Interaction.AutoActive = false end
+	end
+	if resetanim == nil or resetanim then
+		game.RemoveAnim(human)
+		game.RemoveAnim(human.chestNames)
+		game.RemoveAnim(human.breastNames)
+		game.RemoveAnim(human.forearmNames)
+		game.RemoveAnim(human.handNames)
+		game.RemoveAnim(human.m_mouth)
+		game.RemoveAnim(human.headNames)
+		game.RemoveAnim(human.Anus)
+		game.RemoveAnim(human.footNames)
+		game.RemoveAnim(human.thighNames)
+	end
+	if resetpose == nil or resetpose then
+		human.Pose(StandUp())
+	end
+	if resetface == nil or resetface then
+		human.Pose(FaceNeutral())
+	end
+end
+
 -------------------------------------------------------------------------------------------------
 -- INTERACTION
 -------------------------------------------------------------------------------------------------
@@ -148,22 +176,4 @@ function SetInteractionThrustWeightStep(interaction, weightStep, increase, ishan
 		interaction.AutoActive = true
 		interaction.m_autoThrustWeight = weight
 	end
-end
-
--- RESET
-function ResetPose(human)
-	human.Pose(StandUp())
-	human.Pose(FaceNeutral())
-	game.RemoveAnim(human)
-	game.RemoveAnim(human.chestNames)
-	game.RemoveAnim(human.breastNames)
-	game.RemoveAnim(human.forearmNames)
-	game.RemoveAnim(human.handNames)
-	game.RemoveAnim(human.m_mouth)
-	game.RemoveAnim(human.headNames)
-	game.RemoveAnim(human.Anus)
-	game.RemoveAnim(human.footNames)
-	game.RemoveAnim(human.thighNames)
-	human.Penis.Interaction.AutoActive = false
-	human.Mouth.Fucker.Penis.Interaction.AutoActive = false
 end

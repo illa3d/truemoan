@@ -32,7 +32,7 @@ label SexControl(human, interaction, ishand)
 	
 	-- handjob
 	+ if human.Penis.m_holdDepth ~= 0
-		+ "Style.. | T" .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), sdec) [if SexShowStyleControl] [gold]
+		+ "Style control.. | T" .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), sdec) [if SexShowStyleControl] [gold]
 			+ "| Thrust >"
 				SetInteractionThrustWeightStep(interaction, SexThrustStep, true, ishand)
 				Return()
@@ -48,7 +48,7 @@ label SexControl(human, interaction, ishand)
 
 	-- oral/vaginal/anal
 	+ else 
-		+ "Style.. | M" .. ValueLabel(GetInteractionWeight(interaction, ishand), sdec) .. " | T" .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), sdec) [if SexShowStyleControl] [gold]
+		+ "Style control.. | M" .. ValueLabel(GetInteractionWeight(interaction, ishand), sdec) .. " | T" .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), sdec) [if SexShowStyleControl] [gold]
 			+ "| Thrust >"
 				SetInteractionThrustWeightStep(interaction, SexThrustStep, true, ishand)
 				Return()
@@ -154,7 +154,7 @@ label TMMenuSex(human)
 
 	-- HAS PENIS
 	+ if human.Penis.IsActive == true
-		+ "Cum.. | " .. WordLabel(cumevery .. "s") [gold]
+		+ "Cum control.. | " .. WordLabel(cumevery .. "s") [gold]
 			+ "Cum every 1 sec"
 				cumevery = SetCumEvery(human, 1)
 				Return(2)
@@ -189,7 +189,7 @@ label TMMenuSex(human)
 
 	-- HAS NO PENIS
 	+ if not human.Penis.IsActive
-		+ "Wet.. | " .. ValueLabel2("V",human.m_vagina.m_wetness, "A", human.m_anus.m_wetness) .. " | " .. ValueLabel1("M", human.m_mouth.m_wetness) [gold]
+		+ "Wet control.. | " .. ValueLabel2("V",human.m_vagina.m_wetness, "A", human.m_anus.m_wetness) .. " | " .. ValueLabel1("M", human.m_mouth.m_wetness) [gold]
 			+ "3 Squirt"
 				SetGirlWetness(human, 10000, "Vagina")
 				Return()
