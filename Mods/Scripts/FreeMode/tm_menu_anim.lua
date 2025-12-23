@@ -1,5 +1,40 @@
 -- TrueMoan v0.9 by illa3d
 label TMMenuAnim(human)
+	+ "Speed.. | " .. ValueLabel(CL_SMult, adec) [gold]
+		+ "Speed >"
+			CL_SMult = CL_SMult + SpeedIncrement_A
+			Return()
+		+ "< Speed"
+			CL_SMult = CL_SMult - SpeedIncrement_A
+			Return()
+		+ "RESET | " .. ValueLabel(CL_SMult, adec) [gold]
+			CL_SMult = 1
+			Return()
+		+ MenuBack.." (applied to new anims)"
+			Return(2)
+		+ MenuClose
+	+ "Ease.. | " .. ValueLabel2("", CLV2_A, "", CLV2_B, adec) [gold]
+		+ "Ease In >"
+			CLV2_A = CLV2_A + EaseIncrement_A
+			Return()
+		+ "< Ease In"
+			CLV2_A = CLV2_A - EaseIncrement_A
+			Return()
+		+ "RESET Ease In | ".. ValueLabel(CLV2_A, adec) [gold]
+			CLV2_A = 2
+			Return()
+		+ "Ease Out >"
+			CLV2_B = CLV2_B + EaseIncrement_A
+			Return()
+		+ "< Ease Out"
+			CLV2_B = CLV2_B - EaseIncrement_A
+			Return()
+		+ "RESET Ease Out | " .. ValueLabel(CLV2_B, adec) [gold]
+			CLV2_B = 2
+			Return()
+		+ MenuBack.." (applied to new anims)"
+			Return(2)
+		+ MenuClose
 	+ "Licking.."[if game.HasAnim(human.m_mouth) == false][gold]
 		+ "Tongue"
 			activeloops[human.m_mouth] = 0.3/CL_SMult*2.5
