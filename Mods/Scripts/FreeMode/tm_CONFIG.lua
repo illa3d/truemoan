@@ -39,7 +39,7 @@ NormalTreshold = 0.1
 -- Menu
 RootHideShowUI = false						-- Display show/hide UI option in TalkMenu first page
 MenuBack = "<color=#e87435>« BACK</color>"	-- Back button style
-MenuClose = "<color=#e84235>× CLOSE"		-- Close button style
+MenuClose = "<color=#e85035>× CLOSE"		-- Close button style
 MenuNumColor = "<color=#df9c3d>"			-- Numerical values
 
 -- Music tracks displayed in Options/Music

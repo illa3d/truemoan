@@ -29,7 +29,7 @@ label TMMenuBodySize(human)
 	+ "2 Small"
 		bodysize = BodyEditSet(human,"Body size", -0.15)
 		Return()
-	+ "3 Fairy"
+	+ "3 Tiny"
 		bodysize = BodyEditSet(human,"Body size", -0.7)
 		Return()
 	+ MenuBack

@@ -3,11 +3,11 @@
 bdec = 3
 
 label TMMenuBody(human)
-	+ "Edit Safe | ON" [if BodyEditSafe == true]
+	+ "Edit Safe | " .. BoolLabel(BodyEditSafe) [if BodyEditSafe == true]
 		BodyEditSafe = false
 		human "Warning: Game can crash for Breasts <-0.8 and BodySize <-0.9!\nMake sure you save before :)"
 		Return()
-	+ "Edit Safe | OFF (can crash app)" [if BodyEditSafe == false]
+	+ "Edit Safe | " .. BoolLabel(BodyEditSafe) .. "(can crash app)" [if BodyEditSafe == false]
 		BodyEditSafe = true
 		Return()
 	+ "RESET Values" [gold]
@@ -179,7 +179,7 @@ label TMMenuBody(human)
 	+ "Apply values" [if BodyEditSafe]
 		BodyEditApplyValues(human)
 		Return()
-	+ "Apply values (safe off!)" [if not BodyEditSafe]
+	+ "Apply values " .. WordLabel("(safe off)") [if not BodyEditSafe]
 		BodyEditApplyValues(human)
 		Return()
 	+ "Size.." [gold]
