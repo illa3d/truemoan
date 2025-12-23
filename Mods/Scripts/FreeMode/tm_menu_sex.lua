@@ -24,7 +24,7 @@ label TMSexControl(human, interaction, ishand)
 	+ "| Speed >"
 		SetInteractionSpeedStep(interaction, SexSpeedStep, true, ishand)
 		Return()
-	+ "| Speed <"
+	+ "| < Speed"
 		SetInteractionSpeedStep(interaction, SexSpeedStep, false, ishand)
 		Return()
 	+ "RESET Speed | " .. ValueLabel(GetInteractionSpeed(interaction, ishand), tmSdec)
