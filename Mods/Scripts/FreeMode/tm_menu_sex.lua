@@ -136,7 +136,7 @@ label TMMenuSex(human)
 				game.AddRepeatAnim(4, || human.Shoot(), human.Penis)
 				Return()
 	+ if human.Penis.IsActive == false
-		+ "Wet.. | V" .. human.m_vagina.m_wetness .. " | A" ..human.m_anus.m_wetness.. " | M" .. human.m_mouth.m_wetness [gold]
+		+ "Wet.. | " .. ValueLabel2("V",human.m_vagina.m_wetness, "A", human.m_anus.m_wetness) .. " | " .. ValueLabel1("M", human.m_mouth.m_wetness) [gold]
 			+ "3 Squirt"
 				SetGirlWetness(human, 10000, "Vagina")
 				Return()
@@ -156,7 +156,7 @@ label TMMenuSex(human)
 					wett = 0
 				SetGirlWetness(human, wett, "Vagina")
 				Return()
-			+ "RESET | V" .. human.m_vagina.m_wetness .. " | A" ..human.m_anus.m_wetness.. " | M" .. human.m_mouth.m_wetness [gold]
+			+ "RESET | " .. ValueLabel2("V",human.m_vagina.m_wetness, "A", human.m_anus.m_wetness) .. " | " .. ValueLabel1("M", human.m_mouth.m_wetness) [gold]
 				ResetGirlWetness(human)	
 				Return()
 			+ MenuBack
