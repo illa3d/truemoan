@@ -154,7 +154,7 @@ label TMMenuBody(human)
 			+ MenuBack
 				Return(2)
 			+ MenuClose
-	+ "| Body	| " .. ValueLabel2("B", bodysize, "M", musclesize, bdec) 
+	+ "| Body	| " .. ValueLabel2("B", bodysize, "M", musclesize, bdec) [gold]
 		+ "Muscle >"
 			musclesize = BodyEditUp(human, "Muscle tone", musclesize, BodyStepA, 1)
 			Return()
