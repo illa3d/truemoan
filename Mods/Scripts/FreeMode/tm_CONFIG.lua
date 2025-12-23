@@ -4,57 +4,57 @@
 -----------------------------------------------
 
 -- Ambience
-AllowAmbience = true
-AmbienceVolume = 0.5 -- 0 to 1
+TM_AllowAmbience = true
+TM_AmbienceVolume = 0.5 -- 0 to 1
 
 -- Characters spawn naked
-NakedOnSpawn = false	-- default value on scene change
+TM_NakedOnSpawn = false	-- default value on scene change
 
 -- Body Edit
-BodyEditSafe = true	-- default value on scene change
-BreastSafeMin = -0.8	-- some characters fall apart below this value and game crashes
+TM_BodyEditSafe = true	-- default value on scene change
+TM_BreastSafeMin = -0.8	-- some characters fall apart below this value and game crashes
 
 -- Body Edit Increments
-BodyStepA = 0.1		-- nipples hip, waist, muscle
-BodyStepB = 0.05	-- ass, penis-length, penis-size, forearm, upperarm, calf, thigh, neck
-BodyStepC = 0.025	-- breast, body
+TM_BodyStepA = 0.1		-- nipples hip, waist, muscle
+TM_BodyStepB = 0.05		-- ass, penis-length, penis-size, forearm, upperarm, calf, thigh, neck
+TM_BodyStepC = 0.025	-- breast, body
 
 -- Sex speed config (0.001-2)
-SexShowStyleControl = true	-- Show/Hide Male and Thrust controls
-SexSpeedStep = 0.05		-- non-linear percent (increments: slow = small, fast = big)
-SexMaleStep = 0.1		-- giver/getter, linear percent (of UI slider)
-SexThrustStep = 0.1 	-- easier/harder, linear percent (of UI slider)
-SexSpeedMax = 2
-SexSpeedFast = 0.9
-SexSpeedNormal = 0.5
-SexSpeedMedium = 0.25
-SexSpeedSlow = 0.1
+TM_SexShowStyleControl = true	-- Show/Hide Male and Thrust controls
+TM_SexSpeedStep = 0.05			-- non-linear percent (increments: slow = small, fast = big)
+TM_SexMaleStep = 0.1			-- giver/getter, linear percent (of UI slider)
+TM_SexThrustStep = 0.1		 	-- easier/harder, linear percent (of UI slider)
+TM_SexSpeedMax = 2
+TM_SexSpeedFast = 0.9
+TM_SexSpeedNormal = 0.5
+TM_SexSpeedMedium = 0.25
+TM_SexSpeedSlow = 0.1
 
 -- Sex/Moan Tier config
-WetSex = true		-- default value on scene change
-Moaning = true		-- default value on scene change
-WetnessStep = 200	-- Umm. Try lol.
+TM_WetSex = true		-- default value on scene change
+TM_Moaning = true		-- default value on scene change
+TM_WetnessStep = 200	-- Umm. Try lol.
 
 -- Cum moan frequency (seconds)
-MoanCumEyeTime = 1
-MoanCumLipsTime = 3
-MoanCumBodyTime = 5
+TM_MoanCumEyeTime = 1
+TM_MoanCumLipsTime = 3
+TM_MoanCumBodyTime = 5
 
 -- Sex Moan Tresholds (speed 0-2)
-ClimaxTreshold = 1.3
-OrgasmTreshold = 0.9
-FasterTreshold = 0.6
-FastTreshold = 0.3
-NormalTreshold = 0.1
+TM_ClimaxTreshold = 1.3
+TM_OrgasmTreshold = 0.9
+TM_FasterTreshold = 0.6
+TM_FastTreshold = 0.3
+TM_NormalTreshold = 0.1
 
 -- Menu
-RootHideShowUI = false						-- Display show/hide UI option in TalkMenu first page
-MenuBack = "<color=#e87435>« BACK</color>"	-- Back button style
-MenuClose = "<color=#e85035>× CLOSE"		-- Close button style
-MenuNumColor = "<color=#df9c3d>"			-- Numerical values
+TM_RootHideShowUI = false						-- Display show/hide UI option in TalkMenu first page
+TM_MenuBack = "<color=#e87435>« BACK</color>"	-- Back button style
+TM_MenuClose = "<color=#e85035>× CLOSE"			-- Close button style
+TM_MenuNumColor = "<color=#df9c3d>"				-- Numerical values
 
 -- Music tracks displayed in Options/Music
-MusicTracks = {
+TM_MusicTracks = {
 	"01_Dreamy_Whisper",
 	"02_Moon-blind",
 	"03_OpenMeBabe",
@@ -90,20 +90,20 @@ MusicTracks = {
 -------------------------------------------------------------------------------------------------
 -- LABELS FORMAT
 -------------------------------------------------------------------------------------------------
-endcolor = "</color>"
+TM_EndColor = "</color>"
 
-function BoolLabel (bvalue)
-	 return MenuNumColor .. (bvalue and "ON" or "OFF") .. endcolor
+function TMBoolLabel (bvalue)
+	 return TM_MenuNumColor .. (bvalue and "ON" or "OFF") .. TM_EndColor
 end
-function WordLabel (svalue)
-	return  MenuNumColor .. svalue .. endcolor
+function TMWordLabel (svalue)
+	return  TM_MenuNumColor .. svalue .. TM_EndColor
 end
-function ValueLabel (value, decimals)
-	return  MenuNumColor .. TruncDecimal(value, decimals) .. endcolor
+function TMValueLabel (value, decimals)
+	return  TM_MenuNumColor .. TruncDecimal(value, decimals) .. TM_EndColor
 end
-function ValueLabel1 (letter, value, decimals)
-	return  letter .. MenuNumColor .. TruncDecimal(value, decimals) .. endcolor
+function TMValueLabel1 (letter, value, decimals)
+	return  letter .. TM_MenuNumColor .. TruncDecimal(value, decimals) .. TM_EndColor
 end
-function ValueLabel2 (letter1, value1, letter2, value2, decimals)
-	return  letter1 .. MenuNumColor .. TruncDecimal(value1, decimals) .. endcolor .. " | " .. letter2 .. MenuNumColor .. TruncDecimal(value2, decimals) .. endcolor
+function TMValueLabel2 (letter1, value1, letter2, value2, decimals)
+	return  letter1 .. TM_MenuNumColor .. TruncDecimal(value1, decimals) .. TM_EndColor .. " | " .. letter2 .. TM_MenuNumColor .. TruncDecimal(value2, decimals) .. TM_EndColor
 end

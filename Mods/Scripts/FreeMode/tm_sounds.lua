@@ -37,7 +37,7 @@ function TMPlayAmbienceRandom()
 end
 
 function TMPlayAmbience(track)
-	if AllowAmbience == false then return end
+	if TM_AllowAmbience == false then return end
 
 	-- set next ambience to play
 	track = math.max(1, math.min(track, tmAmbienceTracks)) -- Clamp
@@ -48,9 +48,9 @@ function TMPlayAmbience(track)
 	if tmLoopingAmbience then return end
 	ResetTimer(tmAmbienceTimer)
 	tmLoopingAmbience = true
-	PlaySound("tm_ambience" .. " (" .. track .. ")", AmbienceVolume)
+	PlaySound("tm_ambience" .. " (" .. track .. ")", TM_AmbienceVolume)
 	Delayed(tmAmbienceTrackSec, function()
 		tmLoopingAmbience = false
-		if AllowAmbience and tmPlayingAmbience then TMPlayAmbience(tmAmbienceTrack) end
+		if TM_AllowAmbience and tmPlayingAmbience then TMPlayAmbience(tmAmbienceTrack) end
 	end)
 end

@@ -9,64 +9,64 @@ label TMMenuOptions(human)
 		HG_UIvis = true
 		game.m_controlsUI.Show()
 		Return()
-	+ "New people | " .. WordLabel("Naked") [if NakedOnSpawn == true]
-		NakedOnSpawn = false
+	+ "New people | " .. TMWordLabel("Naked") [if TM_NakedOnSpawn == true]
+		TM_NakedOnSpawn = false
 		Return()
-	+ "New people | " .. WordLabel("Clothed") [if NakedOnSpawn == false]
-		NakedOnSpawn = true
+	+ "New people | " .. TMWordLabel("Clothed") [if TM_NakedOnSpawn == false]
+		TM_NakedOnSpawn = true
 		Return()
 	-- + "Sex.." [gold] --return when options fill up
-	+ "Wet sex | " .. BoolLabel(WetSex) [if WetSex == true]
-		WetSex = false
+	+ "Wet sex | " .. TMBoolLabel(TM_WetSex) [if TM_WetSex == true]
+		TM_WetSex = false
 		Return()
-	+ "Wet sex | " .. BoolLabel(WetSex) [if WetSex == false]
-		WetSex = true
+	+ "Wet sex | " .. TMBoolLabel(TM_WetSex) [if TM_WetSex == false]
+		TM_WetSex = true
 		Return()
-	+ "Moan sex | " .. BoolLabel(Moaning) [if Moaning == true]
-		Moaning = false
+	+ "Moan sex | " .. TMBoolLabel(TM_Moaning) [if TM_Moaning == true]
+		TM_Moaning = false
 		Return()
-	+ "Moan sex | " .. BoolLabel(Moaning) [if Moaning == false]
-		Moaning = true
+	+ "Moan sex | " .. TMBoolLabel(TM_Moaning) [if TM_Moaning == false]
+		TM_Moaning = true
 		Return()
-	+ "Moan cum | " .. BoolLabel(game.FluidReaction) [if game.FluidReaction == true]
+	+ "Moan cum | " .. TMBoolLabel(game.FluidReaction) [if game.FluidReaction == true]
 		game.FluidReaction = false
 		Return()
-	+ "Moan cum | " .. BoolLabel(game.FluidReaction) [if game.FluidReaction == false]
+	+ "Moan cum | " .. TMBoolLabel(game.FluidReaction) [if game.FluidReaction == false]
 		game.FluidReaction = true
 		Return()
 	-- + MenuBack
 	-- 	Return(2)
 	-- + MenuClose
-	+ "Ambience.. | " .. BoolLabel(AllowAmbience) [gold]
-		+ "Refresh" [if AllowAmbience == true]
+	+ "Ambience.. | " .. TMBoolLabel(TM_AllowAmbience) [gold]
+		+ "Refresh" [if TM_AllowAmbience == true]
 			Return()
-		+ "Next track | " .. WordLabel("Ambience " .. tmAmbienceTrack) [if AllowAmbience]
+		+ "Next track | " .. TMWordLabel("Ambience " .. tmAmbienceTrack) [if TM_AllowAmbience]
 			TMPlayAmbienceNext()
 			Return()
-		+ "Ambience | " .. BoolLabel(AllowAmbience) .. " (next in ".. ValueLabel(TMAmbienceLeftSec()) .. "s)" [if AllowAmbience == true]
-			AllowAmbience = false
+		+ "Ambience | " .. TMBoolLabel(TM_AllowAmbience) .. " (next in ".. TMValueLabel(TMAmbienceLeftSec()) .. "s)" [if TM_AllowAmbience == true]
+			TM_AllowAmbience = false
 			Return()
-		+ "Ambience | " .. BoolLabel(AllowAmbience) [if AllowAmbience == false]
-			AllowAmbience = true
+		+ "Ambience | " .. TMBoolLabel(TM_AllowAmbience) [if TM_AllowAmbience == false]
+			TM_AllowAmbience = true
 			TMPlayAmbienceCurrent()
 			Return()
-		+ MenuBack
+		+ TM_MenuBack
 			Return(2)
-		+ MenuClose
+		+ TM_MenuClose
 	+ "Music.." [gold]
-		+ MenuBack
+		+ TM_MenuBack
 			Return (2)
-		+ for i, track in ipairs(MusicTracks)
+		+ for i, track in ipairs(TM_MusicTracks)
 			+ "Play " .. track
 				Music(track , 0.05, 0)
 				Return()
 		+ "STOP Music" [gold]
 			StopMusic()
 			Return()
-		+ MenuBack
+		+ TM_MenuBack
 			Return(2)
-		+ MenuClose
-	+ MenuBack
+		+ TM_MenuClose
+	+ TM_MenuBack
 		Return(2)
-	+ MenuClose
+	+ TM_MenuClose
 stop

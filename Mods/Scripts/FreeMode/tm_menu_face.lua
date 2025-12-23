@@ -7,9 +7,9 @@ label TMMenuFace(human)
 			+ " " .. pres
 				human.Pose(kisspresets[i]())
 				Return()
-		+ MenuBack
+		+ TM_MenuBack
 			Return(2)
-		+ MenuClose
+		+ TM_MenuClose
 	+ "Anim.."[gold] --Face expression looping @callmedrjones6911 https://discord.com/channels/620113492208517120/1312401584910631054/1349562400105431090
 		+ "Smile > Ahegao"
 			game.AddRepeatAnim(2, || CustomLoops(human, FaceSmile, FaceAhegao, "Smile > Ahegao"), human)
@@ -31,17 +31,17 @@ label TMMenuFace(human)
 		+ "Stop Looping" [if game.HasAnim(human) == true]
 			game.RemoveAnim(human)
 			Return()
-		+ MenuBack.." (EYE BUG during movement)"
+		+ TM_MenuBack.." (EYE BUG during movement)"
 			Return(2)
-		+ MenuClose
+		+ TM_MenuClose
 	+ "Custom.."[gold]
 		+ for i, pres in ipairs (facestr)
 			+ " " .. pres
 				human.Pose(facepresets[i]())
 				Return()
-		+ MenuBack
+		+ TM_MenuBack
 			Return(2)
-		+ MenuClose
+		+ TM_MenuClose
 	+ "Original.."[gold]
 		+ "Ahegao!"
 			human.Pose(FaceAhegao())
@@ -76,16 +76,16 @@ label TMMenuFace(human)
 		+ "Close your eyes."
 			human.Pose(EyesClose())
 			Return()
-		+ MenuBack
+		+ TM_MenuBack
 			Return(2)
-		+ MenuClose
+		+ TM_MenuClose
 	+ "Stop Looping" [if game.HasAnim(human) == true]
 		game.RemoveAnim(human)
 		Return()
 	+ "RESET Face" [gold]
 		human.Pose(FaceNeutral())
 		Return()
-	+ MenuBack
+	+ TM_MenuBack
 		Return(2)
-	+ MenuClose
+	+ TM_MenuClose
 stop

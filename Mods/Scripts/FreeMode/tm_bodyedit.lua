@@ -19,7 +19,7 @@ tmBodySize = 0
 function TMBodyEditUp(human, bodypart, value, step, valuemax, valuesafe)
 	local mult = 1 + math.floor(math.abs(value) / 2) -- step function to multiply step for bigger values
 	value = value + step * mult
-	if BodyEditSafe and valuesafe ~= nil and valuesafe ~= 0 and value > valuesafe then 
+	if TM_BodyEditSafe and valuesafe ~= nil and valuesafe ~= 0 and value > valuesafe then 
 		value = valuesafe
 	elseif value > valuemax then
 		value = valuemax
@@ -31,7 +31,7 @@ end
 function TMBodyEditDown(human, bodypart, value, step, valuemin, valuesafe)
 	local mult = 1 + math.floor(math.abs(value) / 2) -- step function to multiply step for bigger values
 	value = value - step * mult
-	if BodyEditSafe and valuesafe ~= nil and valuesafe ~= 0 and value < valuesafe then 
+	if TM_BodyEditSafe and valuesafe ~= nil and valuesafe ~= 0 and value < valuesafe then 
 		value = valuesafe
 	elseif value < valuemin then
 		value = valuemin

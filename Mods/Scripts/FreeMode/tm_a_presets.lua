@@ -32,9 +32,9 @@ label TMMenuBodySize(human)
 	+ "• Tiny"
 		tmBodySize = TMBodyEditSet(human,"Body size", -0.7)
 		Return()
-	+ MenuBack
+	+ TM_MenuBack
 		Return(2)
-	+ MenuClose
+	+ TM_MenuClose
 stop
 
 -- MENU: BODY.. / Type..
@@ -57,9 +57,9 @@ label TMMenuBodyType(human)
 	+ "Random"
 		TMBEPreset_Random(human)
 		Return()
-	+ MenuBack
+	+ TM_MenuBack
 		Return(2)
-	+ MenuClose
+	+ TM_MenuClose
 stop
 
 -------------------------------------------------------------------------------------------------

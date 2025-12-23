@@ -5,9 +5,9 @@ label TMMenuPose(human)
 			+ " " .. pres
 				human.Pose(bodypresets[i]())
 				Return()
-		+ MenuBack
+		+ TM_MenuBack
 			Return(2)
-		+ MenuClose
+		+ TM_MenuClose
 	+ "Lay.."[gold]
 		+ "On your Back"
 			human.Pose(LayDownBack1())
@@ -21,9 +21,9 @@ label TMMenuPose(human)
 		+ "On your stomach."
 			human.Pose(LaydownStomach1())
 			Return()
-		+ MenuBack
+		+ TM_MenuBack
 			Return(2)
-		+ MenuClose
+		+ TM_MenuClose
 	+ "Kneel.."[gold]
 		+ "All Four."
 			human.Pose(All41())
@@ -43,9 +43,9 @@ label TMMenuPose(human)
 		+ "Kneel down - 4."
 			human.Pose(KneelDown4())
 			Return()
-		+ MenuBack
+		+ TM_MenuBack
 			Return(2)
-		+ MenuClose
+		+ TM_MenuClose
 	+ "Sit.."[gold]
 		+ "Sit down."
 			human.Pose(SitDown1())
@@ -56,9 +56,9 @@ label TMMenuPose(human)
 		+ "Sit down and spread your legs."
 			human.Pose(SitDownSpreadLegs())
 			Return()
-		+ MenuBack
+		+ TM_MenuBack
 			Return(2)
-		+ MenuClose
+		+ TM_MenuClose
 	+ "Stand.."[gold]
 		+ "Stand up"
 			human.Pose(StandUp1())
@@ -66,9 +66,9 @@ label TMMenuPose(human)
 		+ "Bend over."
 			human.Pose(BendOver1())
 			Return()
-		+ MenuBack
+		+ TM_MenuBack
 			Return(2)
-		+ MenuClose
+		+ TM_MenuClose
 	+ "Original.."[gold]
 		+ "Stand up straight."
 			human.Pose(StandUp())
@@ -97,13 +97,13 @@ label TMMenuPose(human)
 		+ "Bend over."
 			human.Pose(BendOver())
 			Return()
-		+ MenuBack
+		+ TM_MenuBack
 			Return(2)
-		+ MenuClose
+		+ TM_MenuClose
 	+ "RESET Pose" [gold]
 		ResetHuman(human, false, false, true) --resetsex, resetanim, resetpose, resetface
 		Return()
-	+ MenuBack
+	+ TM_MenuBack
 		Return(2)
-	+ MenuClose
+	+ TM_MenuClose
 stop

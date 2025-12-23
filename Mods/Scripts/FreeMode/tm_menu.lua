@@ -2,7 +2,7 @@
 label TMTalkMenu(human, hitTri)
 	+ "Mod Menu" [if TM_ModMenu ~= nil] [gold]
 		TM_ModMenu(human, hitTri)
-	+ if RootHideShowUI
+	+ if TM_RootHideShowUI
 		+ "Hide UI" [if HG_UIvis == true]
 			HG_UIvis = false
 			game.m_controlsUI.Show(false)
@@ -32,5 +32,5 @@ label TMTalkMenu(human, hitTri)
 		+ "Exit POV"
 			game.PovHuman = nil
 			Return()
-	+ MenuClose
+	+ TM_MenuClose
 stop

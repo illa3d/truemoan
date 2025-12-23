@@ -7,74 +7,74 @@ tmSdec = 3
 -- SEX CONTROL (in many menus)
 label TMSexControl(human, interaction, ishand)
 	+ "• Max"
-		SetInteractionSpeed(interaction, SexSpeedMax, ishand)
+		SetInteractionSpeed(interaction, TM_SexSpeedMax, ishand)
 		Return()
 	+ "• Fast"
-		SetInteractionSpeed(interaction, SexSpeedFast, ishand)
+		SetInteractionSpeed(interaction, TM_SexSpeedFast, ishand)
 		Return()
 	+ "• Normal"
-		SetInteractionSpeed(interaction, SexSpeedNormal, ishand)
+		SetInteractionSpeed(interaction, TM_SexSpeedNormal, ishand)
 		Return()
 	+ "• Medium"
-		SetInteractionSpeed(interaction, SexSpeedMedium, ishand)
+		SetInteractionSpeed(interaction, TM_SexSpeedMedium, ishand)
 		Return()
 	+ "• Slow"
-		SetInteractionSpeed(interaction, SexSpeedSlow, ishand)
+		SetInteractionSpeed(interaction, TM_SexSpeedSlow, ishand)
 		Return()
 	+ "| Speed >"
-		SetInteractionSpeedStep(interaction, SexSpeedStep, true, ishand)
+		SetInteractionSpeedStep(interaction, TM_SexSpeedStep, true, ishand)
 		Return()
 	+ "| < Speed"
-		SetInteractionSpeedStep(interaction, SexSpeedStep, false, ishand)
+		SetInteractionSpeedStep(interaction, TM_SexSpeedStep, false, ishand)
 		Return()
-	+ "RESET Speed | " .. ValueLabel(GetInteractionSpeed(interaction, ishand), tmSdec)
+	+ "RESET Speed | " .. TMValueLabel(GetInteractionSpeed(interaction, ishand), tmSdec)
 		SetInteractionSpeed(interaction, 0, ishand)
 		Return()
 	
 	-- handjob
 	+ if human.Penis.m_holdDepth ~= 0
-		+ "Style control.. | T" .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), tmSdec) [if SexShowStyleControl] [gold]
+		+ "Style control.. | T" .. TMValueLabel(GetInteractionThrustWeight(interaction, ishand), tmSdec) [if TM_SexShowStyleControl] [gold]
 			+ "| Thrust >"
-				SetInteractionThrustWeightStep(interaction, SexThrustStep, true, ishand)
+				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, true, ishand)
 				Return()
 			+ "| < Thrust"
-				SetInteractionThrustWeightStep(interaction, SexThrustStep, false, ishand)
+				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, false, ishand)
 				Return()
-			+ "RESET Thrust | " .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), tmSdec)[gold]
+			+ "RESET Thrust | " .. TMValueLabel(GetInteractionThrustWeight(interaction, ishand), tmSdec)[gold]
 				SetInteractionThrustWeight(interaction, 0, ishand)
 				Return()
-			+ MenuBack
+			+ TM_MenuBack
 				Return(2)
-			+ MenuClose
+			+ TM_MenuClose
 
 	-- oral/vaginal/anal
 	+ else 
-		+ "Style control.. | M" .. ValueLabel(GetInteractionWeight(interaction, ishand), tmSdec) .. " | T" .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), tmSdec) [if SexShowStyleControl] [gold]
+		+ "Style control.. | M" .. TMValueLabel(GetInteractionWeight(interaction, ishand), tmSdec) .. " | T" .. TMValueLabel(GetInteractionThrustWeight(interaction, ishand), tmSdec) [if TM_SexShowStyleControl] [gold]
 			+ "| Thrust >"
-				SetInteractionThrustWeightStep(interaction, SexThrustStep, true, ishand)
+				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, true, ishand)
 				Return()
 			+ "| < Thrust"
-				SetInteractionThrustWeightStep(interaction, SexThrustStep, false, ishand)
+				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, false, ishand)
 				Return()
-			+ "RESET Thrust | " .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), tmSdec)
+			+ "RESET Thrust | " .. TMValueLabel(GetInteractionThrustWeight(interaction, ishand), tmSdec)
 				SetInteractionThrustWeight(interaction, 0, ishand)
 				Return()
 			+ "| Male >"
-				SetInteractionWeightStep(interaction, SexMaleStep, true, ishand)
+				SetInteractionWeightStep(interaction, TM_SexMaleStep, true, ishand)
 				Return()
 			+ "| < Male"
-				SetInteractionWeightStep(interaction, SexMaleStep, false, ishand)
+				SetInteractionWeightStep(interaction, TM_SexMaleStep, false, ishand)
 				Return()
-			+ "RESET Male | " .. ValueLabel(GetInteractionWeight(interaction, ishand), tmSdec)
+			+ "RESET Male | " .. TMValueLabel(GetInteractionWeight(interaction, ishand), tmSdec)
 				SetInteractionWeight(interaction, 0, ishand)
 				Return()
-			+ MenuBack
+			+ TM_MenuBack
 				Return(2)
-			+ MenuClose
+			+ TM_MenuClose
 
-	+ MenuBack
+	+ TM_MenuBack
 		Return(2)
-	+ MenuClose
+	+ TM_MenuClose
 stop
 
 -- SEX MENU
@@ -93,19 +93,19 @@ label TMMenuSex(human)
 
 	-- SEX CONTROL
 	-- GETTER HANDJOB
-	+ "Handjob control.. | " .. ValueLabel(human.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Penis.m_holdDepth ~= 0] [gold]
+	+ "Handjob control.. | " .. TMValueLabel(human.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Penis.m_holdDepth ~= 0] [gold]
 		TMSexControl(human, human.Penis.Interaction, true)
 	-- GIVER (MOUTH, VAGINA, ANUS)
-	+ "Sex control.. | " .. ValueLabel(human.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Penis.Hole ~= nil] [gold]
+	+ "Sex control.. | " .. TMValueLabel(human.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Penis.Hole ~= nil] [gold]
 		TMSexControl(human, human.Penis.Interaction)
 	-- GETTER MOUTH
-	+ "Oral control.. | " .. ValueLabel(human.Mouth.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Mouth.Fucker ~= nil] [gold]
+	+ "Oral control.. | " .. TMValueLabel(human.Mouth.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Mouth.Fucker ~= nil] [gold]
 		TMSexControl(human, human.Mouth.Fucker.Penis.Interaction)
 	-- GETTER ANUS
-	+ "Anal control.. | " .. ValueLabel(human.Anus.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Anus.Fucker ~= nil] [gold]
+	+ "Anal control.. | " .. TMValueLabel(human.Anus.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Anus.Fucker ~= nil] [gold]
 		TMSexControl(human, human.Anus.Fucker.Penis.Interaction)
 	-- GETTER VAGINA
-	+ "Vagi control.. | " .. ValueLabel(human.Vagina.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Vagina.Fucker ~= nil] [gold]
+	+ "Vagi control.. | " .. TMValueLabel(human.Vagina.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Vagina.Fucker ~= nil] [gold]
 		TMSexControl(human, human.Vagina.Fucker.Penis.Interaction)
 
 	-- START / STOP
@@ -156,7 +156,7 @@ label TMMenuSex(human)
 
 	-- HAS PENIS
 	+ if human.Penis.IsActive == true
-		+ "Cum control.. | " .. WordLabel(tmCumevery .. "s") [gold]
+		+ "Cum control.. | " .. TMWordLabel(tmCumevery .. "s") [gold]
 			+ "Cum every 1 sec"
 				cumevery = SetCumEvery(human, 1)
 				Return(2)
@@ -175,9 +175,9 @@ label TMMenuSex(human)
 			+ "Cum every 32 sec"
 				tmCumevery = SetCumEvery(human, 32)
 				Return(2)
-			+ MenuBack
+			+ TM_MenuBack
 				Return(2)
-			+ MenuClose
+			+ TM_MenuClose
 		+ if game.HasAnim(human.Penis)
 			+ "Cum STOP"
 				tmCumevery = 0
@@ -191,7 +191,7 @@ label TMMenuSex(human)
 
 	-- HAS NO PENIS
 	+ if not human.Penis.IsActive
-		+ "Wet control.. | " .. ValueLabel2("V",human.m_vagina.m_wetness, "A", human.m_anus.m_wetness) .. " | " .. ValueLabel1("M", human.m_mouth.m_wetness) [gold]
+		+ "Wet control.. | " .. TMValueLabel2("V",human.m_vagina.m_wetness, "A", human.m_anus.m_wetness) .. " | " .. TMValueLabel1("M", human.m_mouth.m_wetness) [gold]
 			+ "3 Squirt"
 				SetGirlWetness(human, 10000, "Vagina")
 				Return()
@@ -202,21 +202,21 @@ label TMMenuSex(human)
 				SetGirlWetness(human, 500, "Vagina")
 				Return()
 			+ "Wetness >"
-				wett = human.m_vagina.m_wetness + WetnessStep
+				wett = human.m_vagina.m_wetness + TM_WetnessStep
 				SetGirlWetness(human, wett, "Vagina")
 				Return()
 			+ "< Wetness"
-				wett = human.m_vagina.m_wetness - WetnessStep
+				wett = human.m_vagina.m_wetness - TM_WetnessStep
 				if wett < 0
 					wett = 0
 				SetGirlWetness(human, wett, "Vagina")
 				Return()
-			+ "RESET | " .. ValueLabel2("V",human.m_vagina.m_wetness, "A", human.m_anus.m_wetness) .. " | " .. ValueLabel1("M", human.m_mouth.m_wetness) [gold]
+			+ "RESET | " .. TMValueLabel2("V",human.m_vagina.m_wetness, "A", human.m_anus.m_wetness) .. " | " .. TMValueLabel1("M", human.m_mouth.m_wetness) [gold]
 				ResetGirlWetness(human)	
 				Return()
-			+ MenuBack
+			+ TM_MenuBack
 				Return(2)
-			+ MenuClose
+			+ TM_MenuClose
 		+ if human.m_vagina.m_wetness > 0 or human.m_anus.m_wetness > 0 or human.m_mouth.m_wetness > 0
 			+ "Wet STOP"
 				ResetGirlWetness(human)	
@@ -225,7 +225,7 @@ label TMMenuSex(human)
 			+ "Squirt start"
 				SetGirlWetness(human, 10000, "Vagina")
 				Return()
-	+ MenuBack
+	+ TM_MenuBack
 		Return(2)
-	+ MenuClose
+	+ TM_MenuClose
 stop

@@ -61,9 +61,9 @@ label TMMenuHeyHuman(human)
 		+ "Grab Head"
 			human.Pose(GrabHead())
 			Return()
-		+ MenuBack
+		+ TM_MenuBack
 			Return(2)
-		+ MenuClose
+		+ TM_MenuClose
 	+ "Look at me"
 		human.Pose(LookCam())
 		Return()
@@ -88,7 +88,7 @@ label TMMenuHeyHuman(human)
 	+ "Clothes OFF"
 		ShowClothes(human, false)	
 		Return()
-	+ MenuBack
+	+ TM_MenuBack
 		Return(2)
-	+ MenuClose
+	+ TM_MenuClose
 stop

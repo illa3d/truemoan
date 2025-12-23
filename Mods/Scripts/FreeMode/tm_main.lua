@@ -58,7 +58,7 @@ end
 function TMOnCreateHuman(human)
 	ResetGirlWetness(human)
 	TMBEPreset_RandomStart(human)
-	if NakedOnSpawn then
+	if TM_NakedOnSpawn then
 		ShowClothes(human)
 		ShowPenis(human, false)
 	end
@@ -81,15 +81,15 @@ function TMOnFluidHit(hitActor, bodyArea, shootActor)
 	local timerKey = "FluidHit_" .. hitActor.Name .. bodyArea
 	local lastHitTime = Timer(timerKey)
 
-	if bodyArea == "L_Eye" and lastHitTime > MoanCumEyeTime then 
+	if bodyArea == "L_Eye" and lastHitTime > TM_MoanCumEyeTime then 
 		TMPlayGirlMoan(hitActor, "faster")
 		hitActor.AddInvoluntaryAnim("L_Eye_HitClose", 1, 0.7, 0.7, EyelidL(1))
 		ResetTimer(timerKey)
-	elseif bodyArea == "R_Eye" and lastHitTime > MoanCumEyeTime then 
+	elseif bodyArea == "R_Eye" and lastHitTime > TM_MoanCumEyeTime then 
 		TMPlayGirlMoan(hitActor, "faster")
 		hitActor.AddInvoluntaryAnim("R_Eye_HitClose", 1, 0.7, 0.7, EyelidR(1))
 		ResetTimer(timerKey)
-	elseif bodyArea == "Lips" and lastHitTime > MoanCumLipsTime then 
+	elseif bodyArea == "Lips" and lastHitTime > TM_MoanCumLipsTime then 
 		TMPlayGirlMoan(hitActor, "fast")
 		hitActor.AddInvoluntaryAnim("OpenMouth", 5, 0.4, 0.4, Mouth(-0.83, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.73, 0, 0.39))
 		Delayed(1, function()
@@ -103,7 +103,7 @@ function TMOnFluidHit(hitActor, bodyArea, shootActor)
 			hitActor.SayCustom("gen_cumshot")
 			hitActor.Say(hitActor.FaceMood >= 0 and "Like" or "Dislike")
 			ResetTimer(genericVoiceKey)
-		elseif lastHitTime > MoanCumBodyTime then
+		elseif lastHitTime > TM_MoanCumBodyTime then
 			TMPlayGirlMoan(hitActor, "slow")
 			ResetTimer(timerKey)
 		end
@@ -112,7 +112,7 @@ end
 
 -- Updated on penetration (holeName: "Vagina" "Anus" Mouth")
 function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
-	if inVelocity < outVelocity or Moaning == false  then return end
+	if inVelocity < outVelocity or TM_Moaning == false  then return end
 
 	-- Variables
 	local key = "PenetrationMoan_" .. girl.Name .. holeName
@@ -124,40 +124,40 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	local wetness = 0
 
 	-- Tier selection + boundary detection
-	if inVelocity > ClimaxTreshold then
+	if inVelocity > TM_ClimaxTreshold then
 		tier = "climax"
 		pauseMax = 0.1 -- Audio files: ~0.3s + pause
-		tierMax = ClimaxTreshold + 1
-		tierMin = ClimaxTreshold
+		tierMax = TM_ClimaxTreshold + 1
+		tierMin = TM_ClimaxTreshold
 		wetness = 10000
-	elseif inVelocity > OrgasmTreshold then
+	elseif inVelocity > TM_OrgasmTreshold then
 		tier = "orgasm"
 		pauseMax = 0.4 -- Audio files: ~0.4s + pause
-		tierMax = ClimaxTreshold
-		tierMin = OrgasmTreshold
+		tierMax = TM_ClimaxTreshold
+		tierMin = TM_OrgasmTreshold
 		wetness = 1000
-	elseif inVelocity > FasterTreshold then
+	elseif inVelocity > TM_FasterTreshold then
 		tier = "faster"
 		pauseMax = 0.5 -- Audio files: ~0.5s + pause
-		tierMax = OrgasmTreshold
-		tierMin = FasterTreshold
+		tierMax = TM_OrgasmTreshold
+		tierMin = TM_FasterTreshold
 		wetness = 100
-	elseif inVelocity > FastTreshold then
+	elseif inVelocity > TM_FastTreshold then
 		tier = "fast"
 		pauseMax = 0.6 -- Audio files: ~0.5s + pause
-		tierMax = FasterTreshold
-		tierMin = FastTreshold
+		tierMax = TM_FasterTreshold
+		tierMin = TM_FastTreshold
 		wetness = 10
-	elseif inVelocity > NormalTreshold then
+	elseif inVelocity > TM_NormalTreshold then
 		tier = "normal"
 		pauseMax = 1.3 -- Audio files: ~0.8s + pause
-		tierMax = FastTreshold
-		tierMin = NormalTreshold
+		tierMax = TM_FastTreshold
+		tierMin = TM_NormalTreshold
 		wetness = 5
 	else
 		tier = "slow"
 		pauseMax = 10.0 -- VERY long pauses when not moving
-		tierMax = NormalTreshold
+		tierMax = TM_NormalTreshold
 		tierMin = 0.0
 		wetness = 1
 	end
@@ -177,7 +177,7 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	if lastMoanTime > cooldown then
 		TMPlayGirlMoan(girl, tier)
 		-- Auto Wetness
-		if WetSex then
+		if TM_WetSex then
 			SetGirlWetness(girl, wetness, holeName)
 		else
 			SetGirlWetness(girl, 0, holeName)
