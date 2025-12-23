@@ -13,11 +13,11 @@ function TMOnStart()
 	Play_FreeMode() -- this makes TalkMenu visible and 3d interactable
 end 
 
-function TMOnStartAmbience()
+function TMOnStart_Ambience()
 	TMStartSound()
 end
 
-function TMOnStartGenericChat()
+function TMOnStart_GenericChat()
 	init = true
 	ResetTimer("GenericChat", math.random(-10, 0))
 	local speaker = game.GetRandomHuman(|h| h.CanSpeak)
@@ -29,7 +29,7 @@ function TMOnGameUpdate()
 end
 	
 -- Updated every frame
-function TMOnGameUpdateGenericChat()
+function TMOnGameUpdate_GenericChat()
 	if init == false then return end
 	local lastChatTime = Timer("GenericChat")
 	if lastChatTime > game.ChatIntervals then

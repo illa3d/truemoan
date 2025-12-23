@@ -1,26 +1,26 @@
 -- TrueMoan v1.0 by illa3d
 label TMMenuAnim(human)
-	+ "Speed.. | " .. ValueLabel(CL_SMult, adec) [gold]
+	+ "Speed.. | " .. ValueLabel(CL_SMult, tmAdec) [gold]
 		+ "Speed >"
 			CL_SMult = CL_SMult + SpeedIncrement_A
 			Return()
 		+ "< Speed"
 			CL_SMult = CL_SMult - SpeedIncrement_A
 			Return()
-		+ "RESET | " .. ValueLabel(CL_SMult, adec) [gold]
+		+ "RESET | " .. ValueLabel(CL_SMult, tmAdec) [gold]
 			CL_SMult = 1
 			Return()
 		+ MenuBack.." (applied to new anims)"
 			Return(2)
 		+ MenuClose
-	+ "Ease.. | " .. ValueLabel2("", CLV2_A, "", CLV2_B, adec) [gold]
+	+ "Ease.. | " .. ValueLabel2("", CLV2_A, "", CLV2_B, tmAdec) [gold]
 		+ "Ease In >"
 			CLV2_A = CLV2_A + EaseIncrement_A
 			Return()
 		+ "< Ease In"
 			CLV2_A = CLV2_A - EaseIncrement_A
 			Return()
-		+ "RESET Ease In | ".. ValueLabel(CLV2_A, adec) [gold]
+		+ "RESET Ease In | ".. ValueLabel(CLV2_A, tmAdec) [gold]
 			CLV2_A = 2
 			Return()
 		+ "Ease Out >"
@@ -29,7 +29,7 @@ label TMMenuAnim(human)
 		+ "< Ease Out"
 			CLV2_B = CLV2_B - EaseIncrement_A
 			Return()
-		+ "RESET Ease Out | " .. ValueLabel(CLV2_B, adec) [gold]
+		+ "RESET Ease Out | " .. ValueLabel(CLV2_B, tmAdec) [gold]
 			CLV2_B = 2
 			Return()
 		+ MenuBack.." (applied to new anims)"

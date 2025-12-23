@@ -2,21 +2,20 @@
 -------------------------------------------------------------------------------------------------
 -- Used for integration with Talk Menu Mod Manager
 -------------------------------------------------------------------------------------------------
-
 label Start()
 	-- TrueMoan: Enable clicking outside TalkMenu
 	TMOnStart()	
 	-- TrueMoan: Ambience
-	TMOnStartAmbience()	
+	TMOnStart_Ambience()	
 	-- TrueMoan: GenericChat
-	TMOnStartGenericChat()
+	TMOnStart_GenericChat()
 stop
 
 function OnGameUpdate()
 	-- TrueMoan: Unused
 	TMOnGameUpdate()
 	-- TrueMoan: GenericChat
-	TM_OnGameUpdate_GenericChat()
+	TMOnGameUpdate_GenericChat()
 end
 
 -- function OnHumanClick(human, hitTri)

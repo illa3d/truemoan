@@ -1,10 +1,11 @@
 -- TrueMoan vSexSpeedFast by illa3d
 -- Variables
-cumevery = 0
+tmCumevery = 0
 -- Sex speed decimals
-sdec = 3
+tmSdec = 3
 
-label SexControl(human, interaction, ishand)
+-- SEX CONTROL (in many menus)
+label TMSexControl(human, interaction, ishand)
 	+ "• Max"
 		SetInteractionSpeed(interaction, SexSpeedMax, ishand)
 		Return()
@@ -26,20 +27,20 @@ label SexControl(human, interaction, ishand)
 	+ "| Speed <"
 		SetInteractionSpeedStep(interaction, SexSpeedStep, false, ishand)
 		Return()
-	+ "RESET Speed | " .. ValueLabel(GetInteractionSpeed(interaction, ishand), sdec)
+	+ "RESET Speed | " .. ValueLabel(GetInteractionSpeed(interaction, ishand), tmSdec)
 		SetInteractionSpeed(interaction, 0, ishand)
 		Return()
 	
 	-- handjob
 	+ if human.Penis.m_holdDepth ~= 0
-		+ "Style control.. | T" .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), sdec) [if SexShowStyleControl] [gold]
+		+ "Style control.. | T" .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), tmSdec) [if SexShowStyleControl] [gold]
 			+ "| Thrust >"
 				SetInteractionThrustWeightStep(interaction, SexThrustStep, true, ishand)
 				Return()
 			+ "| < Thrust"
 				SetInteractionThrustWeightStep(interaction, SexThrustStep, false, ishand)
 				Return()
-			+ "RESET Thrust | " .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), sdec)[gold]
+			+ "RESET Thrust | " .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), tmSdec)[gold]
 				SetInteractionThrustWeight(interaction, 0, ishand)
 				Return()
 			+ MenuBack
@@ -48,14 +49,14 @@ label SexControl(human, interaction, ishand)
 
 	-- oral/vaginal/anal
 	+ else 
-		+ "Style control.. | M" .. ValueLabel(GetInteractionWeight(interaction, ishand), sdec) .. " | T" .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), sdec) [if SexShowStyleControl] [gold]
+		+ "Style control.. | M" .. ValueLabel(GetInteractionWeight(interaction, ishand), tmSdec) .. " | T" .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), tmSdec) [if SexShowStyleControl] [gold]
 			+ "| Thrust >"
 				SetInteractionThrustWeightStep(interaction, SexThrustStep, true, ishand)
 				Return()
 			+ "| < Thrust"
 				SetInteractionThrustWeightStep(interaction, SexThrustStep, false, ishand)
 				Return()
-			+ "RESET Thrust | " .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), sdec)
+			+ "RESET Thrust | " .. ValueLabel(GetInteractionThrustWeight(interaction, ishand), tmSdec)
 				SetInteractionThrustWeight(interaction, 0, ishand)
 				Return()
 			+ "| Male >"
@@ -64,7 +65,7 @@ label SexControl(human, interaction, ishand)
 			+ "| < Male"
 				SetInteractionWeightStep(interaction, SexMaleStep, false, ishand)
 				Return()
-			+ "RESET Male | " .. ValueLabel(GetInteractionWeight(interaction, ishand), sdec)
+			+ "RESET Male | " .. ValueLabel(GetInteractionWeight(interaction, ishand), tmSdec)
 				SetInteractionWeight(interaction, 0, ishand)
 				Return()
 			+ MenuBack
@@ -76,6 +77,7 @@ label SexControl(human, interaction, ishand)
 	+ MenuClose
 stop
 
+-- SEX MENU
 label TMMenuSex(human)
 	-- `Natural AutoBJ AutoThrust` @masterchief_87971
 	+ "Sex auto" [if human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == false]
@@ -91,20 +93,20 @@ label TMMenuSex(human)
 
 	-- SEX CONTROL
 	-- GETTER HANDJOB
-	+ "Handjob control.. | " .. ValueLabel(human.Penis.Interaction.m_autoSpeed, sdec) [if human.Penis.m_holdDepth ~= 0] [gold]
-		SexControl(human, human.Penis.Interaction, true)
+	+ "Handjob control.. | " .. ValueLabel(human.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Penis.m_holdDepth ~= 0] [gold]
+		TMSexControl(human, human.Penis.Interaction, true)
 	-- GIVER (MOUTH, VAGINA, ANUS)
-	+ "Sex control.. | " .. ValueLabel(human.Penis.Interaction.m_autoSpeed, sdec) [if human.Penis.Hole ~= nil] [gold]
-		SexControl(human, human.Penis.Interaction)
+	+ "Sex control.. | " .. ValueLabel(human.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Penis.Hole ~= nil] [gold]
+		TMSexControl(human, human.Penis.Interaction)
 	-- GETTER MOUTH
-	+ "Oral control.. | " .. ValueLabel(human.Mouth.Fucker.Penis.Interaction.m_autoSpeed, sdec) [if human.Mouth.Fucker ~= nil] [gold]
-		SexControl(human, human.Mouth.Fucker.Penis.Interaction)
+	+ "Oral control.. | " .. ValueLabel(human.Mouth.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Mouth.Fucker ~= nil] [gold]
+		TMSexControl(human, human.Mouth.Fucker.Penis.Interaction)
 	-- GETTER ANUS
-	+ "Anal control.. | " .. ValueLabel(human.Anus.Fucker.Penis.Interaction.m_autoSpeed, sdec) [if human.Anus.Fucker ~= nil] [gold]
-		SexControl(human, human.Anus.Fucker.Penis.Interaction)
+	+ "Anal control.. | " .. ValueLabel(human.Anus.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Anus.Fucker ~= nil] [gold]
+		TMSexControl(human, human.Anus.Fucker.Penis.Interaction)
 	-- GETTER VAGINA
-	+ "Vagi control.. | " .. ValueLabel(human.Vagina.Fucker.Penis.Interaction.m_autoSpeed, sdec) [if human.Vagina.Fucker ~= nil] [gold]
-		SexControl(human, human.Vagina.Fucker.Penis.Interaction)
+	+ "Vagi control.. | " .. ValueLabel(human.Vagina.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Vagina.Fucker ~= nil] [gold]
+		TMSexControl(human, human.Vagina.Fucker.Penis.Interaction)
 
 	-- START / STOP
 	-- GETTER HANDJOB
@@ -154,36 +156,36 @@ label TMMenuSex(human)
 
 	-- HAS PENIS
 	+ if human.Penis.IsActive == true
-		+ "Cum control.. | " .. WordLabel(cumevery .. "s") [gold]
+		+ "Cum control.. | " .. WordLabel(tmCumevery .. "s") [gold]
 			+ "Cum every 1 sec"
 				cumevery = SetCumEvery(human, 1)
 				Return(2)
 			+ "Cum every 2 sec"
-				cumevery = SetCumEvery(human, 2)
+				tmCumevery = SetCumEvery(human, 2)
 				Return(2)
 			+ "Cum every 4 sec"
-				cumevery = SetCumEvery(human, 4)
+				tmCumevery = SetCumEvery(human, 4)
 				Return(2)
 			+ "Cum every 8 sec"
-				cumevery = SetCumEvery(human, 8)
+				tmCumevery = SetCumEvery(human, 8)
 				Return(2)
 			+ "Cum every 16 sec"
-				cumevery = SetCumEvery(human, 16)
+				tmCumevery = SetCumEvery(human, 16)
 				Return(2)
 			+ "Cum every 32 sec"
-				cumevery = SetCumEvery(human, 32)
+				tmCumevery = SetCumEvery(human, 32)
 				Return(2)
 			+ MenuBack
 				Return(2)
 			+ MenuClose
 		+ if game.HasAnim(human.Penis)
 			+ "Cum STOP"
-				cumevery = 0
+				tmCumevery = 0
 				game.RemoveAnim(human.Penis)
 				Return()
 		+ else
 			+ "Cum start"
-				cumevery = 4
+				tmCumevery = 4
 				game.AddRepeatAnim(4, || human.Shoot(), human.Penis)
 				Return()
 

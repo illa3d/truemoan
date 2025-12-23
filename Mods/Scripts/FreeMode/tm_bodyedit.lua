@@ -1,22 +1,22 @@
 -- TrueMoan v1.0 by illa3d
 -- Menu in: tm_menu_body.lua
 -- Edit Body Variables
-necksize = 0
-forearmsize = 0
-uperarmsize = 0
-calfsize = 0
-thighsize = 0
-waistsize = 0
-hipssize = 0
-asssize = 0
-nipplesize = 0
-breastsize = 0
-penissize = 0
-penislength = 0
-musclesize = 0
-bodysize = 0
+tmNeckSize = 0
+tmForearmSize = 0
+tmUperArmsize = 0
+tmCalfSize = 0
+tmThighSize = 0
+tmWaistSize = 0
+tmHipsSize = 0
+tmAssSize = 0
+tmNipplesSize = 0
+tmBreastSize = 0
+tmPenisSize = 0
+tmPenisLength = 0
+tmMuscleSize = 0
+tmBodySize = 0
 
-function BodyEditUp(human, bodypart, value, step, valuemax, valuesafe)
+function TMBodyEditUp(human, bodypart, value, step, valuemax, valuesafe)
 	local mult = 1 + math.floor(math.abs(value) / 2) -- step function to multiply step for bigger values
 	value = value + step * mult
 	if BodyEditSafe and valuesafe ~= nil and valuesafe ~= 0 and value > valuesafe then 
@@ -28,7 +28,7 @@ function BodyEditUp(human, bodypart, value, step, valuemax, valuesafe)
 	return value
 end
 
-function BodyEditDown(human, bodypart, value, step, valuemin, valuesafe)
+function TMBodyEditDown(human, bodypart, value, step, valuemin, valuesafe)
 	local mult = 1 + math.floor(math.abs(value) / 2) -- step function to multiply step for bigger values
 	value = value - step * mult
 	if BodyEditSafe and valuesafe ~= nil and valuesafe ~= 0 and value < valuesafe then 
@@ -40,42 +40,42 @@ function BodyEditDown(human, bodypart, value, step, valuemin, valuesafe)
 	return value
 end
 
-function BodyEditSet(human, bodypart, value)
+function TMBodyEditSet(human, bodypart, value)
 	human.Body(bodypart, value)
 	return value
 end
 
-function BodyEditResetValues()
-	necksize = 0
-	forearmsize = 0
-	uperarmsize = 0
-	calfsize = 0
-	thighsize = 0
-	hipssize = 0
-	waistsize = 0
-	asssize = 0
-	nipplesize = 0
-	breastsize = 0
-	penislength = 0
-	penissize = 0
-	musclesize = 0
-	bodysize = 0
+function TMBodyEditResetValues()
+	tmNeckSize = 0
+	tmForearmSize = 0
+	tmUperArmsize = 0
+	tmCalfSize = 0
+	tmThighSize = 0
+	tmHipsSize = 0
+	tmWaistSize = 0
+	tmAssSize = 0
+	tmNipplesSize = 0
+	tmBreastSize = 0
+	tmPenisLength = 0
+	tmPenisSize = 0
+	tmMuscleSize = 0
+	tmBodySize = 0
 end
 
-function BodyEditApplyValues(human)
-	human.Body("Neck size", necksize)
-	human.Body("Forearms size", forearmsize)
-	human.Body("Upper arms size", uperarmsize)
-	human.Body("Calf size", calfsize)
-	human.Body("Thigh size", thighsize)
-	human.Body("Hips size", hipssize)
-	human.Body("Waist size", waistsize)
-	human.Body("Ass size", asssize)
-	human.Body("Nipples size", nipplesize)
-	human.Body("Breasts size", breastsize)
-	human.Body("Penis length", penislength)
-	human.Body("Penis size", penissize)
-	human.Body("Muscle tone", musclesize)
-	human.Body("Body size", bodysize)
+function TMBodyEditApplyValues(human)
+	human.Body("Neck size", tmNeckSize)
+	human.Body("Forearms size", tmForearmSize)
+	human.Body("Upper arms size", tmUperArmsize)
+	human.Body("Calf size", tmCalfSize)
+	human.Body("Thigh size", tmThighSize)
+	human.Body("Hips size", tmHipsSize)
+	human.Body("Waist size", tmWaistSize)
+	human.Body("Ass size", tmAssSize)
+	human.Body("Nipples size", tmNipplesSize)
+	human.Body("Breasts size", tmBreastSize)
+	human.Body("Penis length", tmPenisLength)
+	human.Body("Penis size", tmPenisSize)
+	human.Body("Muscle tone", tmMuscleSize)
+	human.Body("Body size", tmBodySize)
 	human.Penis.m_penisSkinOut = 0
 end

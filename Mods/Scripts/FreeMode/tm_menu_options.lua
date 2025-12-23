@@ -1,5 +1,5 @@
 -- TrueMoan v1.0 by illa3d
-adec = 1
+tmAdec = 1
 
 label TMMenuOptions(human)
 	+ "Hide UI" [if HG_UIvis == true]

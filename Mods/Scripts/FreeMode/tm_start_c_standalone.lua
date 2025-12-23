@@ -4,21 +4,20 @@
 -- same function in multiple files, alphabetically last one is used
 -- THIS FUNCTION IS NEEDED FOR THE FULL MOD TO WORK
 -------------------------------------------------------------------------------------------------
-
 label Start()
 	-- TrueMoan: Enable clicking outside TalkMenu
 	TMOnStart()	
 	-- TrueMoan: Ambience
-	TMOnStartAmbience()	
+	TMOnStart_Ambience()	
 	-- TrueMoan: GenericChat
-	TMOnStartGenericChat()
+	TMOnStart_GenericChat()
 stop
 
 function OnGameUpdate()
 	-- TrueMoan: Unused
 	TMOnGameUpdate()
 	-- TrueMoan: GenericChat
-	TMOnGameUpdateGenericChat()
+	TMOnGameUpdate_GenericChat()
 end
 
 function OnHumanClick(human, hitTri)
