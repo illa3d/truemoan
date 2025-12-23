@@ -6,12 +6,19 @@
 -- Variables
 init = false
 
+-- VoiceMod detection (TrueMoan stops moaning functionality)
+tmVoiceModDetected = false
+function TMCheckForVoiceMod()
+	if type(VM_VoiceMod_Enable) == "function" then tmVoiceModDetected = true end
+end 
+
 -------------------------------------------------------------------------------------------------
 -- FREE MODE START (called from TrueFacials)
 -------------------------------------------------------------------------------------------------
 function TMOnStart()
 	Play_FreeMode() -- this makes TalkMenu visible and 3d interactable
-end 
+	TMCheckForVoiceMod()
+end
 
 function TMOnStart_Ambience()
 	TMStartSound()
@@ -19,6 +26,7 @@ end
 
 function TMOnStart_GenericChat()
 	init = true
+	if tmVoiceModDetected then return end
 	ResetTimer("GenericChat", math.random(-10, 0))
 	local speaker = game.GetRandomHuman(|h| h.CanSpeak)
 	if speaker ~= nil then speaker.Say("Greeting") end
@@ -30,7 +38,7 @@ end
 	
 -- Updated every frame
 function TMOnGameUpdate_GenericChat()
-	if init == false then return end
+	if tmVoiceModDetected or init == false then return end
 	local lastChatTime = Timer("GenericChat")
 	if lastChatTime > game.ChatIntervals then
 		ResetTimer("GenericChat", math.random(-7, 0))
@@ -180,6 +188,7 @@ end
 
 -- Function to play TM moans
 function TMPlayGirlMoan(actor, tier)
+	if tmVoiceModDetected then return end -- don't do moaning VoiceMod present
 	if actor == nil then return end
 	actor.SayCustom("tm_" .. tier)
 end

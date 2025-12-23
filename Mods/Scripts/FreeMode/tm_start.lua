@@ -1,6 +1,8 @@
 -- TrueMoan v1.0 by illa3d
 -------------------------------------------------------------------------------------------------
--- Used for integration with Talk Menu Mod Manager
+-- freemode_main.lua is not required, these functions are overrides (even if it exists in folder)
+-- same function in multiple files, alphabetically last one is used
+-- THIS FUNCTION IS NEEDED FOR THE FULL MOD TO WORK
 -------------------------------------------------------------------------------------------------
 label Start()
 	-- TrueMoan: Enable clicking outside TalkMenu
@@ -18,20 +20,13 @@ function OnGameUpdate()
 	TMOnGameUpdate_GenericChat()
 end
 
+-- Replaced OnHumanClick by Talk Menu Mod Manager hook (works in standalone as well)
+if type(TM_AddMenuMod) == "function" then TM_AddMenuMod("True Moan", "TMTalkMenu")
+else local funcCode = [[function TalkMenu(human, hitTri) Jump("TMTalkMenu", human, hitTri) end ]] load(funcCode)() end
 -- function OnHumanClick(human, hitTri)
--- 	-- TrueMoan: TMTalkMenu
+-- 	-- TrueMoan: TM_TalkMenu
 -- 	TMOnHumanClick(human, hitTri)
 -- end
-if type(TM_AddMenuMod) == "function" then
-	TM_AddMenuMod("True Moan", "TMTalkMenu")
-else
-	local funcCode = [[
-	function TalkMenu(human, hitTri)
-		Jump("TMTalkMenu", human, hitTri)
-	end
-	]]
-	load(funcCode)()
-end
 
 function OnCreateHuman(human)
 	-- TrueMoan: Naked On Start
