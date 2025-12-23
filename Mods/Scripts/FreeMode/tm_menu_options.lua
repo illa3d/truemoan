@@ -1,26 +1,28 @@
 -- TrueMoan v0.9 by illa3d
+adec = 1
+
 label TMMenuOptions(human)
-	+ "Anim Speed.. | " .. CL_SMult [gold]
+	+ "Anim Speed.. | " .. ValueLabel(CL_SMult, adec) [gold]
 		+ "Speed >"
 			CL_SMult = CL_SMult + SpeedIncrement_A
 			Return()
 		+ "< Speed"
 			CL_SMult = CL_SMult - SpeedIncrement_A
 			Return()
-		+ "RESET | "  .. CL_SMult [gold]
+		+ "RESET | " .. ValueLabel(CL_SMult, adec) [gold]
 			CL_SMult = 1
 			Return()
 		+ MenuBack.." (applied to new anims)"
 			Return(2)
 		+ MenuClose
-	+ "Anim Ease.. | " .. CLV2_A .. "/" .. CLV2_B [gold]
+	+ "Anim Ease.. | " .. ValueLabel2("", CLV2_A, "", CLV2_B, adec) [gold]
 		+ "Ease In >"
 			CLV2_A = CLV2_A + EaseIncrement_A
 			Return()
 		+ "< Ease In"
 			CLV2_A = CLV2_A - EaseIncrement_A
 			Return()
-		+ "RESET Ease In |".. CLV2_A [gold]
+		+ "RESET Ease In | ".. ValueLabel(CLV2_A, adec) [gold]
 			CLV2_A = 2
 			Return()
 		+ "Ease Out >"
@@ -29,22 +31,22 @@ label TMMenuOptions(human)
 		+ "< Ease Out"
 			CLV2_B = CLV2_B - EaseIncrement_A
 			Return()
-		+ "RESET Ease Out | ".. CLV2_B [gold]
+		+ "RESET Ease Out | " .. ValueLabel(CLV2_B, adec) [gold]
 			CLV2_B = 2
 			Return()
 		+ MenuBack.." (applied to new anims)"
 			Return(2)
 		+ MenuClose
-	+ "Ambience.. | " ..BoolLabel(AllowAmbience) [gold]
+	+ "Ambience.. | " .. BoolLabel(AllowAmbience) [gold]
 		+ "Refresh" [if AllowAmbience == true]
 			Return()
-		+ "Next track | Ambience " .. tmAmbienceTrack [if AllowAmbience]
+		+ "Next track | " .. WordLabel("Ambience " .. tmAmbienceTrack) [if AllowAmbience]
 			TMPlayAmbienceNext()
 			Return()
-		+ "Ambience | ON (loop in ".. TMAmbienceLeftSec() .. "s)" [if AllowAmbience == true]
+		+ "Ambience | " .. BoolLabel(AllowAmbience) .. " (loops in ".. ValueLabel(TMAmbienceLeftSec()) .. "s)" [if AllowAmbience == true]
 			AllowAmbience = false
 			Return()
-		+ "Ambience | OFF" [if AllowAmbience == false]
+		+ "Ambience | " .. BoolLabel(AllowAmbience) [if AllowAmbience == false]
 			AllowAmbience = true
 			TMPlayAmbienceCurrent()
 			Return()
@@ -65,31 +67,31 @@ label TMMenuOptions(human)
 			Return(2)
 		+ MenuClose
 	+ "Sex.." [gold]
-		+ "Moan Sex | ON" [if Moaning == true]
+		+ "Moan Sex | " .. BoolLabel(Moaning) [if Moaning == true]
 			Moaning = false
 			Return()
-		+ "Moan Sex | OFF" [if Moaning == false]
+		+ "Moan Sex | " .. BoolLabel(Moaning) [if Moaning == false]
 			Moaning = true
 			Return()
-		+ "Moan Cum | ON" [if game.FluidReaction == true]
+		+ "Moan Cum | " .. BoolLabel(game.FluidReaction) [if game.FluidReaction == true]
 			game.FluidReaction = false
 			Return()
-		+ "Moan Cum | OFF" [if game.FluidReaction == false]
+		+ "Moan Cum | " .. BoolLabel(game.FluidReaction) [if game.FluidReaction == false]
 			game.FluidReaction = true
 			Return()
-		+ "Wet Sex | ON" [if WetSex == true]
+		+ "Wet Sex | " .. BoolLabel(WetSex) [if WetSex == true]
 			WetSex = false
 			Return()
-		+ "Wet Sex | OFF" [if WetSex == false]
+		+ "Wet Sex | " .. BoolLabel(WetSex) [if WetSex == false]
 			WetSex = true
 			Return()
 		+ MenuBack
 			Return(2)
 		+ MenuClose
-	+ "New people | Naked" [if NakedOnSpawn == true]
+	+ "New people | " .. WordLabel("Naked") [if NakedOnSpawn == true]
 		NakedOnSpawn = false
 		Return()
-	+ "New people | Clothed" [if NakedOnSpawn == false]
+	+ "New people | " .. WordLabel("Clothed") [if NakedOnSpawn == false]
 		NakedOnSpawn = true
 		Return()
 	+ "Hide UI" [if HG_UIvis == true]

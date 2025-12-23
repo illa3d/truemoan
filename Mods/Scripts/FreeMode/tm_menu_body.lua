@@ -13,7 +13,7 @@ label TMMenuBody(human)
 	+ "RESET Values" [gold]
 		BodyEditResetValues()
 		Return()
-	+ "| Neck	| " .. NumLabel(necksize, bdec) [gold]
+	+ "| Neck	| " .. ValueLabel1("N", necksize, bdec) [gold]
 		+ "Neck >"
 			necksize = BodyEditUp(human, "Neck size", necksize, BodyStepB, 2)
 			Return()
@@ -26,14 +26,14 @@ label TMMenuBody(human)
 		+ MenuBack
 			Return(2)
 		+ MenuClose
-	+ "| Arms	| F" .. NumLabel(forearmsize, bdec) .. " | U" .. NumLabel(uperarmsize, bdec) [gold]
+	+ "| Arms	| " .. ValueLabel2("U", uperarmsize, "F", forearmsize, bdec) [gold]
 		+ "Forearms >"
 			forearmsize = BodyEditUp(human, "Forearms size", forearmsize, BodyStepB, 2)
 			Return()
 		+ "< Forearms"
 			forearmsize = BodyEditDown(human, "Forearms size", forearmsize, BodyStepB, -0.5)
 			Return()
-		+ "RESET Forearms | " .. NumLabel(forearmsize, bdec) [gold]
+		+ "RESET Forearms | " .. ValueLabel(forearmsize, bdec) [gold]
 			forearmsize = BodyEditSet(human, "Forearms size", 0)
 			Return()
 		+ "Upper arms >"
@@ -42,20 +42,20 @@ label TMMenuBody(human)
 		+ "< Upper arms"
 			uperarmsize = BodyEditDown(human, "Upper arms size", uperarmsize, BodyStepB, -0.5)
 			Return()
-		+ "RESET Upper arms | " .. NumLabel(uperarmsize, bdec) [gold]
+		+ "RESET Upper arms | " .. ValueLabel(uperarmsize, bdec) [gold]
 			uperarmsize = BodyEditSet(human, "Upper arms size", 0)
 			Return()
 		+ MenuBack
 			Return(2)
 		+ MenuClose
-	+ "| Legs		| T" .. NumLabel(thighsize, bdec) .. " | C" .. NumLabel(calfsize, bdec) [gold]
+	+ "| Legs		| " .. ValueLabel2("T", thighsize, "C", calfsize, bdec) [gold]
 		+ "Calf >"
 			calfsize = BodyEditUp(human, "Calf size", calfsize, BodyStepB, 2)
 			Return()
 		+ "< Calf"
 			calfsize = BodyEditDown(human, "Calf size", calfsize, BodyStepB, -0.5)
 			Return()
-		+ "RESET Calf | " .. NumLabel(calfsize, bdec) [gold]
+		+ "RESET Calf | " .. ValueLabel(calfsize, bdec) [gold]
 			calfsize = BodyEditSet(human, "Calf size", 0)
 			Return()
 		+ "Thigh >"
@@ -64,20 +64,20 @@ label TMMenuBody(human)
 		+ "< Thigh"
 			thighsize = BodyEditDown(human, "Thigh size", thighsize, BodyStepB, -1)
 			Return()
-		+ "RESET Thigh | " .. NumLabel(thighsize, bdec) [gold]
+		+ "RESET Thigh | " .. ValueLabel(thighsize, bdec) [gold]
 			thighsize = BodyEditSet(human, "Thigh size", 0)
 			Return()
 		+ MenuBack
 			Return(2)
 		+ MenuClose
-	+ "| Waist	| W" .. NumLabel(waistsize, bdec) .. " | H" .. NumLabel(hipssize, bdec) [gold]
+	+ "| Waist	| " .. ValueLabel2("W", waistsize, "H", hipssize, bdec) [gold]
 		+ "Hips >"
 			hipssize = BodyEditUp(human, "Hips size", hipssize, BodyStepA, 5)
 			Return()
 		+ "< Hips"
 			hipssize = BodyEditDown(human, "Hips size", hipssize, BodyStepA, -2)
 			Return()
-		+ "RESET Hips | " .. NumLabel(hipssize, bdec) [gold]
+		+ "RESET Hips | " .. ValueLabel(hipssize, bdec) [gold]
 			hipssize = BodyEditSet(human, "Hips size", 0)
 			Return()
 		+ "Waist >"
@@ -86,34 +86,34 @@ label TMMenuBody(human)
 		+ "< Waist"
 			waistsize = BodyEditDown(human, "Waist size", waistsize, BodyStepA, -1)
 			Return()
-		+ "RESET Waist | " .. NumLabel(waistsize, bdec) [gold]
+		+ "RESET Waist | " .. ValueLabel(waistsize, bdec) [gold]
 			waistsize = BodyEditSet(human, "Waist size", 0)
 			Return()
 		+ MenuBack
 			Return(2)
 		+ MenuClose
-	+ "| Ass		| " .. NumLabel(asssize, bdec) [gold]
+	+ "| Ass		| " .. ValueLabel1("A", asssize, bdec) [gold]
 		+ "Ass >"
 			asssize = BodyEditUp(human, "Ass size", asssize, BodyStepB, 10)
 			Return()
 		+ "< Ass"
 			asssize = BodyEditDown(human, "Ass size", asssize, BodyStepB, -1)
 			Return()
-		+ "RESET | " .. NumLabel(asssize, bdec) [gold]
+		+ "RESET | " .. ValueLabel(asssize, bdec) [gold]
 			asssize = BodyEditSet(human, "Ass size", 0)
 			Return()
 		+ MenuBack
 			Return(2)
 		+ MenuClose
 	+ if human.m_isMale == false
-		+ "| Breasts	| B" .. NumLabel(breastsize, bdec) .. " | N" .. NumLabel(nipplesize, bdec) [gold]
+		+ "| Breasts	| " .. ValueLabel2("B", breastsize, "N", nipplesize, bdec) [gold]
 			+ "Nipples >"
 				nipplesize = BodyEditUp(human, "Nipples size", nipplesize, BodyStepA, 10)
 				Return()
 			+ "< Nipples"
 				nipplesize = BodyEditDown(human, "Nipples size", nipplesize, BodyStepA, -5)
 				Return()
-			+ "RESET Nipples | " .. NumLabel(nipplesize, bdec) [gold]
+			+ "RESET Nipples | " .. ValueLabel(nipplesize, bdec) [gold]
 				nipplesize = BodyEditSet(human, "Nipples size", 0)
 				Return()
 			+ "Breasts >"
@@ -122,21 +122,21 @@ label TMMenuBody(human)
 			+ "< Breasts"
 				breastsize = BodyEditDown(human, "Breasts size", breastsize, BodyStepC, -2, BreastSafeMin)
 				Return()
-			+ "RESET Breasts | " .. NumLabel(breastsize, bdec) [gold]
+			+ "RESET Breasts | " .. ValueLabel(breastsize, bdec) [gold]
 				breastsize = BodyEditSet(human, "Breasts size", 0)
 				Return()
 			+ MenuBack
 				Return(2)
 			+ MenuClose
 	+ if human.Penis.IsActive
-		+ "| Penis	| L" .. NumLabel(penislength, bdec) .. " | S" .. NumLabel(penissize, bdec) [gold]
+		+ "| Penis	| " .. ValueLabel2("S", penissize, "L", penislength, bdec) [gold]
 			+ "Length >"
 				penislength = BodyEditUp(human, "Penis length", penislength, BodyStepB, 5)
 				Return()
 			+ "< Length"
 				penislength = BodyEditDown(human, "Penis length", penislength, BodyStepB, -0.7)
 				Return()
-			+ "RESET Length | " .. NumLabel(penislength, bdec) [gold]
+			+ "RESET Length | " .. ValueLabel(penislength, bdec) [gold]
 				penislength = BodyEditSet(human, "Penis length", 0)
 				Return()
 			+ "Size >"
@@ -145,7 +145,7 @@ label TMMenuBody(human)
 			+ "< Size"
 				penissize = BodyEditDown(human, "Penis size", penissize, BodyStepB, -0.7)
 				Return()
-			+ "RESET size | " .. NumLabel(penissize, bdec) [gold]
+			+ "RESET size | " .. ValueLabel(penissize, bdec) [gold]
 				penissize = BodyEditSet(human, "Penis size", 0)
 				Return()
 			+ "RESET Foreskin"
@@ -154,14 +154,14 @@ label TMMenuBody(human)
 			+ MenuBack
 				Return(2)
 			+ MenuClose
-	+ "| Body	| B" .. NumLabel(bodysize, bdec) .. " | M".. NumLabel(musclesize, bdec) [gold]
+	+ "| Body	| " .. ValueLabel2("B", bodysize, "M", musclesize, bdec) 
 		+ "Muscle >"
 			musclesize = BodyEditUp(human, "Muscle tone", musclesize, BodyStepA, 1)
 			Return()
 		+ "< Muscle"
 			musclesize = BodyEditDown(human, "Muscle tone", musclesize, BodyStepA, -0.3)
 			Return()
-		+ "RESET Muscle | " .. NumLabel(musclesize, bdec) [gold]
+		+ "RESET Muscle | " .. ValueLabel(musclesize, bdec) [gold]
 			musclesize = BodyEditSet(human, "Muscle tone", 0)
 			Return()
 		+ "Body >"
@@ -170,7 +170,7 @@ label TMMenuBody(human)
 		+ "< Body"
 			bodysize = BodyEditDown(human, "Body size", bodysize, BodyStepC, -0.9)
 			Return()
-		+ "RESET Body | " .. NumLabel(bodysize, bdec) [gold]
+		+ "RESET Body | " .. ValueLabel(bodysize, bdec) [gold]
 			bodysize = BodyEditSet(human, "Body size", 0)
 			Return()
 		+ MenuBack

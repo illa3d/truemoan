@@ -37,9 +37,10 @@ FastTreshold = 0.3
 NormalTreshold = 0.1
 
 -- Menu
-RootHideShowUI = false					-- Display show/hide UI option in TalkMenu first page
-MenuBack = "<color=#e87435>« BACK"		-- Back button style
-MenuClose = "<color=#e84235>× CLOSE"	-- Close button style
+RootHideShowUI = false						-- Display show/hide UI option in TalkMenu first page
+MenuBack = "<color=#e87435>« BACK</color>"	-- Back button style
+MenuClose = "<color=#e84235>× CLOSE"		-- Close button style
+MenuNumColor = "<color=#df9c3d>"			-- Numerical values
 
 -- Music tracks displayed in Options/Music
 MusicTracks = {
@@ -74,3 +75,24 @@ MusicTracks = {
 	"29_Welcome_to_Radux_World",
 	"30_Journey_to_You",
 }
+
+-------------------------------------------------------------------------------------------------
+-- LABELS FORMAT
+-------------------------------------------------------------------------------------------------
+endcolor = "</color>"
+
+function BoolLabel (bvalue)
+	 return MenuNumColor .. (bvalue and "ON" or "OFF") .. endcolor
+end
+function WordLabel (svalue)
+	return  MenuNumColor .. svalue .. endcolor
+end
+function ValueLabel (value, decimals)
+	return  MenuNumColor .. NumLabel(value, decimals) .. endcolor
+end
+function ValueLabel1 (letter, value, decimals)
+	return  letter .. MenuNumColor .. NumLabel(value, decimals) .. endcolor
+end
+function ValueLabel2 (letter1, value1, letter2, value2, decimals)
+	return  letter1 .. MenuNumColor .. NumLabel(value1, decimals) .. endcolor .. " | " .. letter2 .. MenuNumColor .. NumLabel(value2, decimals) .. endcolor
+end

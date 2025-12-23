@@ -15,7 +15,7 @@ label TMMenuSex(human)
 		GradualSpeedUpAutoBJ(human, 30, 0, 0.35, 0.1, 0.3, 1.5, 25)
 		activeAutoBJ = true
 		Return()
-	+ "Thrust.. | " .. NumLabel(human.Penis.Interaction.m_autoSpeed, sdec) [if human.Penis.Hole ~= nil] [gold]
+	+ "Thrust.. | " .. ValueLabel(human.Penis.Interaction.m_autoSpeed, sdec) [if human.Penis.Hole ~= nil] [gold]
 		+ "5 Max"
 			SetInteractionSpeed(human.Penis.Interaction, 2);
 			Return()
@@ -37,13 +37,13 @@ label TMMenuSex(human)
 		+ "< Slower"
 			SetInteractionSpeedStep(human.Penis.Interaction, false)
 			Return()
-		+ "STOP | " .. NumLabel(human.Penis.Interaction.m_autoSpeed, sdec) [gold]
+		+ "STOP | " .. ValueLabel(human.Penis.Interaction.m_autoSpeed, sdec) [gold]
 			SetInteractionSpeed(human.Penis.Interaction, 0)
 			Return()
 		+ MenuBack
 			Return(2)
 		+ MenuClose
-	+ "Suck.. | " .. NumLabel(human.Mouth.Fucker.Penis.Interaction.m_autoSpeed, sdec) [if human.Mouth.Fucker ~= nil] [gold]
+	+ "Suck.. | " .. ValueLabel(human.Mouth.Fucker.Penis.Interaction.m_autoSpeed, sdec) [if human.Mouth.Fucker ~= nil] [gold]
 		+ "5 Max"
 			SetInteractionSpeed(human.Mouth.Fucker.Penis.Interaction, 2);
 			Return()
@@ -65,7 +65,7 @@ label TMMenuSex(human)
 		+ "< Slower"
 			SetInteractionSpeedStep(human.Mouth.Fucker.Penis.Interaction, false)
 			Return()
-		+ "STOP | " .. NumLabel(human.Mouth.Fucker.Penis.Interaction.m_autoSpeed, sdec) [gold]
+		+ "STOP | " .. ValueLabel(human.Mouth.Fucker.Penis.Interaction.m_autoSpeed, sdec) [gold]
 			SetInteractionSpeed(human.Mouth.Fucker.Penis.Interaction, 0)
 			Return()
 		+ MenuBack
@@ -97,7 +97,7 @@ label TMMenuSex(human)
 		human.Penis.Interaction.m_autoHandActive = false
 		Return()
 	+ if human.Penis.IsActive == true
-		+ "Cum.. | " .. cumevery .. "s" [gold]
+		+ "Cum.. | " .. WordLabel(cumevery .. "s") [gold]
 			+ "Cum every 1 sec"
 				cumevery = 1
 				game.AddRepeatAnim(1, || human.Shoot(), human.Penis)
