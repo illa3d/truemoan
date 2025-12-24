@@ -1,7 +1,5 @@
 -- TrueMoan v1.0 by illa3d
 label TMTalkMenu(human, hitTri)
-	+ "Mod Menu" [if TM_ModMenu ~= nil] [gold]
-		TM_ModMenu(human, hitTri)
 	+ if TM_RootHideShowUI
 		+ "Hide UI" [if HG_UIvis == true]
 			HG_UIvis = false

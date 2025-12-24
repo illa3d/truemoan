@@ -49,6 +49,7 @@ TM_NormalTreshold = 0.1
 
 -- Menu
 TM_RootHideShowUI = false						-- Display show/hide UI option in TalkMenu first page
+TM_MenuMod = "<color=#e87435>« MOD MENU</color>" -- Back to Mod menu (Talk Mod Menu Manager)
 TM_MenuBack = "<color=#e87435>« BACK</color>"	-- Back button style
 TM_MenuClose = "<color=#e85035>× CLOSE"			-- Close button style
 TM_MenuNumColor = "<color=#df9c3d>"				-- Numerical values
