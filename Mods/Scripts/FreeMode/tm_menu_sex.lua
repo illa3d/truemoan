@@ -33,7 +33,7 @@ label TMSexControl(human, interaction, ishand)
 	
 	-- handjob
 	+ if human.Penis.m_holdDepth ~= 0
-		+ "Style control.. | T" .. TMValueLabel(GetInteractionThrustWeight(interaction, ishand), tmSdec) [if TM_SexShowStyleControl] [gold]
+		+ "Style control.. | T" .. TMValueLabel(GetInteractionThrustWeight(interaction, ishand), tmSdec) [if TM_ShowSexStyleControl] [gold]
 			+ "| Thrust >"
 				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, true, ishand)
 				Return()
@@ -49,7 +49,7 @@ label TMSexControl(human, interaction, ishand)
 
 	-- oral/vaginal/anal
 	+ else 
-		+ "Style control.. | M" .. TMValueLabel(GetInteractionWeight(interaction, ishand), tmSdec) .. " | T" .. TMValueLabel(GetInteractionThrustWeight(interaction, ishand), tmSdec) [if TM_SexShowStyleControl] [gold]
+		+ "Style control.. | M" .. TMValueLabel(GetInteractionWeight(interaction, ishand), tmSdec) .. " | T" .. TMValueLabel(GetInteractionThrustWeight(interaction, ishand), tmSdec) [if TM_ShowSexStyleControl] [gold]
 			+ "| Thrust >"
 				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, true, ishand)
 				Return()
@@ -105,7 +105,7 @@ label TMMenuSex(human)
 	+ "Anal control.. | " .. TMValueLabel(human.Anus.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Anus.Fucker ~= nil] [gold]
 		TMSexControl(human, human.Anus.Fucker.Penis.Interaction)
 	-- GETTER VAGINA
-	+ "Vagi control.. | " .. TMValueLabel(human.Vagina.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Vagina.Fucker ~= nil] [gold]
+	+ "Pussy control.. | " .. TMValueLabel(human.Vagina.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Vagina.Fucker ~= nil] [gold]
 		TMSexControl(human, human.Vagina.Fucker.Penis.Interaction)
 
 	-- START / STOP
@@ -146,11 +146,11 @@ label TMMenuSex(human)
 		human.Anus.Fucker.Penis.Interaction.AutoActive = false
 		Return()
 	-- GETTER VAGINA
-	+ "Vagi start" [if human.Vagina.Fucker ~= nil and human.Vagina.Fucker.Penis.Interaction.AutoActive == false]
+	+ "Pussy start" [if human.Vagina.Fucker ~= nil and human.Vagina.Fucker.Penis.Interaction.AutoActive == false]
 		human.Vagina.Fucker.Penis.Interaction.AutoActive = true
 		human.Vagina.Fucker.Penis.Interaction.AutoPenisWeight = 0.2
 		Return()
-	+ "Vagi STOP" [if human.Vagina.Fucker ~= nil and human.Vagina.Fucker.Penis.Interaction.AutoActive == true]
+	+ "Pussy STOP" [if human.Vagina.Fucker ~= nil and human.Vagina.Fucker.Penis.Interaction.AutoActive == true]
 		human.Vagina.Fucker.Penis.Interaction.AutoActive = false
 		Return()
 

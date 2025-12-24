@@ -32,3 +32,22 @@ label TMTalkMenu(human, hitTri)
 			Return()
 	+ TM_MenuClose
 stop
+
+-- LABELS FORMAT (no need to modify)
+TM_EndColor = "</color>"
+
+function TMBoolLabel (bvalue)
+	 return TM_MenuNumColor .. (bvalue and "ON" or "OFF") .. TM_EndColor
+end
+function TMWordLabel (svalue)
+	return  TM_MenuNumColor .. svalue .. TM_EndColor
+end
+function TMValueLabel (value, decimals)
+	return  TM_MenuNumColor .. TruncDecimal(value, decimals) .. TM_EndColor
+end
+function TMValueLabel1 (letter, value, decimals)
+	return  letter .. TM_MenuNumColor .. TruncDecimal(value, decimals) .. TM_EndColor
+end
+function TMValueLabel2 (letter1, value1, letter2, value2, decimals)
+	return  letter1 .. TM_MenuNumColor .. TruncDecimal(value1, decimals) .. TM_EndColor .. " | " .. letter2 .. TM_MenuNumColor .. TruncDecimal(value2, decimals) .. TM_EndColor
+end

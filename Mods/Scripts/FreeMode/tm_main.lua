@@ -113,7 +113,7 @@ end
 
 -- Updated on penetration (holeName: "Vagina" "Anus" Mouth")
 function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
-	if inVelocity < outVelocity or TM_Moaning == false  then return end
+	if inVelocity < outVelocity or TM_MoanSex == false  then return end
 
 	-- Variables
 	local key = "PenetrationMoan_" .. girl.Name .. holeName

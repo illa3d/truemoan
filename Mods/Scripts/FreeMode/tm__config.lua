@@ -1,60 +1,65 @@
 -- TrueMoan v1.0 by illa3d
------------------------------------------------
--- MAIN CONFIG FILE, MODIFY TO YOOUR LIKING! --
------------------------------------------------
+-- These values are used every time new scene loads
+---------------------------------------------------
+-- MAIN DEFAULTS CONFIG, MODIFY TO YOOUR LIKING! --
+---------------------------------------------------
 
 -- Ambience
-TM_AllowAmbience = true
-TM_AmbienceVolume = 0.5 -- 0 to 1
-
--- Characters spawn naked
-TM_NakedOnSpawn = false	-- default value on scene change
-
+TM_AllowAmbience = true -- Ambient sounds
+TM_AmbienceVolume = 0.5 -- Ambient volume (0 to 1)
+-- Options
+TM_NakedOnSpawn = false -- Spawn characters naked
+TM_WetSex = true        -- Moisting holes (vag, anus, mouth)
+TM_MoanSex = true       -- Moaning during sex
 -- Body Edit
-TM_BodyEditSafe = true	-- default value on scene change
-TM_BreastSafeMin = -0.8	-- some characters fall apart below this value and game crashes
+TM_BodyEditSafe = true  -- default value on scene change
+TM_BreastSafeMin = -0.8 -- some characters fall apart below this value and game crashes
+-- Menu
+TM_RootHideShowUI = false -- Display show/hide UI option in TalkMenu first page
+TM_ShowSexStyleControl = true  -- Show/Hide SexControl/Style controls (Male/Thrust) in the menu
+
+-----------------------------------------------
+-- FINE TUNING
+-----------------------------------------------
 
 -- Body Edit Increments
-TM_BodyStepA = 0.1		-- nipples hip, waist, muscle
-TM_BodyStepB = 0.05		-- ass, penis-length, penis-size, forearm, upperarm, calf, thigh, neck
-TM_BodyStepC = 0.025	-- breast, body
+TM_BodyStepA = 0.1   -- nipples hip, waist, muscle
+TM_BodyStepB = 0.05  -- ass, penis-length, penis-size, forearm, upperarm, calf, thigh, neck
+TM_BodyStepC = 0.025 -- breast, body
 
--- Sex speed config (0.001-2)
-TM_SexShowStyleControl = true	-- Show/Hide Male and Thrust controls
-TM_SexSpeedStep = 0.05			-- non-linear percent (increments: slow = small, fast = big)
-TM_SexMaleStep = 0.1			-- giver/getter, linear percent (of UI slider)
-TM_SexThrustStep = 0.1		 	-- easier/harder, linear percent (of UI slider)
-TM_SexSpeedMax = 2
+TM_SexSpeedStep = 0.05         -- non-linear percent (increments: slow = small, fast = big)
+TM_SexMaleStep = 0.1           -- giver/getter, linear percent (of UI slider)
+TM_SexThrustStep = 0.1         -- easier/harder, linear percent (of UI slider)
+
+-- Sex speed.001-2)
+TM_SexSpeedMax = 2             -- more than this is placebo
 TM_SexSpeedFast = 0.9
 TM_SexSpeedNormal = 0.5
 TM_SexSpeedMedium = 0.25
 TM_SexSpeedSlow = 0.1
 
--- Sex/Moan Tier config
-TM_WetSex = true		-- default value on scene change
-TM_Moaning = true		-- default value on scene change
-TM_WetnessStep = 200	-- Umm. Try lol.
-
--- Cum moan frequency (seconds)
-TM_MoanCumEyeTime = 1
-TM_MoanCumLipsTime = 3
-TM_MoanCumBodyTime = 5
-
--- Sex Moan Tresholds (speed 0-2)
+-- Moan Sex treshold by sex speeed (0-2)
 TM_ClimaxTreshold = 1.3
 TM_OrgasmTreshold = 0.9
 TM_FasterTreshold = 0.6
 TM_FastTreshold = 0.3
 TM_NormalTreshold = 0.1
 
--- Menu
-TM_RootHideShowUI = false						-- Display show/hide UI option in TalkMenu first page
-TM_MenuMod = "<color=#e87435>« MOD MENU</color>" -- Back to Mod menu (Talk Mod Menu Manager)
-TM_MenuBack = "<color=#e87435>« BACK</color>"	-- Back button style
-TM_MenuClose = "<color=#e85035>× CLOSE"			-- Close button style
-TM_MenuNumColor = "<color=#df9c3d>"				-- Numerical values
+-- Moan Cum frequency (sec)
+TM_MoanCumEyeTime = 1
+TM_MoanCumLipsTime = 3
+TM_MoanCumBodyTime = 5
+TM_WetnessStep = 200
 
--- Music tracks displayed in Options/Music
+-- Menu Style
+TM_MenuMod = "<color=#e87435>« MOD MENU</color>" -- Back to Mod menu (Talk Mod Menu Manager)
+TM_MenuBack = "<color=#e87435>« BACK</color>"    -- Back button style
+TM_MenuClose = "<color=#e85035>× CLOSE"          -- Close button style
+TM_MenuNumColor = "<color=#df9c3d>"              -- Numerical values
+
+-----------------------------------------------
+-- MUSIC TRACKS (displayed in Options/Music)
+-----------------------------------------------
 TM_MusicTracks = {
 	"01_Dreamy_Whisper",
 	"02_Moon-blind",
@@ -87,24 +92,3 @@ TM_MusicTracks = {
 	"29_Welcome_to_Radux_World",
 	"30_Journey_to_You",
 }
-
--------------------------------------------------------------------------------------------------
--- LABELS FORMAT
--------------------------------------------------------------------------------------------------
-TM_EndColor = "</color>"
-
-function TMBoolLabel (bvalue)
-	 return TM_MenuNumColor .. (bvalue and "ON" or "OFF") .. TM_EndColor
-end
-function TMWordLabel (svalue)
-	return  TM_MenuNumColor .. svalue .. TM_EndColor
-end
-function TMValueLabel (value, decimals)
-	return  TM_MenuNumColor .. TruncDecimal(value, decimals) .. TM_EndColor
-end
-function TMValueLabel1 (letter, value, decimals)
-	return  letter .. TM_MenuNumColor .. TruncDecimal(value, decimals) .. TM_EndColor
-end
-function TMValueLabel2 (letter1, value1, letter2, value2, decimals)
-	return  letter1 .. TM_MenuNumColor .. TruncDecimal(value1, decimals) .. TM_EndColor .. " | " .. letter2 .. TM_MenuNumColor .. TruncDecimal(value2, decimals) .. TM_EndColor
-end
