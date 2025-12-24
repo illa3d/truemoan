@@ -67,7 +67,7 @@ label TMMenuOptions(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ TM_MenuMod [if HasTalkMenuModManager()]
+	+ TM_MenuMod [if TM_Mod_TalkModMenuManager]
 		TM_ModMenu(human, hitTri)
 	+ TM_MenuBack
 		Return(2)

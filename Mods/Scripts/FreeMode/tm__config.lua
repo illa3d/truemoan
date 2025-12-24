@@ -5,22 +5,25 @@
 ---------------------------------------------------
 
 -- Ambience
-TM_AllowAmbience = true -- Ambient sounds
-TM_AmbienceVolume = 0.6 -- Ambient volume (0 to 1)
+TM_AllowAmbience = true       -- Ambient sounds
+TM_AmbienceVolume = 0.6       -- Ambient volume (0 to 1)
 -- Options
-TM_NakedOnSpawn = false -- Spawn characters naked
-TM_WetSex = true        -- Moisting holes (vag, anus, mouth)
-TM_MoanSex = true       -- Moaning during sex
+TM_NakedOnSpawn = false       -- Characters naked when spawning/changing
+TM_NakedOnDoubleClick = true  -- ModCharacters naked on double clicking (doesn't work with TalkMenu manager)
+TM_MoanOnDoubleClick = true   -- Moan on dobuleclick (doesn't work with TalkMenu manager)
+TM_MoanSex = true             -- Moaning during sex
+TM_WetSex = true              -- Moisting holes (vag, anus, mouth)
 -- Body Edit
-TM_BodyEditSafe = true  -- default value on scene change
-TM_BreastSafeMin = -0.8 -- some characters fall apart below this value and game crashes
+TM_BodyEditSafe = true        -- default value on scene change
+TM_BreastSafeMin = -0.8       -- some characters fall apart below this value and game crashes
 -- Menu
-TM_RootHideShowUI = false -- Display show/hide UI option in TalkMenu first page
-TM_ShowSexStyleControl = true  -- Show/Hide SexControl/Style controls (Male/Thrust) in the menu
+TM_RootHideShowUI = false     -- Display show/hide UI option in TalkMenu first page
+TM_ShowSexStyleControl = true -- Show/Hide SexControl/Style controls (Male/Thrust) in the menu
 
 -----------------------------------------------
 -- FINE TUNING
 -----------------------------------------------
+TM_DoubleClickSeconds = 0.2 -- 
 
 -- Body Edit Increments
 TM_BodyStepA = 0.1   -- nipples hip, waist, muscle
@@ -31,14 +34,14 @@ TM_SexSpeedStep = 0.05         -- non-linear percent (increments: slow = small, 
 TM_SexMaleStep = 0.1           -- giver/getter, linear percent (of UI slider)
 TM_SexThrustStep = 0.1         -- easier/harder, linear percent (of UI slider)
 
--- Sex speed.001-2)
-TM_SexSpeedMax = 2             -- more than this is placebo
+-- Sex speed (Min: 0.001, Max: 2)
+TM_SexSpeedMax = 2
 TM_SexSpeedFast = 0.9
 TM_SexSpeedNormal = 0.5
 TM_SexSpeedMedium = 0.25
 TM_SexSpeedSlow = 0.1
 
--- Moan Sex treshold by sex speeed (0-2)
+-- Moan Sex treshold by sex speeed (Min: 0.001, Max: 2)
 TM_ClimaxTreshold = 1.3
 TM_OrgasmTreshold = 0.9
 TM_FasterTreshold = 0.6

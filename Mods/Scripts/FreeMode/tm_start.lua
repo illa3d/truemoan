@@ -1,4 +1,4 @@
--- TrueMoan v1.0 by illa3d
+-- TrueMoan Start Scripts v1.0 by illa3d
 -------------------------------------------------------------------------------------------------
 -- This script is main connection between TrueFacials calls, TMMM mod and TrueMoan
 -- These functions override freemode_main.lua's, because of alphabetical filename order
@@ -21,30 +21,44 @@ stop
 
 -- From TrueFacials
 function OnGameUpdate()
-	-- TrueMoan: Unused
-	TMOnGameUpdate()
-	-- TrueMoan: TrueFacials GenericChat
-	TMOnGameUpdate_GenericChat()
+    -- TrueMoan: Unused
+    TMOnGameUpdate()
+    -- TrueMoan: TrueFacials GenericChat
+    TMOnGameUpdate_GenericChat()
 end
 
-------------------------------------------------------------------------------------------------------------------------
--- TALK MENU MOD MANAGER INTEGRATION - Mod works both in STANDALONE and TMMM (mandatory)
-------------------------------------------------------------------------------------------------------------------------
--- 1. Rename your "label TalkMenu(human)" to label MODTalkMenu(human)" (so its after the letters "fre")
-local TMMM_Name = "True Moan.." -- 2. Change name displayed in the TMMM
--- 3. Replace below "TMTalkMenu" with name of your "MODTalkMenu" - [HERE BELOW], in two places!
-if type(TM_AddMenuMod) == "function" then TM_AddMenuMod(TMMM_Name, "TMTalkMenu")
-else local funcCode = [[ function TalkMenu(human, hitTri) Jump("TMTalkMenu", human, hitTri) end ]] load(funcCode)() end
-function OnHumanClick(human, hitTri) -- (called from TrueFacials on clicking humans)
-	Jump("TalkMenu", human, hitTri) -- (don't change this)
-end -- 4. don't call your functions here (called only in STANDALONE, not TMMM), see below
-------------------------------------------------------------------------------------------------------------------------
---- ON HUMAN CLICK FUNCTION (optional)
-------------------------------------------------------------------------------------------------------------------------
--- 5. Replace below "TMOnHumanClick" with name of your "MODOnHumanClick(human, hitTri)" function, in two places!
-if type(TM_AddMenuMod) == "function" then TM_AddMenuMod(TMMM_Name, "TMOnHumanClick")
-else local funcCode = [[ function OnHumanClick(human, hitTri) TMOnHumanClick(human, hitTri) end ]] load(funcCode)() end
-------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------
+-- TALK MENU MOD MANAGER INTEGRATION (Mod works both in STANDALONE and TMMM)
+-- 1. Rename this file so it's after freemode_main.lua (alphabetically)
+-- 2. Enter your mod name displayed in the TMMM menu
+YourModName = "True Moan.."
+-- 2. Rename your menu function "TalkMenu(human)" to ie: "MODTalkMenu(human)"
+-- 3. Enter your renamed "MODTalkMenu"
+YourTalkMenuFunc = "TMTalkMenu"
+-- 4. Pick one of the options (delete/comment the other):
+
+-- --[ OPTION A - Use just TalkMenu ]----------------------------------------------------------------------------------------------
+-- if type(TM_AddMenuMod) == "function" then TM_AddMenuMod(YourModName, YourTalkMenuFunc)
+-- else local funcCode=[[function TalkMenu(human,hitTri) Jump("]]..YourTalkMenuFunc..[[",human,hitTri) end]] load(funcCode)() end
+-- function OnHumanClick(human, hitTri) Jump("TalkMenu", human, hitTri) end -- (don't change this)
+-- --[ DONT MODIFY CODE ABOVE ]----------------------------------------------------------------------------------------------------
+
+--[ OPTION B - Use TalkMenu and OnHumanSingleClick / OnHumanDoubleClick ]-------------------------------------------------------
+if type(TM_AddMenuMod) == "function" then TM_AddMenuMod(YourModName, "TMMMOnHumanClick")
+else local funcCode=[[function OnHumanClick(human,hitTri) TMMMOnHumanClick(human,hitTri) end]] load(funcCode)() end
+function TMMMOnHumanClick(human, hitTri) Jump(YourTalkMenuFunc, human, hitTri) TMMMOnhumanSingleClick(human, hitTri)
+local time = Timer("TMMDCT") ResetTimer("TMMDCT") if time <= TMMM_DoubleClick then TMMMOnHumanDoubleClick(human, hitTri) end end
+--[ DONT MODIFY CODE ABOVE ]----------------------------------------------------------------------------------------------------
+TMMM_DoubleClick = 0.25 -- (optional) Time to register double click (0.2 to 0.5 ok values, default 0.2s = 250ms)
+function TMMMOnhumanSingleClick(human, hitTri)
+	-- 5. Add your single click actions here (MENU IS ALREADY CALLED)
+	TMOnHumanClick(human, hitTri) 
+end function TMMMOnHumanDoubleClick(human, hitTri)
+	-- ! WORKS ONLY IN STANDALONE ! (TMMM uses doubleclick)
+	-- 6. Add your double click actions here
+	TMOnHumanDoubleClick(human, hitTri)
+end 
+--------------------------------------------------------------------------------------------------------------------------------
 
 -- From TrueFacials
 function OnCreateHuman(human)

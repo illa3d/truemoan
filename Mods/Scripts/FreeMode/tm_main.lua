@@ -7,9 +7,11 @@
 -------------------------------------------------------------------------------------------------
 TM_Initialized = false
 TM_AllowMoaning = true
+TM_Mod_TalkModMenuManager = false
 
 function TMDetectMods()
-	TM_AllowMoaning = not HasMod_Nf123VoiceMod()
+	if (HasMod_Nf123VoiceMod()) then TM_AllowMoaning = false end
+	if (HasMod_TalkMenuModManager()) then TM_Mod_TalkModMenuManager = true end
 end 
 
 -------------------------------------------------------------------------------------------------
@@ -37,9 +39,14 @@ function TMOnGameUpdate()
 end
 
 function TMOnHumanClick(human, hittri)
-	HumanClothes(human, false)
+	-- unused for now
 end
-	
+
+function TMOnHumanDoubleClick(human, hittri)
+	if (TM_MoanOnDoubleClick) then TMPlayGirlMoan(human, "slow") end
+	if (TM_NakedOnDoubleClick) then HumanClothes(human, false) end
+end 
+
 -- Updated every frame
 function TMOnGameUpdate_GenericChat()
 	-- don't talk with other voice mods
