@@ -9,19 +9,17 @@ label TMMenuHeyHuman(human)
 		+ "(TODO) FaunaLabs"
 			Return()
 	+ "Eyes OPEN" [if not TMEyesOpen]
-		TMEyesOpen = true
-		human.Pose(HumanEyesOpen(TMEyesOpen))
+		TMEyesOpen = HumanEyesOpen(human, true)
 		Return()
 	+ "Eyes CLOSE" [if TMEyesOpen]
-		TMEyesOpen = false
-		human.Pose(HumanEyesOpen(TMEyesOpen))
+		TMEyesOpen = HumanEyesOpen(human, false)
 		Return()
 	+ "Look at me"
-		human.Pose(HumanLookCamera())
+		HumanLookAtCamera(human)
 		Return()
 	+ "Face me"
-		human.Pose(HumanLookCamera())
-		human.Pose(HumanFaceCamera())
+		HumanLookAtCamera(human)
+		HumanFaceAtCamera(human)
 		Return()
 	+ if human.m_isMale
 		+ "Bottom time"

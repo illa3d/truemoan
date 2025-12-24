@@ -1,4 +1,4 @@
--- TrueMoan v1.0 by illa3d
+-- TrueMoan Common Scripts v1.0
 
 -------------------------------------------------------------------------------------------------
 -- FORMATTING
@@ -30,6 +30,7 @@ function HumanClothes(human, show)
 		if hadpenis then HumanPenis(human, true)
 		else HumanPenis(human, false) end
 	end
+	return show
 end
 
 -- CROSS GENDER STUFF
@@ -64,25 +65,26 @@ function HumanWetSet(girl, value, holename)
 	else
 		girl.m_vagina.m_wetness = value
 	end
+	return value
 end
 
 -------------------------------------------------------------------------------------------------
--- POSES
+-- HUMAN POSES
 -------------------------------------------------------------------------------------------------
 
-function HumanLookCamera() return Preset(
-	EyeL(CameraPos()),
-	EyeR(CameraPos())
-) end
+function HumanLookAtCamera(human)
+	human.Pose(Preset(EyeL(CameraPos()), EyeR(CameraPos())))
+end
 
-function HumanFaceCamera(human) return Preset(
-	HeadLookAt(CameraPos())
-) end
+function HumanFaceAtCamera(human)
+	human.Pose(Preset(HeadLookAt(CameraPos())))
+end
 
-function HumanEyesOpen(isopen) -- open = 0, closed = 1
+function HumanEyesOpen(human, isopen) -- open = 0, closed = 1
 	if isopen == nil then state = 0
 	else state = isopen and 0 or 1 end
-	return Preset(EyelidL(state), EyelidR(state))
+	human.Pose(Preset(EyelidL(state), EyelidR(state)))
+	return isopen
 end
 
 function HumanReset(human, resetsex, resetanim, resetpose, resetface)
