@@ -2,7 +2,7 @@
 --                                               TRUE MOAN                                             --
 ---------------------------------------------------------------------------------------------------------
 
-**(Standalone mod/Supports VoiceMOD & TalkMenuModMan) Realistic Moans | BodyEdit | Sex Control | Wet Sex | Animation | Poses | Skyboxes | Ambient Audio | Improved Menu |**
+**Supports VoiceMod/TalkMenuMM | Realistic Moans | BodyEdit | Sex Control | Wet Sex | Animation | Poses | Skyboxes | Ambient Audio | Improved Menu |**
 
 **MOD FEATURES**
 - **Realistic Moans**
@@ -44,7 +44,6 @@ https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
 
 **REQUIREMENTS/COMPATIBILITY**
 - TrueFacials v0.59
-- 
 - Compatibile with 'Nf123 Voice Mod' and 'Talk Menu Mod Manager'
 
 **HOW TO INSTALL**
