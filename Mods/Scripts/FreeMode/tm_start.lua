@@ -22,11 +22,10 @@ end
 
 -- Replaced OnHumanClick by Talk Menu Mod Manager hook (works in standalone as well)
 if type(TM_AddMenuMod) == "function" then TM_AddMenuMod("True Moan..", "TMTalkMenu")
-else local funcCode = [[function TalkMenu(human, hitTri) Jump("TMTalkMenu", human, hitTri) end ]] load(funcCode)() end
--- function OnHumanClick(human, hitTri)
--- 	-- TrueMoan: TM_TalkMenu
--- 	TMOnHumanClick(human, hitTri)
--- end
+else local funcCode = [[ function TalkMenu(human, hitTri) Jump("TMTalkMenu", human, hitTri) end ]] load(funcCode)() end
+function OnHumanClick(human, hitTri)
+	Jump("TalkMenu", human, hitTri)
+end
 
 function OnCreateHuman(human)
 	-- TrueMoan: Naked On Start

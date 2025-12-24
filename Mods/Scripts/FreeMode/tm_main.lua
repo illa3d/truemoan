@@ -50,11 +50,6 @@ function TMOnGameUpdate_GenericChat()
 	end
 end
 
--- Updated on human click, Talk Menu Start
-function TMOnHumanClick(human, hitTri)
-	Jump("TMTalkMenu", human, hitTri)
-end
-
 -- Updated on human creation
 function TMOnCreateHuman(human)
 	ResetGirlWetness(human)
