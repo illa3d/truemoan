@@ -1,18 +1,25 @@
 -- TrueMoan v1.0 by illa3d
--- Sex speed constants (UI slider values: 0.001 - 0.5)
 
 -------------------------------------------------------------------------------------------------
--- COMMON FUNCTIONS
+-- FORMATTING
 -------------------------------------------------------------------------------------------------
 
 -- TRUNCATE DECIMAL PLACES (for UI number display without gazillion decimals)
-function TruncDecimal(value, decimals)
+function FDec(value, decimals)
 	if decimals == nil then return math.floor(value)
 	else return math.floor(value * 10^decimals + 0.5) / 10^decimals end
 end
 
+function FBold(text) return "<b>" .. text .. "</b>" end
+function FIta(text) return "<i>" .. text .. "</i>" end
+function FCol(text, color) return "<color=" .. color .. ">" .. text .. "</color>" end
+
+-------------------------------------------------------------------------------------------------
+-- HUMAN FUNCTIONS
+-------------------------------------------------------------------------------------------------
+
 -- CLOTHES STUFF
-function ShowClothes(human, show)
+function HumanClothes(human, show)
 	if show then
 		human.CustomizeAll(0)
 		-- no simple way of keeping futa penis
@@ -20,34 +27,34 @@ function ShowClothes(human, show)
 	else
 		hadpenis = human.Penis.IsActive
 		human.CustomizeAll(99)
-		if hadpenis then ShowPenis(human, true)
-		else ShowPenis(human, false) end
+		if hadpenis then HumanPenis(human, true)
+		else HumanPenis(human, false) end
 	end
 end
 
 -- CROSS GENDER STUFF
-function ShowPenis(girl, show)
+function HumanPenis(girl, show)
 	if show then girl.Customize("Penis", 1)
 	else girl.Customize("Penis", 0) end
 end
 
-function SetMaleBottomable(human)
-	human.m_isMale = false
+function HumanFemaleSet(male)
+	male.m_isMale = false
 end
 
 -- CUM
-function SetCumEvery(human, sec)
+function HumanCumEvery(human, sec)
 	game.AddRepeatAnim(sec, || human.Shoot(), human.Penis)
 	return sec
 end
 
-function ResetGirlWetness(girl)
-	SetGirlWetness(girl, 0, "Vagina")
-	SetGirlWetness(girl, 0, "Anus")
-	SetGirlWetness(girl, 0, "Mouth")
+function HumanWetReset(girl)
+	HumanWetSet(girl, 0, "Vagina")
+	HumanWetSet(girl, 0, "Anus")
+	HumanWetSet(girl, 0, "Mouth")
 end
 
-function SetGirlWetness(girl, value, holename)
+function HumanWetSet(girl, value, holename)
 	--holeName:"Vagina" "Anus" Mouth"
 	if girl == nil or value == nil or girl.m_isMale == true then return end
 	if holename ~= nil and holename == "Mouth" then
@@ -63,8 +70,27 @@ end
 -- POSES
 -------------------------------------------------------------------------------------------------
 
--- RESET
-function ResetHuman(human, resetsex, resetanim, resetpose, resetface)
+function HumanLookCamera() return Preset(
+	EyeL(CameraPos()),
+	EyeR(CameraPos())
+) end
+
+function HumanFaceCamera(human) return Preset(
+	HeadLookAt(CameraPos())
+) end
+
+
+function HumanEyesClose() return Preset(
+	EyelidL(1),
+	EyelidR(1)
+) end
+
+function HumanEyesOpen() return Preset(
+	EyelidL(0),
+	EyelidR(0)
+) end
+
+function HumanReset(human, resetsex, resetanim, resetpose, resetface)
 	if resetsex == nil or resetsex then
 		if human.Penis ~= nil and human.Penis.Interaction ~= nil then human.Penis.Interaction.AutoActive = false end
 		if human.Mouth.Fucker ~= nil and human.Mouth.Fucker.Penis ~= nil and human.Mouth.Fucker.Penis.Interaction ~= nil then human.Mouth.Fucker.Penis.Interaction.AutoActive = false end
@@ -90,26 +116,6 @@ function ResetHuman(human, resetsex, resetanim, resetpose, resetface)
 		human.Pose(FaceNeutral())
 	end
 end
-
-function CameraLookAt() return Preset(
-	EyeL(CameraPos()),
-	EyeR(CameraPos())
-) end
-
-function CameraFaceAt() return Preset(
-	HeadLookAt(CameraPos())
-) end
-
-
-function EyesClose() return Preset(
-	EyelidL(1),
-	EyelidR(1)
-) end
-
-function EyesOpen() return Preset(
-	EyelidL(0),
-	EyelidR(0)
-) end
 
 -------------------------------------------------------------------------------------------------
 -- INTERACTION

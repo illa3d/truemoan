@@ -1,6 +1,4 @@
 -- TrueMoan v1.0 by illa3d
-tmAdec = 1
-
 label TMMenuOptions(human)
 	+ "Hide UI" [if HG_UIvis == true]
 		HG_UIvis = false
@@ -9,47 +7,47 @@ label TMMenuOptions(human)
 		HG_UIvis = true
 		game.m_controlsUI.Show()
 		Return()
-	+ "New people | " .. TMWordLabel("Naked") [if TM_NakedOnSpawn == true]
+	+ "New people | " .. AccStr("Naked") [if TM_NakedOnSpawn == true]
 		TM_NakedOnSpawn = false
 		Return()
-	+ "New people | " .. TMWordLabel("Clothed") [if TM_NakedOnSpawn == false]
+	+ "New people | " .. AccStr("Clothed") [if TM_NakedOnSpawn == false]
 		TM_NakedOnSpawn = true
 		Return()
-	+ "Sex.." [gold]
-		+ "Wet sex | " .. TMBoolLabel(TM_WetSex) [if TM_WetSex == true]
+	+ "Sex options.." [gold]
+		+ "Wet sex | " .. AccBool(TM_WetSex) [if TM_WetSex == true]
 			TM_WetSex = false
 			Return()
-		+ "Wet sex | " .. TMBoolLabel(TM_WetSex) [if TM_WetSex == false]
+		+ "Wet sex | " .. AccBool(TM_WetSex) [if TM_WetSex == false]
 			TM_WetSex = true
 			Return()
-		+ "Moan sex | " .. TMBoolLabel(TM_MoanSex) [if TM_MoanSex == true and TM_AllowMoaning]
+		+ "Moan sex | " .. AccBool(TM_MoanSex) [if TM_MoanSex == true and TM_AllowMoaning]
 			TM_MoanSex = false
 			Return()
-		+ "Moan sex | " .. TMBoolLabel(TM_MoanSex) [if TM_MoanSex == false and TM_AllowMoaning]
+		+ "Moan sex | " .. AccBool(TM_MoanSex) [if TM_MoanSex == false and TM_AllowMoaning]
 			TM_MoanSex = true
 			Return()
-		+ "Moan cum | " .. TMBoolLabel(game.FluidReaction) [if game.FluidReaction == true and TM_AllowMoaning]
+		+ "Moan cum | " .. AccBool(game.FluidReaction) [if game.FluidReaction == true and TM_AllowMoaning]
 			game.FluidReaction = false
 			Return()
-		+ "Moan cum | " .. TMBoolLabel(game.FluidReaction) [if game.FluidReaction == false and TM_AllowMoaning]
+		+ "Moan cum | " .. AccBool(game.FluidReaction) [if game.FluidReaction == false and TM_AllowMoaning]
 			game.FluidReaction = true
 			Return()
 		+ "Moaning | OFF (VoiceMod detected)" [if not TM_AllowMoaning]
 			human "I know, right? Don't <b>MOooAhN</b> about it tho!"
 			Return()
-	+ MenuBack
-		Return(2)
-	+ MenuClose
-	+ "Ambience.. | " .. TMBoolLabel(TM_AllowAmbience) [gold]
+		+ TM_MenuBack
+			Return(2)
+		+ TM_MenuClose
+	+ "Ambience.. | " .. AccBool(TM_AllowAmbience) [gold]
 		+ "Refresh" [if TM_AllowAmbience == true]
 			Return()
-		+ "Next track | " .. TMWordLabel("Ambience " .. tmAmbienceTrack) [if TM_AllowAmbience]
+		+ "Next track | " .. AccStr("Ambience " .. tmAmbienceTrack) [if TM_AllowAmbience]
 			TMPlayAmbienceNext()
 			Return()
-		+ "Ambience | " .. TMBoolLabel(TM_AllowAmbience) .. " (next in ".. TMValueLabel(TMAmbienceLeftSec()) .. "s)" [if TM_AllowAmbience == true]
+		+ "Ambience | " .. AccBool(TM_AllowAmbience) .. " (next in ".. AccNum(TMAmbienceLeftSec()) .. "s)" [if TM_AllowAmbience == true]
 			TM_AllowAmbience = false
 			Return()
-		+ "Ambience | " .. TMBoolLabel(TM_AllowAmbience) [if TM_AllowAmbience == false]
+		+ "Ambience | " .. AccBool(TM_AllowAmbience) [if TM_AllowAmbience == false]
 			TM_AllowAmbience = true
 			TMPlayAmbienceCurrent()
 			Return()

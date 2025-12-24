@@ -55,7 +55,7 @@ TM_WetnessStep = 200
 TM_MenuMod = "<color=#e87435>« MOD MENU</color>" -- Back to Mod menu (Talk Mod Menu Manager)
 TM_MenuBack = "<color=#e87435>« BACK</color>"    -- Back button style
 TM_MenuClose = "<color=#e85035>× CLOSE"          -- Close button style
-TM_MenuNumColor = "<color=#df9c3d>"              -- Numerical values
+TM_MenuAccent = "#df9c3d"                        -- Menu accent color
 
 -----------------------------------------------
 -- MUSIC TRACKS (displayed in Options/Music)

@@ -20,7 +20,7 @@ label TMTalkMenu(human, hitTri)
 		TMMenuSex(human)
 	+ "BODY.." [gold]
 		TMMenuBody(human)
-	+ "HEY, " .. human.Name ..".." [gold]
+	+ "HEY, " .. FBold(human.Name) .. ".." [gold]
 		TMMenuHeyHuman(human)
 	+ if game.PovHuman ~= human
 		+ "POV"
@@ -36,18 +36,21 @@ stop
 -- LABELS FORMAT (no need to modify)
 TM_EndColor = "</color>"
 
-function TMBoolLabel (bvalue)
-	 return TM_MenuNumColor .. (bvalue and "ON" or "OFF") .. TM_EndColor
+function AccBool (bol)
+	 return FCol(bol and "ON" or "OFF", TM_MenuAccent)
 end
-function TMWordLabel (svalue)
-	return  TM_MenuNumColor .. svalue .. TM_EndColor
+function AccStr (str)
+	return  FCol(str, TM_MenuAccent)
 end
-function TMValueLabel (value, decimals)
-	return  TM_MenuNumColor .. TruncDecimal(value, decimals) .. TM_EndColor
+function AccNum (value, decimals)
+	return  FCol(FDec(value, decimals), TM_MenuAccent)
 end
-function TMValueLabel1 (letter, value, decimals)
-	return  letter .. TM_MenuNumColor .. TruncDecimal(value, decimals) .. TM_EndColor
+function AccTextNum1 (text, value, decimals)
+	return  text .. FCol(FDec(value, decimals), TM_MenuAccent)
 end
-function TMValueLabel2 (letter1, value1, letter2, value2, decimals)
-	return  letter1 .. TM_MenuNumColor .. TruncDecimal(value1, decimals) .. TM_EndColor .. " | " .. letter2 .. TM_MenuNumColor .. TruncDecimal(value2, decimals) .. TM_EndColor
+function AccTextNum2 (text1, value1, text2, value2, decimals)
+	return  text1 .. FCol(FDec(value1, decimals), TM_MenuAccent) .. " | " .. text2 .. FCol(FDec(value2, decimals), TM_MenuAccent)
+end
+function AccTextNum3 (text1, value1, text2, value2, text3, value3, decimals)
+	return  text1 .. FCol(FDec(value1, decimals), TM_MenuAccent) .. " | " .. text2 .. FCol(FDec(value2, decimals), TM_MenuAccent) .. " | " .. text3 .. FCol(FDec(value3, decimals), TM_MenuAccent)
 end

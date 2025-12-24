@@ -52,11 +52,11 @@ end
 
 -- Updated on human creation
 function TMOnCreateHuman(human)
-	ResetGirlWetness(human)
+	HumanWetReset(human)
 	TMBEPreset_RandomStart(human)
 	if TM_NakedOnSpawn then
-		ShowClothes(human)
-		ShowPenis(human, false)
+		HumanClothes(human)
+		HumanPenis(human, false)
 	end
 	game.PlayCharacterMusic(human)
 	if init then human.Say("Greeting") end
@@ -174,9 +174,9 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 		TMPlayGirlMoan(girl, tier)
 		-- Auto Wetness
 		if TM_WetSex then
-			SetGirlWetness(girl, wetness, holeName)
+			HumanWetSet(girl, wetness, holeName)
 		else
-			SetGirlWetness(girl, 0, holeName)
+			HumanWetSet(girl, 0, holeName)
 		end
 		ResetTimer(key)
 	end

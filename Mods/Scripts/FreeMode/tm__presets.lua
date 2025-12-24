@@ -91,11 +91,11 @@ function TMBEPreset_Random(human)
 end
 
 function TMBEPreset_Dildo(human)
-	ShowClothes(human, false)
+	HumanClothes(human, false)
 	TMBEPreset_Normal(human)
 	tmPenisSize = TMBodyEditSet(human,"Penis size", 8)
 	tmBodySize = TMBodyEditSet(human,"Body size", -0.9)
-	ResetHuman(human)
+	HumanReset(human)
 end
 
 function TMBEPreset_Obese(human)
