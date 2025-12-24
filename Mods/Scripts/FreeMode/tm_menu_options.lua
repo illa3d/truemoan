@@ -35,6 +35,8 @@ label TMMenuOptions(human)
 		game.FluidReaction = true
 		Return()
 	+ "Moaning | OFF (VoiceMod detected)" [if not TM_AllowMoaning]
+		human "I know, right? Don't <b>MOooAhN</b> about it tho!"
+		Return()
 	-- + MenuBack
 	-- 	Return(2)
 	-- + MenuClose
