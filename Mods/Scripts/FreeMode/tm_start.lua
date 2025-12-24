@@ -28,7 +28,7 @@ function OnHumanClick(human, hitTri)
 end
 
 function OnCreateHuman(human)
-	-- TrueMoan: Naked On Start
+	-- TrueMoan: Naked On Start, Remove Wetness, Randomize body type
 	TMOnCreateHuman(human)
 end
 
