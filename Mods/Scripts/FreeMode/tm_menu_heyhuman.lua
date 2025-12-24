@@ -1,4 +1,6 @@
 -- TrueMoan v1.0 by illa3d
+TMEyesOpen = true
+
 label TMMenuHeyHuman(human)
 	+ "RESET ALL" [gold]
 		ResetHuman(human)
@@ -6,15 +8,20 @@ label TMMenuHeyHuman(human)
 	+ "Hands.." [gold]
 		+ "(TODO) FaunaLabs"
 			Return()
-	+ "Close eyes"
+	+ "Eyes close" [if TMEyesOpen = true]
+		TMEyesOpen = true
 		human.Pose(EyesClose())
 		Return()
+	+ "Eyes open" [if TMEyesOpen = false]
+		TMEyesOpen = false
+		human.Pose(EyesOpen())
+		Return()
 	+ "Look at me"
-		human.Pose(LookAtCamera())
+		human.Pose(CameraLookAt())
 		Return()
 	+ "Face me"
-		human.Pose(LookAtCamera())
-		human.Pose(FaceAtCamera())
+		human.Pose(CameraLookAt())
+		human.Pose(CameraFaceAt())
 		Return()
 	+ if human.m_isMale
 		+ "Bottom time"

@@ -1,18 +1,9 @@
 -- TrueMoan v1.0 by illa3d
 -- Sex speed constants (UI slider values: 0.001 - 0.5)
 
-
 -------------------------------------------------------------------------------------------------
 -- COMMON FUNCTIONS
 -------------------------------------------------------------------------------------------------
-function LookAtCamera() return Preset(
-	EyeL(CameraPos()),
-	EyeR(CameraPos())
-) end
-
-function FaceAtCamera() return Preset(
-	HeadLookAt(CameraPos())
-) end
 
 -- TRUNCATE DECIMAL PLACES (for UI number display without gazillion decimals)
 function TruncDecimal(value, decimals)
@@ -68,6 +59,10 @@ function SetGirlWetness(girl, value, holename)
 	end
 end
 
+-------------------------------------------------------------------------------------------------
+-- POSES
+-------------------------------------------------------------------------------------------------
+
 -- RESET
 function ResetHuman(human, resetsex, resetanim, resetpose, resetface)
 	if resetsex == nil or resetsex then
@@ -95,6 +90,26 @@ function ResetHuman(human, resetsex, resetanim, resetpose, resetface)
 		human.Pose(FaceNeutral())
 	end
 end
+
+function CameraLookAt() return Preset(
+	EyeL(CameraPos()),
+	EyeR(CameraPos())
+) end
+
+function CameraFaceAt() return Preset(
+	HeadLookAt(CameraPos())
+) end
+
+
+function EyesClose() return Preset(
+	EyelidL(1),
+	EyelidR(1)
+) end
+
+function EyesOpen() return Preset(
+	EyelidL(0),
+	EyelidR(0)
+) end
 
 -------------------------------------------------------------------------------------------------
 -- INTERACTION
