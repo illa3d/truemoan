@@ -1,4 +1,12 @@
 -- TrueMoan Common Scripts v1.0
+-- MODS SUPPORTED: TalkMenuModManager, Nf123VoiceMod
+
+-------------------------------------------------------------------------------------------------
+-- MOD CHECKS
+-------------------------------------------------------------------------------------------------
+
+function HasMod_TalkMenuModManager() return TM_ModMenu ~= nil end
+function HasMod_Nf123VoiceMod() return type(VM_VoiceMod_Enable) == "function" end
 
 -------------------------------------------------------------------------------------------------
 -- FORMATTING
@@ -49,6 +57,7 @@ function HumanCumEvery(human, sec)
 	return sec
 end
 
+-- WET
 function HumanWetReset(girl)
 	HumanWetSet(girl, 0, "Vagina")
 	HumanWetSet(girl, 0, "Anus")

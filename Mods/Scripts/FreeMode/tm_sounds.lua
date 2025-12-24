@@ -12,10 +12,6 @@ function TMAmbienceLeftSec()
 	return FDec(tmAmbienceTrackSec - Timer(tmAmbienceTimer))
 end
 
-function TMStartSound()
-	TMPlayAmbienceRandom()
-end
-
 -- AMBIENCE
 function TMStopAmbience()
 	tmPlayingAmbience = false

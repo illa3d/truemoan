@@ -1,4 +1,5 @@
 -- TrueMoan v1.0 by illa3d
+-- Code in: tm_bodyedit.lua
 -- decimals
 tmBdec = 3
 

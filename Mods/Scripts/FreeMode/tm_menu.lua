@@ -20,7 +20,7 @@ label TMTalkMenu(human, hitTri)
 		TMMenuSex(human)
 	+ "BODY.." [gold]
 		TMMenuBody(human)
-	+ "HEY, " .. FBold(human.Name) .. ".." [gold]
+	+ "HEY, " .. AccStr(human.Name) .. ".." [gold]
 		TMMenuHeyHuman(human)
 	+ if game.PovHuman ~= human
 		+ "POV"

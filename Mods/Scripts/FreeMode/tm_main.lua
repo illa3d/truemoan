@@ -3,29 +3,29 @@
 -- freemode_main.lua is not required, these functions are overrides (even if it exists in folder)
 -- same function in multiple files, alphabetically last one is used
 -------------------------------------------------------------------------------------------------
--- Variables
-init = false
-
--- VoiceMod detection (TrueMoan stops moaning functionality)
+-- TrueMoan module global switches
+-------------------------------------------------------------------------------------------------
+TM_Initialized = false
 TM_AllowMoaning = true
-function TMCheckForVoiceMod()
-	if type(VM_VoiceMod_Enable) == "function" then TM_AllowMoaning = false end
+
+function TMDetectMods()
+	TM_AllowMoaning = not HasMod_Nf123VoiceMod()
 end 
 
 -------------------------------------------------------------------------------------------------
 -- FREE MODE START (called from TrueFacials)
 -------------------------------------------------------------------------------------------------
 function TMOnStart()
-	Play_FreeMode() -- this makes TalkMenu visible and 3d interactable
-	TMCheckForVoiceMod()
+	Play_FreeMode() -- this makes 3d interactable when TalkMenu visible
+	TMDetectMods()
 end
 
 function TMOnStart_Ambience()
-	TMStartSound()
+	TMPlayAmbienceRandom()
 end
 
 function TMOnStart_GenericChat()
-	init = true
+	TM_Initialized = true
 	if not TM_AllowMoaning then return end
 	ResetTimer("GenericChat", math.random(-10, 0))
 	local speaker = game.GetRandomHuman(|h| h.CanSpeak)
@@ -35,11 +35,15 @@ end
 function TMOnGameUpdate()
 	-- unused for now
 end
+
+function TMOnHumanClick(human, hittri)
+	HumanClothes(human, false)
+end
 	
 -- Updated every frame
 function TMOnGameUpdate_GenericChat()
 	-- don't talk with other voice mods
-	if not TM_AllowMoaning or init == false then return end
+	if not TM_AllowMoaning or TM_Initialized == false then return end
 	local lastChatTime = Timer("GenericChat")
 	if lastChatTime > game.ChatIntervals then
 		ResetTimer("GenericChat", math.random(-7, 0))
@@ -59,7 +63,7 @@ function TMOnCreateHuman(human)
 		HumanPenis(human, false)
 	end
 	game.PlayCharacterMusic(human)
-	if init then human.Say("Greeting") end
+	if TM_Initialized then human.Say("Greeting") end
 end
 
 -- Updated on human removal
