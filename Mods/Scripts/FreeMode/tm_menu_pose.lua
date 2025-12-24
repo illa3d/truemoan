@@ -6,43 +6,43 @@ label TMMenuPose(human)
 		+ "Camel pose"
 			human.Pose(CamelPose())
 			Return()
-		+ "Jack-o-Pose"
+		+ "Jack-o pose"
 			human.Pose(JackoPose())
 			Return()
-		+ "Lay on back"
-			human.Pose(LayDownBack())
-			Return()
-		+ "Lay on back, spread legs"
+		+ "Lay, back, legs spread"
 			human.Pose(LayDownBackSpread())
 			Return()
-		+ "Lay on side"
+		+ "Lay, back"
+			human.Pose(LayDownBack())
+			Return()
+		+ "Lay, side"
 			human.Pose(LayDownSide())
 			Return()
-		+ "Lay on stomach"
+		+ "Lay, stomach"
 			human.Pose(LaydownStomach())
 			Return()
-		+ "Kneel on all fours"
+		+ "Doggy"
 			human.Pose(GetdownAll4())
 			Return()
-		+ "Kneel down"
+		+ "Kneel"
 			human.Pose(KneelDown())
 			Return()
-		+ "Sit down"
-			human.Pose(SitDown())
+		+ "Sit, legs spread"
+			human.Pose(SitDownSpreadLegs())
 			Return()
-		+ "Sit and cross legs"
+		+ "Sit, legs cross"
 			human.Pose(SittingFolded())
 			Return()
-		+ "Sit and spread legs"
-			human.Pose(SitDownSpreadLegs())
+		+ "Sit"
+			human.Pose(SitDown())
 			Return()
 		+ "Bend over"
 			human.Pose(BendOver())
 			Return()
-		+ "T-Pose"
+		+ "Stand, T-Pose"
 			human.Pose(TPose())
 			Return()
-		+ "Stand up"
+		+ "Stand"
 			human.Pose(StandUp())
 			Return()
 		+ TM_MenuBack

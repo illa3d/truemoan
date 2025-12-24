@@ -30,7 +30,7 @@ label TMMenuFace(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "Stop Looping" [if game.HasAnim(human) == true]
+	+ "Stop Anim" [if game.HasAnim(human)]
 		game.RemoveAnim(human)
 		Return()
 	+ "RESET Face" [gold]
