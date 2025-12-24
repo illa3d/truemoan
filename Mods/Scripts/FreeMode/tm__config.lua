@@ -52,10 +52,10 @@ TM_MoanCumBodyTime = 5
 TM_WetnessStep = 200
 
 -- Menu Style
-TM_MenuMod = "<color=#e87435>« MOD MENU</color>" -- Back to Mod menu (Talk Mod Menu Manager)
-TM_MenuBack = "<color=#e87435>« BACK</color>"    -- Back button style
-TM_MenuClose = "<color=#e85035>× CLOSE"          -- Close button style
-TM_MenuAccent = "#df9c3d"                        -- Menu accent color
+TM_MenuMod = "<color=#e87435>« MOD MENU</color>"
+TM_MenuBack = "<color=#e87435>« BACK</color>"
+TM_MenuClose = "<color=#e85035>× CLOSE</color>"
+TM_MenuAccent = "#df9c3d"
 
 -----------------------------------------------
 -- MUSIC TRACKS (displayed in Options/Music)
