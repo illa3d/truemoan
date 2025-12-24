@@ -3,26 +3,26 @@ label TMMenuFace(human)
 	+ "(TODO) FaunaLabs"
 		Return()
 	+ "Original.."[gold]
-		+ "Happy"
-			human.Pose(FaceSmile())
+		+ "Ahegao"
+			human.Pose(FaceAhegao())
 			Return()
-		+ "Angry"
-			human.Pose(FaceAngry())
+		+ "Disgusted"
+			human.Pose(FaceDisgusted())
 			Return()
 		+ "Sad"
 			human.Pose(FaceSad())
 			Return()
-		+ "Ahegao"
-			human.Pose(FaceAhegao())
+		+ "Scared"
+			human.Pose(FaceScared())
+			Return()
+		+ "Angry"
+			human.Pose(FaceAngry())
 			Return()
 		+ "Surprised"
 			human.Pose(FaceSurprised())
 			Return()
-		+ "Scared"
-			human.Pose(FaceScared())
-			Return()
-		+ "Disgusted"
-			human.Pose(FaceDisgusted())
+		+ "Happy"
+			human.Pose(FaceSmile())
 			Return()
 		+ "Neutral"
 			human.Pose(FaceNeutral())

@@ -3,14 +3,32 @@ label TMMenuPose(human)
 	+ "(TODO) FaunaLabs"
 		Return()
 	+ "Original.."[gold]
-		+ "Stand up"
-			human.Pose(StandUp())
+		+ "Camel pose"
+			human.Pose(CamelPose())
 			Return()
-		+ "Sit down"
-			human.Pose(SitDown())
+		+ "Jack-o-Pose"
+			human.Pose(JackoPose())
+			Return()
+		+ "Lay on back"
+			human.Pose(LayDownBack())
+			Return()
+		+ "Lay on back, spread legs"
+			human.Pose(LayDownBackSpread())
+			Return()
+		+ "Lay on side"
+			human.Pose(LayDownSide())
+			Return()
+		+ "Lay on stomach"
+			human.Pose(LaydownStomach())
+			Return()
+		+ "Kneel on all fours"
+			human.Pose(GetdownAll4())
 			Return()
 		+ "Kneel down"
 			human.Pose(KneelDown())
+			Return()
+		+ "Sit down"
+			human.Pose(SitDown())
 			Return()
 		+ "Sit and cross legs"
 			human.Pose(SittingFolded())
@@ -18,32 +36,14 @@ label TMMenuPose(human)
 		+ "Sit and spread legs"
 			human.Pose(SitDownSpreadLegs())
 			Return()
-		+ "Lay on your back"
-			human.Pose(LayDownBack())
-			Return()
-		+ "Lay on your back and spread legs"
-			human.Pose(LayDownBackSpread())
-			Return()
-		+ "Lay on your side"
-			human.Pose(LayDownSide())
-			Return()
-		+ "Lay on your stomach"
-			human.Pose(LaydownStomach())
-			Return()
-		+ "Get on all fours"
-			human.Pose(GetdownAll4())
-			Return()
 		+ "Bend over"
 			human.Pose(BendOver())
 			Return()
-		+ "Camel pose"
-			human.Pose(CamelPose())
-			Return()
-		+ "Jack-o-Pose"
-			human.Pose(JackoPose())
-			Return()
 		+ "T-Pose"
 			human.Pose(TPose())
+			Return()
+		+ "Stand up"
+			human.Pose(StandUp())
 			Return()
 		+ TM_MenuBack
 			Return(2)
