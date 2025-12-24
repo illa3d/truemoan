@@ -2,7 +2,7 @@
 --                                               TRUE MOAN                                             --
 ---------------------------------------------------------------------------------------------------------
 
-**(FreeMode Replacer Mod) Realistic Moans | Wet Sex | BodyEdit | Sex Control | Animation | Poses | Skyboxes | Ambient Audio | Improved Menu |**
+**(Standalone mod/Supports VoiceMOD & TalkMenuModMan) Realistic Moans | BodyEdit | Sex Control | Wet Sex | Animation | Poses | Skyboxes | Ambient Audio | Improved Menu |**
 
 **MOD FEATURES**
 - **Realistic Moans**
@@ -11,19 +11,20 @@
   - 6 moan tiers: Slow, Normal, Fast, Faster, Orgasm, Climax
   - Togglable organic speed dependant moans
   - Fluid reaction moans
-- **Wet Sex** (moisting used holes Vag, Anl, Orl)
-- **Improved Menu UX**
 - **Body Edit**
   - Reduce/enlarge body beyond slider limits
-  - Presets (Random, Skinny, Slim, Normal, Curvy, Obese)
+  - Body Size and Type Presets
   - Apply to/reset multiple actors quickly
+  - Fairy Dildo
 - **Sex Control**
-  - Thrusting (Presets, Slower/Faster)
+  - Speed/Presets/Thrust/Male vs female move
   - Natural Auto BJ / Thrust
-  - Cum frequency
-  - Wetness (Presets, Less and More)
+  - Cum/Wetness controls and presets
+- **Wet Sex** (moisting used holes Vag, Anl, Orl)
 - **Animation & Poses**
 - **6x ambience audio backgrounds**
+- **8 Scenes included**
+- **Improved Menu UX**
 
 **ADDONS** (separate downloads)
 - **7x skyboxes** (8/4/2k)
@@ -37,30 +38,28 @@ Thanks everyone for the effort, pretty slick mods! :heart:
 Thanks Chiyoru, Spicy Sounds Bundle :heart:
 
 **LATEST DOWNLOAD**
-**TrueMoan v1.0** [2025-12-22]
-**TrueMoan Addon Skyboxes v1.0** [2025-12-22]
-(Skyboxes - 8/**4**/2k are separate downloads, in-game no visual difference between 8/**4**k) 
+**TrueMoan v1.1** [2025-12-24]
+**TrueMoan Addon Skyboxes v1.0** [2025-12-22] (no difference between 8/4k in-game)
 https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
 
-**REQUIREMENTS**
+**REQUIREMENTS/COMPATIBILITY**
 - TrueFacials v0.59
-- No other mods required
+- 
+- Compatibile with 'Nf123 Voice Mod' and 'Talk Menu Mod Manager'
 
 **HOW TO INSTALL**
-- :warning:**WILL BREAK MODS USING FREEMODE** (ie: other Voice Mods)
-- Backup/rename existing`Mods/Scripts/FreeMode`
-- **Mod or Addons**: Extract archive to game folder (overwrite all files)
+- Extract archive to game folder (overwrite all files)
 
 **HOW TO UNINSTALL**
-- If backed up `Mods/Scripts/FreeMode`: Delete TrueMoan `FreeMode` folder and restore yours
-- Or delete TrueMoan files in `Mods/Scripts/FreeMode`: `tm_*.lua, tm_*.txt, Voice/tm_*.mp3, Sounds/tm_*.mp3`
+- Delete TrueMoan files in `Mods/Scripts/FreeMode`: `tm_*.lua, tm_*.txt, Voice/tm_*.mp3, Sounds/tm_*.mp3`
 
 ---------------------------------------------------------------------------------------------------------
 -- ADDITIONAL INFO
 ---------------------------------------------------------------------------------------------------------
 
 **MOD CONFIG**
-- Tweak defaults & values `Mods/Scripts/FreeMode/tm_CONFIG.lua`
+- Tweak defaults & values `Mods/Scripts/FreeMode/tm__config.lua`
+- Tweak body presets `Mods/Scripts/FreeMode/tm__presets.lua`
 
 **INTEGRATED MODS**
 - `FreeModeHG v0.3.zip` @.heartgrenade https://discord.com/channels/620113492208517120/1312401584910631054/1349491994510233661
@@ -73,6 +72,11 @@ GitHub Repository - https://github.com/illa3d/truemoan
 
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_main%20README.txt
+
+[ v1.1]
+- Added support for Talk Menu Mod Manager
+- Solved compatibility with Nf123 Voice Mod (stops moaning)
+- Renamed functions/variables to minimize clashing with other FreeMode mods
 
 [ v1.0 ]
 - SexControl

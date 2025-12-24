@@ -6,7 +6,7 @@
 
 -- Ambience
 TM_AllowAmbience = true -- Ambient sounds
-TM_AmbienceVolume = 0.5 -- Ambient volume (0 to 1)
+TM_AmbienceVolume = 0.6 -- Ambient volume (0 to 1)
 -- Options
 TM_NakedOnSpawn = false -- Spawn characters naked
 TM_WetSex = true        -- Moisting holes (vag, anus, mouth)
