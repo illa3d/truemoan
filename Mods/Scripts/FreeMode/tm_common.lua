@@ -5,6 +5,14 @@
 -------------------------------------------------------------------------------------------------
 -- COMMON FUNCTIONS
 -------------------------------------------------------------------------------------------------
+function LookAtCamera() return Preset(
+	EyeL(CameraPos()),
+	EyeR(CameraPos())
+) end
+
+function FaceAtCamera() return Preset(
+	HeadLookAt(CameraPos())
+) end
 
 -- TRUNCATE DECIMAL PLACES (for UI number display without gazillion decimals)
 function TruncDecimal(value, decimals)

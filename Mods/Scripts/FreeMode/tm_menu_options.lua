@@ -15,31 +15,31 @@ label TMMenuOptions(human)
 	+ "New people | " .. TMWordLabel("Clothed") [if TM_NakedOnSpawn == false]
 		TM_NakedOnSpawn = true
 		Return()
-	-- + "Sex.." [gold] --return when options fill up
-	+ "Wet sex | " .. TMBoolLabel(TM_WetSex) [if TM_WetSex == true]
-		TM_WetSex = false
-		Return()
-	+ "Wet sex | " .. TMBoolLabel(TM_WetSex) [if TM_WetSex == false]
-		TM_WetSex = true
-		Return()
-	+ "Moan sex | " .. TMBoolLabel(TM_MoanSex) [if TM_MoanSex == true and TM_AllowMoaning]
-		TM_MoanSex = false
-		Return()
-	+ "Moan sex | " .. TMBoolLabel(TM_MoanSex) [if TM_MoanSex == false and TM_AllowMoaning]
-		TM_MoanSex = true
-		Return()
-	+ "Moan cum | " .. TMBoolLabel(game.FluidReaction) [if game.FluidReaction == true and TM_AllowMoaning]
-		game.FluidReaction = false
-		Return()
-	+ "Moan cum | " .. TMBoolLabel(game.FluidReaction) [if game.FluidReaction == false and TM_AllowMoaning]
-		game.FluidReaction = true
-		Return()
-	+ "Moaning | OFF (VoiceMod detected)" [if not TM_AllowMoaning]
-		human "I know, right? Don't <b>MOooAhN</b> about it tho!"
-		Return()
-	-- + MenuBack
-	-- 	Return(2)
-	-- + MenuClose
+	+ "Sex.." [gold]
+		+ "Wet sex | " .. TMBoolLabel(TM_WetSex) [if TM_WetSex == true]
+			TM_WetSex = false
+			Return()
+		+ "Wet sex | " .. TMBoolLabel(TM_WetSex) [if TM_WetSex == false]
+			TM_WetSex = true
+			Return()
+		+ "Moan sex | " .. TMBoolLabel(TM_MoanSex) [if TM_MoanSex == true and TM_AllowMoaning]
+			TM_MoanSex = false
+			Return()
+		+ "Moan sex | " .. TMBoolLabel(TM_MoanSex) [if TM_MoanSex == false and TM_AllowMoaning]
+			TM_MoanSex = true
+			Return()
+		+ "Moan cum | " .. TMBoolLabel(game.FluidReaction) [if game.FluidReaction == true and TM_AllowMoaning]
+			game.FluidReaction = false
+			Return()
+		+ "Moan cum | " .. TMBoolLabel(game.FluidReaction) [if game.FluidReaction == false and TM_AllowMoaning]
+			game.FluidReaction = true
+			Return()
+		+ "Moaning | OFF (VoiceMod detected)" [if not TM_AllowMoaning]
+			human "I know, right? Don't <b>MOooAhN</b> about it tho!"
+			Return()
+	+ MenuBack
+		Return(2)
+	+ MenuClose
 	+ "Ambience.. | " .. TMBoolLabel(TM_AllowAmbience) [gold]
 		+ "Refresh" [if TM_AllowAmbience == true]
 			Return()
