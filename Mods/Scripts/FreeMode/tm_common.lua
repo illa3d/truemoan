@@ -79,16 +79,11 @@ function HumanFaceCamera(human) return Preset(
 	HeadLookAt(CameraPos())
 ) end
 
-
-function HumanEyesClose() return Preset(
-	EyelidL(1),
-	EyelidR(1)
-) end
-
-function HumanEyesOpen() return Preset(
-	EyelidL(0),
-	EyelidR(0)
-) end
+function HumanEyesOpen(isopen) -- open = 0, closed = 1
+	if isopen == nil then state = 0
+	else state = isopen and 0 or 1 end
+	return Preset(EyelidL(state), EyelidR(state))
+end
 
 function HumanReset(human, resetsex, resetanim, resetpose, resetface)
 	if resetsex == nil or resetsex then

@@ -2,19 +2,19 @@
 TMEyesOpen = true
 
 label TMMenuHeyHuman(human)
-	+ "RESET ALL" [gold]
+	+ "RESET ".. FBold(human.Name) [gold]
 		HumanReset(human)
 		Return()
 	+ "Hands.." [gold]
 		+ "(TODO) FaunaLabs"
 			Return()
-	+ "Eyes close" [if not TMEyesOpen]
+	+ "Eyes OPEN" [if not TMEyesOpen]
 		TMEyesOpen = true
-		human.Pose(HumanEyesClose())
+		human.Pose(HumanEyesOpen(TMEyesOpen))
 		Return()
-	+ "Eyes open" [if TMEyesOpen]
+	+ "Eyes CLOSE" [if TMEyesOpen]
 		TMEyesOpen = false
-		human.Pose(HumanEyesOpen())
+		human.Pose(HumanEyesOpen(TMEyesOpen))
 		Return()
 	+ "Look at me"
 		human.Pose(HumanLookCamera())
@@ -28,11 +28,11 @@ label TMMenuHeyHuman(human)
 			HumanFemaleSet(human)
 			Return(2)
 	+ else
-		+ "Penis Off" [if human.Penis.IsActive]
-			HumanPenis(human, false)
-			Return(2)
-		+ "Penis On" [if not human.Penis.IsActive]
+		+ "Penis ON" [if not human.Penis.IsActive]
 			HumanPenis(human, true)
+			Return(2)
+		+ "Penis OFF" [if human.Penis.IsActive]
+			HumanPenis(human, false)
 			Return(2)
 	+ "Clothes ON"
 		HumanClothes(human, true)
