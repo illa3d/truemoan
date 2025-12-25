@@ -1,4 +1,4 @@
--- TrueMoan v1.0 by illa3d
+-- TrueMoan v1.2 by illa3d
 label TMTalkMenu(human, hitTri)
 	+ if TM_RootHideShowUI
 		+ "Hide UI" [if HG_UIvis == true]

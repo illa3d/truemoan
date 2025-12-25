@@ -1,17 +1,20 @@
--- TrueMoan v1.0 by illa3d
+-- TrueMoan v1.2 by illa3d
 TMEyesOpen = true
 
 label TMMenuHeyHuman(human)
-	+ "RESET ".. FBold(human.Name) [gold]
+	+ "RESET ".. AccStr(human.Name)
 		HumanReset(human)
 		Return()
 	+ "Hands.." [gold]
 		+ "(TODO) FaunaLabs"
 			Return()
-	+ "Eyes OPEN" [if not TMEyesOpen]
+		+ TM_MenuBack
+			Return(2)
+		+ TM_MenuClose
+	+ "Eyes " .. AccStr("open")  [if not TMEyesOpen]
 		TMEyesOpen = HumanEyesOpen(human, true)
 		Return()
-	+ "Eyes CLOSE" [if TMEyesOpen]
+	+ "Eyes " .. AccStr("close") [if TMEyesOpen]
 		TMEyesOpen = HumanEyesOpen(human, false)
 		Return()
 	+ "Look at me"
@@ -26,16 +29,16 @@ label TMMenuHeyHuman(human)
 			HumanFemaleSet(human)
 			Return(2)
 	+ else
-		+ "Penis ON" [if not human.Penis.IsActive]
+		+ "Penis " .. AccStr("on") [if not human.Penis.IsActive]
 			HumanPenis(human, true)
 			Return(2)
-		+ "Penis OFF" [if human.Penis.IsActive]
+		+ "Penis " .. AccStr("off") [if human.Penis.IsActive]
 			HumanPenis(human, false)
 			Return(2)
-	+ "Clothes ON"
+	+ "Clothes " .. AccStr("on")
 		HumanClothes(human, true)
 		Return()
-	+ "Clothes OFF"
+	+ "Clothes " .. AccStr("off")
 		HumanClothes(human, false)	
 		Return()
 	+ TM_MenuBack

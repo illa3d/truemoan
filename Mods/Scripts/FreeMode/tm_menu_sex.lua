@@ -21,7 +21,7 @@ label TMSexControl(human, interaction, ishand)
 	+ "• Slow"
 		SetInteractionSpeed(interaction, TM_SexSpeedSlow, ishand)
 		Return()
-	+ "| Speed >"
+	+ "| > Speed"
 		SetInteractionSpeedStep(interaction, TM_SexSpeedStep, true, ishand)
 		Return()
 	+ "| < Speed"
@@ -34,13 +34,13 @@ label TMSexControl(human, interaction, ishand)
 	-- handjob
 	+ if human.Penis.m_holdDepth ~= 0
 		+ "Style control.. | T" .. AccNum(GetInteractionThrustWeight(interaction, ishand), tmSdec) [if TM_ShowSexStyleControl] [gold]
-			+ "| Thrust >"
+			+ "| > Thrust"
 				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, true, ishand)
 				Return()
 			+ "| < Thrust"
 				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, false, ishand)
 				Return()
-			+ "RESET Thrust | " .. AccNum(GetInteractionThrustWeight(interaction, ishand), tmSdec)[gold]
+			+ "RESET Thrust | " .. AccNum(GetInteractionThrustWeight(interaction, ishand), tmSdec)
 				SetInteractionThrustWeight(interaction, 0, ishand)
 				Return()
 			+ TM_MenuBack
@@ -50,7 +50,7 @@ label TMSexControl(human, interaction, ishand)
 	-- oral/vaginal/anal
 	+ else 
 		+ "Style control.. | M" .. AccNum(GetInteractionWeight(interaction, ishand), tmSdec) .. " | T" .. AccNum(GetInteractionThrustWeight(interaction, ishand), tmSdec) [if TM_ShowSexStyleControl] [gold]
-			+ "| Thrust >"
+			+ "| > Thrust"
 				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, true, ishand)
 				Return()
 			+ "| < Thrust"
@@ -59,7 +59,7 @@ label TMSexControl(human, interaction, ishand)
 			+ "RESET Thrust | " .. AccNum(GetInteractionThrustWeight(interaction, ishand), tmSdec)
 				SetInteractionThrustWeight(interaction, 0, ishand)
 				Return()
-			+ "| Male >"
+			+ "| > Male"
 				SetInteractionWeightStep(interaction, TM_SexMaleStep, true, ishand)
 				Return()
 			+ "| < Male"
@@ -157,22 +157,22 @@ label TMMenuSex(human)
 	-- HAS PENIS
 	+ if human.Penis.IsActive == true
 		+ "Cum control.. | " .. AccStr(tmCumevery .. "s") [gold]
-			+ "Cum every 1 sec"
+			+ "• Cum every 1 sec"
 				cumevery = HumanCumEvery(human, 1)
 				Return(2)
-			+ "Cum every 2 sec"
+			+ "• Cum every 2 sec"
 				tmCumevery = HumanCumEvery(human, 2)
 				Return(2)
-			+ "Cum every 4 sec"
+			+ "• Cum every 4 sec"
 				tmCumevery = HumanCumEvery(human, 4)
 				Return(2)
-			+ "Cum every 8 sec"
+			+ "• Cum every 8 sec"
 				tmCumevery = HumanCumEvery(human, 8)
 				Return(2)
-			+ "Cum every 16 sec"
+			+ "• Cum every 16 sec"
 				tmCumevery = HumanCumEvery(human, 16)
 				Return(2)
-			+ "Cum every 32 sec"
+			+ "• Cum every 32 sec"
 				tmCumevery = HumanCumEvery(human, 32)
 				Return(2)
 			+ TM_MenuBack
@@ -192,26 +192,26 @@ label TMMenuSex(human)
 	-- HAS NO PENIS
 	+ if not human.Penis.IsActive
 		+ "Wet control.. | " .. AccTextNum3("V",human.m_vagina.m_wetness, "A", human.m_anus.m_wetness, "M", human.m_mouth.m_wetness) [gold]
-			+ "3 Squirt"
+			+ "• Squirt"
 				HumanWetSet(human, 10000, "Vagina")
 				Return()
-			+ "2 Wet"
+			+ "• Wet"
 				HumanWetSet(human, 2000, "Vagina")
 				Return()
-			+ "1 Default"
+			+ "• Default"
 				HumanWetSet(human, 500, "Vagina")
 				Return()
-			+ "Wetness >"
+			+ "| > Wetness"
 				wett = human.m_vagina.m_wetness + TM_WetnessStep
 				HumanWetSet(human, wett, "Vagina")
 				Return()
-			+ "< Wetness"
+			+ "| < Wetness"
 				wett = human.m_vagina.m_wetness - TM_WetnessStep
 				if wett < 0
 					wett = 0
 				HumanWetSet(human, wett, "Vagina")
 				Return()
-			+ "RESET | " .. AccTextNum3("V",human.m_vagina.m_wetness, "A", human.m_anus.m_wetness, "M", human.m_mouth.m_wetness) [gold]
+			+ "RESET | " .. AccTextNum3("V",human.m_vagina.m_wetness, "A", human.m_anus.m_wetness, "M", human.m_mouth.m_wetness)
 				HumanWetReset(human)	
 				Return()
 			+ TM_MenuBack

@@ -1,10 +1,12 @@
--- TrueMoan v1.0 by illa3d
+-- TrueMoan v1.2 by illa3d
+TM_UIVisible = true
+
 label TMMenuOptions(human)
-	+ "Hide UI" [if HG_UIvis]
-		HG_UIvis = false
+	+ "Hide UI" [if TM_UIVisible]
+		TM_UIVisible = false
 		game.m_controlsUI.Show(false)
-	+ "Show UI" [if not HG_UIvis]
-		HG_UIvis = true
+	+ "Show UI" [if not TM_UIVisible]
+		TM_UIVisible = true
 		game.m_controlsUI.Show()
 		Return()
 	+ "New people | " .. AccStr("Naked") [if TM_NakedOnSpawn]
@@ -32,7 +34,7 @@ label TMMenuOptions(human)
 		+ "Moan cum | " .. AccBool(game.FluidReaction) [if not game.FluidReaction and TM_AllowMoaning]
 			game.FluidReaction = true
 			Return()
-		+ "Moaning | OFF (VoiceMod detected)" [if not TM_AllowMoaning]
+		+ "Moaning | Disabled (VoiceMod)" [if not TM_AllowMoaning]
 			human "I know, right? Don't <b>MOooAhN</b> about it tho!"
 			Return()
 		+ TM_MenuBack

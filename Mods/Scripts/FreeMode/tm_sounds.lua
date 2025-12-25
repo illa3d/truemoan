@@ -1,4 +1,4 @@
--- TrueMoan v1.0 by illa3d
+-- TrueMoan v1.2 by illa3d
 -- Ambience Constants
 tmAmbienceTrackSec = 140	-- depends on the mp3 file length (all files must be of same length)
 tmAmbienceTracks = 6		-- number of files: Sounds/tm_ambience (N).mp3 (modify this to add your own)

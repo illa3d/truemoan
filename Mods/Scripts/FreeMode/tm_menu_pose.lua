@@ -1,4 +1,4 @@
--- TrueMoan v1.0 by illa3d
+-- TrueMoan v1.2 by illa3d
 label TMMenuPose(human)
 	+ "(TODO) FaunaLabs"
 		Return()
@@ -36,7 +36,7 @@ label TMMenuPose(human)
 		+ "Sit"
 			human.Pose(SitDown())
 			Return()
-		+ "Bend over"
+		+ "Stand, Bend over"
 			human.Pose(BendOver())
 			Return()
 		+ "Stand, T-Pose"

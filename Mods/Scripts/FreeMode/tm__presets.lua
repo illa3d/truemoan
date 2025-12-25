@@ -1,4 +1,4 @@
--- TrueMoan v1.0 by illa3d
+-- TrueMoan v1.2 by illa3d
 -------------------------------------------------------------------------------------------------
 -- PRESETS for True Moan Body Edit (TMBE)
 -- WARNING:
