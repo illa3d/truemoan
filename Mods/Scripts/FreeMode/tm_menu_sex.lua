@@ -79,18 +79,6 @@ stop
 
 -- SEX MENU
 label TMMenuSex(human)
-	-- `Natural AutoBJ AutoThrust` @masterchief_87971
-	+ "Sex auto" [if human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == false]
-		--function GradualSpeedUpAutoThrusting(human, duration, step, startSpeed, endSpeed, startDepth, endDepth, autoDisableAfter)
-		GradualSpeedUpAutoThrusting(human, 30, 0, 0.6, 0.3, 0.1, 1, 30)
-		Return()
-	+ "Oral auto" [if human.Mouth.Fucker ~= nil and human.Mouth.Fucker.Penis.Interaction.AutoActive == false and activeAutoBJ == false]
-		--function GradualSpeedUpAutoBJ(human, duration, step, startSpeed, endSpeed, startDepth, endDepth, autoDisableAfter)
-		human.Mouth.Fucker.Penis.Interaction.AutoPenisWeight = 0
-		GradualSpeedUpAutoBJ(human, 30, 0, 0.35, 0.1, 0.3, 1.5, 25)
-		activeAutoBJ = true
-		Return()
-
 	-- SEX CONTROL
 	-- GETTER HANDJOB
 	+ "Handjob control.. | " .. AccNum(human.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Penis.m_holdDepth ~= 0] [gold]
@@ -125,17 +113,12 @@ label TMMenuSex(human)
 		human.Penis.Interaction.AutoActive = false
 		Return()
 	-- GETTER MOUTH
-	+ "Oral start" [if human.Mouth.Fucker ~= nil and human.Mouth.Fucker.Penis.Interaction.AutoActive == false and activeAutoBJ == false]
+	+ "Oral start" [if human.Mouth.Fucker ~= nil and human.Mouth.Fucker.Penis.Interaction.AutoActive == false]
 		human.Mouth.Fucker.Penis.Interaction.AutoActive = true
 		human.Mouth.Fucker.Penis.Interaction.AutoPenisWeight = 0.2
 		Return()
-	+ "Oral STOP" [if human.Mouth.Fucker ~= nil and human.Mouth.Fucker.Penis.Interaction.AutoActive == true and activeAutoBJ == false]
+	+ "Oral STOP" [if human.Mouth.Fucker ~= nil and human.Mouth.Fucker.Penis.Interaction.AutoActive == true]
 		human.Mouth.Fucker.Penis.Interaction.AutoActive = false
-		Return()
-	+ "Oral STOP" [if human.Mouth.Fucker ~= nil and activeAutoBJ == true]
-		--human.Mouth.Fucker.Penis.Interaction.AutoActive = false
-		StopAutoBJ(human)
-		activeAutoBJ = false
 		Return()
 	-- GETTER ANUS
 	+ "Anal start" [if human.Anus.Fucker ~= nil and human.Anus.Fucker.Penis.Interaction.AutoActive == false]
