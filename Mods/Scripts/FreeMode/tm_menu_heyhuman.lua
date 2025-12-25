@@ -14,7 +14,7 @@ label TMMenuHeyHuman(human)
 	+ "Eyes " .. AccStr("open")  [if not TMEyesOpen]
 		TMEyesOpen = HumanEyesOpen(human, true)
 		Return()
-	+ "Eyes " .. AccStr("close") [if TMEyesOpen]
+	+ "Eyes " .. AccStr("closed") [if TMEyesOpen]
 		TMEyesOpen = HumanEyesOpen(human, false)
 		Return()
 	+ "Look at me"

@@ -141,7 +141,7 @@ label TMMenuSex(human)
 	+ if human.Penis.IsActive == true
 		+ "Cum control.. | " .. AccStr(tmCumevery .. "s") [gold]
 			+ "• Cum every 1 sec"
-				cumevery = HumanCumEvery(human, 1)
+				tmCumevery = HumanCumEvery(human, 1)
 				Return(2)
 			+ "• Cum every 2 sec"
 				tmCumevery = HumanCumEvery(human, 2)
