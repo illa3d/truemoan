@@ -197,7 +197,7 @@ end
 -- Function to play TM moans
 function TMPlayGirlMoan(actor, tier)
 	-- don't moan with other voice mods
-	if not TM_AllowMoaning then return end
+	if not TM_AllowMoaning or actor.m_isMale then return end
 	if actor == nil then return end
 	actor.SayCustom("tm_" .. tier)
 end
