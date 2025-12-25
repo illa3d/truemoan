@@ -9,6 +9,7 @@ TM_AllowAmbience = true       -- Ambient sounds
 TM_AmbienceVolume = 0.6       -- Ambient volume (0 to 1)
 -- Options
 TM_NakedOnSpawn = false       -- Characters naked when spawning/changing
+TM_ResetOnDoubleClick = true  -- Reset character pose/activity/face/animations with double click
 TM_NakedOnDoubleClick = true  -- ModCharacters naked on double clicking (doesn't work with TalkMenu manager)
 TM_MoanOnDoubleClick = true   -- Moan on dobuleclick (doesn't work with TalkMenu manager)
 TM_MoanSex = true             -- Moaning during sex
