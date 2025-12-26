@@ -35,6 +35,23 @@ label TMTalkMenu(human, hitTri)
 	+ TM_MenuClose
 stop
 
+-- DYNAMIC MENUS
+label GetMenuItems_Pose(human, posePresets)
+	-- ModPosePresets = { { name = "MenuName", preset = PoseFunction }, ... }
+	+ if posePresets == nil or #posePresets == 0
+		+ "-empty- " .. AccStr("(tm--menu-custom.lua)")
+			Return()
+	+ else
+		+ for i, pair in ipairs(posePresets)
+			+ pair.name
+				HumanPose(human, pair.preset())
+				Return()
+	+ TM_MenuBack
+		Return(2)
+	+ TM_MenuClose
+stop
+
+
 -- LABELS FORMAT (no need to modify)
 TM_EndColor = "</color>"
 

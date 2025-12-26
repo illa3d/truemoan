@@ -31,6 +31,10 @@ end
 -- HUMAN FUNCTIONS
 -------------------------------------------------------------------------------------------------
 
+function HumanPose(human, pose)
+	human.Pose(pose)
+end
+
 -- CLOTHES STUFF
 function HumanClothes(human, show)
 	if show then
@@ -86,12 +90,12 @@ end
 -- HUMAN POSES
 -------------------------------------------------------------------------------------------------
 
-function HumanLookAtCamera(human)
-	human.Pose(Preset(EyeL(CameraPos()), EyeR(CameraPos())))
+function HumanLookAt(human, position)
+	human.Pose(Preset(EyeL(position), EyeR(position)))
 end
 
-function HumanFaceAtCamera(human)
-	human.Pose(Preset(HeadLookAt(CameraPos())))
+function HumanFaceAt(human, position)
+	human.Pose(Preset(HeadLookAt(position)))
 end
 
 function HumanEyesOpen(human, isopen) -- open = 0, closed = 1

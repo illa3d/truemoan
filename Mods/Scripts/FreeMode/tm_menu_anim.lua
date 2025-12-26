@@ -1,6 +1,6 @@
 -- TrueMoan v1.2 by illa3d
 label TMMenuAnim(human)
-	+ "(TODO) FaunaLabs"
+	+ "(TODO) Fauna"
 		Return()
 	+ TM_MenuBack
 		Return(2)
