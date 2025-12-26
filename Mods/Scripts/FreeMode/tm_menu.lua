@@ -43,7 +43,7 @@ label GetMenuItems_Pose(human, posePresets)
 			Return()
 	+ else
 		+ for i, pair in ipairs(posePresets)
-			+ pair.name
+			+ AccStr(#posePresets - i .. ". ") .. pair.name
 				HumanPose(human, pair.preset())
 				Return()
 	+ TM_MenuBack

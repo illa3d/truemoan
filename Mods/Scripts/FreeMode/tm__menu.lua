@@ -39,8 +39,8 @@ TM_PoseFace_Original = {
 TM_PoseBody_Fauna = {
 	{ name = "Jack-O Pose", preset = JackO },
 	-- SIT
-	{ name = "Sit1", preset = SitDown1 },
 	{ name = "Sit2", preset = SitDown2 },
+	{ name = "Sit1", preset = SitDown1 },
 	{ name = "Sit, Spread legs", preset = SitDownSpreadLegs },
 	{ name = "Squat", preset = Squat },
 	-- LAY
@@ -57,15 +57,15 @@ TM_PoseBody_Fauna = {
 	{ name = "Bend Over | Handstand", preset = Handstand_1 },
 	{ name = "Bend Over | Handstand - 2", preset = Handstand_2 },
 	-- KNEEL
-	{ name = "All Four", preset = All41 },
 	{ name = "All Four 2", preset = All42 },
+	{ name = "All Four", preset = All41 },
 	{ name = "Doggystyle | Exhausted", preset = Doggystyle_Exhausted },
 	{ name = "Doggystyle | Bound", preset = Doggystyle_Bound },
+	{ name = "Kneel 5", preset = KneelDown5 },
+	{ name = "Kneel 4", preset = KneelDown4 },
+	{ name = "Kneel 3", preset = KneelDown3 },
+	{ name = "Kneel 2", preset = KneelDown2 },
 	{ name = "Kneel 1", preset = KneelDown1 },
-	{ name = "Kneel 1", preset = KneelDown2 },
-	{ name = "Kneel 1", preset = KneelDown3 },
-	{ name = "Kneel 1", preset = KneelDown4 },
-	{ name = "Kneel 1", preset = KneelDown5 },
 	{ name = "Eifel", preset = Eiffel },
 }
 
@@ -75,12 +75,12 @@ TM_PoseHands_Fauna = {
 	{ name = "R Shush", preset = Shush },
 	{ name = "Double V", preset = DoubleV },
 	{ name = "Claw", preset = HandsOpen_Claw },
-	{ name = "Front1", preset = HandsInfront_1 },
-	{ name = "Front2", preset = HandsInfront_2 },
-	{ name = "Behind0", preset = HandsBehind },
-	{ name = "Behind1", preset = HandsBehind1 },
-	{ name = "Behind2", preset = HandsBehind2 },
-	{ name = "Behind3", preset = HandsBehind3 },
+	{ name = "Front 2", preset = HandsInfront_2 },
+	{ name = "Front 1", preset = HandsInfront_1 },
+	{ name = "Behind 3", preset = HandsBehind3 },
+	{ name = "Behind 2", preset = HandsBehind2 },
+	{ name = "Behind 1", preset = HandsBehind1 },
+	{ name = "Behind", preset = HandsBehind },
 	{ name = "Closed", preset = HandsOpen_2 },
 	{ name = "Half", preset = HandsClosed_Half },
 	{ name = "Open", preset = HandsOpen },
@@ -90,24 +90,24 @@ TM_PoseHands_Fauna = {
 
 TM_PoseFace_Fauna = {
 	{ name = "OpenWide", preset = OpenWide },
-	{ name = "Grit Teeth 1", preset = GritTeeth },
 	{ name = "Grit Teeth 2", preset = GritTeeth2 },
+	{ name = "Grit Teeth 1", preset = GritTeeth },
 	{ name = "Pogged", preset = Pog },
 	{ name = "Pursed Lips", preset = Pursedlips },
 	{ name = "Pursed Smile", preset = Pursedsmile },
-	{ name = "Lipbite 1", preset = Lipbite },
 	{ name = "Lipbite 2", preset = Lipbite2 },
+	{ name = "Lipbite 1", preset = Lipbite },
 	{ name = "Nervous", preset = FaceNervous },
 	{ name = "Disappointed", preset = FaceDisappointed },
 	{ name = "Unimpressed", preset = FaceUnimpressed },
 }
 
 TM_PoseTongueKiss_Fauna = {
-	{ name = "TongueOut 1", preset = TongueOut },
-	{ name = "TongueOut 2", preset = TongueOut2 },
 	{ name = "TongueOut 3", preset = TongueOut3 },
-	{ name = "Kiss 1", preset = Kiss1 },
-	{ name = "Kiss 2", preset = Kiss2 },
-	{ name = "Kiss 3", preset = Kiss3 },
+	{ name = "TongueOut 2", preset = TongueOut2 },
+	{ name = "TongueOut 1", preset = TongueOut },
 	{ name = "Kiss 4", preset = Kiss4 },
+	{ name = "Kiss 3", preset = Kiss3 },
+	{ name = "Kiss 2", preset = Kiss2 },
+	{ name = "Kiss 1", preset = Kiss1 },
 }
