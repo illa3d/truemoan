@@ -31,7 +31,7 @@ end
 -- TALK MENU MOD MANAGER INTEGRATION (Mod works both in STANDALONE and TMMM)
 -- 1. Rename this file so it's after freemode_main.lua (alphabetically)
 -- 2. Enter your mod name displayed in the TMMM menu
-YourModName = "True Moan.."
+YourModName = "True Moan"
 -- 2. Rename your menu function "TalkMenu(human)" to ie: "MODTalkMenu(human)"
 -- 3. Enter your renamed "MODTalkMenu"
 YourTalkMenuFunc = "TMTalkMenu"

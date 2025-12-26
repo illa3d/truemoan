@@ -1,11 +1,13 @@
 -- TrueMoan v1.2 by illa3d
+TM_UIVisible = true
+
 label TMTalkMenu(human, hitTri)
 	+ if TM_RootHideShowUI
-		+ "Hide UI" [if HG_UIvis == true]
-			HG_UIvis = false
+		+ "Hide UI" [if TM_UIVisible]
+			TM_UIVisible = false
 			game.m_controlsUI.Show(false)
-		+ "Show UI" [if HG_UIvis == false]
-			HG_UIvis = true
+		+ "Show UI" [if not TM_UIVisible]
+			TM_UIVisible = true
 			game.m_controlsUI.Show()
 			Return()
 	+ "OPTIONS.." [gold]

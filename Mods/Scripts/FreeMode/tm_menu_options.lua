@@ -3,11 +3,9 @@ TM_UIVisible = true
 
 label TMMenuOptions(human)
 	+ "Hide UI" [if TM_UIVisible]
-		TM_UIVisible = false
-		game.m_controlsUI.Show(false)
+		TM_UIVisible = ShowUI(false)
 	+ "Show UI" [if not TM_UIVisible]
-		TM_UIVisible = true
-		game.m_controlsUI.Show()
+		TM_UIVisible = ShowUI(true)
 		Return()
 	+ "New people | " .. AccStr("Naked") [if TM_NakedOnSpawn]
 		TM_NakedOnSpawn = false

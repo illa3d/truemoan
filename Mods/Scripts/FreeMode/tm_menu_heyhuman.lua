@@ -5,16 +5,23 @@ label TMMenuHeyHuman(human)
 	+ "RESET ".. AccStr(human.Name)
 		HumanReset(human)
 		Return()
-	+ "Hands.." [gold]
-		+ "(TODO) FaunaLabs"
-			Return()
-		+ TM_MenuBack
+	+ if not human.m_isMale
+		+ "Penis | " .. AccStr("OFF") [if not human.Penis.IsActive]
+			HumanPenis(human, true)
 			Return(2)
-		+ TM_MenuClose
-	+ "Eyes " .. AccStr("open")  [if not TMEyesOpen]
+		+ "Penis | " .. AccStr("ON") [if human.Penis.IsActive]
+			HumanPenis(human, false)
+			Return(2)
+	+ "Penetration | " .. AccStr("ON") [if not human.m_isMale]
+		HumanMaleSet(human, true)
+		Return()
+	+ "Penetration | " .. AccStr("OFF") [if human.m_isMale]
+		HumanMaleSet(human, false)
+		Return()
+	+ "Eyes | " .. AccStr("Closed")  [if not TMEyesOpen]
 		TMEyesOpen = HumanEyesOpen(human, true)
 		Return()
-	+ "Eyes " .. AccStr("closed") [if TMEyesOpen]
+	+ "Eyes | " .. AccStr("Open") [if TMEyesOpen]
 		TMEyesOpen = HumanEyesOpen(human, false)
 		Return()
 	+ "Look at me"
@@ -24,17 +31,6 @@ label TMMenuHeyHuman(human)
 		HumanLookAtCamera(human)
 		HumanFaceAtCamera(human)
 		Return()
-	+ if human.m_isMale
-		+ "Bottom time"
-			HumanFemaleSet(human)
-			Return(2)
-	+ else
-		+ "Penis " .. AccStr("on") [if not human.Penis.IsActive]
-			HumanPenis(human, true)
-			Return(2)
-		+ "Penis " .. AccStr("off") [if human.Penis.IsActive]
-			HumanPenis(human, false)
-			Return(2)
 	+ "Clothes " .. AccStr("on")
 		HumanClothes(human, true)
 		Return()

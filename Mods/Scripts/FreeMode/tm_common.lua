@@ -22,6 +22,11 @@ function FBold(text) return "<b>" .. text .. "</b>" end
 function FIta(text) return "<i>" .. text .. "</i>" end
 function FCol(text, color) return "<color=" .. color .. ">" .. text .. "</color>" end
 
+function ShowUI(show)
+	game.m_controlsUI.Show(show)
+	return show
+end
+
 -------------------------------------------------------------------------------------------------
 -- HUMAN FUNCTIONS
 -------------------------------------------------------------------------------------------------
@@ -47,8 +52,8 @@ function HumanPenis(girl, show)
 	else girl.Customize("Penis", 0) end
 end
 
-function HumanFemaleSet(male)
-	male.m_isMale = false
+function HumanMaleSet(male, isMale)
+	male.m_isMale = isMale
 end
 
 -- CUM

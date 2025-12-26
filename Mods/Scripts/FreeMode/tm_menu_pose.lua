@@ -2,6 +2,12 @@
 label TMMenuPose(human)
 	+ "(TODO) FaunaLabs"
 		Return()
+	+ "Hands.." [gold]
+		+ "(TODO) FaunaLabs"
+			Return()
+		+ TM_MenuBack
+			Return(2)
+		+ TM_MenuClose
 	+ "Original.."[gold]
 		+ "Camel pose"
 			human.Pose(CamelPose())
