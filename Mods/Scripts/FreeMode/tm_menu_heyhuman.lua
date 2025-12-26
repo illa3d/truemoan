@@ -35,6 +35,8 @@ label TMMenuHeyHuman(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
+	+ "Clothes From.." [gold]
+		GetMenuItems_Clothes(human, TM_Clothes_Custom)
 	+ "Clothes " .. AccStr("on")
 		HumanClothes(human, true)
 		Return()

@@ -51,6 +51,24 @@ label GetMenuItems_Pose(human, posePresets)
 	+ TM_MenuClose
 stop
 
+label GetMenuItems_Clothes(human, clothesPresets)
+	-- ModClothesCharacters = { character, character }
+	+ TM_MenuBack
+		Return(2)
+	+ if clothesPresets == nil or #clothesPresets == 0
+		+ "-empty- " .. AccStr("(tm--menu-custom.lua)")
+			Return()
+	+ else
+		+ for i, pair in ipairs(clothesPresets)
+			+ AccStr(i .. ". ") .. pair
+				HumanClothesReplace(human, pair)
+			+ if i % 20 == 0
+				+ TM_MenuBack
+					Return(2)
+	+ TM_MenuBack
+		Return(2)
+	+ TM_MenuClose
+stop
 
 -- LABELS FORMAT (no need to modify)
 TM_EndColor = "</color>"
