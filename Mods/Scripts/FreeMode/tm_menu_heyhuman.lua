@@ -18,19 +18,23 @@ label TMMenuHeyHuman(human)
 	+ "Penetration | " .. AccStr("OFF") [if human.m_isMale]
 		HumanMaleSet(human, false)
 		Return()
-	+ "Eyes | " .. AccStr("Closed")  [if not TMEyesOpen]
-		TMEyesOpen = HumanEyesOpen(human, true)
-		Return()
-	+ "Eyes | " .. AccStr("Open") [if TMEyesOpen]
-		TMEyesOpen = HumanEyesOpen(human, false)
-		Return()
-	+ "Look at me"
-		HumanLookAt(human, CameraPos())
-		Return()
-	+ "Face me"
-		HumanLookAt(human, CameraPos())
-		HumanFaceAt(human, CameraPos())
-		Return()
+	+ "Look at.." [gold]
+		+ "• Look at " .. AccStr("cam")
+			HumanLookAt(human, CameraPos())
+			Return(2)
+		+ "• Face " .. AccStr("cam")
+			HumanLookAt(human, CameraPos())
+			HumanFaceAt(human, CameraPos())
+			Return(2)
+		+ "Eyes | " .. AccStr("Closed")  [if not TMEyesOpen]
+			TMEyesOpen = HumanEyesOpen(human, true)
+			Return(2)
+		+ "Eyes | " .. AccStr("Open") [if TMEyesOpen]
+			TMEyesOpen = HumanEyesOpen(human, false)
+			Return(2)
+		+ TM_MenuBack
+			Return(2)
+		+ TM_MenuClose
 	+ "Clothes " .. AccStr("on")
 		HumanClothes(human, true)
 		Return()
