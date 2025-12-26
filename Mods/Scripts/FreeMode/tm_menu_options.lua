@@ -33,8 +33,14 @@ label TMMenuOptions(human)
 			game.FluidReaction = true
 			Return()
 		+ "Moaning | Disabled (VoiceMod)" [if not TM_AllowVoice]
-			human "I know, right? Don't <b>MOooAhN</b> about it tho!"
+			human "I know, right? Don't <b>MOAN</b> about it!\n(VoiceMod is present, TrueMoaning disabled!)"
 			Return()
+		+ TM_MenuBack
+			Return(2)
+		+ TM_MenuClose
+	+ "Plugins.." [gold]
+		+ "Fauna LABS.." [if TMMOD_FaunaLabs] [gold]
+			TMMOD_Jump(TMMOD_Menu_FaunaLabs, human, hitTri)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose

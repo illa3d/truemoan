@@ -8,6 +8,9 @@
 -- MAIN DEFAULTS
 --------------------------------------------------------------------------------------------------------------
 
+-- Menu
+TM_Menu_FaunaLabs = false          -- Display Fauna labs Maoin Menu (if FaunaLABS is present)
+TM_Menu_HideShowUI = false         -- Display Show/hide UI option in Main Menu
 -- Double click
 TM_DoubleClickInOtherMods = false  -- Allows double clicking in other mods (works only with TMMM stickied option)
 TM_DoubleClickReset = true         -- Reset character pose/activity/face/animations on double click
@@ -21,14 +24,11 @@ TM_AmbienceVolume = 0.6            -- Ambient volume (0 to 1)
 TM_NakedOnSpawn = false            -- Characters naked when spawning/changing
 TM_MoanSex = true                  -- Moaning during sex
 TM_WetSex = true                   -- Moisting holes (vag, anus, mouth)
+-- Sex Menu
+TM_ShowSexStyleControl = true      -- Show/Hide SexControl/Style controls (Male/Thrust) in the menu
 -- Body Edit
 TM_BodyEditSafe = true             -- default value on scene change
 TM_BreastSafeMin = -0.8            -- some characters fall apart below this value and game crashes
--- Main Menu
-TM_Menu_HideShowUI = false         -- Display show/hide UI option in TalkMenu first page
-TM_Menu_FaunaLabs = false          -- Display Fauna labs menu (if mod is added)
--- Sex Menu
-TM_ShowSexStyleControl = true      -- Show/Hide SexControl/Style controls (Male/Thrust) in the menu
 
 --------------------------------------------------------------------------------------------------------------
 -- FINE TUNING
