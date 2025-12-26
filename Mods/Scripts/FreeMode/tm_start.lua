@@ -21,7 +21,8 @@ function TM_TrueMoan_Enable()
 	if TMMOD_TrueMoan then return end
 	if type(TM_AddFunctionOverride) == "function" then 
 		-- TalkMenuModManager: Add function hooks
-		local modname = "TrueMoan"
+		local modname = "True Moan"
+		local menuName = "TMTalkMenu"
 		TM_AddFunctionHook(modname, "Start", 0, "_TMStart", true, false)
 		TM_AddFunctionHook(modname, "OnGameUpdate", 0, "_TMOnGameUpdate", true, false)
 		TM_AddFunctionHook(modname, "OnCreateHuman", 1, "_TMOnCreateHuman", true, true)
@@ -29,7 +30,7 @@ function TM_TrueMoan_Enable()
 		TM_AddFunctionHook(modname, "OnHumanClick", 2, "_TMOnHumanClick", true, true)
 		TM_AddFunctionHook(modname, "OnFluidHit", 3, "_TMOnFluidHit", 200, false)
 		TM_AddFunctionHook(modname, "OnPenetration", 5, "_TMOnPenetration", 200, false)
-		if type(TM_AddMenuMod) == "function" then TM_AddMenuMod(modname, "TMTalkMenu") end
+		if type(TM_AddMenuMod) == "function" then TM_AddMenuMod(modname, menuName) end
 		TMMOD_TrueMoan = true
 	else
 		-- Standalone: Create original TrueFacials FreeMode functions with literal strings (hidden from TrueFacials until loaded)
