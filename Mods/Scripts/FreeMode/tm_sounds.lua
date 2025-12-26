@@ -16,6 +16,11 @@ function TMPlayGirlMoan(actor, tier)
 	actor.SayCustom("tm_" .. tier)
 end
 
+-- MUSIC
+function TMPlayMusic(track)
+	Music(track , 0.05, 0)
+end
+
 -- AMBIENCE
 function TMAmbienceLeftSec()
 	return FDec(tmAmbienceTrackSec - Timer(tmAmbienceTimer))

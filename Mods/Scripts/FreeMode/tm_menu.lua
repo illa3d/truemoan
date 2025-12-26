@@ -1,5 +1,7 @@
 -- TrueMoan v1.2 by illa3d
-TM_UIVisible = true
+-------------------------------------------------------------------------------------------------
+-- MAIN MENU
+-------------------------------------------------------------------------------------------------
 
 label TMTalkMenu(human, hitTri)
 	+ "OPTIONS.." [gold]
@@ -37,20 +39,24 @@ label TMTalkMenu(human, hitTri)
 	+ TM_MenuClose
 stop
 
+-------------------------------------------------------------------------------------------------
 -- DYNAMIC MENUS
+-------------------------------------------------------------------------------------------------
+
+-- POSES
 label GetMenuItems_Pose(human, posePresets)
 	-- ModPosePresets = { { name = "MenuName", preset = PoseFunction }, ... }
 	+ TM_MenuBack
 		Return(2)
 	+ if posePresets == nil or #posePresets == 0
-		+ "-empty- " .. AccStr("(tm--menu-custom.lua)")
+		+ "-empty- " .. AccStr("(tm--presets.lua)")
 			Return()
 	+ else
 		+ for i, pair in ipairs(posePresets)
 			+ AccStr(#posePresets - i .. ". ") .. pair.name
 				HumanPose(human, pair.preset())
 				Return()
-			+ if i % 20 == 0
+			+ if i % TM_MenuBackButtonEvery == 0
 				+ TM_MenuBack
 					Return(2)
 	+ TM_MenuBack
@@ -58,18 +64,19 @@ label GetMenuItems_Pose(human, posePresets)
 	+ TM_MenuClose
 stop
 
+-- CLOTHES
 label GetMenuItems_Clothes(human, clothesPresets)
 	-- ModClothesCharacters = { character, character }
 	+ TM_MenuBack
 		Return(2)
 	+ if clothesPresets == nil or #clothesPresets == 0
-		+ "-empty- " .. AccStr("(tm--menu-custom.lua)")
+		+ "-empty- " .. AccStr("(tm--clothes.lua)")
 			Return()
 	+ else
-		+ for i, pair in ipairs(clothesPresets)
-			+ AccStr(i .. ". ") .. pair
-				HumanClothesReplace(human, pair)
-			+ if i % 20 == 0
+		+ for i, item in ipairs(clothesPresets)
+			+ AccStr(i .. ". ") .. item
+				HumanClothesReplace(human, item)
+			+ if i % TM_MenuBackButtonEvery == 0
 				+ TM_MenuBack
 					Return(2)
 	+ TM_MenuBack
@@ -77,7 +84,30 @@ label GetMenuItems_Clothes(human, clothesPresets)
 	+ TM_MenuClose
 stop
 
+-- MUSIC
+label GetMenuItems_Music(musicTracks)
+	-- ModClothesCharacters = { character, character }
+	+ TM_MenuBack
+		Return(2)
+	+ if musicTracks == nil or #musicTracks == 0
+		+ "-empty- " .. AccStr("(tm--music.lua)")
+			Return()
+	+ else
+		+ for i, item in ipairs(musicTracks)
+			+ AccStr("> ") .. item
+				TMPlayMusic(item)
+			+ if i % TM_MenuBackButtonEvery == 0
+				+ TM_MenuBack
+					Return(2)
+	+ TM_MenuBack
+		Return(2)
+	+ TM_MenuClose
+stop
+
+-------------------------------------------------------------------------------------------------
 -- LABELS FORMAT (no need to modify)
+-------------------------------------------------------------------------------------------------
+
 TM_EndColor = "</color>"
 
 function AccBool (bol)

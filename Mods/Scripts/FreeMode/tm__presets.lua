@@ -1,10 +1,11 @@
 -- TrueMoan v1.2 by illa3d
 -------------------------------------------------------------------------------------------------
--- PRESETS for True Moan Body Edit (TMBE)
+-- BODYEDIT PRESETS (TMBE - TrueMoanBodyEdit)
+-------------------------------------------------------------------------------------------------
+
 -- WARNING:
 -- Breasts values below -0.8 can crash the game on some characters
 -- Body values below -0.9 crash the game
--------------------------------------------------------------------------------------------------
 
 -- MENU: BODY.. / Size..
 label TMMenuBodySize(human)

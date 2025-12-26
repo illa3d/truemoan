@@ -7,6 +7,30 @@ label TMMenuOptions(human)
 	+ "Show UI" [if not TM_UIVisible]
 		TM_UIVisible = ShowUI(true)
 		Return()
+	+ "Music.." [gold]
+		GetMenuItems_Music(TM_MusicTracks)
+	+ "Ambience.. | " .. AccBool(TM_AllowAmbience) [gold]
+		+ "Refresh" [if TM_AllowAmbience == true]
+			Return()
+		+ "Next track | " .. AccStr("Ambience " .. tmAmbienceTrack) [if TM_AllowAmbience]
+			TMPlayAmbienceNext()
+			Return()
+		+ "Ambience | " .. AccBool(TM_AllowAmbience) .. " (next in ".. AccNum(TMAmbienceLeftSec()) .. "s)" [if TM_AllowAmbience]
+			TM_AllowAmbience = false
+			Return()
+		+ "Ambience | " .. AccBool(TM_AllowAmbience) [if not TM_AllowAmbience]
+			TM_AllowAmbience = true
+			TMPlayAmbienceCurrent()
+			Return()
+		+ TM_MenuBack
+			Return(2)
+		+ TM_MenuClose
+	+ "New people | " .. AccStr("Naked") [if TM_NakedOnSpawn]
+		TM_NakedOnSpawn = false
+		Return()
+	+ "New people | " .. AccStr("Dressed") [if not TM_NakedOnSpawn]
+		TM_NakedOnSpawn = true
+		Return()
 	+ "Sex options.." [gold]
 		+ "Wet sex | " .. AccBool(TM_WetSex) [if TM_WetSex]
 			TM_WetSex = false
@@ -58,41 +82,6 @@ label TMMenuOptions(human)
 			Return()
 		+ "In other mods | " .. AccBool(TM_DoubleClickInOtherMods) [if not TM_DoubleClickInOtherMods]
 			TM_DoubleClickInOtherMods = true
-			Return()
-		+ TM_MenuBack
-			Return(2)
-		+ TM_MenuClose
-	+ "New people | " .. AccStr("Naked") [if TM_NakedOnSpawn]
-		TM_NakedOnSpawn = false
-		Return()
-	+ "New people | " .. AccStr("Dressed") [if not TM_NakedOnSpawn]
-		TM_NakedOnSpawn = true
-		Return()
-	+ "Music.." [gold]
-		+ TM_MenuBack
-			Return (2)
-		+ for i, track in ipairs(TM_MusicTracks)
-			+ "Play " .. track
-				Music(track , 0.05, 0)
-				Return()
-		+ "STOP Music" [gold]
-			StopMusic()
-			Return()
-		+ TM_MenuBack
-			Return(2)
-		+ TM_MenuClose
-	+ "Ambience.. | " .. AccBool(TM_AllowAmbience) [gold]
-		+ "Refresh" [if TM_AllowAmbience == true]
-			Return()
-		+ "Next track | " .. AccStr("Ambience " .. tmAmbienceTrack) [if TM_AllowAmbience]
-			TMPlayAmbienceNext()
-			Return()
-		+ "Ambience | " .. AccBool(TM_AllowAmbience) .. " (next in ".. AccNum(TMAmbienceLeftSec()) .. "s)" [if TM_AllowAmbience]
-			TM_AllowAmbience = false
-			Return()
-		+ "Ambience | " .. AccBool(TM_AllowAmbience) [if not TM_AllowAmbience]
-			TM_AllowAmbience = true
-			TMPlayAmbienceCurrent()
 			Return()
 		+ TM_MenuBack
 			Return(2)

@@ -1,8 +1,6 @@
 -- TrueMoan v1.2 by illa3d
--- MENU PRESETS for True Moan
-
 -------------------------------------------------------------------------------------------------
--- POSES
+-- MENU POSE PRESETS
 -------------------------------------------------------------------------------------------------
 TM_PoseBody_Custom = {
 	-- Add your custom body presets here

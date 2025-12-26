@@ -4,6 +4,7 @@
 -- same function in multiple files, alphabetically last one is used
 -------------------------------------------------------------------------------------------------
 -- TrueMoan module global switches
+TM_UIVisible = true -- TrueFacials UI
 TM_AllowVoice = true
 TM_AllowGenericChat = false
 
