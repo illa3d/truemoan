@@ -8,11 +8,19 @@ tmLoopingAmbience = false
 tmAmbienceTrack = 0
 tmAmbienceTimer = "AmbienceTimer"
 
+-- MOANS
+function TMPlayGirlMoan(actor, tier)
+	-- don't moan with other voice mods
+	if not TM_AllowVoice or actor.m_isMale then return end
+	if actor == nil then return end
+	actor.SayCustom("tm_" .. tier)
+end
+
+-- AMBIENCE
 function TMAmbienceLeftSec()
 	return FDec(tmAmbienceTrackSec - Timer(tmAmbienceTimer))
 end
 
--- AMBIENCE
 function TMStopAmbience()
 	tmPlayingAmbience = false
 end

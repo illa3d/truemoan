@@ -20,19 +20,19 @@ label TMMenuOptions(human)
 		+ "Wet sex | " .. AccBool(TM_WetSex) [if not TM_WetSex]
 			TM_WetSex = true
 			Return()
-		+ "Moan sex | " .. AccBool(TM_MoanSex) [if TM_MoanSex and TM_AllowMoaning]
+		+ "Moan sex | " .. AccBool(TM_MoanSex) [if TM_MoanSex and TM_AllowVoice]
 			TM_MoanSex = false
 			Return()
-		+ "Moan sex | " .. AccBool(TM_MoanSex) [if not TM_MoanSex and TM_AllowMoaning]
+		+ "Moan sex | " .. AccBool(TM_MoanSex) [if not TM_MoanSex and TM_AllowVoice]
 			TM_MoanSex = true
 			Return()
-		+ "Moan cum | " .. AccBool(game.FluidReaction) [if game.FluidReaction and TM_AllowMoaning]
+		+ "Moan cum | " .. AccBool(game.FluidReaction) [if game.FluidReaction and TM_AllowVoice]
 			game.FluidReaction = false
 			Return()
-		+ "Moan cum | " .. AccBool(game.FluidReaction) [if not game.FluidReaction and TM_AllowMoaning]
+		+ "Moan cum | " .. AccBool(game.FluidReaction) [if not game.FluidReaction and TM_AllowVoice]
 			game.FluidReaction = true
 			Return()
-		+ "Moaning | Disabled (VoiceMod)" [if not TM_AllowMoaning]
+		+ "Moaning | Disabled (VoiceMod)" [if not TM_AllowVoice]
 			human "I know, right? Don't <b>MOooAhN</b> about it tho!"
 			Return()
 		+ TM_MenuBack
@@ -67,7 +67,7 @@ label TMMenuOptions(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ TM_MenuMod [if TM_Mod_TalkModMenuManager]
+	+ TM_MenuMod [if TMMOD_TalkMenuModManager]
 		TM_ModMenu(human, hitTri)
 	+ TM_MenuBack
 		Return(2)

@@ -4,22 +4,15 @@
 -- same function in multiple files, alphabetically last one is used
 -------------------------------------------------------------------------------------------------
 -- TrueMoan module global switches
--------------------------------------------------------------------------------------------------
-TM_Initialized = false
-TM_AllowMoaning = true
-TM_Mod_TalkModMenuManager = false
+TM_AllowVoice = true
+TM_AllowGenericChat = false
 
-function TMDetectMods()
-	if (HasMod_Nf123VoiceMod()) then TM_AllowMoaning = false end
-	if (HasMod_TalkMenuModManager()) then TM_Mod_TalkModMenuManager = true end
-end 
-
--------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
 -- FREE MODE START (called from TrueFacials)
 -------------------------------------------------------------------------------------------------
-function TMOnStart()
+function TMOnStart_Init()
 	Play_FreeMode() -- this makes 3d interactable when TalkMenu visible
-	TMDetectMods()
+	if TMMOD_VoiceMod then TM_AllowVoice = false end
 end
 
 function TMOnStart_Ambience()
@@ -27,18 +20,15 @@ function TMOnStart_Ambience()
 end
 
 function TMOnStart_GenericChat()
-	TM_Initialized = true
-	if not TM_AllowMoaning then return end
-	ResetTimer("GenericChat", math.random(-10, 0))
+	if not TM_AllowVoice then return end
+	local timerKey = "TMGenericChat"
+	ResetTimer(timerKey, math.random(-10, 0))
 	local speaker = game.GetRandomHuman(|h| h.CanSpeak)
 	if speaker ~= nil then speaker.Say("Greeting") end
+	TM_AllowGenericChat = true
 end
 
-function TMOnGameUpdate()
-	-- unused for now
-end
-
-function TMOnHumanClick(human, hittri)
+function TMOnHumanSingleClick(human, hittri)
 	-- unused for now
 end
 
@@ -48,13 +38,18 @@ function TMOnHumanDoubleClick(human, hittri)
 	if (TM_MoanOnDoubleClick) then TMPlayGirlMoan(human, "slow") end
 end 
 
+function TMOnUpdate()
+	-- unused for now
+end
+
 -- Updated every frame
-function TMOnGameUpdate_GenericChat()
+function TMOnUpdate_GenericChat()
+	local timerKey = "TMGenericChat"
 	-- don't talk with other voice mods
-	if not TM_AllowMoaning or TM_Initialized == false then return end
-	local lastChatTime = Timer("GenericChat")
+	if not TM_AllowVoice or not TM_AllowGenericChat then return end
+	local lastChatTime = Timer(timerKey)
 	if lastChatTime > game.ChatIntervals then
-		ResetTimer("GenericChat", math.random(-7, 0))
+		ResetTimer(timerKey, math.random(-7, 0))
 		local speaker = game.GetRandomHuman(|h| h.CanSpeak and ((h.FaceMood >= 0 and h.HasVoice("Like") == true) or (h.FaceMood < 0 and h.HasVoice("Dislike") == true)))
 		if speaker ~= nil then
 			speaker.Say(speaker.FaceMood >= 0 and "Like" or "Dislike")
@@ -62,31 +57,26 @@ function TMOnGameUpdate_GenericChat()
 	end
 end
 
--- Updated on human creation
 function TMOnCreateHuman(human)
 	HumanWetReset(human)
 	TMBEPreset_RandomStart(human)
-	if TM_NakedOnSpawn then
-		HumanClothes(human)
-		HumanPenis(human, false)
-	end
+	if TM_NakedOnSpawn then HumanClothes(human) end
 	game.PlayCharacterMusic(human)
-	if TM_Initialized then human.Say("Greeting") end
+	if TM_AllowGenericChat then human.Say("Greeting") end
 end
 
--- Updated on human removal
 function TMOnRemoveHuman(human)
 	game.PlayRandomCharacterMusic()
 end
 
 -------------------------------------------------------------------------------------------------
--- MOANING (called from TrueFacials)
+-- VOICE
 -------------------------------------------------------------------------------------------------
 -- Updated on fluid hit (cum)
 function TMOnFluidHit(hitActor, bodyArea, shootActor)
 	if game.FluidReaction == false or shootActor == nil or hitActor.m_isMale == true then return end
 
-	local timerKey = "FluidHit_" .. hitActor.Name .. bodyArea
+	local timerKey = "TMFluidHit_" .. hitActor.Name .. bodyArea
 	local lastHitTime = Timer(timerKey)
 
 	if bodyArea == "L_Eye" and lastHitTime > TM_MoanCumEyeTime then 
@@ -123,7 +113,7 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	if inVelocity < outVelocity or TM_MoanSex == false  then return end
 
 	-- Variables
-	local key = "PenetrationMoan_" .. girl.Name .. holeName
+	local key = "TMSexMoan_" .. girl.Name .. holeName
 	local lastMoanTime = Timer(key)
 	local tier = ""
 	local pauseMax = 0
@@ -192,12 +182,4 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 		end
 		ResetTimer(key)
 	end
-end
-
--- Function to play TM moans
-function TMPlayGirlMoan(actor, tier)
-	-- don't moan with other voice mods
-	if not TM_AllowMoaning or actor.m_isMale then return end
-	if actor == nil then return end
-	actor.SayCustom("tm_" .. tier)
 end
