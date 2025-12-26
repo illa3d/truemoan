@@ -14,8 +14,9 @@ TMMOD_FaunaLabs = false
 -- TRUE MOAN ENABLE/DISABLE
 -------------------------------------------------------------------------------------------------
 function TM_TrueMoan_Enable()
-	-- if TMMOD_TrueMoan then return end
+	if TMMOD_TrueMoan then return end
 	if type(TM_AddFunctionOverride) == "function" then 
+		-- TalkMenuModManager: Add function hooks
 		local modname = "TrueMoan"
 		TM_AddFunctionHook(modname, "Start", 0, "_TMStart", true, false)
 		TM_AddFunctionHook(modname, "OnGameUpdate", 0, "_TMOnGameUpdate", true, false)
@@ -27,6 +28,7 @@ function TM_TrueMoan_Enable()
 		if type(TM_AddMenuMod) == "function" then TM_AddMenuMod(modname, "TMTalkMenu") end
 		TMMOD_TrueMoan = true
 	else
+		-- Standalone: Create original TrueFacials FreeMode functions with literal strings (hidden from TrueFacials until loaded)
 		load([[function Start() _TMStart() end]])()
 		load([[function OnGameUpdate(human, hitTri) _TMOnGameUpdate(human, hitTri) end]])()
 		load([[function OnCreateHuman(human) _TMOnCreateHuman(human) end]])()
@@ -39,10 +41,17 @@ function TM_TrueMoan_Enable()
 	TMDetectMods()
 end
 
+function TMDetectMods()
+	-- Detect other mods
+	TMMOD_TalkMenuModManager = type(TM_ModMenu) == "function"
+	TMMOD_VoiceMod = type(VM_VoiceMod_Enable) == "function"
+	TMMOD_FaunaLabs = type(fauna_LABS_Menu) == "function"
+end
+
 function TM_TrueMoan_Disable()
 	if not TMMOD_TrueMoan then return end
 	if type(TM_RemoveFunctionOverride) == "function" then 
-		TM_RemoveFunctionOverride("VM_OnPenetration")
+		-- TalkMenuModManager: Add function hooks
 		TM_RemoveFunctionHook("_TMStart")
 		TM_RemoveFunctionHook("_TMOnGameUpdate")
 		TM_RemoveFunctionHook("_TMOnCreateHuman")
@@ -52,12 +61,6 @@ function TM_TrueMoan_Disable()
 		TM_RemoveFunctionHook("_TMOnPenetration")
 		TMMOD_TrueMoan = false
 	end
-end
-
-function TMDetectMods()
-	TMMOD_TalkMenuModManager = type(TM_ModMenu) == "function"
-	TMMOD_VoiceMod = type(VM_VoiceMod_Enable) == "function"
-	TMMOD_FaunaLabs = type(fauna_LABS_Menu) == "function"
 end
 
 -------------------------------------------------------------------------------------------------
@@ -98,7 +101,8 @@ function _TMOnHumanClick(human, hitTri)
 	_TMOnHumanSingleClick(human, hitTri)
 	local time = Timer("TMDct")
 	ResetTimer("TMDct")
-	if time <= 0.25 then _TMOnHumanDoubleClick(human, hitTri) end -- Time to register double click (0.2 to 0.5 ok values, default 0.2s = 250ms)
+	 -- Time to register double click (0.2 to 0.5 ok values, default 0.2s = 250ms)
+	if time <= 0.25 then _TMOnHumanDoubleClick(human, hitTri) end
 end
 
 function _TMOnHumanSingleClick(human, hitTri)
