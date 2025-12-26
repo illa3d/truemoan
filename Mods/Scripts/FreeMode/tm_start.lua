@@ -111,7 +111,7 @@ function _TMOnHumanClick(human, hitTri)
 	if not TMMOD_AllowDoubleClick() then return end
 	local time = Timer("TMDct")
 	ResetTimer("TMDct")
-	if time <= TM_DoubleClickSec then _TMOnHumanDoubleClick(human, hitTri) end
+	if time <= TM_DoubleClickDelay then _TMOnHumanDoubleClick(human, hitTri) end
 end
 
 function _TMOnHumanSingleClick(human, hitTri)

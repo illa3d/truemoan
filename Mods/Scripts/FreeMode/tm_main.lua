@@ -61,7 +61,9 @@ end
 function TMOnCreateHuman(human)
 	HumanWetReset(human)
 	TMBEPreset_RandomStart(human)
-	if TM_NakedOnSpawn then HumanClothes(human) end
+	if TM_SpawnNaked then HumanClothes(human) end
+	if TM_SpawnNoFuta then Delayed(0.05, function() HumanPenis(human, false) end) end
+	if TM_SpawnReset then Delayed(0.1, function() HumanReset(human) end) end
 	game.PlayCharacterMusic(human)
 	if TM_AllowGenericChat then human.Say("Greeting") end
 end

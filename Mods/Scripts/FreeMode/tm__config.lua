@@ -10,32 +10,34 @@
 ------------------------------------------------------------------------------------------------------------------
 
 -- Menu
-TM_Menu_FaunaLabs = false          -- Display Fauna labs Maoin Menu (if FaunaLABS is present)
-TM_Menu_HideShowUI = false         -- Display Show/hide UI option in Main Menu
-TM_MenuBackButtonEvery = 20        -- [5-20] After how many items back button appear in item lists
+TM_Menu_FaunaLabs = false         -- Display Fauna labs Maoin Menu (if FaunaLABS is present)
+TM_Menu_HideShowUI = false        -- Display Show/hide UI option in Main Menu
+TM_MenuBackButtonEvery = 20       -- [5-20] After how many items back button appear in item lists
 
 -- Sex Menu
-TM_ShowSexStyleControl = true      -- Show/Hide SexControl/Style controls (Male/Thrust) in the menu
+TM_ShowSexStyleControl = true     -- Show/Hide SexControl/Style controls (Male/Thrust) in the menu
 
 -- Double click
-TM_DoubleClickInOtherMods = false  -- Allows double clicking in other mods (works only with TMMM stickied option)
-TM_DoubleClickReset = true         -- Reset character pose/activity/face/animations on double click
-TM_DoubleClickUndress = true         -- Take clothes off on double click
-TM_DoubleClickMoan = true          -- Moan on dobuleclick (doesn't work with VoiceMod)
-TM_DoubleClickSec = 0.25           -- [0.2-0.4] Time to register double click (0.25 = 250ms, 200-400ms is fine)
+TM_DoubleClickInOtherMods = false -- Allows double clicking in other mods (works only with TMMM stickied option)
+TM_DoubleClickReset = true        -- Reset character pose/activity/face/animations on double click
+TM_DoubleClickUndress = true      -- Take clothes off on double click
+TM_DoubleClickMoan = true         -- Moan on dobuleclick (doesn't work with VoiceMod)
+TM_DoubleClickDelay = 0.25          -- [0.2-0.4] Time to register double click (0.25 = 250ms, 200-400ms is fine)
 
 -- People
-TM_NakedOnSpawn = false            -- Characters naked when spawning/changing
-TM_MoanSex = true                  -- Moaning during sex
-TM_WetSex = true                   -- Moisting holes (vag, anus, mouth)
+TM_SpawnNaked = false             -- Characters naked when spawned / changing
+TM_SpawnReset = false             -- Characters reset when spawned / changing (no sucking lol)
+TM_SpawnNoFuta = false            -- Females spawn without penises (no sucking lol)
+TM_MoanSex = true                 -- Moaning during sex
+TM_WetSex = true                  -- Moisting holes (vag, anus, mouth)
 
 -- Body Edit
-TM_BodyEditSafe = true             -- default value on scene change
-TM_BreastSafeMin = -0.8            -- some characters fall apart below this value and game crashes
+TM_BodyEditSafe = true            -- default value on scene change
+TM_BreastSafeMin = -0.8           -- some characters fall apart below this value and game crashes
 
 -- SFX Ambience
-TM_AllowAmbience = true            -- Ambient sounds
-TM_AmbienceVolume = 0.6            -- [0-1] Ambient volume
+TM_AllowAmbience = true           -- Ambient sounds
+TM_AmbienceVolume = 0.6           -- [0-1] Ambient volume
 
 ------------------------------------------------------------------------------------------------------------------
 -- FINE TUNING
