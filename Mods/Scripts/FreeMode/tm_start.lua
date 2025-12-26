@@ -3,6 +3,8 @@
 -- This script is connection between TrueFacials calls, TMMM mod and TrueMoan
 -- MODS SUPPORTED: TalkMenuModManager, nf123 VoiceMod, Fauna LABS
 -------------------------------------------------------------------------------------------------
+TMModName = "True Moan"
+TMMenuName = "TMTalkMenu"
 
 -- MOD DETECTION
 TMMOD_TrueMoan = false
@@ -13,6 +15,10 @@ TMMOD_FaunaLabs = false
 -- MOD JUMPING
 TMMOD_Menu_FaunaLabs = "fauna_LABS_Menu"
 function TMMOD_Jump(modMenuName, human, hitTri) Jump(modMenuName, human, hitTri) end
+function TMMOD_AllowDoubleClick()
+	if not TMMOD_TalkMenuModManager or TM_DoubleClickInOtherMods then return true end
+	return TM_CurrentStickiedMod == TMMenuName
+end
 
 -------------------------------------------------------------------------------------------------
 -- TRUE MOAN ENABLE/DISABLE
@@ -21,16 +27,14 @@ function TM_TrueMoan_Enable()
 	if TMMOD_TrueMoan then return end
 	if type(TM_AddFunctionOverride) == "function" then 
 		-- TalkMenuModManager: Add function hooks
-		local modname = "True Moan"
-		local menuName = "TMTalkMenu"
-		TM_AddFunctionHook(modname, "Start", 0, "_TMStart", true, false)
-		TM_AddFunctionHook(modname, "OnGameUpdate", 0, "_TMOnGameUpdate", true, false)
-		TM_AddFunctionHook(modname, "OnCreateHuman", 1, "_TMOnCreateHuman", true, true)
-		TM_AddFunctionHook(modname, "OnRemoveHuman", 1, "_TMOnRemoveHuman", true, true)
-		TM_AddFunctionHook(modname, "OnHumanClick", 2, "_TMOnHumanClick", true, true)
-		TM_AddFunctionHook(modname, "OnFluidHit", 3, "_TMOnFluidHit", 200, false)
-		TM_AddFunctionHook(modname, "OnPenetration", 5, "_TMOnPenetration", 200, false)
-		if type(TM_AddMenuMod) == "function" then TM_AddMenuMod(modname, menuName) end
+		TM_AddFunctionHook(TMModName, "Start", 0, "_TMStart", true, false)
+		TM_AddFunctionHook(TMModName, "OnGameUpdate", 0, "_TMOnGameUpdate", true, false)
+		TM_AddFunctionHook(TMModName, "OnCreateHuman", 1, "_TMOnCreateHuman", true, true)
+		TM_AddFunctionHook(TMModName, "OnRemoveHuman", 1, "_TMOnRemoveHuman", true, true)
+		TM_AddFunctionHook(TMModName, "OnHumanClick", 2, "_TMOnHumanClick", true, true)
+		TM_AddFunctionHook(TMModName, "OnFluidHit", 3, "_TMOnFluidHit", 200, false)
+		TM_AddFunctionHook(TMModName, "OnPenetration", 5, "_TMOnPenetration", 200, false)
+		if type(TM_AddMenuMod) == "function" then TM_AddMenuMod(TMModName, TMMenuName) end
 		TMMOD_TrueMoan = true
 	else
 		-- Standalone: Create original TrueFacials FreeMode functions with literal strings (hidden from TrueFacials until loaded)
@@ -104,10 +108,10 @@ end
 function _TMOnHumanClick(human, hitTri)
 	Jump("TMTalkMenu", human, hitTri)
 	_TMOnHumanSingleClick(human, hitTri)
+	if not TMMOD_AllowDoubleClick() then return end
 	local time = Timer("TMDct")
 	ResetTimer("TMDct")
-	 -- Time to register double click (0.2 to 0.5 ok values, default 0.2s = 250ms)
-	if time <= 0.25 then _TMOnHumanDoubleClick(human, hitTri) end
+	if time <= TM_DoubleClickSec then _TMOnHumanDoubleClick(human, hitTri) end
 end
 
 function _TMOnHumanSingleClick(human, hitTri)

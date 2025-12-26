@@ -33,9 +33,9 @@ function TMOnHumanSingleClick(human, hittri)
 end
 
 function TMOnHumanDoubleClick(human, hittri)
-	if (TM_ResetOnDoubleClick) then HumanReset(human) end
-	if (TM_NakedOnDoubleClick) then HumanClothes(human, false) end
-	if (TM_MoanOnDoubleClick) then TMPlayGirlMoan(human, "slow") end
+	if (TM_DoubleClickReset) then HumanReset(human) end
+	if (TM_DoubleClickNaked) then HumanClothes(human, false) end
+	if (TM_DoubleClickMoan) then TMPlayGirlMoan(human, "slow") end
 end 
 
 function TMOnUpdate()
