@@ -7,12 +7,6 @@ label TMMenuOptions(human)
 	+ "Show UI" [if not TM_UIVisible]
 		TM_UIVisible = ShowUI(true)
 		Return()
-	+ "New people | " .. AccStr("Naked") [if TM_NakedOnSpawn]
-		TM_NakedOnSpawn = false
-		Return()
-	+ "New people | " .. AccStr("Clothed") [if not TM_NakedOnSpawn]
-		TM_NakedOnSpawn = true
-		Return()
 	+ "Sex options.." [gold]
 		+ "Wet sex | " .. AccBool(TM_WetSex) [if TM_WetSex]
 			TM_WetSex = false
@@ -38,9 +32,52 @@ label TMMenuOptions(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "Plugins.." [gold]
-		+ "Fauna LABS.." [if TMMOD_FaunaLabs] [gold]
-			TMMOD_Jump(TMMOD_Menu_FaunaLabs, human, hitTri)
+	+ "Double click.." [gold]
+		+ "Delay | " .. AccNum(TM_DoubleClickDelay, 1) .. "s (edit config)"
+			Return()
+		+ "Reset | " .. AccBool(TM_DoubleClickReset) [if TM_DoubleClickReset]
+			TM_DoubleClickReset = false
+			Return()
+		+ "Reset | " .. AccBool(TM_DoubleClickReset) [if not TM_DoubleClickReset]
+			TM_DoubleClickReset = true
+			Return()
+		+ "Undress |" .. AccBool(TM_DoubleClickUndress) [if TM_DoubleClickUndress]
+			TM_DoubleClickUndress = false
+			Return()
+		+ "Undress | " .. AccBool(TM_DoubleClickUndress) [if not TM_DoubleClickUndress]
+			TM_DoubleClickUndress = true
+			Return()
+		+ "Moan | " .. AccBool(TM_DoubleClickMoan) [if TM_DoubleClickMoan and not TMMOD_VoiceMod]
+			TM_DoubleClickMoan = false
+			Return()
+		+ "Moan | " .. AccBool(TM_DoubleClickMoan) [if not TM_DoubleClickMoan and not TMMOD_VoiceMod]
+			TM_DoubleClickMoan = true
+			Return()
+		+ "In other mods | " .. AccBool(TM_DoubleClickInOtherMods) [if TM_DoubleClickInOtherMods]
+			TM_DoubleClickInOtherMods = false
+			Return()
+		+ "In other mods | " .. AccBool(TM_DoubleClickInOtherMods) [if not TM_DoubleClickInOtherMods]
+			TM_DoubleClickInOtherMods = true
+			Return()
+		+ TM_MenuBack
+			Return(2)
+		+ TM_MenuClose
+	+ "New people | " .. AccStr("Naked") [if TM_NakedOnSpawn]
+		TM_NakedOnSpawn = false
+		Return()
+	+ "New people | " .. AccStr("Dressed") [if not TM_NakedOnSpawn]
+		TM_NakedOnSpawn = true
+		Return()
+	+ "Music.." [gold]
+		+ TM_MenuBack
+			Return (2)
+		+ for i, track in ipairs(TM_MusicTracks)
+			+ "Play " .. track
+				Music(track , 0.05, 0)
+				Return()
+		+ "STOP Music" [gold]
+			StopMusic()
+			Return()
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
@@ -60,21 +97,14 @@ label TMMenuOptions(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "Music.." [gold]
-		+ TM_MenuBack
-			Return (2)
-		+ for i, track in ipairs(TM_MusicTracks)
-			+ "Play " .. track
-				Music(track , 0.05, 0)
-				Return()
-		+ "STOP Music" [gold]
-			StopMusic()
-			Return()
+	+ "Plugins.." .. AccStr(" (mod menu)") [gold]
+		+ "Fauna LABS.." [if TMMOD_FaunaLabs] [gold]
+			TMMOD_Jump(TMMOD_Menu_FaunaLabs, human, hitTri)
+		+ TM_MenuMod [if TMMOD_TalkMenuModManager]
+			TM_ModMenu(human, hitTri)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ TM_MenuMod [if TMMOD_TalkMenuModManager]
-		TM_ModMenu(human, hitTri)
 	+ TM_MenuBack
 		Return(2)
 	+ TM_MenuClose

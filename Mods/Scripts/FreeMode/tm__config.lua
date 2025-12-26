@@ -14,7 +14,7 @@ TM_Menu_HideShowUI = false         -- Display Show/hide UI option in Main Menu
 -- Double click
 TM_DoubleClickInOtherMods = false  -- Allows double clicking in other mods (works only with TMMM stickied option)
 TM_DoubleClickReset = true         -- Reset character pose/activity/face/animations on double click
-TM_DoubleClickNaked = true         -- Take clothes off on double click
+TM_DoubleClickUndress = true         -- Take clothes off on double click
 TM_DoubleClickMoan = true          -- Moan on dobuleclick (doesn't work with VoiceMod)
 TM_DoubleClickSec = 0.25           -- Time to register double click (0.25 = 250ms, 200-400ms is fine)
 -- Ambience
@@ -64,7 +64,7 @@ TM_MoanCumBodyTime = 5
 TM_WetnessStep = 200
 
 -- Menu Style
-TM_MenuMod = "<color=#e87435>« MOD MENU</color>"
+TM_MenuMod = "<color=#e87435>«« MOD MENU</color>"
 TM_MenuBack = "<color=#e87435>« BACK</color>"
 TM_MenuClose = "<color=#e85035>× CLOSE</color>"
 TM_MenuAccent = "#df9c3d"

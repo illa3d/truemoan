@@ -3,7 +3,7 @@
 -- This script is connection between TrueFacials calls, TMMM mod and TrueMoan
 -- MODS SUPPORTED: TalkMenuModManager, nf123 VoiceMod, Fauna LABS
 -------------------------------------------------------------------------------------------------
-TMModName = "True Moan"
+TMModName = "True Moan »"
 TMMenuName = "TMTalkMenu"
 
 -- MOD DETECTION
