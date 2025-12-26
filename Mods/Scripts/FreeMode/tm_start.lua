@@ -10,6 +10,10 @@ TMMOD_TalkMenuModManager = false
 TMMOD_VoiceMod = false
 TMMOD_FaunaLabs = false
 
+-- MOD JUMPING
+TMMOD_Menu_FaunaLabs = "fauna_LABS_Menu"
+function TMMOD_Jump(modMenuName, human, hitTri) Jump(modMenuName, human, hitTri) end
+
 -------------------------------------------------------------------------------------------------
 -- TRUE MOAN ENABLE/DISABLE
 -------------------------------------------------------------------------------------------------

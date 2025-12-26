@@ -1,30 +1,35 @@
 -- TrueMoan v1.2 by illa3d
 -- These values are used every time new scene loads
----------------------------------------------------
--- MAIN DEFAULTS CONFIG, MODIFY TO YOOUR LIKING! --
----------------------------------------------------
+
+--------------------------------------------------------------------------------------------------------------
+--                            !!! REMEMBER TO BACKUP BEFORE UPDATING THE MOD !!!                            --
+--   Some values will be added through time. If you just copy your backup, you might be losing on options!  --
+--------------------------------------------------------------------------------------------------------------
+-- MAIN DEFAULTS
+--------------------------------------------------------------------------------------------------------------
 
 -- Ambience
-TM_AllowAmbience = true       -- Ambient sounds
-TM_AmbienceVolume = 0.6       -- Ambient volume (0 to 1)
+TM_AllowAmbience = true        -- Ambient sounds
+TM_AmbienceVolume = 0.6        -- Ambient volume (0 to 1)
 -- Options
-TM_NakedOnSpawn = false       -- Characters naked when spawning/changing
-TM_ResetOnDoubleClick = true  -- Reset character pose/activity/face/animations with double click
-TM_NakedOnDoubleClick = true  -- ModCharacters naked on double clicking (doesn't work with TalkMenu manager)
-TM_MoanOnDoubleClick = true   -- Moan on dobuleclick (doesn't work with TalkMenu manager)
-TM_MoanSex = true             -- Moaning during sex
-TM_WetSex = true              -- Moisting holes (vag, anus, mouth)
+TM_NakedOnSpawn = false        -- Characters naked when spawning/changing
+TM_ResetOnDoubleClick = true   -- Reset character pose/activity/face/animations with double click
+TM_NakedOnDoubleClick = true   -- ModCharacters naked on double clicking (doesn't work with TalkMenu manager)
+TM_MoanOnDoubleClick = true    -- Moan on dobuleclick (doesn't work with TalkMenu manager)
+TM_MoanSex = true              -- Moaning during sex
+TM_WetSex = true               -- Moisting holes (vag, anus, mouth)
 -- Body Edit
-TM_BodyEditSafe = true        -- default value on scene change
-TM_BreastSafeMin = -0.8       -- some characters fall apart below this value and game crashes
--- Menu
-TM_RootHideShowUI = false     -- Display show/hide UI option in TalkMenu first page
-TM_ShowSexStyleControl = true -- Show/Hide SexControl/Style controls (Male/Thrust) in the menu
+TM_BodyEditSafe = true         -- default value on scene change
+TM_BreastSafeMin = -0.8        -- some characters fall apart below this value and game crashes
+-- Main Menu
+TM_Menu_HideShowUI = false     -- Display show/hide UI option in TalkMenu first page
+TM_Menu_FaunaLabs = false      -- Display Fauna labs menu (if mod is added)
+-- Sex Menu
+TM_ShowSexStyleControl = true  -- Show/Hide SexControl/Style controls (Male/Thrust) in the menu
 
------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
 -- FINE TUNING
------------------------------------------------
-TM_DoubleClickSeconds = 0.2 -- 
+--------------------------------------------------------------------------------------------------------------
 
 -- Body Edit Increments
 TM_BodyStepA = 0.1   -- nipples hip, waist, muscle
@@ -61,9 +66,9 @@ TM_MenuBack = "<color=#e87435>« BACK</color>"
 TM_MenuClose = "<color=#e85035>× CLOSE</color>"
 TM_MenuAccent = "#df9c3d"
 
------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
 -- MUSIC TRACKS (displayed in Options/Music)
------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
 TM_MusicTracks = {
 	"01_Dreamy_Whisper",
 	"02_Moon-blind",

@@ -2,7 +2,9 @@
 TM_UIVisible = true
 
 label TMTalkMenu(human, hitTri)
-	+ if TM_RootHideShowUI
+	+ "OPTIONS.." [gold]
+		TMMenuOptions(human)
+	+ if TM_Menu_HideShowUI
 		+ "Hide UI" [if TM_UIVisible]
 			TM_UIVisible = false
 			game.m_controlsUI.Show(false)
@@ -10,8 +12,8 @@ label TMTalkMenu(human, hitTri)
 			TM_UIVisible = true
 			game.m_controlsUI.Show()
 			Return()
-	+ "OPTIONS.." [gold]
-		TMMenuOptions(human)
+	+ "FAUNA LABS.." [if TMMOD_FaunaLabs and TM_Menu_FaunaLabs] [gold]
+		TMMOD_Jump(TMMOD_Menu_FaunaLabs, human, hitTri)
 	+ "POSE.." [gold]
 		TMMenuPose(human)
 	+ "FACE.."[gold]
@@ -38,6 +40,8 @@ stop
 -- DYNAMIC MENUS
 label GetMenuItems_Pose(human, posePresets)
 	-- ModPosePresets = { { name = "MenuName", preset = PoseFunction }, ... }
+	+ TM_MenuBack
+		Return(2)
 	+ if posePresets == nil or #posePresets == 0
 		+ "-empty- " .. AccStr("(tm--menu-custom.lua)")
 			Return()
@@ -46,6 +50,9 @@ label GetMenuItems_Pose(human, posePresets)
 			+ AccStr(#posePresets - i .. ". ") .. pair.name
 				HumanPose(human, pair.preset())
 				Return()
+			+ if i % 20 == 0
+				+ TM_MenuBack
+					Return(2)
 	+ TM_MenuBack
 		Return(2)
 	+ TM_MenuClose
