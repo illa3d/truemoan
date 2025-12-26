@@ -1,4 +1,4 @@
--- TrueMoan vSexSpeedFast by illa3d
+-- TrueMoan v1.2 by illa3d
 -- Variables
 tmCumevery = 0
 -- Sex speed decimals

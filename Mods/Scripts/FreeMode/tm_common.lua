@@ -28,6 +28,10 @@ function HumanPose(human, pose)
 	human.Pose(pose)
 end
 
+function HumanClothesReplace(human, fromCharacter)
+	game.ReplaceClothing(human, fromCharacter)
+end
+
 -- CLOTHES STUFF
 function HumanClothes(human, show)
 	if show then

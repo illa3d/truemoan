@@ -1,6 +1,22 @@
 -- TrueMoan v1.2 by illa3d
 -- Menu in: tm_menu_body.lua
 
+-- Edit Body Definitions
+TMBE_Neck = "Neck size"
+TMBE_Forearms = "Forearms size"
+TMBE_Upperarms = "Upper arms size"
+TMBE_Calf = "Calf size"
+TMBE_Thigh = "Thigh size"
+TMBE_Hips = "Hips size"
+TMBE_Waist = "Waist size"
+TMBE_Ass = "Ass size"
+TMBE_Nipples = "Nipples size"
+TMBE_Breasts = "Breasts size"
+TMBE_PenisLength = "Penis length"
+TMBE_PenisSize = "Penis size"
+TMBE_Muscle = "Muscle tone"
+TMBE_Body = "Body size"
+
 -- Edit Body Variables
 tmNeckSize = 0
 tmForearmSize = 0
@@ -41,7 +57,11 @@ function TMBodyEditDown(human, bodypart, value, step, valuemin, valuesafe)
 	return value
 end
 
-function TMBodyEditSet(human, bodypart, value)
+function TMBodyEditSize(human, value)
+	human.Body(TMBE_Body, value)
+end
+
+function TMBodyEdit(human, bodypart, value)
 	human.Body(bodypart, value)
 	return value
 end
@@ -64,19 +84,19 @@ function TMBodyEditResetValues()
 end
 
 function TMBodyEditApplyValues(human)
-	human.Body("Neck size", tmNeckSize)
-	human.Body("Forearms size", tmForearmSize)
-	human.Body("Upper arms size", tmUperArmsize)
-	human.Body("Calf size", tmCalfSize)
-	human.Body("Thigh size", tmThighSize)
-	human.Body("Hips size", tmHipsSize)
-	human.Body("Waist size", tmWaistSize)
-	human.Body("Ass size", tmAssSize)
-	human.Body("Nipples size", tmNipplesSize)
-	human.Body("Breasts size", tmBreastSize)
-	human.Body("Penis length", tmPenisLength)
-	human.Body("Penis size", tmPenisSize)
-	human.Body("Muscle tone", tmMuscleSize)
-	human.Body("Body size", tmBodySize)
+	human.Body(TMBE_Neck, tmNeckSize)
+	human.Body(TMBE_Forearms, tmForearmSize)
+	human.Body(TMBE_Upperarms, tmUperArmsize)
+	human.Body(TMBE_Calf, tmCalfSize)
+	human.Body(TMBE_Thigh, tmThighSize)
+	human.Body(TMBE_Hips, tmHipsSize)
+	human.Body(TMBE_Waist, tmWaistSize)
+	human.Body(TMBE_Ass, tmAssSize)
+	human.Body(TMBE_Nipples, tmNipplesSize)
+	human.Body(TMBE_Breasts, tmBreastSize)
+	human.Body(TMBE_PenisLen, tmPenisLength)
+	human.Body(TMBE_PenisSize, tmPenisSize)
+	human.Body(TMBE_Muscle, tmMuscleSize)
+	human.Body(TMBE_Body, tmBodySize)
 	human.Penis.m_penisSkinOut = 0
 end
