@@ -1,13 +1,13 @@
 -- TrueMoan v1.2 by illa3d
 label TMMenuFace(human)
-	+ "Face " .. AccStr("(custom)") .. ".." [gold]
-		GetMenuItems_Pose(human, TM_PoseFace_Custom)
-	+ "Tongue/Kiss " .. AccStr("(fauna)") .. ".." [gold]
+	+ "Tongue/Kiss " .. AccStr("(fauna)") .. ".." [if TMMOD_FaunaLabs] [gold]
 		GetMenuItems_Pose(human, TM_PoseTongueKiss_Fauna)
-	+ "Face " .. AccStr("(fauna)") .. ".." [gold]
+	+ "Face " .. AccStr("(fauna)") .. ".."  [if TMMOD_FaunaLabs] [gold]
 		GetMenuItems_Pose(human, TM_PoseFace_Fauna)
 	+ "Face " .. AccStr("(orig)") .. ".." [gold]
 		GetMenuItems_Pose(human, TM_PoseFace_Original)
+	+ "Face " .. AccStr("(custom)") .. ".." [if #TM_PoseFace_Custom > 0] [gold]
+		GetMenuItems_Pose(human, TM_PoseFace_Custom)
 	+ "Stop Anim" [if game.HasAnim(human)]
 		game.RemoveAnim(human)
 		Return()
