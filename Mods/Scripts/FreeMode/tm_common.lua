@@ -34,7 +34,7 @@ function HumansFreeze(frozen)
 end
 
 function HumanClothesReplace(human, targetCharacterName)
-	if human == nil or targetCharacterName == nil or type(param) ~= "string" then return end
+	if human == nil or targetCharacterName == nil or type(targetCharacterName) ~= "string" then return end
 	game.ReplaceClothing(human, targetCharacterName)
 end
 
