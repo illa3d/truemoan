@@ -4,11 +4,11 @@
 tmBdec = 3
 
 label TMMenuBody(human)
-	+ "Edit Safe | " .. AccBool(TM_BodyEditSafe) [if TM_BodyEditSafe]
+	+ "Edit safe | " .. AccBool(TM_BodyEditSafe) [if TM_BodyEditSafe]
 		TM_BodyEditSafe = false
 		human "Warning: Game can crash for Breasts <-0.8 and BodySize <-0.9!\nMake sure you save before :)"
 		Return()
-	+ "Edit Safe | " .. AccBool(TM_BodyEditSafe) .. "(can crash app)" [if not TM_BodyEditSafe]
+	+ "Edit safe | " .. AccBool(TM_BodyEditSafe) .. "(can crash app)" [if not TM_BodyEditSafe]
 		TM_BodyEditSafe = true
 		Return()
 	+ "RESET Values"
@@ -141,13 +141,13 @@ label TMMenuBody(human)
 				tmPenisSize = TMBodyEdit(human, TMBE_PenisSize, 0)
 				Return()
 			+ "| > Length"
-				tmPenisLength = TMBodyEditUp(human, TMBE_PenisLen, tmPenisLength, TM_BodyStepB, 5)
+				tmPenisLength = TMBodyEditUp(human, TMBE_PenisLength, tmPenisLength, TM_BodyStepB, 5)
 				Return()
 			+ "| < Length"
-				tmPenisLength = TMBodyEditDown(human, TMBE_PenisLen, tmPenisLength, TM_BodyStepB, -0.7)
+				tmPenisLength = TMBodyEditDown(human, TMBE_PenisLength, tmPenisLength, TM_BodyStepB, -0.7)
 				Return()
 			+ "RESET Length | " .. AccNum(tmPenisLength, tmBdec)
-				tmPenisLength = TMBodyEdit(human, TMBE_PenisLen, 0)
+				tmPenisLength = TMBodyEdit(human, TMBE_PenisLength, 0)
 				Return()
 			+ "RESET Foreskin"
 				human.Penis.m_penisSkinOut = 0

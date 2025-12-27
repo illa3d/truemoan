@@ -111,10 +111,10 @@ function TMBEPreset_Obese(human)
 	tmAssSize = TMBodyEdit(human,TMBE_Ass, 2)
 	tmNipplesSize = TMBodyEdit(human,TMBE_Nipples, 0)
 	tmBreastSize = TMBodyEdit(human,TMBE_Breasts, 0.7)
-	-- penislength = TMBodyEdit(human,TMBE_PenisLen, 0)
-	-- penissize = TMBodyEdit(human,TMBE_PenisSize, 0)
+	-- tmPenisLength = TMBodyEdit(human,TMBE_PenisLen, 0)
+	-- tmPenisSize = TMBodyEdit(human,TMBE_PenisSize, 0)
 	tmMuscleSize = TMBodyEdit(human,TMBE_Muscle, -0.3)
-	-- bodysize = TMBodyEdit(human, 0)
+	-- tmBodySize = TMBodyEdit(human, 0)
 	human.Penis.m_penisSkinOut = 0
 end
 
@@ -129,10 +129,10 @@ function TMBEPreset_Curvy(human)
 	tmAssSize = TMBodyEdit(human,TMBE_Ass, 1)
 	tmNipplesSize = TMBodyEdit(human,TMBE_Nipples, 0)
 	tmBreastSize = TMBodyEdit(human,TMBE_Breasts, 0.3)
-	-- penislength = TMBodyEdit(human,TMBE_PenisLen, 0)
-	-- penissize = TMBodyEdit(human,TMBE_PenisSize, 0)
+	-- tmPenisLength = TMBodyEdit(human,TMBE_PenisLen, 0)
+	-- tmPenisSize = TMBodyEdit(human,TMBE_PenisSize, 0)
 	tmMuscleSize = TMBodyEdit(human,TMBE_Muscle, -0.2)
-	-- bodysize = TMBodyEdit(human, 0)
+	-- tmBodySize = TMBodyEdit(human, 0)
 	human.Penis.m_penisSkinOut = 0
 end
 
@@ -147,10 +147,10 @@ function TMBEPreset_Normal(human)
 	tmAssSize = TMBodyEdit(human,TMBE_Ass, 0)
 	tmNipplesSize = TMBodyEdit(human,TMBE_Nipples, 0)
 	tmBreastSize = TMBodyEdit(human,TMBE_Breasts, 0)
-	-- penislength = TMBodyEdit(human,TMBE_PenisLen, 0)
-	-- penissize = TMBodyEdit(human,TMBE_PenisSize, 0)
+	-- tmPenisLength = TMBodyEdit(human,TMBE_PenisLen, 0)
+	-- tmPenisSize = TMBodyEdit(human,TMBE_PenisSize, 0)
 	tmMuscleSize = TMBodyEdit(human,TMBE_Muscle, 0)
-	-- bodysize = TMBodyEdit(human, 0)
+	-- tmBodySize = TMBodyEdit(human, 0)
 	human.Penis.m_penisSkinOut = 0
 end
 
@@ -165,10 +165,10 @@ function TMBEPreset_Slim(human)
 	tmAssSize = TMBodyEdit(human, TMBE_Ass, -0.5)
 	tmNipplesSize = TMBodyEdit(human, TMBE_Nipples, 0)
 	tmBreastSize = TMBodyEdit(human, TMBE_Breasts, -0.5)
-	-- penislength = TMBodyEdit(human,TMBE_PenisLen, 0)
-	-- penissize = TMBodyEdit(human,TMBE_PenisSize, 0)
+	-- tmPenisLength = TMBodyEdit(human,TMBE_PenisLen, 0)
+	-- tmPenisSize = TMBodyEdit(human,TMBE_PenisSize, 0)
 	tmMuscleSize = TMBodyEdit(human, TMBE_Muscle, 0.2)
-	-- bodysize = TMBodyEdit(human, 0)
+	-- tmBodySize = TMBodyEdit(human, 0)
 	human.Penis.m_penisSkinOut = 0
 end
 
@@ -183,10 +183,10 @@ function TMBEPreset_Skinny(human)
 	tmAssSize = TMBodyEdit(human,TMBE_Ass, -1)
 	tmNipplesSize = TMBodyEdit(human,TMBE_Nipples, 0)
 	tmBreastSize = TMBodyEdit(human,TMBE_Breasts, -0.8)
-	-- penislength = TMBodyEdit(human,TMBE_PenisLen, 0)
-	-- penissize = TMBodyEdit(human,TMBE_PenisSize, 0)
+	-- tmPenisLength = TMBodyEdit(human,TMBE_PenisLen, 0)
+	-- tmPenisSize = TMBodyEdit(human,TMBE_PenisSize, 0)
 	tmMuscleSize = TMBodyEdit(human,TMBE_Muscle, 0.3)
-	-- bodysize = TMBodyEdit(human, 0)
+	-- tmBodySize = TMBodyEdit(human, 0)
 	human.Penis.m_penisSkinOut = 0
 end
 
@@ -201,7 +201,7 @@ function TMBEPreset_Reset(human)
 	tmAssSize = TMBodyEdit(human,TMBE_Ass, 0)
 	tmNipplesSize = TMBodyEdit(human,TMBE_Nipples, 0)
 	tmBreastSize = TMBodyEdit(human,TMBE_Breasts, 0)
-	tmPenisLength = TMBodyEdit(human,TMBE_PenisLen, 0)
+	tmPenisLength = TMBodyEdit(human,TMBE_PenisLength, 0)
 	tmPenisSize = TMBodyEdit(human,TMBE_PenisSize, 0)
 	tmMuscleSize = TMBodyEdit(human,TMBE_Muscle, 0)
 	tmBodySize = TMBodyEdit(human, 0)

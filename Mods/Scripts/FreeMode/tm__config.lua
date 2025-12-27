@@ -32,8 +32,8 @@ TM_MoanSex = true                 -- Moaning during sex
 TM_WetSex = true                  -- Moisting holes (vag, anus, mouth)
 
 -- Body Edit
-TM_BodyEditSafe = true            -- default value on scene change
-TM_BreastSafeMin = -0.8           -- some characters fall apart below this value and game crashes
+TM_BodyEditSafe = true            -- Turns on safe body editing using SafeMin values
+TM_BreastSafeMin = -0.8           -- Some characters fall apart below this value and game crashes
 
 -- SFX Ambience
 TM_AllowAmbience = true           -- Ambient sounds
