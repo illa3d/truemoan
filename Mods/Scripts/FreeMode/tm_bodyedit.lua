@@ -59,6 +59,7 @@ end
 
 function TMBodyEditSize(human, value)
 	human.Body(TMBE_Body, value)
+	return value
 end
 
 function TMBodyEdit(human, bodypart, value)
