@@ -4,7 +4,7 @@ tmAdec = 2 -- decimals
 label TMMenuAnim(human)
 	-- FAUNA
 	+ if TMMOD_FaunaLabs
-		+ AccStr(TM_PosePrefix_Faun) .. "Speed.. | " .. AccNum(CL_SMult, tmAdec) [gold]
+		+ AccStr(TM_PosePrefix_Faun) .. "SET Speed.. | " .. AccNum(CL_SMult, tmAdec) [gold]
 			+ "| > Speed"
 				CL_SMult = CL_SMult + Faun_SpeedIncrement
 				Return()
@@ -17,7 +17,7 @@ label TMMenuAnim(human)
 			+ TM_MenuBack.. " (applied to new anims)"
 				Return(2)
 			+ TM_MenuClose
-		+ AccStr(TM_PosePrefix_Faun) .. "Ease.. | " .. AccTextNum2("I", CLV_A, "O", CLV_B, tmAdec) [gold]
+		+ AccStr(TM_PosePrefix_Faun) .. "SET Ease.. | " .. AccTextNum2("I", CLV_A, "O", CLV_B, tmAdec) [gold]
 			+ "| > Ease In"
 				CLV_A = CLV_A + Faun_EaseIncrement
 				Return()
@@ -41,9 +41,71 @@ label TMMenuAnim(human)
 			+ TM_MenuClose
 		+ AccStr(TM_PosePrefix_Faun) .. "EDIT Anim.." [gold]
 			TMMenuFaunaAnimLab(human, hitTri)
-	-- ORIGINAL
-	+ AccStr(TM_PosePrefix_Orig) .. "Poses.." [gold]
-		GetMenuItems_Poses(human, TM_PoseBody_Original)
+		+ AccStr(TM_PosePrefix_Faun) .. "Feet.." [gold]
+		-- + AccStr(TM_PosePrefix_Faun) .. "Feet.." [if bot game.HasAnim(human.footNames) == false] [gold]
+			TMMenuFaunaAnim_Feet(human, hitTri)
+		+ AccStr(TM_PosePrefix_Faun) .. "Licking.." [gold]
+		-- + AccStr(TM_PosePrefix_Faun) .. "Licking.." [if not game.HasAnim(human.m_mouth) == false] [gold]
+			TMMenuFaunaAnim_Licking(human, hitTri)
+		+ AccStr(TM_PosePrefix_Faun) .. "Blowjob.." [gold]
+			TMMenuFaunaAnim_Blowjob(human, hitTri)
+		+ AccStr(TM_PosePrefix_Faun) .. "Neck.." [if not game.HasAnim(human.headNames) == false] [gold]
+		-- + AccStr(TM_PosePrefix_Faun) .. "Neck.." [if not game.HasAnim(human.headNames) == false] [gold]
+			TMMenuFaunaAnim_Neck(human, hitTri)
+		+ AccStr(TM_PosePrefix_Faun) .. "Hand R.." [gold]
+		-- + AccStr(TM_PosePrefix_Faun) .. "Hand R.." [if not game.HasAnim(human.handNames) == false] [gold]
+			TMMenuFaunaAnim_HandR(human, hitTri)
+		+ AccStr(TM_PosePrefix_Faun) .. "Hand L.." [gold]
+		-- + AccStr(TM_PosePrefix_Faun) .. "Hand L.." [if not game.HasAnim(human.forearmNames) == false] [gold]
+			TMMenuFaunaAnim_HandL(human, hitTri)
+		+ AccStr(TM_PosePrefix_Faun) .. "Hips.." [gold]
+			TMMenuFaunaAnim_Hips(human, hitTri)
+		+ AccStr(TM_PosePrefix_Faun) .. "Breasts.." [gold]
+		-- + AccStr(TM_PosePrefix_Faun) .. "Breasts.." [if not game.HasAnim(human.chestNames) == false] [gold]
+			TMMenuFaunaAnim_Breasts(human, hitTri)
+		+ AccStr(TM_PosePrefix_Faun) .. "Bouncing.." [gold]
+		-- + AccStr(TM_PosePrefix_Faun) .. "Bouncing.." [if game.HasAnim(human.breastNames) == false] [gold]
+			TMMenuFaunaAnim_Bouncing(human, hitTri)
+
+		-- START FreemodeHG version 0.3 ~ fauna_LABS_v1.02 (partial menu extract)
+		+ "Stop shaking" [if game.HasAnim(human.chestNames) == true]
+			game.RemoveAnim(human.chestNames)
+			Return()
+		+ "Stop Bouncing" [if game.HasAnim(human.breastNames) == true]
+			game.RemoveAnim(human.breastNames)
+			Return()
+		+ "Stop left hand" [if game.HasAnim(human.forearmNames) == true]
+			game.RemoveAnim(human.forearmNames)
+			Return()
+		+ "Stop right hand" [if game.HasAnim(human.handNames) == true]
+			game.RemoveAnim(human.handNames)
+			Return()
+		+ "Stop Licking" [if game.HasAnim(human.m_mouth) == true]
+			game.RemoveAnim(human.m_mouth)
+			Return()
+		+ "Stop neck"[if game.HasAnim(human.headNames) == true]
+			game.RemoveAnim(human.headNames)
+			Return()
+		+ "Stop Hip moves" [if game.HasAnim(human.Anus) == true]
+			game.RemoveAnim(human.Anus)
+			Return()
+		+ "Stop Legs" [if game.HasAnim(human.footNames) == true]
+			game.RemoveAnim(human.footNames)
+			Return()
+		+ "Stop twisting" [if game.HasAnim(human.thighNames) == true]
+			game.RemoveAnim(human.thighNames)
+			Return(2)
+		+ "Stop humping"[if game.HasAnim(human) == true]
+			game.RemoveAnim(human)
+			Return()
+		+ "Stop head" [if game.HasAnim(human.spineNames) == true]
+			game.RemoveAnim(human.spineNames)
+			Return()
+		-- END FreemodeHG version 0.3 ~ fauna_LABS_v1.02 (partial menu extract)		
+	+ else
+		+ AccStr("(requires faunalabs)") [gold]
+			human "You were supposed to click the FaunaLABS bundle download!\nNow I suffer in lack of life, I'm like a robot, look at me!"
+			Return(2)
 	+ TM_MenuBack
 		Return(2)
 	+ TM_MenuClose
