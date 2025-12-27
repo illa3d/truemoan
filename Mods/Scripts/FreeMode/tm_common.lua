@@ -33,6 +33,11 @@ function HumansFreeze(frozen)
 	game.m_freezeAllActors = frozen
 end
 
+function HumanClothesRandom(human)
+	if TM_Clothes_Custom == nil or #TM_Clothes_Custom == 0 then return end
+	HumanClothesReplace(human, GetRandomItem(TM_Clothes_Custom))
+end
+
 function HumanClothesReplace(human, targetCharacterName)
 	if human == nil or targetCharacterName == nil or type(targetCharacterName) ~= "string" then return end
 	game.ReplaceClothing(human, targetCharacterName)

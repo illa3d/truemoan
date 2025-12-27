@@ -1,4 +1,4 @@
--- TrueMoan v1.2 by illa3d
+-- TrueMoan v1.3 by illa3d
 ------------------------------------------------------------------------------------------------------------------
 -- TRUE MOAN DEFAULTS CONFIG
 -- These values are used every time new scene loads

@@ -2,55 +2,58 @@
 --                                               TRUE MOAN                                             --
 ---------------------------------------------------------------------------------------------------------
 
-**Supports VoiceMod/TalkMenuMM | Realistic Moans | BodyEdit | Sex Control | Wet Sex | Animation | Poses | Skyboxes | Ambient Audio | Improved Menu |**
+**Supports: VoiceMod/TalkMenuMM/FaunaLABS | Realistic Moans | BodyEdit | Sex Control | Wet Sex | Animation | Poses | Skyboxes | Ambient Audio | Improved Menu |**
 
 **MOD FEATURES**
 - **Realistic Moans**
   - **Generic Voice** for all characters
-  - 950+ unique moans
-  - 6 moan tiers: Slow, Normal, Fast, Faster, Orgasm, Climax
-  - Togglable organic speed dependant moans
+  - 950+ moans (Slow, Normal, Fast, Faster, Orgasm, Climax)
   - Fluid reaction moans
 - **Body Edit**
   - Reduce/enlarge body beyond slider limits
   - Body Size and Type Presets
   - Apply to/reset multiple actors quickly
-  - Fairy Dildo
 - **Sex Control**
-  - Speed/Presets/Thrust/Male vs female move
-  - Natural Auto BJ / Thrust
+  - Presets/Speed/Thrust/Male vs female move
   - Cum/Wetness controls and presets
 - **Wet Sex** (moisting used holes Vag, Anl, Orl)
-- **Animation & Poses**
-- **6x ambience audio backgrounds**
-- **8 Scenes included**
+- **Poses** (more poses requires FaunaLABS)
+- **6x ambience audio**
+- **14 Scenes included**
 - **Improved Menu UX**
+- **Highly Configurable**
 
 **ADDONS** (separate downloads)
 - **7x skyboxes** (8/4/2k)
 
-**INTEGRATED MODS**
-- **FreeModeHG** by @.heartgrenade
-- **FreeModeHG v0.3 faunap edit 0.2** by @faunap
-- **Natural AutoBJ AutoThrust** by @masterchief_87971
-- **Face expression looping** by @callmedrjones6911
-Thanks everyone for the effort, pretty slick mods! :heart:
-Thanks Chiyoru, Spicy Sounds Bundle :heart:
-
-**LATEST DOWNLOAD**
-**TrueMoan v1.1** [2025-12-24]
-**TrueMoan Addon Skyboxes v1.0** [2025-12-22] (no difference between 8/4k in-game)
+**LATEST DOWNLOADS**
+**TrueMoan_v1.2.zip** [2025-12-27] - Just TrueMoan
+**TrueMoan_v1.2_FLABS_v1.02.zip** [2025-12-27] - TrueMoan + Fauna LABS **(recommended)**
+**TrueMoan_Addon_Skyboxes_4k_v1.0.zip** [2025-12-22] - No difference between 8/4k in-game
+**TrueFacials v0.59_Clothes_Preview.zip** [2025-12-22] - Just preview images to find clothes faster
 https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
 
-**REQUIREMENTS/COMPATIBILITY**
+**REQUIREMENTS**
 - TrueFacials v0.59
-- Compatibile with 'Nf123 Voice Mod' and 'Talk Menu Mod Manager'
+- FaunaLABS v1.02 for full experience
+
+**SUPPORTED MODS**
+- Nf123 Voice Mod, Talk Menu Mod Manager, FaunaLabs
 
 **HOW TO INSTALL**
-- Extract archive to game folder (overwrite all files)
+- Backup your config files prior to install
+- Extract archives to game folder (overwrite all files)
+- If config files have new settings, **don't overwrite with your configs**, re-set your values in the new config
+
+**CONFIG FILES** `Mods/Scripts/FreeMod`
+- Config & defaults: `tm__config.lua`
+- Body presets: `tm__presets.lua`
+- Custom poses: `tm__poses.lua`
+- Character clothes: `tm__clothes.lua`
+- Music: `tm__music.lua`
 
 **HOW TO UNINSTALL**
-- Delete TrueMoan files in `Mods/Scripts/FreeMode`: `tm_*.lua, tm_*.txt, Voice/tm_*.mp3, Sounds/tm_*.mp3`
+- Delete TrueMoan files in `Mods/Scripts/FreeMode`: `tm_*.*, Voice/tm_*.mp3, Sounds/tm_*.mp3`
 
 ---------------------------------------------------------------------------------------------------------
 -- ADDITIONAL INFO
@@ -72,19 +75,33 @@ GitHub Repository - https://github.com/illa3d/truemoan
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_main%20README.txt
 
-[ v1.2]
-- Added proper support for Talk Menu Mod Manager
-- Added support for FaunaLABS (through item menus and full FaunaLABS menu)
+[ v1.3 ]
+- Added Pause option (all actors)
+- Added Random clothes option
+- Added FaunaLabs animations
+- Added FaunaLabs Editor Menus: AnimationLab, FaceLabSpeed, FingerLab, SpeedLab
+- BodyEdit sorted items better
+- Fixed bodyedit nipple size+
+
+[ v1.2 ]
+- Removed all integrated mods
+- Added full support for Talk Menu Mod Manager
+- Added support for FaunaLABS (through pose/face menus and full FaunaLABS menu)
 - Dynamic menu items
 - Added cleanup batch script for obsolete files
 - DoubleClick: Naked, Reset, Use in other mods (when using TMMM, respects stickied mod or not)
-- OnSpawn: 
+- OnSpawn: Naked, No Sex, No futa
 - Penetration option toggle (male/female)
 - Males no longer moan
 - Changeable clothes (all characters)
-- Editable menus: clothes, music, body presets, custom poses(face, body, arm)
+- Editable menus: clothes, music, body presets, custom poses(face, body, arm) in config files:
+  - Config & defaults: tm__config.lua
+  - Body presets: tm__presets.lua
+  - Custom pose menu: tm__poses.lua
+  - Character clothes: tm__clothes.lua
+  - Music: tm__music.lua
 
-[ v1.1]
+[ v1.1 ]
 - Added support for Talk Menu Mod Manager
 - Solved compatibility with Nf123 Voice Mod (stops moaning)
 - Renamed functions/variables to minimize clashing with other FreeMode mods

@@ -1,4 +1,4 @@
--- TrueMoan v1.2 by illa3d
+-- TrueMoan v1.3 by illa3d
 -------------------------------------------------------------------------------------------------
 -- MAIN MENU
 -------------------------------------------------------------------------------------------------
@@ -80,7 +80,7 @@ label GetMenuItems_Clothes(human, clothesPresets)
 				+ TM_MenuBack
 					Return(2)
 	+ "Random Clothes"
-		HumanClothesReplace(human, GetRandomItem(clothesPresets))
+		HumanClothesRandom(human)
 	+ TM_MenuBack
 		Return(2)
 	+ TM_MenuClose
