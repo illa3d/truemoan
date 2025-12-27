@@ -29,6 +29,10 @@ end
 -- HUMAN FUNCTIONS
 -------------------------------------------------------------------------------------------------
 
+function HumansFreeze(frozen)
+	game.m_freezeAllActors = frozen
+end
+
 function HumanClothesReplace(human, targetCharacterName)
 	if human == nil or targetCharacterName == nil or type(param) ~= "string" then return end
 	game.ReplaceClothing(human, targetCharacterName)

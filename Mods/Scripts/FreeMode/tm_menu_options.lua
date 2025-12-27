@@ -3,6 +3,12 @@ TM_UITips_Options = true
 TM_UITip_Options = "Tip: edit defaults in tm-config"
 
 label TMMenuOptions(human)
+	+ "Pause | " .. AccBool(game.m_freezeAllActors) [if game.m_freezeAllActors]
+		HumansFreeze(false)
+		Return()
+	+ "Pause | " .. AccBool(game.m_freezeAllActors) [if not game.m_freezeAllActors]
+		HumansFreeze(true)
+		Return()
 	+ "Hide UI" [if TM_UIVisible]
 		TM_UIVisible = ShowUI(false)
 	+ "Show UI" [if not TM_UIVisible]

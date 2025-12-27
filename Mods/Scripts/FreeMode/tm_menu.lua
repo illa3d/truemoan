@@ -4,7 +4,7 @@
 -------------------------------------------------------------------------------------------------
 
 label TMTalkMenu(human, hitTri)
-	+ "OPTIONS.." [gold]
+	+ "OPTIONS.." ..(game.m_freezeAllActors and " (paused)" or "") [gold]
 		TMMenuOptions(human)
 	+ if TM_Menu_HideShowUI
 		+ "Hide UI" [if TM_UIVisible]
