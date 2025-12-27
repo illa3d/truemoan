@@ -5,73 +5,95 @@ tmCumevery = 0
 tmSdec = 3
 
 -- SEX CONTROL (in many menus)
-label TMSexControl(human, interaction, ishand)
+label TMSexControl(human, interaction, isHand)
 	+ "• Max"
-		SetInteractionSpeed(interaction, TM_SexSpeedMax, ishand)
+		SetInteractionSpeed(interaction, TM_SexSpeedMax, isHand)
 		Return()
 	+ "• Fast"
-		SetInteractionSpeed(interaction, TM_SexSpeedFast, ishand)
+		SetInteractionSpeed(interaction, TM_SexSpeedFast, isHand)
 		Return()
 	+ "• Normal"
-		SetInteractionSpeed(interaction, TM_SexSpeedNormal, ishand)
+		SetInteractionSpeed(interaction, TM_SexSpeedNormal, isHand)
 		Return()
 	+ "• Medium"
-		SetInteractionSpeed(interaction, TM_SexSpeedMedium, ishand)
+		SetInteractionSpeed(interaction, TM_SexSpeedMedium, isHand)
 		Return()
 	+ "• Slow"
-		SetInteractionSpeed(interaction, TM_SexSpeedSlow, ishand)
+		SetInteractionSpeed(interaction, TM_SexSpeedSlow, isHand)
 		Return()
 	+ "| > Speed"
-		SetInteractionSpeedStep(interaction, TM_SexSpeedStep, true, ishand)
+		SetInteractionSpeedStep(interaction, TM_SexSpeedStep, true, isHand)
 		Return()
 	+ "| < Speed"
-		SetInteractionSpeedStep(interaction, TM_SexSpeedStep, false, ishand)
+		SetInteractionSpeedStep(interaction, TM_SexSpeedStep, false, isHand)
 		Return()
-	+ "RESET Speed | " .. AccNum(GetInteractionSpeed(interaction, ishand), tmSdec)
-		SetInteractionSpeed(interaction, 0, ishand)
+	+ "RESET Speed | " .. AccNum(GetInteractionSpeed(interaction, isHand), tmSdec)
+		SetInteractionSpeed(interaction, 0, isHand)
 		Return()
 	
-	-- handjob
+	-- THRUST (handjob)
 	+ if human.Penis.m_holdDepth ~= 0
-		+ "Thrust | T" .. AccNum(GetInteractionThrustWeight(interaction, ishand), tmSdec) [if TM_ShowSexStyleControl] [gold]
+		+ "Thrust | T" .. AccNum(GetInteractionThrustWeight(interaction, isHand), tmSdec) [if TM_ShowSexStyleControl] [gold]
 			+ "| > Thrust"
-				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, true, ishand)
+				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, true, isHand)
 				Return()
 			+ "| < Thrust"
-				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, false, ishand)
+				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, false, isHand)
 				Return()
-			+ "RESET Thrust | " .. AccNum(GetInteractionThrustWeight(interaction, ishand), tmSdec)
-				SetInteractionThrustWeight(interaction, 0, ishand)
+			+ "RESET Thrust | " .. AccNum(GetInteractionThrustWeight(interaction, isHand), tmSdec)
+				SetInteractionThrustWeight(interaction, 0, isHand)
 				Return()
 			+ TM_MenuBack
 				Return(2)
 			+ TM_MenuClose
 
-	-- oral/vaginal/anal
+	-- THRUST / PENIS WEIGHT (oral/vaginal/anal)
 	+ else 
-		+ "Thrust|Male.. | T" .. AccNum(GetInteractionThrustWeight(interaction, ishand), tmSdec) .. " | M" .. AccNum(GetInteractionWeight(interaction, ishand), tmSdec) [if TM_ShowSexStyleControl] [gold]
+		+ "» Thrust..	| T" .. AccNum(GetInteractionThrustWeight(interaction, isHand), tmSdec) .. " | M" .. AccNum(GetInteractionPenisWeight(interaction), tmSdec) [if TM_ShowSexStyleControl] [gold]
 			+ "| > Thrust"
-				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, true, ishand)
+				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, true)
 				Return()
 			+ "| < Thrust"
-				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, false, ishand)
+				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, false)
 				Return()
-			+ "RESET Thrust | " .. AccNum(GetInteractionThrustWeight(interaction, ishand), tmSdec)
-				SetInteractionThrustWeight(interaction, 0, ishand)
+			+ "RESET Thrust | " .. AccNum(GetInteractionThrustWeight(interaction, isHand), tmSdec)
+				SetInteractionThrustWeight(interaction, 0)
 				Return()
 			+ "| > Male"
-				SetInteractionWeightStep(interaction, TM_SexMaleStep, true, ishand)
+				SetInteractionPenisWeightStep(interaction, TM_SexMaleStep, true)
 				Return()
 			+ "| < Male"
-				SetInteractionWeightStep(interaction, TM_SexMaleStep, false, ishand)
+				SetInteractionPenisWeightStep(interaction, TM_SexMaleStep, false)
 				Return()
-			+ "RESET Male | " .. AccNum(GetInteractionWeight(interaction, ishand), tmSdec)
-				SetInteractionWeight(interaction, 0, ishand)
+			+ "RESET Male | " .. AccNum(GetInteractionPenisWeight(interaction), tmSdec)
+				SetInteractionPenisWeight(interaction, 0)
 				Return()
 			+ TM_MenuBack
 				Return(2)
 			+ TM_MenuClose
-
+	-- START / END (handjob/oral/vaginal/anal)
+	+ "» Depth..	| S" .. AccNum(GetInteractionDepth(interaction, true), tmSdec) .. " | E" .. AccNum(GetInteractionDepth(interaction, false), tmSdec) [if TM_ShowSexStyleControl] [gold]
+		+ "| > Start"
+			SetInteractionDepthStep(interaction, TM_SexDepthStep, true, isHand, true)
+			Return()
+		+ "| < Start"
+			SetInteractionDepthStep(interaction, TM_SexDepthStep, false, isHand, true)
+			Return()
+		+ "RESET Start | " .. AccNum(GetInteractionDepth(interaction, true), tmSdec)
+			SetInteractionDepth(interaction, 0, isHand, true)
+			Return()
+		+ "| > End"
+			SetInteractionDepthStep(interaction, TM_SexDepthStep, true, isHand, false)
+			Return()
+		+ "| < End"
+			SetInteractionDepthStep(interaction, TM_SexDepthStep, false, isHand, false)
+			Return()
+		+ "RESET End | " .. AccNum(GetInteractionDepth(interaction, false), tmSdec)
+			SetInteractionDepth(interaction, 0, isHand, false)
+			Return()
+		+ TM_MenuBack
+			Return(2)
+		+ TM_MenuClose
 	+ TM_MenuBack
 		Return(2)
 	+ TM_MenuClose

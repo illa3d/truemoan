@@ -51,6 +51,7 @@ TM_BodyStepC = 0.025 -- breast, body
 TM_SexSpeedStep = 0.05         -- non-linear percent (increments: slow = small, fast = big)
 TM_SexMaleStep = 0.1           -- giver/getter, linear percent (of UI slider)
 TM_SexThrustStep = 0.1         -- easier/harder, linear percent (of UI slider)
+TM_SexDepthStep = 0.05         -- shallow/deep, linear percent (of UI slider)
 
 -- Sex speed (Min: 0.001, Max: 2)
 TM_SexSpeedMax = 2

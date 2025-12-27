@@ -20,6 +20,9 @@ function ShowUI(show)
 	return show
 end
 
+function Clamp01(value) return math.max(0, math.min(value, 1)) end
+function ClampValue(value, min, max) return math.max(min, math.min(value, max)) end
+
 function GetRandomItem(list)
 	if list == nil or #list == 0 then return end
 	return list[math.random(1, #list)]
@@ -148,89 +151,117 @@ end
 -------------------------------------------------------------------------------------------------
 -- INTERACTION
 -------------------------------------------------------------------------------------------------
+-- -- ENABLE
+-- interaction.AutoActive = true
+-- interaction.m_autoHandActive = true
+-- -- SPEED
+-- interaction.m_autoSpeed = speed
+-- interaction.m_autoHandSpeed = speed
+-- -- GIVER VS GETTER
+-- interaction.AutoPenisWeight = weight
+-- -- THRUST
+-- interaction.m_autoThrustWeight = weight
+-- interaction.m_autoHandThrustWeight = weight
+-- -- DEPTH
+-- interaction.m_autoStartDepth = depth
+-- interaction.m_autoEndDepth = depth
 
--- INTERACTION SPEED (0.001-20)
-function GetInteractionSpeed(interaction, ishand)
-	return (ishand ~= nill and ishand) and interaction.m_autoHandSpeed or interaction.m_autoSpeed
+function SetInteractionActive(interaction, isActive, isHand)
+	if isHand then interaction.m_autoHandActive = isActive
+	else interaction.AutoActive = isActive end
 end
 
-function SetInteractionSpeed(interaction, speed, ishand)
-	speed = math.max(0.001, math.min(speed, 2)) -- clamp min max
-	if ishand ~= nil and ishand then 
-		interaction.m_autoHandActive = true
-		interaction.m_autoHandSpeed = speed
-	else
-		interaction.AutoActive = true
-		interaction.m_autoSpeed = speed
-	end
+-- INTERACTION SPEED (0.001 - 2)
+function ClampInteractionSpeed(value) return ClampValue(value, 0.001, 2) end -- speed value range
+
+function GetInteractionSpeed(interaction, isHand)
+	return isHand and interaction.m_autoHandSpeed or interaction.m_autoSpeed
 end
 
-function SetInteractionSpeedStep(interaction, speedStep, increase, ishand)
-	local speed = (ishand ~= nill and ishand) and interaction.m_autoHandSpeed or interaction.m_autoSpeed
+function SetInteractionSpeed(interaction, speed, isHand)
+	speed = ClampInteractionSpeed(speed)
+	SetInteractionActive(interaction, true, isHand)
+	if isHand then interaction.m_autoHandSpeed = speed
+	else interaction.m_autoSpeed = speed end
+end
+
+function SetInteractionSpeedStep(interaction, speedStep, increase, isHand)
+	local speed = isHand and interaction.m_autoHandSpeed or interaction.m_autoSpeed
 	local increment = 1 + (speedStep / (speed ^ 0.6)) -- 1 + (speed multiplier / (speed / curve))
 	if increase then speed = speed * increment
 	else speed = speed / increment end
-	speed = math.max(0.001, math.min(speed, 2)) -- clamp min max
-	if ishand ~= nil and ishand then 
-		interaction.m_autoHandActive = true
-		interaction.m_autoHandSpeed = speed
-	else
-		interaction.AutoActive = true
-		interaction.m_autoSpeed = speed
-	end
+	speed = ClampInteractionSpeed(speed)
+	SetInteractionActive(interaction, true, isHand)
+	if isHand then interaction.m_autoHandSpeed = speed
+	else interaction.m_autoSpeed = speed end
 end
 
--- INTERACTION WEIGHT (0-1)
-function GetInteractionWeight(interaction, ishand)
-	return (ishand ~= nil and ishand) and 0 or interaction.AutoPenisWeight -- no interaction weight in handjobs
+-- (PENIS) INTERACTION WEIGHT (GIVER VS GETTER) (0-1)
+function GetInteractionPenisWeight(interaction, isHand)
+	return (isHand) and 0 or interaction.AutoPenisWeight -- no interaction weight in handjobs
 end
 
-function SetInteractionWeight(interaction, weight, ishand)
-	if ishand ~= nil and ishand then return end -- no interaction weight in handjobs
-	weight = math.max(0, math.min(weight, 1)) -- clamp min max
-
-	interaction.AutoActive = true
+function SetInteractionPenisWeight(interaction, weight, isHand)
+	if isHand then return end -- no interaction weight in handjobs
+	weight = Clamp01(weight)
+	SetInteractionActive(interaction, true, isHand)
 	interaction.AutoPenisWeight = weight
 end
 
-function SetInteractionWeightStep(interaction, weightStep, increase, ishand)
-	if ishand ~= nil and ishand then return end -- no interaction weight in handjobs
+function SetInteractionPenisWeightStep(interaction, weightStep, increase, isHand)
+	if isHand then return end -- no interaction weight in handjobs
 	local weight = interaction.AutoPenisWeight
 	if increase then weight = weight + weightStep
 	else weight = weight - weightStep end
-	weight = math.max(0, math.min(weight, 1)) -- clamp min max (0-1)
-
-	interaction.AutoActive = true
+	weight = Clamp01(weight)
+	SetInteractionActive(interaction, true, isHand)
 	interaction.AutoPenisWeight = weight
 end
 
--- INTERACTION THRUST WEIGHT (normalize 0-1 to actual 1-3)
-function GetInteractionThrustWeight(interaction, ishand)
-	return (ishand ~= nill and ishand) and ((interaction.m_autoHandThrustWeight-1)/2) or ((interaction.m_autoThrustWeight-1)/2) -- 3(max) - 1(min) = 2
+-- (PENIS/HAND) INTERACTION THRUST WEIGHT (normalized 0-1 to actual 1-3)
+function ClampInteractionThrustWeight(weight) return ClampValue(weight, 1, 3) end -- thrust value range
+
+function GetInteractionThrustWeight(interaction, isHand)
+	return isHand and ((interaction.m_autoHandThrustWeight-1)/2) or ((interaction.m_autoThrustWeight-1)/2) -- 3(max) - 1(min) = 2(range)
 end
 
-function SetInteractionThrustWeight(interaction, weight, ishand)
+function SetInteractionThrustWeight(interaction, weight, isHand)
 	weight = 2 * weight + 1 -- 3(max) - 1(min) = 2
-	weight = math.max(1, math.min(weight, 3)) -- clamp min max (1-3) ui slider range
-	if ishand ~= nil and ishand then 
-		interaction.m_autoHandActive = true
-		interaction.m_autoHandThrustWeight = weight
-	else
-		interaction.AutoActive = true
-		interaction.m_autoThrustWeight = weight
-	end
+	weight = ClampInteractionThrustWeight(weight)
+	SetInteractionActive(interaction, true, isHand)
+	if isHand then interaction.m_autoHandThrustWeight = weight
+	else interaction.m_autoThrustWeight = weight end
 end
 
-function SetInteractionThrustWeightStep(interaction, weightStep, increase, ishand)
-	local weight = (ishand ~= nill and ishand) and interaction.m_autoHandThrustWeight or interaction.m_autoThrustWeight
-	if increase then weight = weight + (2 * weightStep) -- 3(max) - 1(min) = 2
+function SetInteractionThrustWeightStep(interaction, weightStep, increase, isHand)
+	local weight = isHand and interaction.m_autoHandThrustWeight or interaction.m_autoThrustWeight
+	if increase then weight = weight + (2 * weightStep) -- 3(max) - 1(min) = 2(range)
 	else weight = weight - (2 * weightStep) end
-	weight = math.max(1, math.min(weight, 3)) -- clamp min max (0-3) ui slider range
-	if ishand ~= nil and ishand then 
-		interaction.m_autoHandActive = true
-		interaction.m_autoHandThrustWeight = weight
-	else
-		interaction.AutoActive = true
-		interaction.m_autoThrustWeight = weight
-	end
+	weight = ClampInteractionThrustWeight(weight)
+	SetInteractionActive(interaction, true, isHand)
+	if isHand then interaction.m_autoHandThrustWeight = weight
+	else interaction.m_autoThrustWeight = weight end
+end
+
+-- (PENIS/HAND) INTERACTION THRUST DEPTH (0-1)
+function GetInteractionDepth(interaction, isStartDepth)
+	if isStartDepth then return interaction.m_autoStartDepth
+	else return interaction.m_autoEndDepth end
+end
+
+function SetInteractionDepth(interaction, depth, isHand, isStartDepth)
+	depth = Clamp01(depth)
+	SetInteractionActive(interaction, true, isHand)
+	if isStartDepth then interaction.m_autoStartDepth = depth
+	else interaction.m_autoEndDepth = depth	end
+end
+
+function SetInteractionDepthStep(interaction, depthStep, increase, isHand, isStartDepth)
+	local depth = GetInteractionDepth(interaction, isStartDepth)
+	if increase then depth = depth + depthStep
+	else depth = depth - depthStep end
+	depth = Clamp01(depth)
+	SetInteractionActive(interaction, true, isHand)
+	if isStartDepth then interaction.m_autoStartDepth = depth
+	else interaction.m_autoEndDepth = depth	end
 end
