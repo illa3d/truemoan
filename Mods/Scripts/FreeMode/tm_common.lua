@@ -20,12 +20,18 @@ function ShowUI(show)
 	return show
 end
 
+function GetRandomItem(list)
+	if list == nil or #list == 0 then return end
+	return list[math.random(1, #list)]
+end
+
 -------------------------------------------------------------------------------------------------
 -- HUMAN FUNCTIONS
 -------------------------------------------------------------------------------------------------
 
-function HumanClothesReplace(human, fromCharacter)
-	game.ReplaceClothing(human, fromCharacter)
+function HumanClothesReplace(human, targetCharacterName)
+	if human == nil or targetCharacterName == nil or type(param) ~= "string" then return end
+	game.ReplaceClothing(human, targetCharacterName)
 end
 
 -- CLOTHES STUFF

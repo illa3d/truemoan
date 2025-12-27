@@ -79,6 +79,8 @@ label GetMenuItems_Clothes(human, clothesPresets)
 			+ if i % TM_MenuBackButtonEvery == 0
 				+ TM_MenuBack
 					Return(2)
+	+ "Random Clothes"
+		HumanClothesReplace(human, GetRandomItem(clothesPresets))
 	+ TM_MenuBack
 		Return(2)
 	+ TM_MenuClose
