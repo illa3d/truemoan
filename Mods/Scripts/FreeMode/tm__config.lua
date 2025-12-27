@@ -71,9 +71,3 @@ TM_MoanCumEyeTime = 1
 TM_MoanCumLipsTime = 3
 TM_MoanCumBodyTime = 5
 TM_WetnessStep = 200
-
--- Menu Style
-TM_MenuMod = "<color=#e87435>« MOD MENU</color>"
-TM_MenuBack = "<color=#e87435>« BACK</color>"
-TM_MenuClose = "<color=#e85035>× CLOSE</color>"
-TM_MenuAccent = "#df9c3d"

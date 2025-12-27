@@ -108,11 +108,16 @@ label GetMenuItems_Music(musicTracks)
 stop
 
 -------------------------------------------------------------------------------------------------
--- LABELS FORMAT (no need to modify)
+-- STYLES
 -------------------------------------------------------------------------------------------------
-
+-- Menu Style
+TM_MenuMod = "<color=#e87435>« MOD MENU</color>"
+TM_MenuBack = "<color=#e87435>« BACK</color>"
+TM_MenuClose = "<color=#e85035>× CLOSE</color>"
+TM_MenuAccent = "#df9c3d"
 TM_EndColor = "</color>"
 
+-- STYLING
 function AccBool (bol)
 	 return FCol(bol and "ON" or "OFF", TM_MenuAccent)
 end
