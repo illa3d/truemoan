@@ -4,6 +4,8 @@ tmAdec = 2 -- decimals
 label TMMenuAnim(human)
 	-- FAUNA
 	+ if TMMOD_FaunaLabs
+		+ TM_MenuBack
+			Return(2)
 		+ AccStr(TM_PosePrefix_Faun) .. "SET Speed.. | " .. AccNum(CL_SMult, tmAdec) [gold]
 			+ "| > Speed"
 				CL_SMult = CL_SMult + Faun_SpeedIncrement
@@ -68,37 +70,37 @@ label TMMenuAnim(human)
 			TMMenuFaunaAnim_Bouncing(human, hitTri)
 
 		-- START FreemodeHG version 0.3 ~ fauna_LABS_v1.02 (partial menu extract)
-		+ "Stop shaking" [if game.HasAnim(human.chestNames) == true]
+		+ "STOP Shaking" [if game.HasAnim(human.chestNames) == true]
 			game.RemoveAnim(human.chestNames)
 			Return()
-		+ "Stop Bouncing" [if game.HasAnim(human.breastNames) == true]
+		+ "STOP Bouncing" [if game.HasAnim(human.breastNames) == true]
 			game.RemoveAnim(human.breastNames)
 			Return()
-		+ "Stop left hand" [if game.HasAnim(human.forearmNames) == true]
+		+ "STOP Hand L" [if game.HasAnim(human.forearmNames) == true]
 			game.RemoveAnim(human.forearmNames)
 			Return()
-		+ "Stop right hand" [if game.HasAnim(human.handNames) == true]
+		+ "STOP Hand R" [if game.HasAnim(human.handNames) == true]
 			game.RemoveAnim(human.handNames)
 			Return()
-		+ "Stop Licking" [if game.HasAnim(human.m_mouth) == true]
+		+ "STOP Licking" [if game.HasAnim(human.m_mouth) == true]
 			game.RemoveAnim(human.m_mouth)
 			Return()
-		+ "Stop neck"[if game.HasAnim(human.headNames) == true]
+		+ "STOP Neck"[if game.HasAnim(human.headNames) == true]
 			game.RemoveAnim(human.headNames)
 			Return()
-		+ "Stop Hip moves" [if game.HasAnim(human.Anus) == true]
+		+ "STOP Hips" [if game.HasAnim(human.Anus) == true]
 			game.RemoveAnim(human.Anus)
 			Return()
-		+ "Stop Legs" [if game.HasAnim(human.footNames) == true]
+		+ "STOP Legs" [if game.HasAnim(human.footNames) == true]
 			game.RemoveAnim(human.footNames)
 			Return()
-		+ "Stop twisting" [if game.HasAnim(human.thighNames) == true]
+		+ "STOP Twisting" [if game.HasAnim(human.thighNames) == true]
 			game.RemoveAnim(human.thighNames)
 			Return(2)
-		+ "Stop humping"[if game.HasAnim(human) == true]
+		+ "STOP Humping"[if game.HasAnim(human) == true]
 			game.RemoveAnim(human)
 			Return()
-		+ "Stop head" [if game.HasAnim(human.spineNames) == true]
+		+ "STOP Head" [if game.HasAnim(human.spineNames) == true]
 			game.RemoveAnim(human.spineNames)
 			Return()
 		-- END FreemodeHG version 0.3 ~ fauna_LABS_v1.02 (partial menu extract)		
