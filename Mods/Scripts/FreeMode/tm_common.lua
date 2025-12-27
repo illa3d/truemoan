@@ -24,10 +24,6 @@ end
 -- HUMAN FUNCTIONS
 -------------------------------------------------------------------------------------------------
 
-function HumanPose(human, pose)
-	human.Pose(pose)
-end
-
 function HumanClothesReplace(human, fromCharacter)
 	game.ReplaceClothing(human, fromCharacter)
 end

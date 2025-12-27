@@ -72,6 +72,18 @@ GitHub Repository - https://github.com/illa3d/truemoan
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_main%20README.txt
 
+[ v1.2]
+- Added proper support for Talk Menu Mod Manager
+- Added support for FaunaLABS (through item menus and full FaunaLABS menu)
+- Dynamic menu items
+- Added cleanup batch script for obsolete files
+- DoubleClick: Naked, Reset, Use in other mods (when using TMMM, respects stickied mod or not)
+- OnSpawn: 
+- Penetration option toggle (male/female)
+- Males no longer moan
+- Changeable clothes (all characters)
+- Editable menus: clothes, music, body presets, custom poses(face, body, arm)
+
 [ v1.1]
 - Added support for Talk Menu Mod Manager
 - Solved compatibility with Nf123 Voice Mod (stops moaning)

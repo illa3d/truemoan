@@ -54,7 +54,7 @@ label GetMenuItems_Pose(human, posePresets)
 	+ else
 		+ for i, pair in ipairs(posePresets)
 			+ AccStr(#posePresets - i .. ". ") .. pair.name
-				HumanPose(human, pair.preset())
+				human.Pose(human, pair.preset())
 				Return()
 			+ if i % TM_MenuBackButtonEvery == 0
 				+ TM_MenuBack

@@ -2,6 +2,8 @@
 -------------------------------------------------------------------------------------------------
 -- MENU POSE PRESETS
 -------------------------------------------------------------------------------------------------
+TM_PosePrefix_Custom = "|cust| "
+
 TM_PoseBody_Custom = {
 	-- Add your custom body presets here
 	-- { name = "MenuName", preset = PresetName },
