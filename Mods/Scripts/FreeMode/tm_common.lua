@@ -244,13 +244,18 @@ function SetInteractionThrustWeightStep(interaction, weightStep, increase, isHan
 end
 
 -- (PENIS/HAND) INTERACTION THRUST DEPTH (0-1)
+function ClampInteractionDepth(depth, isStartDepth)
+	if isStartDepth then ClampValue(depth, 0, 0.95) -- start depth value range
+	else ClampValue(depth, 0.05,1) end -- end depth value range
+end
+
 function GetInteractionDepth(interaction, isStartDepth)
 	if isStartDepth then return interaction.m_autoStartDepth
 	else return interaction.m_autoEndDepth end
 end
 
 function SetInteractionDepth(interaction, depth, isHand, isStartDepth)
-	depth = Clamp01(depth)
+	depth = ClampInteractionDepth(depth, isStartDepth)
 	SetInteractionActive(interaction, true, isHand)
 	if isStartDepth then interaction.m_autoStartDepth = depth
 	else interaction.m_autoEndDepth = depth	end
@@ -260,7 +265,7 @@ function SetInteractionDepthStep(interaction, depthStep, increase, isHand, isSta
 	local depth = GetInteractionDepth(interaction, isStartDepth)
 	if increase then depth = depth + depthStep
 	else depth = depth - depthStep end
-	depth = Clamp01(depth)
+	depth = ClampInteractionDepth(depth, isStartDepth)
 	SetInteractionActive(interaction, true, isHand)
 	if isStartDepth then interaction.m_autoStartDepth = depth
 	else interaction.m_autoEndDepth = depth	end
