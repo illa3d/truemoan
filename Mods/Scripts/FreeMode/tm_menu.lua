@@ -44,7 +44,7 @@ stop
 -------------------------------------------------------------------------------------------------
 
 -- POSES
-label GetMenuItems_Pose(human, posePresets)
+label GetMenuItems_Poses(human, posePresets)
 	-- ModPosePresets = { { name = "MenuName", preset = PoseFunction }, ... }
 	+ TM_MenuBack
 		Return(2)
