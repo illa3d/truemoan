@@ -115,9 +115,8 @@ label TMMenuOptions(human)
 		+ "Moan cum | " .. AccBool(game.FluidReaction) [if not game.FluidReaction and TM_AllowVoice]
 			game.FluidReaction = true
 			Return()
-		+ "Moaning | Disabled (VoiceMod)"
-			+ AccStr(TM_UITip_Options) [if not TM_AllowVoice]
-				human "I know, right? Don't <b>MOAN</b> about it!\n(VoiceMod is present, TrueMoaning disabled!)"
+		+ "Moaning | Disabled (VoiceMod)" [if not TM_AllowVoice]
+			human "I know, right? Don't <b>MOAN</b> about it!\n(VoiceMod is present, TrueMoaning disabled!)"
 			Return()
 		+ TM_MenuBack
 			Return(2)
