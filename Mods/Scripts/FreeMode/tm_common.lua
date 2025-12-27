@@ -29,8 +29,9 @@ end
 -- HUMAN FUNCTIONS
 -------------------------------------------------------------------------------------------------
 
-function HumanRemove(human)
-	game.RemoveHuman(human)
+function HumanRemove(human, immediate)
+	if immediate then game.RemoveHuman(human)
+	else HumanReset(human) Delayed(1, function () game.RemoveHuman(human) end) end
 end
 
 function HumansFreeze(frozen)

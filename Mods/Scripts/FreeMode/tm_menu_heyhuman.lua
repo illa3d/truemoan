@@ -3,6 +3,10 @@ TMEyesOpen = true
 
 label TMMenuHeyHuman(human)
 	+ "DELETE ".. AccStr(human.Name)
+		+ AccStr("may crash the game If")
+			Return()
+		+ AccStr("actor is interacting!")
+			Return()
 		+ "Delete " .. AccStr(human.Name) .. "?"
 			Return()
 		+ TM_MenuOk
