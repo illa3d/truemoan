@@ -40,7 +40,7 @@ label TMMenuAnim(human)
 				Return(2)
 			+ TM_MenuClose
 		+ AccStr(TM_PosePrefix_Faun) .. "EDIT Anim.." [gold]
-			TMMenuFaunaAnimationLab(human, hitTri)
+			TMMenuFaunaAnimLab(human, hitTri)
 	-- ORIGINAL
 	+ AccStr(TM_PosePrefix_Orig) .. "Poses.." [gold]
 		GetMenuItems_Poses(human, TM_PoseBody_Original)

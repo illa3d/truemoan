@@ -1,5 +1,5 @@
 -- FreemodeHG version 0.3 ~ fauna_LABS_v1.02 (partial menu extract)
-label TMMenuFaunaAnimationLab(human, hitTri)
+label TMMenuFaunaAnimLab(human, hitTri)
 -- + "animationLAB.."[gold]
 	+ "Info"
 		human "Build your own animations in realtime! Also, penetration toggle can be good for licking scenes!"
