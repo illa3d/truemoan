@@ -118,6 +118,8 @@ TM_MenuBack = "<color=#e87435>« BACK</color>"
 TM_MenuClose = "<color=#e85035>× CLOSE</color>"
 TM_MenuAccent = "#df9c3d"
 TM_EndColor = "</color>"
+TM_UP = "|>| "
+TM_DN = "|<| "
 
 -- STYLING
 function AccBool (bol)

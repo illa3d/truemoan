@@ -21,23 +21,23 @@ label TMSexControl(human, interaction, isHand)
 	+ "• Slow"
 		SetInteractionSpeed(interaction, TM_SexSpeedSlow, isHand)
 		Return()
-	+ "| > Speed"
+	+ TM_UP.."Speed"
 		SetInteractionSpeedStep(interaction, TM_SexSpeedStep, true, isHand)
 		Return()
-	+ "| < Speed"
+	+ TM_DN.."Speed"
 		SetInteractionSpeedStep(interaction, TM_SexSpeedStep, false, isHand)
 		Return()
-	+ "RESET Speed | " .. AccNum(GetInteractionSpeed(interaction, isHand), tmSdec)
+	+ "RESET Speed	| " .. AccNum(GetInteractionSpeed(interaction, isHand), tmSdec)
 		SetInteractionSpeed(interaction, 0, isHand)
 		Return()
 	
 	-- THRUST (handjob)
 	+ if human.Penis.m_holdDepth ~= 0
 		+ "Thrust | T" .. AccNum(GetInteractionThrustWeight(interaction, isHand), tmSdec) [if TM_ShowSexStyleControl] [gold]
-			+ "| > Thrust"
+			+ TM_UP.."Thrust"
 				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, true, isHand)
 				Return()
-			+ "| < Thrust"
+			+ TM_DN.."Thrust"
 				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, false, isHand)
 				Return()
 			+ "RESET Thrust | " .. AccNum(GetInteractionThrustWeight(interaction, isHand), tmSdec)
@@ -49,20 +49,20 @@ label TMSexControl(human, interaction, isHand)
 
 	-- THRUST / PENIS WEIGHT (oral/vaginal/anal)
 	+ else 
-		+ "» Thrust..	| T" .. AccNum(GetInteractionThrustWeight(interaction, isHand), tmSdec) .. " | M" .. AccNum(GetInteractionPenisWeight(interaction), tmSdec) [if TM_ShowSexStyleControl] [gold]
-			+ "| > Thrust"
+		+ "Thrust..	| T" .. AccNum(GetInteractionThrustWeight(interaction, isHand), tmSdec) .. " | M" .. AccNum(GetInteractionPenisWeight(interaction), tmSdec) [if TM_ShowSexStyleControl] [gold]
+			+ TM_UP.."Thrust"
 				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, true)
 				Return()
-			+ "| < Thrust"
+			+ TM_DN.."Thrust"
 				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, false)
 				Return()
 			+ "RESET Thrust | " .. AccNum(GetInteractionThrustWeight(interaction, isHand), tmSdec)
 				SetInteractionThrustWeight(interaction, 0)
 				Return()
-			+ "| > Male"
+			+ TM_UP.."Male"
 				SetInteractionPenisWeightStep(interaction, TM_SexMaleStep, true)
 				Return()
-			+ "| < Male"
+			+ TM_DN.."Male"
 				SetInteractionPenisWeightStep(interaction, TM_SexMaleStep, false)
 				Return()
 			+ "RESET Male | " .. AccNum(GetInteractionPenisWeight(interaction), tmSdec)
@@ -72,20 +72,20 @@ label TMSexControl(human, interaction, isHand)
 				Return(2)
 			+ TM_MenuClose
 	-- START / END (handjob/oral/vaginal/anal)
-	+ "» Depth..	| S" .. AccNum(GetInteractionDepth(interaction, true), tmSdec) .. " | E" .. AccNum(GetInteractionDepth(interaction, false), tmSdec) [if TM_ShowSexStyleControl] [gold]
-		+ "| > Start"
+	+ "Depth..	| S" .. AccNum(GetInteractionDepth(interaction, true), tmSdec) .. " | E" .. AccNum(GetInteractionDepth(interaction, false), tmSdec) [if TM_ShowSexStyleControl] [gold]
+		+ TM_UP.."Start"
 			SetInteractionDepthStep(interaction, TM_SexDepthStep, true, isHand, true)
 			Return()
-		+ "| < Start"
+		+ TM_DN.."Start"
 			SetInteractionDepthStep(interaction, TM_SexDepthStep, false, isHand, true)
 			Return()
 		+ "RESET Start | " .. AccNum(GetInteractionDepth(interaction, true), tmSdec)
 			SetInteractionDepth(interaction, 0, isHand, true)
 			Return()
-		+ "| > End"
+		+ TM_UP.."End"
 			SetInteractionDepthStep(interaction, TM_SexDepthStep, true, isHand, false)
 			Return()
-		+ "| < End"
+		+ TM_DN.."End"
 			SetInteractionDepthStep(interaction, TM_SexDepthStep, false, isHand, false)
 			Return()
 		+ "RESET End | " .. AccNum(GetInteractionDepth(interaction, false), tmSdec)
@@ -206,11 +206,11 @@ label TMMenuSex(human)
 			+ "• Default"
 				HumanWetSet(human, 500, "Vagina")
 				Return()
-			+ "| > Wetness"
+			+ TM_UP.."Wetness"
 				wett = human.m_vagina.m_wetness + TM_WetnessStep
 				HumanWetSet(human, wett, "Vagina")
 				Return()
-			+ "| < Wetness"
+			+ TM_DN.."Wetness"
 				wett = human.m_vagina.m_wetness - TM_WetnessStep
 				if wett < 0
 					wett = 0

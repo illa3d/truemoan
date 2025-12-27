@@ -7,10 +7,10 @@ label TMMenuAnim(human)
 		+ TM_MenuBack
 			Return(2)
 		+ AccStr(TM_PosePrefix_Faun) .. "SET Speed.. | " .. AccNum(CL_SMult, tmAdec) [gold]
-			+ "| > Speed"
+			+ TM_UP.."Speed"
 				CL_SMult = CL_SMult + Faun_SpeedIncrement
 				Return()
-			+ "| < Speed"
+			+ TM_DN.."Speed"
 				CL_SMult = CL_SMult - Faun_SpeedIncrement
 				Return()
 			+ "RESET | " .. AccNum(CL_SMult, tmAdec) [gold]
@@ -20,19 +20,19 @@ label TMMenuAnim(human)
 				Return(2)
 			+ TM_MenuClose
 		+ AccStr(TM_PosePrefix_Faun) .. "SET Ease.. | " .. AccTextNum2("I", CLV_A, "O", CLV_B, tmAdec) [gold]
-			+ "| > Ease In"
+			+ TM_UP.."Ease In"
 				CLV_A = CLV_A + Faun_EaseIncrement
 				Return()
-			+ "| < Ease In"
+			+ TM_DN.."Ease In"
 				CLV_A = CLV_A - Faun_EaseIncrement
 				Return()
 			+ "RESET Ease In | ".. AccNum(CLV_A, tmAdec) [gold]
 				CLV_A = 2
 				Return()
-			+ "| > Ease Out"
+			+ TM_UP.."Ease Out"
 				CLV_B = CLV_B + Faun_EaseIncrement
 				Return()
-			+ "| < Ease Out"
+			+ TM_DN.."Ease Out"
 				CLV_B = CLV_B - Faun_EaseIncrement
 				Return()
 			+ "RESET Ease Out | " .. AccNum(CLV_B, tmAdec) [gold]
