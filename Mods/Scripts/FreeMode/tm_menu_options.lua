@@ -16,72 +16,85 @@ label TMMenuOptions(human)
 		Return()
 	+ "Music.." [gold]
 		GetMenuItems_Music(TM_MusicTracks)
+
+	-- AMBIENCE
 	+ "Ambience.. | " .. AccBool(TM_AllowAmbience) [gold]
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
-		+ "Refresh" [if TM_AllowAmbience == true]
-			Return()
-		+ "Next track | " .. AccStr("Ambience " .. tmAmbienceTrack) [if TM_AllowAmbience]
-			TMPlayAmbienceNext()
-			Return()
-		+ "Ambience | " .. AccBool(TM_AllowAmbience) .. " (next in ".. AccNum(TMAmbienceLeftSec()) .. "s)" [if TM_AllowAmbience]
-			TM_AllowAmbience = false
-			Return()
-		+ "Ambience | " .. AccBool(TM_AllowAmbience) [if not TM_AllowAmbience]
+		+ if TM_AllowAmbience
+			+ "Refresh"
+				Return()
+			+ "Next ambience"
+				TMPlayAmbienceNext()
+				Return()
+			+ "Ambience " .. AccStr(tmAmbienceTrack) .. " | " .. AccBool(TM_AllowAmbience) .. " (in ".. AccNum(TMAmbienceLeftSec()) .. "s)"
+				TM_AllowAmbience = false
+				Return()
+		+ else	
+			+ "Ambience | " .. AccBool(TM_AllowAmbience)
 			TM_AllowAmbience = true
 			TMPlayAmbienceCurrent()
 			Return()
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "Spawn options.." [gold]
+
+	-- MOANING/SEX
+	+ "Moaning/sex.." [gold]
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
-		+ "Naked | " .. AccBool(TM_SpawnNaked) [if TM_SpawnNaked]
-			TM_SpawnNaked = false
+		+ if TM_AllowVoice
+			+ "Moan sex	| " .. AccBool(TM_MoanSex) [if TM_MoanSex]
+				TM_MoanSex = false
+				Return()
+			+ "Moan sex	| " .. AccBool(TM_MoanSex) [if not TM_MoanSex]
+				TM_MoanSex = true
+				Return()
+			+ "Moan cum	| " .. AccBool(game.FluidReaction) [if game.FluidReaction]
+				game.FluidReaction = false
+				Return()
+			+ "Moan cum	| " .. AccBool(game.FluidReaction) [if not game.FluidReaction]
+				game.FluidReaction = true
+				Return()
+		+ else
+			+ "Moaning	| Disabled (VoiceMod)"
+				human "I know, right? Don't <b>MOAN</b> about it!\n(VoiceMod active, TrueMoaning disabled)"
+				Return(2)
+		+ "Wet sex	| " .. AccBool(TM_WetSex) [if TM_WetSex]
+			TM_WetSex = false
 			Return()
-		+ "Naked | " .. AccBool(TM_SpawnNaked) [if not TM_SpawnNaked]
-			TM_SpawnNaked = true
-			Return()
-		+ "No sex | " .. AccBool(TM_SpawnReset) [if TM_SpawnReset]
-			TM_SpawnReset = false
-			Return()
-		+ "No sex | " .. AccBool(TM_SpawnReset) [if not TM_SpawnReset]
-			TM_SpawnReset = true
-			Return()
-		+ "No futa | " .. AccBool(TM_SpawnNoFuta) [if TM_SpawnNoFuta]
-			TM_SpawnNoFuta = false
-			Return()
-		+ "No futa | " .. AccBool(TM_SpawnNoFuta) [if not TM_SpawnNoFuta]
-			TM_SpawnNoFuta = true
+		+ "Wet sex	| " .. AccBool(TM_WetSex) [if not TM_WetSex]
+			TM_WetSex = true
 			Return()
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
+
+	-- DOUBLE CLICK
 	+ "Double click.." [gold]
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
-		+ "Delay | " .. AccNum(TM_DoubleClickDelay, 1) .. "s"
+		+ "Delay		| " .. AccNum(TM_DoubleClickDelay, 2) .. "s"
 			Return()
-		+ "Reset | " .. AccBool(TM_DoubleClickReset) [if TM_DoubleClickReset]
+		+ "Reset		| " .. AccBool(TM_DoubleClickReset) [if TM_DoubleClickReset]
 			TM_DoubleClickReset = false
 			Return()
-		+ "Reset | " .. AccBool(TM_DoubleClickReset) [if not TM_DoubleClickReset]
+		+ "Reset		| " .. AccBool(TM_DoubleClickReset) [if not TM_DoubleClickReset]
 			TM_DoubleClickReset = true
 			Return()
-		+ "Undress |" .. AccBool(TM_DoubleClickUndress) [if TM_DoubleClickUndress]
+		+ "Undress	| " .. AccBool(TM_DoubleClickUndress) [if TM_DoubleClickUndress]
 			TM_DoubleClickUndress = false
 			Return()
-		+ "Undress | " .. AccBool(TM_DoubleClickUndress) [if not TM_DoubleClickUndress]
+		+ "Undress	| " .. AccBool(TM_DoubleClickUndress) [if not TM_DoubleClickUndress]
 			TM_DoubleClickUndress = true
 			Return()
-		+ "Moan | " .. AccBool(TM_DoubleClickMoan) [if TM_DoubleClickMoan and not TMMOD_VoiceMod]
+		+ "Moaning	| " .. AccBool(TM_DoubleClickMoan) [if TM_DoubleClickMoan and not TMMOD_VoiceMod]
 			TM_DoubleClickMoan = false
 			Return()
-		+ "Moan | " .. AccBool(TM_DoubleClickMoan) [if not TM_DoubleClickMoan and not TMMOD_VoiceMod]
+		+ "Moaning	| " .. AccBool(TM_DoubleClickMoan) [if not TM_DoubleClickMoan and not TMMOD_VoiceMod]
 			TM_DoubleClickMoan = true
 			Return()
 		+ "In other mods | " .. AccBool(TM_DoubleClickInOtherMods) [if TM_DoubleClickInOtherMods]
@@ -93,42 +106,52 @@ label TMMenuOptions(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "Sex options.." [gold]
+
+	-- SPAWN
+	+ "On spawn.." [gold]
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
-		+ "Wet sex | " .. AccBool(TM_WetSex) [if TM_WetSex]
-			TM_WetSex = false
+		+ "Naked		| " .. AccBool(TM_SpawnNaked) [if TM_SpawnNaked]
+			TM_SpawnNaked = false
 			Return()
-		+ "Wet sex | " .. AccBool(TM_WetSex) [if not TM_WetSex]
-			TM_WetSex = true
+		+ "Naked		| " .. AccBool(TM_SpawnNaked) [if not TM_SpawnNaked]
+			TM_SpawnNaked = true
 			Return()
-		+ "Moan sex | " .. AccBool(TM_MoanSex) [if TM_MoanSex and TM_AllowVoice]
-			TM_MoanSex = false
+		+ "No sex	| " .. AccBool(TM_SpawnReset) [if TM_SpawnReset]
+			TM_SpawnReset = false
 			Return()
-		+ "Moan sex | " .. AccBool(TM_MoanSex) [if not TM_MoanSex and TM_AllowVoice]
-			TM_MoanSex = true
+		+ "No sex	| " .. AccBool(TM_SpawnReset) [if not TM_SpawnReset]
+			TM_SpawnReset = true
 			Return()
-		+ "Moan cum | " .. AccBool(game.FluidReaction) [if game.FluidReaction and TM_AllowVoice]
-			game.FluidReaction = false
+		+ "No futa	| " .. AccBool(TM_SpawnNoFuta) [if TM_SpawnNoFuta]
+			TM_SpawnNoFuta = false
 			Return()
-		+ "Moan cum | " .. AccBool(game.FluidReaction) [if not game.FluidReaction and TM_AllowVoice]
-			game.FluidReaction = true
+		+ "No futa	| " .. AccBool(TM_SpawnNoFuta) [if not TM_SpawnNoFuta]
+			TM_SpawnNoFuta = true
 			Return()
-		+ "Moaning | Disabled (VoiceMod)" [if not TM_AllowVoice]
-			human "I know, right? Don't <b>MOAN</b> about it!\n(VoiceMod active, TrueMoaning disabled)"
-			Return(2)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "Plugins.." .. AccStr(" (mod menu)") [gold]
-		+ "Fauna LABS.." [if TMMOD_FaunaLabs] [gold]
-			TMMOD_Jump(TMMOD_Menu_FaunaLabs, human, hitTri)
-		+ TM_MenuMod [if TMMOD_TalkMenuModManager]
+
+	-- MOD MENU OR PLUGINS
+	+ if TMMOD_TalkMenuModManager
+		+ TM_MenuMod
 			TM_ModMenu(human, hitTri)
-		+ TM_MenuBack
-			Return(2)
-		+ TM_MenuClose
+	+ else
+		+ AccStr("PLUGINS..") [gold]
+			+ if TMMOD_FaunaLabs
+				+ "Fauna LABS.." [if TMMOD_FaunaLabs] [gold]
+					TMMOD_Jump(TMMOD_Menu_FaunaLabs, human, hitTri)
+			+ else
+				+ AccStr("(consider FaunaLABS)")
+					human "Fauna LABS brings: Poses, Faces, Animations and more!\nTrue, TrueMoan is truly empty without it!"
+					Return()
+				+ "No plugins"
+					Return()
+			+ TM_MenuBack
+				Return(2)
+			+ TM_MenuClose
 	+ TM_MenuBack
 		Return(2)
 	+ TM_MenuClose

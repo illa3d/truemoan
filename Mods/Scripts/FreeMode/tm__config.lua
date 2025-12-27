@@ -37,7 +37,7 @@ TM_BreastSafeMin = -0.8           -- some characters fall apart below this value
 
 -- SFX Ambience
 TM_AllowAmbience = true           -- Ambient sounds
-TM_AmbienceVolume = 0.6           -- [0-1] Ambient volume
+TM_AmbienceVolume = 0.7           -- [0-1] Ambient volume
 
 ------------------------------------------------------------------------------------------------------------------
 -- FINE TUNING
@@ -73,7 +73,7 @@ TM_MoanCumBodyTime = 5
 TM_WetnessStep = 200
 
 -- Menu Style
-TM_MenuMod = "<color=#e87435>«« MOD MENU</color>"
+TM_MenuMod = "<color=#e87435>« MOD MENU</color>"
 TM_MenuBack = "<color=#e87435>« BACK</color>"
 TM_MenuClose = "<color=#e85035>× CLOSE</color>"
 TM_MenuAccent = "#df9c3d"

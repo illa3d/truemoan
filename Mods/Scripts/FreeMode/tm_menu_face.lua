@@ -2,7 +2,7 @@
 label TMMenuFace(human)
 	-- FAUNA
 	+ if TMMOD_FaunaLabs
-		+ AccStr(TM_PosePrefix_Faun) .. "EDIT Face.." [gold]
+		+ AccStr(TM_PosePrefix_Faun) .. AccStr("EDIT Face..") [gold]
 			TMMenuFaunaFaceLab(human, hitTri)
 		+ AccStr(TM_PosePrefix_Faun) .. "Kiss/Tongue.." [gold]
 			GetMenuItems_Poses(human, TM_PoseKissTongue_Fauna)
@@ -10,7 +10,7 @@ label TMMenuFace(human)
 			GetMenuItems_Poses(human, TM_PoseFace_Fauna)
 	+ else
 		+ AccStr("(more with faunalabs)") [gold]
-			human "True Moan description clearly said you need FaunaLABS for more!\nNow watch me with just original faces."
+			human "True Moan page clearly stated you need FaunaLABS for more!\nYour loss! Now watch me with just original faces."
 			Return()
 	-- ORIGINAL
 	+ AccStr(TM_PosePrefix_Orig) .. "Face.." [gold]

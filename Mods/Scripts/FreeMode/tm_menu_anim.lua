@@ -41,7 +41,7 @@ label TMMenuAnim(human)
 			+ TM_MenuBack.. " (applied to new anims)"
 				Return(2)
 			+ TM_MenuClose
-		+ AccStr(TM_PosePrefix_Faun) .. "EDIT Anim.." [gold]
+		+ AccStr(TM_PosePrefix_Faun) .. AccStr("EDIT Anim..") [gold]
 			TMMenuFaunaAnimLab(human, hitTri)
 		+ AccStr(TM_PosePrefix_Faun) .. "Feet.." [gold]
 		-- + AccStr(TM_PosePrefix_Faun) .. "Feet.." [if bot game.HasAnim(human.footNames) == false] [gold]

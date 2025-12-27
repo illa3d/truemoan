@@ -2,7 +2,7 @@
 label TMMenuPose(human)
 	-- FAUNA
 	+ if TMMOD_FaunaLabs
-		+ AccStr(TM_PosePrefix_Faun) .. "EDIT Fingers.." [gold]
+		+ AccStr(TM_PosePrefix_Faun) .. AccStr("EDIT Fingers..") [gold]
 			TMMenuFaunaFingerLab(human, hitTri)
 		+ AccStr(TM_PosePrefix_Faun) .. "Arms.." [gold]
 			GetMenuItems_Poses(human, TM_PoseArms_Fauna)

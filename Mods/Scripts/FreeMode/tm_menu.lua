@@ -98,6 +98,7 @@ label GetMenuItems_Music(musicTracks)
 		+ for i, item in ipairs(musicTracks)
 			+ AccStr("> ") .. item
 				TMPlayMusic(item)
+				Return()
 			+ if i % TM_MenuBackButtonEvery == 0
 				+ TM_MenuBack
 					Return(2)
