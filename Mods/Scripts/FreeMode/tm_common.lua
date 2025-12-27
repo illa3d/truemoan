@@ -29,6 +29,10 @@ end
 -- HUMAN FUNCTIONS
 -------------------------------------------------------------------------------------------------
 
+function HumanRemove(human)
+	game.RemoveHuman(human)
+end
+
 function HumansFreeze(frozen)
 	game.m_freezeAllActors = frozen
 end

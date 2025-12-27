@@ -111,6 +111,8 @@ stop
 -- STYLES
 -------------------------------------------------------------------------------------------------
 -- Menu Style
+TM_MenuOk = "<color=#e87435>» OK</color>"
+TM_MenuCancel = "<color=#e85035>× CANCEL</color>"
 TM_MenuMod = "<color=#e87435>« MOD MENU</color>"
 TM_MenuBack = "<color=#e87435>« BACK</color>"
 TM_MenuClose = "<color=#e85035>× CLOSE</color>"

@@ -2,6 +2,15 @@
 TMEyesOpen = true
 
 label TMMenuHeyHuman(human)
+	+ "DELETE ".. AccStr(human.Name)
+		+ "Delete " .. AccStr(human.Name) .. "?"
+			Return()
+		+ TM_MenuOk
+			HumanRemove(human)
+			Return(2)
+		+ TM_MenuCancel
+			Return(2)
+		Return()
 	+ "RESET ".. AccStr(human.Name)
 		HumanReset(human)
 		Return()
