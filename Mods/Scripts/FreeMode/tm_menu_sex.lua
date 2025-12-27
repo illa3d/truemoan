@@ -33,7 +33,7 @@ label TMSexControl(human, interaction, ishand)
 	
 	-- handjob
 	+ if human.Penis.m_holdDepth ~= 0
-		+ "Style control.. | T" .. AccNum(GetInteractionThrustWeight(interaction, ishand), tmSdec) [if TM_ShowSexStyleControl] [gold]
+		+ "Thrust | T" .. AccNum(GetInteractionThrustWeight(interaction, ishand), tmSdec) [if TM_ShowSexStyleControl] [gold]
 			+ "| > Thrust"
 				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, true, ishand)
 				Return()
@@ -49,7 +49,7 @@ label TMSexControl(human, interaction, ishand)
 
 	-- oral/vaginal/anal
 	+ else 
-		+ "Style control.. | M" .. AccNum(GetInteractionWeight(interaction, ishand), tmSdec) .. " | T" .. AccNum(GetInteractionThrustWeight(interaction, ishand), tmSdec) [if TM_ShowSexStyleControl] [gold]
+		+ "Thrust|Male.. | T" .. AccNum(GetInteractionThrustWeight(interaction, ishand), tmSdec) .. " | M" .. AccNum(GetInteractionWeight(interaction, ishand), tmSdec) [if TM_ShowSexStyleControl] [gold]
 			+ "| > Thrust"
 				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, true, ishand)
 				Return()
