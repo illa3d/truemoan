@@ -54,35 +54,6 @@ label TMMenuOptions(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "Sex options.." [gold]
-		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
-			TM_UITips_Options = false
-			Return()
-		+ "Wet sex | " .. AccBool(TM_WetSex) [if TM_WetSex]
-			TM_WetSex = false
-			Return()
-		+ "Wet sex | " .. AccBool(TM_WetSex) [if not TM_WetSex]
-			TM_WetSex = true
-			Return()
-		+ "Moan sex | " .. AccBool(TM_MoanSex) [if TM_MoanSex and TM_AllowVoice]
-			TM_MoanSex = false
-			Return()
-		+ "Moan sex | " .. AccBool(TM_MoanSex) [if not TM_MoanSex and TM_AllowVoice]
-			TM_MoanSex = true
-			Return()
-		+ "Moan cum | " .. AccBool(game.FluidReaction) [if game.FluidReaction and TM_AllowVoice]
-			game.FluidReaction = false
-			Return()
-		+ "Moan cum | " .. AccBool(game.FluidReaction) [if not game.FluidReaction and TM_AllowVoice]
-			game.FluidReaction = true
-			Return()
-		+ "Moaning | Disabled (VoiceMod)"
-			+ AccStr(TM_UITip_Options) [if not TM_AllowVoice]
-				human "I know, right? Don't <b>MOAN</b> about it!\n(VoiceMod is present, TrueMoaning disabled!)"
-			Return()
-		+ TM_MenuBack
-			Return(2)
-		+ TM_MenuClose
 	+ "Double click.." [gold]
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
@@ -112,6 +83,35 @@ label TMMenuOptions(human)
 			Return()
 		+ "In other mods | " .. AccBool(TM_DoubleClickInOtherMods) [if not TM_DoubleClickInOtherMods]
 			TM_DoubleClickInOtherMods = true
+			Return()
+		+ TM_MenuBack
+			Return(2)
+		+ TM_MenuClose
+	+ "Sex options.." [gold]
+		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
+			TM_UITips_Options = false
+			Return()
+		+ "Wet sex | " .. AccBool(TM_WetSex) [if TM_WetSex]
+			TM_WetSex = false
+			Return()
+		+ "Wet sex | " .. AccBool(TM_WetSex) [if not TM_WetSex]
+			TM_WetSex = true
+			Return()
+		+ "Moan sex | " .. AccBool(TM_MoanSex) [if TM_MoanSex and TM_AllowVoice]
+			TM_MoanSex = false
+			Return()
+		+ "Moan sex | " .. AccBool(TM_MoanSex) [if not TM_MoanSex and TM_AllowVoice]
+			TM_MoanSex = true
+			Return()
+		+ "Moan cum | " .. AccBool(game.FluidReaction) [if game.FluidReaction and TM_AllowVoice]
+			game.FluidReaction = false
+			Return()
+		+ "Moan cum | " .. AccBool(game.FluidReaction) [if not game.FluidReaction and TM_AllowVoice]
+			game.FluidReaction = true
+			Return()
+		+ "Moaning | Disabled (VoiceMod)"
+			+ AccStr(TM_UITip_Options) [if not TM_AllowVoice]
+				human "I know, right? Don't <b>MOAN</b> about it!\n(VoiceMod is present, TrueMoaning disabled!)"
 			Return()
 		+ TM_MenuBack
 			Return(2)
