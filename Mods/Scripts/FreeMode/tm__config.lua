@@ -25,16 +25,17 @@ TM_DoubleClickDelay = 0.25			-- 9. [0.2-0.4] Time to register double click (0.25
 TM_SpawnNaked = false				-- 10. Characters naked when spawned / changing
 TM_SpawnReset = false				-- 11. Characters reset when spawned / changing (no sucking lol)
 TM_SpawnNoFuta = false				-- 12. Females spawn without penises (no sucking lol)
-TM_MoanSex = true					-- 13. Moaning during sex
-TM_WetSex = true					-- 14. Moisting holes (vag, anus, mouth)
+TM_SpawnRandomTypes = true			-- 13. Randomizes body types on start, configurable in tm__presets.lua
+TM_MoanSex = true					-- 14. Moaning during sex
+TM_WetSex = true					-- 15. Moisting holes (vag, anus, mouth)
 
 -- Body Edit
-TM_BodyEditSafe = true				-- 15. Turns on safe body editing using SafeMin values
-TM_BreastSafeMin = -0.8				-- 16. Some characters fall apart below this value and game crashes
+TM_BodyEditSafe = true				-- 16. Turns on safe body editing using SafeMin values
+TM_BreastSafeMin = -0.8				-- 17. Some characters fall apart below this value and game crashes
 
 -- SFX Ambience
-TM_AllowAmbience = true				-- 17. Ambient sounds
-TM_AmbienceVolume = 0.7				-- 18. [0-1] Ambient volume
+TM_AllowAmbience = true				-- 18. Ambient sounds
+TM_AmbienceVolume = 0.7				-- 19. [0-1] Ambient volume
 
 ------------------------------------------------------------------------------------------------------------------
 -- FINE TUNING

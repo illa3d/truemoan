@@ -248,11 +248,11 @@ label TMMenuSex(human)
 			+ "• Cum every 1 sec"
 				tmCumevery = HumanCumEvery(human, 1)
 				Return()
-			+ "Random | " .. AccStr(tmCumevery .. "s") [gold]
-				tmCumevery = HumanCumEvery(human, GetRandom(1,120))
-				Return()
-			+ "Cum STOP"
+			+ "RESET | " .. AccStr(tmCumevery .. "s")
 				tmCumevery = HumanCumStop(human)
+				Return()
+			+ "Random" [gold]
+				tmCumevery = HumanCumEvery(human, GetRandom(1,120))
 				Return()
 			+ TM_MenuBack
 				Return(2)
