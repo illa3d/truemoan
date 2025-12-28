@@ -14,7 +14,7 @@ label TMMenuBody(human)
 	+ "RESET Values"
 		TMBodyEditResetValues()
 		Return()
-	+ "| Neck	| " .. AccTextNum1("N", TMB_NeckSize, tmBdec) [gold]
+	+ "| Neck »	| " .. AccTextNum1("N", TMB_NeckSize, tmBdec) [gold]
 		+ TM_UP.."Neck"
 			TMB_NeckSize = TMBodyEditUp(human, TMBE_Neck, TMB_NeckSize, TM_BodyStepB, 2)
 			Return()
@@ -27,7 +27,7 @@ label TMMenuBody(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "| Arms	| " .. AccTextNum2("U", TMB_UperArmsize, "F", TMB_ForearmSize, tmBdec) [gold]
+	+ "| Arms »	| " .. AccTextNum2("U", TMB_UperArmsize, "F", TMB_ForearmSize, tmBdec) [gold]
 		+ TM_UP.."Upper arms"
 			TMB_UperArmsize = TMBodyEditUp(human, TMBE_Upperarms, TMB_UperArmsize, TM_BodyStepB, 2)
 			Return()
@@ -49,7 +49,7 @@ label TMMenuBody(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "| Legs		| " .. AccTextNum2("T", TMB_ThighSize, "C", TMB_CalfSize, tmBdec) [gold]
+	+ "| Legs »	| " .. AccTextNum2("T", TMB_ThighSize, "C", TMB_CalfSize, tmBdec) [gold]
 		+ TM_UP.."Thigh"
 			TMB_ThighSize = TMBodyEditUp(human, TMBE_Thigh, TMB_ThighSize, TM_BodyStepB, 2)
 			Return()
@@ -71,7 +71,7 @@ label TMMenuBody(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "| Waist	| " .. AccTextNum2("W", TMB_WaistSize, "H", TMB_HipsSize, tmBdec) [gold]
+	+ "| Waist »	| " .. AccTextNum2("W", TMB_WaistSize, "H", TMB_HipsSize, tmBdec) [gold]
 		+ TM_UP.."Waist"
 			TMB_WaistSize = TMBodyEditUp(human, TMBE_Waist, TMB_WaistSize, TM_BodyStepA, 5)
 			Return()
@@ -93,7 +93,7 @@ label TMMenuBody(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "| Ass		| " .. AccTextNum1("A", TMB_AssSize, tmBdec) [gold]
+	+ "| Ass »	| " .. AccTextNum1("A", TMB_AssSize, tmBdec) [gold]
 		+ TM_UP.."Ass"
 			TMB_AssSize = TMBodyEditUp(human, TMBE_Ass, TMB_AssSize, TM_BodyStepB, 10)
 			Return()
@@ -107,7 +107,7 @@ label TMMenuBody(human)
 			Return(2)
 		+ TM_MenuClose
 	+ if not human.m_isMale
-		+ "| Breasts	| " .. AccTextNum2("B", TMB_BreastSize, "N", TMB_NipplesSize, tmBdec) [gold]
+		+ "| Breasts »	| " .. AccTextNum2("B", TMB_BreastSize, "N", TMB_NipplesSize, tmBdec) [gold]
 			+ TM_UP.."Breasts"
 				TMB_BreastSize = TMBodyEditUp(human, TMBE_Breasts, TMB_BreastSize, TM_BodyStepC, 10)
 				Return()
@@ -130,7 +130,7 @@ label TMMenuBody(human)
 				Return(2)
 			+ TM_MenuClose
 	+ if human.Penis.IsActive
-		+ "| Penis	| " .. AccTextNum2("S", TMB_PenisSize, "L", TMB_PenisLength, tmBdec) [gold]
+		+ "| Penis »	| " .. AccTextNum2("S", TMB_PenisSize, "L", TMB_PenisLength, tmBdec) [gold]
 			+ TM_UP.."Size"
 				TMB_PenisSize = TMBodyEditUp(human, TMBE_PenisSize, TMB_PenisSize, TM_BodyStepB, 20)
 				Return()
@@ -155,7 +155,7 @@ label TMMenuBody(human)
 			+ TM_MenuBack
 				Return(2)
 			+ TM_MenuClose
-	+ "| Body	| " .. AccTextNum2("B", TMB_BodySize, "M", TMB_MuscleSize, tmBdec) [gold]
+	+ "| Body »	| " .. AccTextNum2("B", TMB_BodySize, "M", TMB_MuscleSize, tmBdec) [gold]
 		+ TM_UP.."Body"
 			TMB_BodySize = TMBodyEditUp(human, TMBE_Body, TMB_BodySize, TM_BodyStepC, 10)
 			Return()
