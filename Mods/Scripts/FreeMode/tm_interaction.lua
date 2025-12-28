@@ -96,12 +96,17 @@ function GetInteractionSpeed(interaction, isHand)
 	return isHand and interaction.m_autoHandSpeed or interaction.m_autoSpeed
 end
 
+function GetInteractionSpeedTarget(interaction, isHand)
+	local paramName = isHand and "m_autoHandSpeed" or "m_autoSpeed"
+	return TMGetTargetValue(interaction, paramName)
+end
+
 function SetInteractionSpeedRandom(interaction, isHand)
 	return SetInteractionSpeed(interaction, GetRandomFloat(0.1, 1), isHand)
 end
 
 function SetInteractionSpeedStep(interaction, speedStep, increase, isHand)
-	local speed = isHand and interaction.m_autoHandSpeed or interaction.m_autoSpeed
+	local speed = GetInteractionSpeedTarget(interaction, isHand)
 	local increment = 1 + (speedStep / (speed ^ 0.6)) -- 1 + (speed multiplier / (speed / curve))
 	if increase then speed = speed * increment
 	else speed = speed / increment end
@@ -118,10 +123,6 @@ function SetInteractionSpeed(interaction, speed, isHand)
 	return speed
 end
 
-function GetInteractionSpeedTarget(interaction, isHand)
-	local paramName = isHand and "m_autoHandSpeed" or "m_autoSpeed"
-	return TMGetTargetValue(interaction, paramName)
-end
 
 -------------------------------------------------------------------------------------------------
 -- (PENIS) INTERACTION WEIGHT (GIVER VS GETTER) (0-1)
@@ -130,12 +131,17 @@ function GetInteractionPenisWeight(interaction, isHand)
 	return (isHand) and 0 or interaction.AutoPenisWeight -- no interaction weight in handjobs
 end
 
+function GetInteractionPenisWeightTarget(interaction, isHand)
+	if isHand then return 0 end
+	return TMGetTargetValue(interaction, "AutoPenisWeight")
+end
+
 function SetInteractionPenisWeightRandom(interaction, isHand)
 	return SetInteractionPenisWeight(interaction, GetRandomFloat01(), isHand)
 end
 
 function SetInteractionPenisWeightStep(interaction, weightStep, increase, isHand)
-	local weight = GetInteractionPenisWeight(interaction, isHand)
+	local weight = GetInteractionPenisWeightTarget(interaction, isHand)
 	if increase then weight = weight + weightStep
 	else weight = weight - weightStep end
 	return SetInteractionPenisWeight(interaction, weight, isHand)
@@ -150,10 +156,6 @@ function SetInteractionPenisWeight(interaction, weight, isHand)
 	return weight
 end
 
-function GetInteractionPenisWeightTarget(interaction, isHand)
-	if isHand then return 0 end
-	return TMGetTargetValue(interaction, "AutoPenisWeight")
-end
 
 -------------------------------------------------------------------------------------------------
 -- (PENIS/HAND) INTERACTION THRUST WEIGHT (normalized 0-1 to actual 1-3)
@@ -164,12 +166,18 @@ function GetInteractionThrustWeight(interaction, isHand)
 	return NormalizeValue(isHand and interaction.m_autoHandThrustWeight or interaction.m_autoThrustWeight, 1, 3) -- normalized
 end
 
+function GetInteractionThrustWeightTarget(interaction, isHand)
+	local paramName = isHand and "m_autoHandThrustWeight" or "m_autoThrustWeight"
+	local rawVal = TMGetTargetValue(interaction, paramName)
+	return NormalizeValue(rawVal, 1, 3)
+end
+
 function SetInteractionThrustWeightRandom(interaction, isHand)
 	return SetInteractionThrustWeight(interaction, GetRandomFloat(0,0.6), isHand)
 end
 
 function SetInteractionThrustWeightStep(interaction, weightStep, increase, isHand)
-	local weight = GetInteractionThrustWeight(interaction, isHand)
+	local weight = GetInteractionThrustWeightTarget(interaction, isHand)
 	if increase then weight = weight + weightStep
 	else weight = weight - weightStep end
 	return SetInteractionThrustWeight(interaction, weight, isHand)
@@ -185,11 +193,6 @@ function SetInteractionThrustWeight(interaction, weight, isHand)
 	return weight
 end
 
-function GetInteractionThrustWeightTarget(interaction, isHand)
-	local paramName = isHand and "m_autoHandThrustWeight" or "m_autoThrustWeight"
-	local rawVal = TMGetTargetValue(interaction, paramName)
-	return NormalizeValue(rawVal, 1, 3)
-end
 
 -------------------------------------------------------------------------------------------------
 -- (PENIS/HAND) INTERACTION THRUST DEPTH (0-1)
@@ -204,6 +207,11 @@ function GetInteractionDepth(interaction, isStartDepth)
 	else return interaction.m_autoEndDepth end
 end
 
+function GetInteractionDepthTarget(interaction, isStartDepth)
+	local paramName = isStartDepth and "m_autoStartDepth" or "m_autoEndDepth"
+	return TMGetTargetValue(interaction, paramName)
+end
+
 function SetInteractionDepthRandom(interaction, isHand)
 	local startValue = SetInteractionDepth(interaction, GetRandomFloat(0.2, 0.6), isHand, true)
 	local endValue = SetInteractionDepth(interaction, GetRandomFloat(startValue + 0.05, 1), isHand, false)
@@ -211,7 +219,7 @@ function SetInteractionDepthRandom(interaction, isHand)
 end
 
 function SetInteractionDepthStep(interaction, depthStep, increase, isHand, isStartDepth)
-	local depth = GetInteractionDepth(interaction, isStartDepth)
+	local depth = GetInteractionDepthTarget(interaction, isStartDepth)
 	if increase then depth = depth + depthStep
 	else depth = depth - depthStep end
 	return SetInteractionDepth(interaction, depth, isHand, isStartDepth)
@@ -225,9 +233,4 @@ function SetInteractionDepth(interaction, depth, isHand, isStartDepth)
 	local paramName = isStartDepth and "m_autoStartDepth" or "m_autoEndDepth"
 	TMTweenTo(interaction, paramName, depth, TM_TweenDuration)
 	return depth
-end
-
-function GetInteractionDepthTarget(interaction, isStartDepth)
-	local paramName = isStartDepth and "m_autoStartDepth" or "m_autoEndDepth"
-	return TMGetTargetValue(interaction, paramName)
 end
