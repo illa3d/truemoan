@@ -14,12 +14,14 @@
   - Body Size and Type Presets
   - Apply to/reset multiple actors quickly
 - **Sex Control**
+  - Smooth transitions
   - Speed/Thrust/Depth control + random + presets
   - Cum/Wetness controls + random + presets
 - **Wet Sex** (moisting used holes Vag, Anl, Orl)
+- **Animations**
 - **Poses** (more poses requires FaunaLABS)
 - **6x ambience audio**
-- **22 Scenes included**
+- **23 Scenes included**
 - **Improved Menu UX**
 - **Highly Configurable**
 
@@ -27,8 +29,8 @@
 - **7x skyboxes** (8/4/2k)
 
 **LATEST DOWNLOADS**
-**TrueMoan_v1.4.zip** [2025-12-27] - Just TrueMoan
-**TrueMoan_v1.4_FLABS_v1.02.zip** [2025-12-27] - TrueMoan + Fauna LABS **(recommended)**
+**TrueMoan_v1.5.zip** [2025-12-27] - Just TrueMoan
+**TrueMoan_v1.5_FLABS_v1.02.zip** [2025-12-27] - TrueMoan + Fauna LABS **(recommended)**
 **TrueMoan_Addon_Skyboxes_4k_v1.0.zip** [2025-12-22] - No difference between 8/4k in-game
 **TrueFacials v0.59_Clothes_Preview.zip** [2025-12-22] - Just preview images to find clothes faster
 https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
@@ -67,6 +69,10 @@ GitHub Repository - https://github.com/illa3d/truemoan
 
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_main%20README.txt
+
+[ v1.5 ]
+- SexControl Tweening (natural sex transitions)
+- Face loops in menu (FaunaLABS)
 
 [ v1.4 ]
 - SexControl now has Depth control
