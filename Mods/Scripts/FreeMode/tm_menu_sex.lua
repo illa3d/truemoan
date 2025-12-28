@@ -33,7 +33,7 @@ label TMSexControl(human, interaction, isHand)
 	+ "Random Speed" [gold]
 		SetInteractionSpeedRandom(interaction, isHand)
 		Return()
-	+ "Feeling lucky" [gold]
+	+ "Feeling Lucky" [gold]
 		--SetInteractionSpeedRandom(interaction, isHand) -- random speed control is above
 		SetInteractionThrustWeightRandom(interaction, isHand)
 		SetInteractionPenisWeightRandom(interaction, isHand)
@@ -100,9 +100,13 @@ label TMSexControl(human, interaction, isHand)
 				+ TM_MenuClose
 		-- START / END (handjob/oral/vaginal/anal)
 		+ "Depth »	| S" .. AccNum(GetInteractionDepth(interaction, true), tmSdec) .. " | E" .. AccNum(GetInteractionDepth(interaction, false), tmSdec) [gold]
-			+ "• Deep"
-				SetInteractionDepth(interaction, 0.5, isHand, true)
+			+ "• Max"
+				SetInteractionDepth(interaction, 0.7, isHand, true)
 				SetInteractionDepth(interaction, 0.9, isHand, false)
+				Return()
+			+ "• Deep"
+				SetInteractionDepth(interaction, 0.4, isHand, true)
+				SetInteractionDepth(interaction, 0.8, isHand, false)
 				Return()
 			+ "• Full"
 				SetInteractionDepth(interaction, 0.2, isHand, true)
