@@ -75,6 +75,12 @@ GitHub Repository - https://github.com/illa3d/truemoan
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_main%20README.txt
 
+[ v1.4 ]
+- Added SexControl Depth
+- Added Random control for (speed, depth, thrust, bodysize)
+- Added Feeling Lucky (randomizes Thrust, Depth 4 parameters)
+- Menu UX improvements
+
 [ v1.3 ]
 - Added Pause option (all actors)
 - Added Random clothes option
