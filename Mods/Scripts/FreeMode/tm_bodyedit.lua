@@ -63,6 +63,7 @@ function TMBodyEditSize(human, value)
 end
 
 function TMBodyEdit(human, bodypart, value)
+	if not bodypart or type(bodypart) ~= "string" then return value end
 	human.Body(bodypart, value)
 	return value
 end

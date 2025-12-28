@@ -21,7 +21,7 @@ label TMMenuBody(human)
 		+ TM_DN.."Neck"
 			TMB_NeckSize = TMBodyEditDown(human, TMBE_Neck, TMB_NeckSize, TM_BodyStepB, -1)
 			Return()
-		+ "RESET Neck | " .. AccNum(TMB_NeckSize)
+		+ "RESET Neck | " .. AccNum(TMB_NeckSize, tmBdec)
 			TMB_NeckSize = TMBodyEdit(human, TMBE_Neck, 0)
 			Return()
 		+ TM_MenuBack
