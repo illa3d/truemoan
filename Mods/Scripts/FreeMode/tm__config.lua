@@ -41,6 +41,9 @@ TM_AmbienceVolume = 0.7				-- 19. [0-1] Ambient volume
 -- FINE TUNING
 ------------------------------------------------------------------------------------------------------------------
 
+-- Interaction tweens
+TM_TweenDuration = 1.0	-- Time in seconds to transition between values
+
 -- Body Edit Increments
 TM_BodyStepA = 0.1		-- nipples hip, waist, muscle
 TM_BodyStepB = 0.05		-- ass, penis-length, penis-size, forearm, upperarm, calf, thigh, neck

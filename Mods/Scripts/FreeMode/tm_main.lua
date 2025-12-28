@@ -7,6 +7,7 @@
 TM_UIVisible = true -- TrueFacials UI
 TM_AllowVoice = true
 TM_AllowGenericChat = false
+TM_DeltaTime = 0
 
 ------------------------------------------------------------------------------------------------
 -- FREE MODE START (called from TrueFacials)
@@ -40,7 +41,9 @@ function TMOnHumanDoubleClick(human, hittri)
 end 
 
 function TMOnUpdate()
-	-- unused for now
+	TM_DeltaTime = Timer("TMDeltaTime")
+	ResetTimer("TMDeltaTime")
+	TMUpdateTweens(TM_DeltaTime)
 end
 
 -- Updated every frame
