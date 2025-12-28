@@ -51,6 +51,8 @@ label TMMenuAnim(human)
 			TMMenuFaunaAnim_Licking(human, hitTri)
 		+ AccStr(TM_PosePrefix_Faun) .. "Blowjob »" [gold]
 			TMMenuFaunaAnim_Blowjob(human, hitTri)
+		+ AccStr(TM_PosePrefix_Faun) .. "Face »" [gold]
+			TMMenuFaunaLoops(human, hitTri)
 		+ AccStr(TM_PosePrefix_Faun) .. "Neck »" [if not game.HasAnim(human.headNames) == false] [gold]
 		-- + AccStr(TM_PosePrefix_Faun) .. "Neck »" [if not game.HasAnim(human.headNames) == false] [gold]
 			TMMenuFaunaAnim_Neck(human, hitTri)
@@ -97,11 +99,11 @@ label TMMenuAnim(human)
 		+ "STOP Twisting" [if game.HasAnim(human.thighNames) == true]
 			game.RemoveAnim(human.thighNames)
 			Return(2)
-		+ "STOP Humping"[if game.HasAnim(human) == true]
-			game.RemoveAnim(human)
-			Return()
 		+ "STOP Head" [if game.HasAnim(human.spineNames) == true]
 			game.RemoveAnim(human.spineNames)
+			Return()
+		+ "STOP Anim"[if game.HasAnim(human) == true]
+			game.RemoveAnim(human)
 			Return()
 		-- END FreemodeHG version 0.3 ~ fauna_LABS_v1.02 (partial menu extract)		
 	+ else

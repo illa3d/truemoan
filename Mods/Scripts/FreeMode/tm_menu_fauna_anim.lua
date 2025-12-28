@@ -275,7 +275,7 @@ label TMMenuFaunaAnim_Neck(human)
 	+ "STOP Neck"[if game.HasAnim(human.headNames) == true]
 		game.RemoveAnim(human.headNames)
 		Return()
-	+ "STOP Humping"[if game.HasAnim(human) == true]
+	+ "STOP Anim"[if game.HasAnim(human) == true]
 		game.RemoveAnim(human)
 		Return()
 	+ TM_MenuBack
@@ -515,7 +515,7 @@ label TMMenuFaunaAnim_Hips(human)
 			HipsRot(50, nil, nil), 
 			HipsRot(30, nil, nil)), human)
 			Return()
-		+ "STOP Humping" [if game.HasAnim(human) == true]
+		+ "STOP Anim" [if game.HasAnim(human) == true]
 			game.RemoveAnim(human)
 			Return()
 		+ TM_MenuBack
@@ -527,7 +527,7 @@ label TMMenuFaunaAnim_Hips(human)
 	+ "STOP Twisting" [if game.HasAnim(human.thighNames) == true]
 		game.RemoveAnim(human.thighNames)
 		Return()
-	+ "STOP Humping"[if game.HasAnim(human) == true]
+	+ "STOP Anim"[if game.HasAnim(human) == true]
 		game.RemoveAnim(human)
 		Return()
 	+ TM_MenuBack
