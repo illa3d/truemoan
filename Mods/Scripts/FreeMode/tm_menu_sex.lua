@@ -171,19 +171,19 @@ stop
 label TMMenuSex(human)
 	-- SEX CONTROL
 	-- GETTER HANDJOB
-	+ "| Handjob control »	| " .. AccNum(human.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Penis.m_holdDepth ~= 0] [gold]
+	+ "| Handjob control »	| " .. AccNum(GetInteractionSpeedTarget(human.Penis.Interaction, true), tmSdec) [if human.Penis.m_holdDepth ~= 0] [gold]
 		TMSexControl(human, human.Penis.Interaction, true)
 	-- GIVER (MOUTH, VAGINA, ANUS)
-	+ "| Sex control »	| " .. AccNum(human.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Penis.Hole ~= nil] [gold]
+	+ "| Sex control »	| " .. AccNum(GetInteractionSpeedTarget(human.Penis.Interaction), tmSdec) [if human.Penis.Hole ~= nil] [gold]
 		TMSexControl(human, human.Penis.Interaction)
 	-- GETTER MOUTH
-	+ "| Oral control »	| " .. AccNum(human.Mouth.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Mouth.Fucker ~= nil] [gold]
+	+ "| Oral control »	| " .. AccNum(GetInteractionSpeedTarget(human.Mouth.Fucker.Penis.Interaction), tmSdec) [if human.Mouth.Fucker ~= nil] [gold]
 		TMSexControl(human, human.Mouth.Fucker.Penis.Interaction)
 	-- GETTER ANUS
-	+ "| Anal control »	| " .. AccNum(human.Anus.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Anus.Fucker ~= nil] [gold]
+	+ "| Anal control »	| " .. AccNum(GetInteractionSpeedTarget(human.Anus.Fucker.Penis.Interaction), tmSdec) [if human.Anus.Fucker ~= nil] [gold]
 		TMSexControl(human, human.Anus.Fucker.Penis.Interaction)
 	-- GETTER VAGINA
-	+ "| Pussy control »	| " .. AccNum(human.Vagina.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Vagina.Fucker ~= nil] [gold]
+	+ "| Pussy control »	| " .. AccNum(GetInteractionSpeedTarget(human.Vagina.Fucker.Penis.Interaction), tmSdec) [if human.Vagina.Fucker ~= nil] [gold]
 		TMSexControl(human, human.Vagina.Fucker.Penis.Interaction)
 
 	-- START / STOP
