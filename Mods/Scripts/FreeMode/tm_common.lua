@@ -23,6 +23,9 @@ end
 function Clamp01(value) return math.max(0, math.min(value, 1)) end
 function ClampValue(value, min, max) return math.max(min, math.min(value, max)) end
 
+function GetRandomFloat01() return (math.random(0,100))/100 end
+function GetRandom(min, max) return (math.random(min ,max)) end
+function GetRandomFloat(min, max) return (math.random(min*100 ,max*100))/100 end
 function GetRandomItem(list)
 	if list == nil or #list == 0 then return end
 	return list[math.random(1, #list)]
@@ -171,7 +174,9 @@ function SetInteractionActive(interaction, isActive, isHand)
 	else interaction.AutoActive = isActive end
 end
 
+-------------------------------------------------------------------------------------------------
 -- INTERACTION SPEED (0.001 - 2)
+-------------------------------------------------------------------------------------------------
 function ClampInteractionSpeed(value) return ClampValue(value, 0.001, 2) end -- speed value range
 
 function GetInteractionSpeed(interaction, isHand)
@@ -183,6 +188,11 @@ function SetInteractionSpeed(interaction, speed, isHand)
 	SetInteractionActive(interaction, true, isHand)
 	if isHand then interaction.m_autoHandSpeed = speed
 	else interaction.m_autoSpeed = speed end
+	return speed
+end
+
+function SetInteractionSpeedRandom(interaction, isHand)
+	SetInteractionSpeed(interaction, GetRandomFloat(0.1, 1), isHand)
 end
 
 function SetInteractionSpeedStep(interaction, speedStep, increase, isHand)
@@ -194,9 +204,12 @@ function SetInteractionSpeedStep(interaction, speedStep, increase, isHand)
 	SetInteractionActive(interaction, true, isHand)
 	if isHand then interaction.m_autoHandSpeed = speed
 	else interaction.m_autoSpeed = speed end
+	return speed
 end
 
+-------------------------------------------------------------------------------------------------
 -- (PENIS) INTERACTION WEIGHT (GIVER VS GETTER) (0-1)
+-------------------------------------------------------------------------------------------------
 function GetInteractionPenisWeight(interaction, isHand)
 	return (isHand) and 0 or interaction.AutoPenisWeight -- no interaction weight in handjobs
 end
@@ -206,6 +219,11 @@ function SetInteractionPenisWeight(interaction, weight, isHand)
 	weight = Clamp01(weight)
 	SetInteractionActive(interaction, true, isHand)
 	interaction.AutoPenisWeight = weight
+	return weight
+end
+
+function SetInteractionPenisWeightRandom(interaction, isHand)
+	SetInteractionPenisWeight(interaction, GetRandomFloat01(), isHand)
 end
 
 function SetInteractionPenisWeightStep(interaction, weightStep, increase, isHand)
@@ -216,13 +234,20 @@ function SetInteractionPenisWeightStep(interaction, weightStep, increase, isHand
 	weight = Clamp01(weight)
 	SetInteractionActive(interaction, true, isHand)
 	interaction.AutoPenisWeight = weight
+	return weight
 end
 
+-------------------------------------------------------------------------------------------------
 -- (PENIS/HAND) INTERACTION THRUST WEIGHT (normalized 0-1 to actual 1-3)
+-------------------------------------------------------------------------------------------------
 function ClampInteractionThrustWeight(weight) return ClampValue(weight, 1, 3) end -- thrust value range
 
 function GetInteractionThrustWeight(interaction, isHand)
 	return isHand and ((interaction.m_autoHandThrustWeight-1)/2) or ((interaction.m_autoThrustWeight-1)/2) -- 3(max) - 1(min) = 2(range)
+end
+
+function SetInteractionThrustWeightRandom(interaction, isHand)
+	SetInteractionThrustWeight(interaction, GetRandomFloat(0,0.6), isHand)
 end
 
 function SetInteractionThrustWeight(interaction, weight, isHand)
@@ -231,6 +256,7 @@ function SetInteractionThrustWeight(interaction, weight, isHand)
 	SetInteractionActive(interaction, true, isHand)
 	if isHand then interaction.m_autoHandThrustWeight = weight
 	else interaction.m_autoThrustWeight = weight end
+	return weight
 end
 
 function SetInteractionThrustWeightStep(interaction, weightStep, increase, isHand)
@@ -241,11 +267,14 @@ function SetInteractionThrustWeightStep(interaction, weightStep, increase, isHan
 	SetInteractionActive(interaction, true, isHand)
 	if isHand then interaction.m_autoHandThrustWeight = weight
 	else interaction.m_autoThrustWeight = weight end
+	return weight
 end
 
+-------------------------------------------------------------------------------------------------
 -- (PENIS/HAND) INTERACTION THRUST DEPTH (0-1)
+-------------------------------------------------------------------------------------------------
 function ClampInteractionDepth(depth, isStartDepth)
-	if isStartDepth then ClampValue(depth, 0, 0.95) -- start depth value range
+	if isStartDepth then return ClampValue(depth, 0, 0.95) -- start depth value range
 	else return ClampValue(depth, 0.05,1) end -- end depth value range
 end
 
@@ -259,6 +288,12 @@ function SetInteractionDepth(interaction, depth, isHand, isStartDepth)
 	SetInteractionActive(interaction, true, isHand)
 	if isStartDepth then interaction.m_autoStartDepth = depth
 	else interaction.m_autoEndDepth = depth	end
+	return depth
+end
+
+function SetInteractionDepthRandom(interaction, isHand)
+	local start = SetInteractionDepth(interaction, GetRandomFloat(0.2, 0.6), isHand, true)
+	SetInteractionDepth(interaction, GetRandomFloat(start + 0.05, 1), isHand, false)
 end
 
 function SetInteractionDepthStep(interaction, depthStep, increase, isHand, isStartDepth)
@@ -269,4 +304,5 @@ function SetInteractionDepthStep(interaction, depthStep, increase, isHand, isSta
 	SetInteractionActive(interaction, true, isHand)
 	if isStartDepth then interaction.m_autoStartDepth = depth
 	else interaction.m_autoEndDepth = depth	end
+	return depth
 end
