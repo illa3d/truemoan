@@ -19,7 +19,7 @@ label TMMenuAnim(human)
 			+ TM_MenuBack.. " (applied to new anims)"
 				Return(2)
 			+ TM_MenuClose
-		+ AccStr(TM_PosePrefix_Faun) .. "SET Ease »		| " .. AccTextNum2("I", CLV_A, "O", CLV_B, tmAdec) [gold]
+		+ AccStr(TM_PosePrefix_Faun) .. "SET Ease »	| " .. AccTextNum2("I", CLV_A, "O", CLV_B, tmAdec) [gold]
 			+ TM_UP.."Ease In"
 				CLV_A = CLV_A + Faun_EaseIncrement
 				Return()

@@ -65,10 +65,13 @@ label TMSexControl(human, interaction, isHand)
 					SetInteractionThrustWeight(interaction, 1)
 					Return()
 				+ "• Insane"
-					SetInteractionThrustWeight(interaction, 0.6)
+					SetInteractionThrustWeight(interaction, 0.75)
+					Return()
+				+ "• Fierce"
+					SetInteractionThrustWeight(interaction, 0.5)
 					Return()
 				+ "• Strong"
-					SetInteractionThrustWeight(interaction, 0.3)
+					SetInteractionThrustWeight(interaction, 0.25)
 					Return()
 				+ "• Normal"
 					SetInteractionThrustWeight(interaction, 0)
