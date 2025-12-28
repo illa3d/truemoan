@@ -22,9 +22,9 @@ label TMMenuOptions(human)
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
+		+ "Refresh"
+			Return()
 		+ if TM_AllowAmbience
-			+ "Refresh"
-				Return()
 			+ "Next ambience"
 				TMPlayAmbienceNext()
 				Return()
@@ -32,7 +32,7 @@ label TMMenuOptions(human)
 				TM_AllowAmbience = false
 				Return()
 		+ else	
-			+ "Ambience | " .. AccBool(TM_AllowAmbience)
+			+ "Ambience | " .. AccBool(TM_AllowAmbience) .. (TMAmbienceLeftSec() > 0 and " (in ".. AccNum(TMAmbienceLeftSec()) .. "s)" or "") 
 				TM_AllowAmbience = true
 				TMPlayAmbienceCurrent()
 				Return()
