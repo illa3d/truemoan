@@ -112,10 +112,10 @@ label TMMenuOptions(human)
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
-		+ "Naked		| " .. AccBool(TM_SpawnNaked) [if TM_SpawnNaked]
+		+ "Naked			| " .. AccBool(TM_SpawnNaked) [if TM_SpawnNaked]
 			TM_SpawnNaked = false
 			Return()
-		+ "Naked		| " .. AccBool(TM_SpawnNaked) [if not TM_SpawnNaked]
+		+ "Naked			| " .. AccBool(TM_SpawnNaked) [if not TM_SpawnNaked]
 			TM_SpawnNaked = true
 			Return()
 		+ "Random body	| " .. AccBool(TM_SpawnRandomBody) [if TM_SpawnRandomBody]
@@ -124,16 +124,16 @@ label TMMenuOptions(human)
 		+ "Random body	| " .. AccBool(TM_SpawnRandomBody) [if not TM_SpawnRandomBody]
 			TM_SpawnRandomBody = true
 			Return()
-		+ "No sex	| " .. AccBool(TM_SpawnReset) [if TM_SpawnReset]
+		+ "No sex		| " .. AccBool(TM_SpawnReset) [if TM_SpawnReset]
 			TM_SpawnReset = false
 			Return()
-		+ "No sex	| " .. AccBool(TM_SpawnReset) [if not TM_SpawnReset]
+		+ "No sex		| " .. AccBool(TM_SpawnReset) [if not TM_SpawnReset]
 			TM_SpawnReset = true
 			Return()
-		+ "No futa	| " .. AccBool(TM_SpawnNoFuta) [if TM_SpawnNoFuta]
+		+ "No futa		| " .. AccBool(TM_SpawnNoFuta) [if TM_SpawnNoFuta]
 			TM_SpawnNoFuta = false
 			Return()
-		+ "No futa	| " .. AccBool(TM_SpawnNoFuta) [if not TM_SpawnNoFuta]
+		+ "No futa		| " .. AccBool(TM_SpawnNoFuta) [if not TM_SpawnNoFuta]
 			TM_SpawnNoFuta = true
 			Return()
 		+ TM_MenuBack
