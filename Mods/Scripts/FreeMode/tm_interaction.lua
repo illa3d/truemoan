@@ -34,6 +34,10 @@ function TMTweenTo(object, paramName, targetValue, duration)
 	end
 	-- Start new tween
 	local startValue = object[paramName]
+	
+	-- Fallback if duration is somehow nil, preventing crash
+	duration = duration or 0.5 
+
 	-- If duration is effectively zero, set immediately
 	if duration <= 0.001 then object[paramName] = targetValue return end
 	table.insert(activeTweens, {
