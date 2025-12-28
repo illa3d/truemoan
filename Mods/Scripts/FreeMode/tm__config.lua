@@ -9,7 +9,7 @@
 -- Menu
 TM_Menu_FaunaLabs = false			-- 1. Display Fauna labs Maoin Menu (if FaunaLABS is present)
 TM_Menu_HideShowUI = false			-- 2. Display Show/hide UI option in Main Menu
-TM_MenuBackButtonEvery = 20			-- 3. [5-20] After how many items back button appear in item lists
+TM_MenuBackButtonEvery = 20			-- 3. [10-20] After how many items back button appear in item lists
 
 -- Sex Menu
 TM_ShowSexStyleControl = true		-- 4. Show Thrust and Depth controls
@@ -19,7 +19,7 @@ TM_DoubleClickInOtherMods = false	-- 5. Allows double clicking in other mods (wo
 TM_DoubleClickReset = true			-- 6. Reset character pose/activity/face/animations on double click
 TM_DoubleClickUndress = true		-- 7. Take clothes off on double click
 TM_DoubleClickMoan = true			-- 8. Moan on dobuleclick (doesn't work with VoiceMod)
-TM_DoubleClickDelay = 0.25			-- 9. [0.2-0.4] Time to register double click (0.25 = 250ms, 200-400ms is fine)
+TM_DoubleClickTime = 0.25			-- 9. [sec, 0.2-0.4] Time to register double click (0.25 = 250ms, 200-400ms is fine)
 
 -- People
 TM_SpawnNaked = false				-- 10. Characters naked when spawned / changing
@@ -29,7 +29,7 @@ TM_SpawnRandomBody = true			-- 13. Randomizes body types on start, configurable 
 TM_MoanSex = true					-- 14. Moaning during sex
 TM_WetSex = true					-- 15. Moisting holes (vag, anus, mouth)
 TM_TweenSex = true					-- 16. Soft transitions on changing sex values (speed, thrust, depth)
-TM_TweenDuration = 1.0				-- 17. Time in seconds to transition between sex values (speed, thrust, depth)
+TM_TweenTime = 1.0					-- 17. [sec] Time in seconds to transition between sex values (speed, thrust, depth)
 
 -- Body Edit
 TM_BodyEditSafe = true				-- 18. Turns on safe body editing using SafeMin values

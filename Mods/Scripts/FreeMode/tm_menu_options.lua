@@ -1,6 +1,7 @@
 -- TrueMoan v1.3 by illa3d
 TM_UITips_Options = true
 TM_UITip_Options = "Tip: edit defaults in tm-config"
+tmOdec = 2
 
 label TMMenuOptions(human)
 	+ "Pause | " .. AccBool(game.m_freezeAllActors) [if game.m_freezeAllActors]
@@ -41,31 +42,31 @@ label TMMenuOptions(human)
 		+ TM_MenuClose
 
 	-- MOANING/SEX
-	+ "Moaning/sex »" [gold]
+	+ "Moan/sex »" [gold]
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
 		+ if TM_AllowVoice
-			+ "Moan sex		| " .. AccBool(TM_MoanSex) [if TM_MoanSex]
+			+ "Moan sex	| " .. AccBool(TM_MoanSex) [if TM_MoanSex]
 				TM_MoanSex = false
 				Return()
-			+ "Moan sex		| " .. AccBool(TM_MoanSex) [if not TM_MoanSex]
+			+ "Moan sex	| " .. AccBool(TM_MoanSex) [if not TM_MoanSex]
 				TM_MoanSex = true
 				Return()
-			+ "Moan cum		| " .. AccBool(game.FluidReaction) [if game.FluidReaction]
+			+ "Moan cum	| " .. AccBool(game.FluidReaction) [if game.FluidReaction]
 				game.FluidReaction = false
 				Return()
-			+ "Moan cum		| " .. AccBool(game.FluidReaction) [if not game.FluidReaction]
+			+ "Moan cum	| " .. AccBool(game.FluidReaction) [if not game.FluidReaction]
 				game.FluidReaction = true
 				Return()
 		+ else
 			+ "Moaning	| Disabled (VoiceMod)"
 				human "I know, right? Don't <b>MOAN</b> about it!\n(VoiceMod active, TrueMoaning disabled)"
 				Return(2)
-		+ "Wet sex		| " .. AccBool(TM_WetSex) [if TM_WetSex]
+		+ "Wet sex	| " .. AccBool(TM_WetSex) [if TM_WetSex]
 			TM_WetSex = false
 			Return()
-		+ "Wet sex		| " .. AccBool(TM_WetSex) [if not TM_WetSex]
+		+ "Wet sex	| " .. AccBool(TM_WetSex) [if not TM_WetSex]
 			TM_WetSex = true
 			Return()
 		+ "Tween sex	| " .. AccBool(TM_TweenSex) [if TM_TweenSex]
@@ -74,16 +75,20 @@ label TMMenuOptions(human)
 		+ "Tween sex	| " .. AccBool(TM_TweenSex) [if not TM_TweenSex]
 			TM_TweenSex = true
 			Return()
+		+ "Tween time	| " .. FDec(TM_TweenTime, tmOdec) .. "s"
+			human "To change this setting edit tm-config"
+			Return()
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
 
 	-- DOUBLE CLICK
-	+ "Double click »" [gold]
+	+ "Click2x »" [gold]
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
-		+ "Delay		| " .. AccNum(TM_DoubleClickDelay, 2) .. "s"
+		+ "Delay		| " .. FDec(TM_DoubleClickTime, tmOdec) .. "s"
+			human "To change this setting edit tm-config"
 			Return()
 		+ "Reset		| " .. AccBool(TM_DoubleClickReset) [if TM_DoubleClickReset]
 			TM_DoubleClickReset = false
@@ -114,21 +119,21 @@ label TMMenuOptions(human)
 		+ TM_MenuClose
 
 	-- SPAWN
-	+ "On spawn »" [gold]
+	+ "Spawn »" [gold]
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
-			Return()
-		+ "Naked			| " .. AccBool(TM_SpawnNaked) [if TM_SpawnNaked]
-			TM_SpawnNaked = false
-			Return()
-		+ "Naked			| " .. AccBool(TM_SpawnNaked) [if not TM_SpawnNaked]
-			TM_SpawnNaked = true
 			Return()
 		+ "Random body	| " .. AccBool(TM_SpawnRandomBody) [if TM_SpawnRandomBody]
 			TM_SpawnRandomBody = false
 			Return()
 		+ "Random body	| " .. AccBool(TM_SpawnRandomBody) [if not TM_SpawnRandomBody]
 			TM_SpawnRandomBody = true
+			Return()
+		+ "Naked			| " .. AccBool(TM_SpawnNaked) [if TM_SpawnNaked]
+			TM_SpawnNaked = false
+			Return()
+		+ "Naked			| " .. AccBool(TM_SpawnNaked) [if not TM_SpawnNaked]
+			TM_SpawnNaked = true
 			Return()
 		+ "No sex		| " .. AccBool(TM_SpawnReset) [if TM_SpawnReset]
 			TM_SpawnReset = false

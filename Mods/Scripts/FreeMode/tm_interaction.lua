@@ -129,7 +129,7 @@ function SetInteractionSpeed(interaction, speed, isHand)
 	SetInteractionActive(interaction, true, isHand)
 	if TM_TweenSex then
 		local paramName = (isHand and TMIE_SpeedHand or TMIE_SpeedPenis)
-		TMTweenTo(interaction, paramName, speed, TM_TweenDuration)
+		TMTweenTo(interaction, paramName, speed, TM_TweenTime)
 	else
 		if isHand then interaction.m_autoHandSpeed = speed
 		else interaction.m_autoSpeed = speed end
@@ -166,7 +166,7 @@ function SetInteractionPenisWeight(interaction, weight, isHand)
 	weight = Clamp01(weight)
 	SetInteractionActive(interaction, true, isHand)
 	if TM_TweenSex then
-		TMTweenTo(interaction, TMIE_WeightPenis, weight, TM_TweenDuration)
+		TMTweenTo(interaction, TMIE_WeightPenis, weight, TM_TweenTime)
 	else
 		interaction.AutoPenisWeight = weight
 	end
@@ -205,7 +205,7 @@ function SetInteractionThrustWeight(interaction, weight, isHand)
 	SetInteractionActive(interaction, true, isHand)
 	if TM_TweenSex then
 		local paramName = isHand and TMIE_ThrustHand or TMIE_ThrustPenis
-		TMTweenTo(interaction, paramName, weight, TM_TweenDuration)
+		TMTweenTo(interaction, paramName, weight, TM_TweenTime)
 	else
 		if isHand then interaction.m_autoHandThrustWeight = weight
 		else interaction.m_autoThrustWeight = weight end
@@ -250,7 +250,7 @@ function SetInteractionDepth(interaction, depth, isHand, isStartDepth)
 	SetInteractionActive(interaction, true, isHand)
 	if TM_TweenSex then
 		local paramName = isStartDepth and TMIE_DepthStart or TMIE_DepthEnd
-		TMTweenTo(interaction, paramName, depth, TM_TweenDuration)
+		TMTweenTo(interaction, paramName, depth, TM_TweenTime)
 	else
 		if isStartDepth then interaction.m_autoStartDepth = depth
 		else interaction.m_autoEndDepth = depth	end
