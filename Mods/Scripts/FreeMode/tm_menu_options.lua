@@ -118,6 +118,12 @@ label TMMenuOptions(human)
 		+ "Naked		| " .. AccBool(TM_SpawnNaked) [if not TM_SpawnNaked]
 			TM_SpawnNaked = true
 			Return()
+		+ "Random body	| " .. AccBool(TM_SpawnRandomBody) [if TM_SpawnRandomBody]
+			TM_SpawnRandomBody = false
+			Return()
+		+ "Random body	| " .. AccBool(TM_SpawnRandomBody) [if not TM_SpawnRandomBody]
+			TM_SpawnRandomBody = true
+			Return()
 		+ "No sex	| " .. AccBool(TM_SpawnReset) [if TM_SpawnReset]
 			TM_SpawnReset = false
 			Return()

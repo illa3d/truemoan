@@ -25,7 +25,7 @@ TM_DoubleClickDelay = 0.25			-- 9. [0.2-0.4] Time to register double click (0.25
 TM_SpawnNaked = false				-- 10. Characters naked when spawned / changing
 TM_SpawnReset = false				-- 11. Characters reset when spawned / changing (no sucking lol)
 TM_SpawnNoFuta = false				-- 12. Females spawn without penises (no sucking lol)
-TM_SpawnRandomTypes = true			-- 13. Randomizes body types on start, configurable in tm__presets.lua
+TM_SpawnRandomBody = true			-- 13. Randomizes body types on start, configurable in tm__presets.lua
 TM_MoanSex = true					-- 14. Moaning during sex
 TM_WetSex = true					-- 15. Moisting holes (vag, anus, mouth)
 
