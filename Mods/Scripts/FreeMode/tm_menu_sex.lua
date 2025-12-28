@@ -33,7 +33,7 @@ label TMSexControl(human, interaction, isHand)
 	
 	-- THRUST (handjob)
 	+ if human.Penis.m_holdDepth ~= 0
-		+ "Thrust | T" .. AccNum(GetInteractionThrustWeight(interaction, isHand), tmSdec) [if TM_ShowSexStyleControl] [gold]
+		+ "Thrust »	| T" .. AccNum(GetInteractionThrustWeight(interaction, isHand), tmSdec) [if TM_ShowSexStyleControl] [gold]
 			+ TM_UP.."Thrust"
 				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, true, isHand)
 				Return()
@@ -49,7 +49,7 @@ label TMSexControl(human, interaction, isHand)
 
 	-- THRUST / PENIS WEIGHT (oral/vaginal/anal)
 	+ else 
-		+ "Thrust..	| T" .. AccNum(GetInteractionThrustWeight(interaction, isHand), tmSdec) .. " | M" .. AccNum(GetInteractionPenisWeight(interaction), tmSdec) [if TM_ShowSexStyleControl] [gold]
+		+ "Thrust »	| T" .. AccNum(GetInteractionThrustWeight(interaction, isHand), tmSdec) .. " | M" .. AccNum(GetInteractionPenisWeight(interaction), tmSdec) [if TM_ShowSexStyleControl] [gold]
 			+ TM_UP.."Thrust"
 				SetInteractionThrustWeightStep(interaction, TM_SexThrustStep, true)
 				Return()
@@ -72,7 +72,7 @@ label TMSexControl(human, interaction, isHand)
 				Return(2)
 			+ TM_MenuClose
 	-- START / END (handjob/oral/vaginal/anal)
-	+ "Depth..	| S" .. AccNum(GetInteractionDepth(interaction, true), tmSdec) .. " | E" .. AccNum(GetInteractionDepth(interaction, false), tmSdec) [if TM_ShowSexStyleControl] [gold]
+	+ "Depth »	| S" .. AccNum(GetInteractionDepth(interaction, true), tmSdec) .. " | E" .. AccNum(GetInteractionDepth(interaction, false), tmSdec) [if TM_ShowSexStyleControl] [gold]
 		+ TM_UP.."Start"
 			SetInteractionDepthStep(interaction, TM_SexDepthStep, true, isHand, true)
 			Return()
@@ -103,19 +103,19 @@ stop
 label TMMenuSex(human)
 	-- SEX CONTROL
 	-- GETTER HANDJOB
-	+ "Handjob control.. | " .. AccNum(human.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Penis.m_holdDepth ~= 0] [gold]
+	+ "Handjob control »	| " .. AccNum(human.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Penis.m_holdDepth ~= 0] [gold]
 		TMSexControl(human, human.Penis.Interaction, true)
 	-- GIVER (MOUTH, VAGINA, ANUS)
-	+ "Sex control.. | " .. AccNum(human.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Penis.Hole ~= nil] [gold]
+	+ "Sex control »	| " .. AccNum(human.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Penis.Hole ~= nil] [gold]
 		TMSexControl(human, human.Penis.Interaction)
 	-- GETTER MOUTH
-	+ "Oral control.. | " .. AccNum(human.Mouth.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Mouth.Fucker ~= nil] [gold]
+	+ "Oral control »	| " .. AccNum(human.Mouth.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Mouth.Fucker ~= nil] [gold]
 		TMSexControl(human, human.Mouth.Fucker.Penis.Interaction)
 	-- GETTER ANUS
-	+ "Anal control.. | " .. AccNum(human.Anus.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Anus.Fucker ~= nil] [gold]
+	+ "Anal control »	| " .. AccNum(human.Anus.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Anus.Fucker ~= nil] [gold]
 		TMSexControl(human, human.Anus.Fucker.Penis.Interaction)
 	-- GETTER VAGINA
-	+ "Pussy control.. | " .. AccNum(human.Vagina.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Vagina.Fucker ~= nil] [gold]
+	+ "Pussy control »	| " .. AccNum(human.Vagina.Fucker.Penis.Interaction.m_autoSpeed, tmSdec) [if human.Vagina.Fucker ~= nil] [gold]
 		TMSexControl(human, human.Vagina.Fucker.Penis.Interaction)
 
 	-- START / STOP
@@ -161,7 +161,7 @@ label TMMenuSex(human)
 
 	-- HAS PENIS
 	+ if human.Penis.IsActive == true
-		+ "Cum control.. | " .. AccStr(tmCumevery .. "s") [gold]
+		+ "Cum control »	| " .. AccStr(tmCumevery .. "s") [gold]
 			+ "• Cum every 1 sec"
 				tmCumevery = HumanCumEvery(human, 1)
 				Return(2)
@@ -196,7 +196,7 @@ label TMMenuSex(human)
 
 	-- HAS NO PENIS
 	+ if not human.Penis.IsActive
-		+ "Wet control.. | " .. AccTextNum3("V",human.m_vagina.m_wetness, "A", human.m_anus.m_wetness, "M", human.m_mouth.m_wetness) [gold]
+		+ "Wet control »	| " .. AccTextNum3("V",human.m_vagina.m_wetness, "A", human.m_anus.m_wetness, "M", human.m_mouth.m_wetness) [gold]
 			+ "• Squirt"
 				HumanWetSet(human, 10000, "Vagina")
 				Return()

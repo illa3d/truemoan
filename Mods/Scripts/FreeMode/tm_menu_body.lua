@@ -183,9 +183,9 @@ label TMMenuBody(human)
 	+ "Apply values " .. AccStr("(safe off)") [if not TM_BodyEditSafe]
 		TMBodyEditApplyValues(human)
 		Return()
-	+ "Body sizes.." [gold]
+	+ "Body sizes »" [gold]
 		TMMenuBodySize(human)
-	+ "Body types.." [gold]
+	+ "Body types »" [gold]
 		TMMenuBodyType(human)
 	+ "RESET Body"
 		TMBEPreset_Reset(human)

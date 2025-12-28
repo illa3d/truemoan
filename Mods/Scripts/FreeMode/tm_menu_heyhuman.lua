@@ -31,7 +31,7 @@ label TMMenuHeyHuman(human)
 	+ "Penetration | " .. AccStr("OFF") [if human.m_isMale]
 		HumanMaleSet(human, false)
 		Return()
-	+ "Look at.." [gold]
+	+ "Look at »" [gold]
 		+ "• Look at " .. AccStr("cam")
 			HumanLookAt(human, CameraPos())
 			Return(2)
@@ -48,7 +48,7 @@ label TMMenuHeyHuman(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "Clothes From.." [gold]
+	+ "Clothes From »" [gold]
 		GetMenuItems_Clothes(human, TM_Clothes_Custom)
 	+ "Clothes " .. AccStr("on")
 		HumanClothes(human, true)

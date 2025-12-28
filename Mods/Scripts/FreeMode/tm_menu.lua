@@ -4,7 +4,7 @@
 -------------------------------------------------------------------------------------------------
 
 label TMTalkMenu(human, hitTri)
-	+ "OPTIONS.." ..(game.m_freezeAllActors and " (paused)" or "") [gold]
+	+ "OPTIONS »" ..(game.m_freezeAllActors and " (paused)" or "") [gold]
 		TMMenuOptions(human)
 	+ if TM_Menu_HideShowUI
 		+ "Hide UI" [if TM_UIVisible]
@@ -14,19 +14,19 @@ label TMTalkMenu(human, hitTri)
 			TM_UIVisible = true
 			game.m_controlsUI.Show()
 			Return()
-	+ "FAUNA LABS.." [if TMMOD_FaunaLabs and TM_Menu_FaunaLabs] [gold]
+	+ "FAUNA LABS »" [if TMMOD_FaunaLabs and TM_Menu_FaunaLabs] [gold]
 		TMMOD_Jump(TMMOD_Menu_FaunaLabs, human, hitTri)
-	+ "POSE.." [gold]
+	+ "POSE »" [gold]
 		TMMenuPose(human)
-	+ "FACE.."[gold]
+	+ "FACE »"[gold]
 		TMMenuFace(human)
-	+ "ANIM.." [gold]
+	+ "ANIM »" [gold]
 		TMMenuAnim(human)
-	+ "SEX.." [gold]
+	+ "SEX »" [gold]
 		TMMenuSex(human)
-	+ "BODY.." [gold]
+	+ "BODY »" [gold]
 		TMMenuBody(human)
-	+ "HEY, " .. AccStr(human.Name) .. ".." [gold]
+	+ "HEY, " .. AccStr(human.Name) .. " »" [gold]
 		TMMenuHeyHuman(human)
 	+ if game.PovHuman ~= human
 		+ "POV"

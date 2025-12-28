@@ -2,31 +2,31 @@
 label TMMenuPose(human)
 	-- FAUNA
 	+ if TMMOD_FaunaLabs
-		+ AccStr(TM_PosePrefix_Faun) .. AccStr("EDIT Fingers..") [gold]
+		+ AccStr(TM_PosePrefix_Faun) .. AccStr("EDIT Fingers »") [gold]
 			TMMenuFaunaFingerLab(human, hitTri)
-		+ AccStr(TM_PosePrefix_Faun) .. "Arms.." [gold]
+		+ AccStr(TM_PosePrefix_Faun) .. "Arms »" [gold]
 			GetMenuItems_Poses(human, TM_PoseArms_Fauna)
-		+ AccStr(TM_PosePrefix_Faun) .. "Hands.." [gold]
+		+ AccStr(TM_PosePrefix_Faun) .. "Hands »" [gold]
 			GetMenuItems_Poses(human, TM_PoseHands_Fauna)
-		+ AccStr(TM_PosePrefix_Faun) .. "Lay.." [gold]
+		+ AccStr(TM_PosePrefix_Faun) .. "Lay »" [gold]
 			GetMenuItems_Poses(human, TM_PoseBody_Fauna_Lay)
-		+ AccStr(TM_PosePrefix_Faun) .. "Kneel.." [gold]
+		+ AccStr(TM_PosePrefix_Faun) .. "Kneel »" [gold]
 			GetMenuItems_Poses(human, TM_PoseBody_Fauna_Kneel)
-		+ AccStr(TM_PosePrefix_Faun) .. "Sit.." [gold]
+		+ AccStr(TM_PosePrefix_Faun) .. "Sit »" [gold]
 			GetMenuItems_Poses(human, TM_PoseBody_Fauna_Sit)
-		+ AccStr(TM_PosePrefix_Faun) .. "Stand.." [gold]
+		+ AccStr(TM_PosePrefix_Faun) .. "Stand »" [gold]
 			GetMenuItems_Poses(human, TM_PoseBody_Fauna_Stand)
 	+ else
 		+ AccStr("(more with faunalabs)") [gold]
 			human "Why didn't you download the TrueMoan bundled with FaunaLABS?\nI'd run away but there's no pose for it."
 			Return()
 	-- ORIGINAL
-	+ AccStr(TM_PosePrefix_Orig) .. "Poses.." [gold]
+	+ AccStr(TM_PosePrefix_Orig) .. "Poses »" [gold]
 		GetMenuItems_Poses(human, TM_PoseBody_Original)
 	+ if #TM_PoseHands_Custom > 0
-		+ AccStr(TM_PosePrefix_Custom) .. "Hands.." [gold]
+		+ AccStr(TM_PosePrefix_Custom) .. "Hands »" [gold]
 			GetMenuItems_Poses(human, TM_PoseHands_Custom)
-		+ AccStr(TM_PosePrefix_Custom) .. "Poses.." [gold]
+		+ AccStr(TM_PosePrefix_Custom) .. "Poses »" [gold]
 			GetMenuItems_Poses(human, TM_PoseBody_Custom)
 	+ "RESET Face"
 		human.Pose(FaceNeutral())

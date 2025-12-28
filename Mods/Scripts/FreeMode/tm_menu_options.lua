@@ -14,7 +14,7 @@ label TMMenuOptions(human)
 	+ "Show UI" [if not TM_UIVisible]
 		TM_UIVisible = ShowUI(true)
 		Return()
-	+ "Music.." [gold]
+	+ "Music »" [gold]
 		GetMenuItems_Music(TM_MusicTracks)
 
 	-- AMBIENCE
@@ -41,7 +41,7 @@ label TMMenuOptions(human)
 		+ TM_MenuClose
 
 	-- MOANING/SEX
-	+ "Moaning/sex.." [gold]
+	+ "Moaning/sex »" [gold]
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
@@ -73,7 +73,7 @@ label TMMenuOptions(human)
 		+ TM_MenuClose
 
 	-- DOUBLE CLICK
-	+ "Double click.." [gold]
+	+ "Double click »" [gold]
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
@@ -108,7 +108,7 @@ label TMMenuOptions(human)
 		+ TM_MenuClose
 
 	-- SPAWN
-	+ "On spawn.." [gold]
+	+ "On spawn »" [gold]
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
@@ -139,9 +139,9 @@ label TMMenuOptions(human)
 		+ TM_MenuMod
 			TM_ModMenu(human, hitTri)
 	+ else
-		+ AccStr("PLUGINS..") [gold]
+		+ AccStr("PLUGINS »") [gold]
 			+ if TMMOD_FaunaLabs
-				+ "Fauna LABS.." [if TMMOD_FaunaLabs] [gold]
+				+ "Fauna LABS »" [if TMMOD_FaunaLabs] [gold]
 					TMMOD_Jump(TMMOD_Menu_FaunaLabs, human, hitTri)
 			+ else
 				+ AccStr("(consider FaunaLABS)")
