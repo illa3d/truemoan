@@ -46,27 +46,33 @@ label TMMenuOptions(human)
 			TM_UITips_Options = false
 			Return()
 		+ if TM_AllowVoice
-			+ "Moan sex	| " .. AccBool(TM_MoanSex) [if TM_MoanSex]
+			+ "Moan sex		| " .. AccBool(TM_MoanSex) [if TM_MoanSex]
 				TM_MoanSex = false
 				Return()
-			+ "Moan sex	| " .. AccBool(TM_MoanSex) [if not TM_MoanSex]
+			+ "Moan sex		| " .. AccBool(TM_MoanSex) [if not TM_MoanSex]
 				TM_MoanSex = true
 				Return()
-			+ "Moan cum	| " .. AccBool(game.FluidReaction) [if game.FluidReaction]
+			+ "Moan cum		| " .. AccBool(game.FluidReaction) [if game.FluidReaction]
 				game.FluidReaction = false
 				Return()
-			+ "Moan cum	| " .. AccBool(game.FluidReaction) [if not game.FluidReaction]
+			+ "Moan cum		| " .. AccBool(game.FluidReaction) [if not game.FluidReaction]
 				game.FluidReaction = true
 				Return()
 		+ else
 			+ "Moaning	| Disabled (VoiceMod)"
 				human "I know, right? Don't <b>MOAN</b> about it!\n(VoiceMod active, TrueMoaning disabled)"
 				Return(2)
-		+ "Wet sex	| " .. AccBool(TM_WetSex) [if TM_WetSex]
+		+ "Wet sex		| " .. AccBool(TM_WetSex) [if TM_WetSex]
 			TM_WetSex = false
 			Return()
-		+ "Wet sex	| " .. AccBool(TM_WetSex) [if not TM_WetSex]
+		+ "Wet sex		| " .. AccBool(TM_WetSex) [if not TM_WetSex]
 			TM_WetSex = true
+			Return()
+		+ "Tween sex	| " .. AccBool(TM_TweenSex) [if TM_TweenSex]
+			TM_TweenSex = false
+			Return()
+		+ "Tween sex	| " .. AccBool(TM_TweenSex) [if not TM_TweenSex]
+			TM_TweenSex = true
 			Return()
 		+ TM_MenuBack
 			Return(2)

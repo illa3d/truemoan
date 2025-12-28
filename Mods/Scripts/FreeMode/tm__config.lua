@@ -28,21 +28,20 @@ TM_SpawnNoFuta = false				-- 12. Females spawn without penises (no sucking lol)
 TM_SpawnRandomBody = true			-- 13. Randomizes body types on start, configurable in tm__presets.lua
 TM_MoanSex = true					-- 14. Moaning during sex
 TM_WetSex = true					-- 15. Moisting holes (vag, anus, mouth)
+TM_TweenSex = true					-- 16. Soft transitions on changing sex values (speed, thrust, depth)
+TM_TweenDuration = 1.0				-- 17. Time in seconds to transition between sex values (speed, thrust, depth)
 
 -- Body Edit
-TM_BodyEditSafe = true				-- 16. Turns on safe body editing using SafeMin values
-TM_BreastSafeMin = -0.8				-- 17. Some characters fall apart below this value and game crashes
+TM_BodyEditSafe = true				-- 18. Turns on safe body editing using SafeMin values
+TM_BreastSafeMin = -0.8				-- 19. Some characters fall apart below this value and game crashes
 
 -- SFX Ambience
-TM_AllowAmbience = true				-- 18. Ambient sounds
-TM_AmbienceVolume = 0.7				-- 19. [0-1] Ambient volume
+TM_AllowAmbience = true				-- 20. Ambient sounds
+TM_AmbienceVolume = 0.7				-- 21. [0-1] Ambient volume
 
 ------------------------------------------------------------------------------------------------------------------
 -- FINE TUNING
 ------------------------------------------------------------------------------------------------------------------
-
--- Interaction tweens
-TM_TweenDuration = 1.0	-- Time in seconds to transition between values
 
 -- Body Edit Increments
 TM_BodyStepA = 0.1		-- nipples hip, waist, muscle
