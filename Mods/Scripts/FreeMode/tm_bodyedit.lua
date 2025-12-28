@@ -18,20 +18,20 @@ TMBE_Muscle = "Muscle tone"
 TMBE_Body = "Body size"
 
 -- Edit Body Variables
-tmNeckSize = 0
-tmForearmSize = 0
-tmUperArmsize = 0
-tmCalfSize = 0
-tmThighSize = 0
-tmWaistSize = 0
-tmHipsSize = 0
-tmAssSize = 0
-tmNipplesSize = 0
-tmBreastSize = 0
-tmPenisSize = 0
-tmPenisLength = 0
-tmMuscleSize = 0
-tmBodySize = 0
+TMB_NeckSize = 0
+TMB_ForearmSize = 0
+TMB_UperArmsize = 0
+TMB_CalfSize = 0
+TMB_ThighSize = 0
+TMB_WaistSize = 0
+TMB_HipsSize = 0
+TMB_AssSize = 0
+TMB_NipplesSize = 0
+TMB_BreastSize = 0
+TMB_PenisSize = 0
+TMB_PenisLength = 0
+TMB_MuscleSize = 0
+TMB_BodySize = 0
 
 function TMBodyEditUp(human, bodypart, value, step, valuemax, valuesafe)
 	local mult = 1 + math.floor(math.abs(value) / 2) -- step function to multiply step for bigger values
@@ -68,36 +68,36 @@ function TMBodyEdit(human, bodypart, value)
 end
 
 function TMBodyEditResetValues()
-	tmNeckSize = 0
-	tmForearmSize = 0
-	tmUperArmsize = 0
-	tmCalfSize = 0
-	tmThighSize = 0
-	tmHipsSize = 0
-	tmWaistSize = 0
-	tmAssSize = 0
-	tmNipplesSize = 0
-	tmBreastSize = 0
-	tmPenisLength = 0
-	tmPenisSize = 0
-	tmMuscleSize = 0
-	tmBodySize = 0
+	TMB_NeckSize = 0
+	TMB_ForearmSize = 0
+	TMB_UperArmsize = 0
+	TMB_CalfSize = 0
+	TMB_ThighSize = 0
+	TMB_HipsSize = 0
+	TMB_WaistSize = 0
+	TMB_AssSize = 0
+	TMB_NipplesSize = 0
+	TMB_BreastSize = 0
+	TMB_PenisLength = 0
+	TMB_PenisSize = 0
+	TMB_MuscleSize = 0
+	TMB_BodySize = 0
 end
 
 function TMBodyEditApplyValues(human)
-	human.Body(TMBE_Neck, tmNeckSize)
-	human.Body(TMBE_Forearms, tmForearmSize)
-	human.Body(TMBE_Upperarms, tmUperArmsize)
-	human.Body(TMBE_Calf, tmCalfSize)
-	human.Body(TMBE_Thigh, tmThighSize)
-	human.Body(TMBE_Hips, tmHipsSize)
-	human.Body(TMBE_Waist, tmWaistSize)
-	human.Body(TMBE_Ass, tmAssSize)
-	human.Body(TMBE_Nipples, tmNipplesSize)
-	human.Body(TMBE_Breasts, tmBreastSize)
-	human.Body(TMBE_PenisLength, tmPenisLength)
-	human.Body(TMBE_PenisSize, tmPenisSize)
-	human.Body(TMBE_Muscle, tmMuscleSize)
-	human.Body(TMBE_Body, tmBodySize)
+	human.Body(TMBE_Neck, TMB_NeckSize)
+	human.Body(TMBE_Forearms, TMB_ForearmSize)
+	human.Body(TMBE_Upperarms, TMB_UperArmsize)
+	human.Body(TMBE_Calf, TMB_CalfSize)
+	human.Body(TMBE_Thigh, TMB_ThighSize)
+	human.Body(TMBE_Hips, TMB_HipsSize)
+	human.Body(TMBE_Waist, TMB_WaistSize)
+	human.Body(TMBE_Ass, TMB_AssSize)
+	human.Body(TMBE_Nipples, TMB_NipplesSize)
+	human.Body(TMBE_Breasts, TMB_BreastSize)
+	human.Body(TMBE_PenisLength, TMB_PenisLength)
+	human.Body(TMBE_PenisSize, TMB_PenisSize)
+	human.Body(TMBE_Muscle, TMB_MuscleSize)
+	human.Body(TMBE_Body, TMB_BodySize)
 	human.Penis.m_penisSkinOut = 0
 end

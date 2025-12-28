@@ -2,6 +2,21 @@
 -- MODS SUPPORTED: TalkMenuModManager, Nf123VoiceMod
 
 -------------------------------------------------------------------------------------------------
+-- SYSTEM
+-------------------------------------------------------------------------------------------------
+
+function Clamp01(value) return math.max(0, math.min(value, 1)) end
+function ClampValue(value, min, max) return math.max(min, math.min(value, max)) end
+
+function GetRandomFloat01() return (math.random(0,100))/100 end
+function GetRandom(min, max) return (math.random(min ,max)) end
+function GetRandomFloat(min, max) return (math.random(min*100 ,max*100))/100 end
+function GetRandomItem(list)
+	if list == nil or #list == 0 then return end
+	return list[math.random(1, #list)]
+end
+
+-------------------------------------------------------------------------------------------------
 -- FORMATTING
 -------------------------------------------------------------------------------------------------
 
@@ -15,20 +30,13 @@ function FBold(text) return "<b>" .. text .. "</b>" end
 function FIta(text) return "<i>" .. text .. "</i>" end
 function FCol(text, color) return "<color=" .. color .. ">" .. text .. "</color>" end
 
+-------------------------------------------------------------------------------------------------
+-- UI
+-------------------------------------------------------------------------------------------------
+
 function ShowUI(show)
 	game.m_controlsUI.Show(show)
 	return show
-end
-
-function Clamp01(value) return math.max(0, math.min(value, 1)) end
-function ClampValue(value, min, max) return math.max(min, math.min(value, max)) end
-
-function GetRandomFloat01() return (math.random(0,100))/100 end
-function GetRandom(min, max) return (math.random(min ,max)) end
-function GetRandomFloat(min, max) return (math.random(min*100 ,max*100))/100 end
-function GetRandomItem(list)
-	if list == nil or #list == 0 then return end
-	return list[math.random(1, #list)]
 end
 
 -------------------------------------------------------------------------------------------------
@@ -44,6 +52,7 @@ function HumansFreeze(frozen)
 	game.m_freezeAllActors = frozen
 end
 
+-- CLOTHES STUFF
 function HumanClothesRandom(human)
 	if TM_Clothes_Custom == nil or #TM_Clothes_Custom == 0 then return end
 	HumanClothesReplace(human, GetRandomItem(TM_Clothes_Custom))
@@ -54,7 +63,6 @@ function HumanClothesReplace(human, targetCharacterName)
 	game.ReplaceClothing(human, targetCharacterName)
 end
 
--- CLOTHES STUFF
 function HumanClothes(human, show)
 	if show then
 		human.CustomizeAll(0)
@@ -160,20 +168,20 @@ end
 -------------------------------------------------------------------------------------------------
 -- INTERACTION
 -------------------------------------------------------------------------------------------------
--- -- ENABLE
--- interaction.AutoActive = true
--- interaction.m_autoHandActive = true
--- -- SPEED
--- interaction.m_autoSpeed = speed
--- interaction.m_autoHandSpeed = speed
--- -- GIVER VS GETTER
--- interaction.AutoPenisWeight = weight
--- -- THRUST
--- interaction.m_autoThrustWeight = weight
--- interaction.m_autoHandThrustWeight = weight
--- -- DEPTH
--- interaction.m_autoStartDepth = depth
--- interaction.m_autoEndDepth = depth
+-- ENABLE (penis, hand)
+--  interaction.AutoActive = true
+--  interaction.m_autoHandActive = true
+-- SPEED (penis, hand)
+--  interaction.m_autoSpeed = speed (0.001 - 2)
+--  interaction.m_autoHandSpeed = speed (0.001 - 2)
+-- GIVER VS GETTER (penis)
+--  interaction.AutoPenisWeight = weight (0-1)
+-- THRUST (penis, hand)
+--  interaction.m_autoThrustWeight = weight (1-3)
+--  interaction.m_autoHandThrustWeight = weight (1-3)
+-- DEPTH (penis, hand)
+--  interaction.m_autoStartDepth = depth (0-0.95)
+--  interaction.m_autoEndDepth = depth (0.05-1)
 
 function SetInteractionActive(interaction, isActive, isHand)
 	if isHand then interaction.m_autoHandActive = isActive
