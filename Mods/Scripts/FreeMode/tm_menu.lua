@@ -44,7 +44,7 @@ stop
 -------------------------------------------------------------------------------------------------
 
 -- POSES
-label GetMenuItems_Poses(human, posePresets)
+label TMMenuItems_Poses(human, posePresets)
 	-- ModPosePresets = { { name = "MenuName", preset = PoseFunction }, ... }
 	+ TM_MenuBack
 		Return(2)
@@ -65,7 +65,7 @@ label GetMenuItems_Poses(human, posePresets)
 stop
 
 -- CLOTHES
-label GetMenuItems_Clothes(human, clothesPresets)
+label TMMenuItems_Clothes(human, clothesPresets)
 	-- ModClothesCharacters = { character, character }
 	+ TM_MenuBack
 		Return(2)
@@ -87,7 +87,7 @@ label GetMenuItems_Clothes(human, clothesPresets)
 stop
 
 -- MUSIC
-label GetMenuItems_Music(musicTracks)
+label TMMenuItems_Music(musicTracks)
 	-- ModClothesCharacters = { character, character }
 	+ TM_MenuBack
 		Return(2)

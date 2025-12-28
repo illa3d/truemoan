@@ -15,7 +15,7 @@ label TMMenuOptions(human)
 		TM_UIVisible = ShowUI(true)
 		Return()
 	+ "Music »" [gold]
-		GetMenuItems_Music(TM_MusicTracks)
+		TMMenuItems_Music(TM_MusicTracks)
 
 	-- AMBIENCE
 	+ "Ambience.. | " .. AccBool(TM_AllowAmbience) [gold]
