@@ -246,7 +246,7 @@ end
 -- (PENIS/HAND) INTERACTION THRUST DEPTH (0-1)
 function ClampInteractionDepth(depth, isStartDepth)
 	if isStartDepth then ClampValue(depth, 0, 0.95) -- start depth value range
-	else ClampValue(depth, 0.05,1) end -- end depth value range
+	else return ClampValue(depth, 0.05,1) end -- end depth value range
 end
 
 function GetInteractionDepth(interaction, isStartDepth)
