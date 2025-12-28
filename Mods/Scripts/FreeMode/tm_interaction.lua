@@ -5,6 +5,24 @@
 -------------------------------------------------------------------------------------------------
 local activeTweens = {}
 
+function TMGetTargetValue(object, paramName)
+	-- SCENARIO A: A tween is currently running.
+	-- We loop through the list to find it.
+	for i = 1, #activeTweens do
+		local t = activeTweens[i]
+		if t.object == object and t.param == paramName then
+			-- We found a tween! Return where it is GOING (Target), 
+			-- not where it is right now.
+			return t.targetVal 
+		end
+	end
+
+	-- SCENARIO B: No tween found. 
+	-- (Either the UI just opened, or the tween finished and was removed).
+	-- We return the underlying value directly from the object.
+	return object[paramName]
+end
+
 -- Start a tween on a specific property of the interaction object
 function TMTweenTo(object, paramName, targetValue, duration)
 	-- Remove existing tween for this parameter if it exists to avoid conflicts
@@ -100,6 +118,11 @@ function SetInteractionSpeed(interaction, speed, isHand)
 	return speed
 end
 
+function GetInteractionSpeedTarget(interaction, isHand)
+	local paramName = isHand and "m_autoHandSpeed" or "m_autoSpeed"
+	return TMGetTargetValue(interaction, paramName)
+end
+
 -------------------------------------------------------------------------------------------------
 -- (PENIS) INTERACTION WEIGHT (GIVER VS GETTER) (0-1)
 -------------------------------------------------------------------------------------------------
@@ -125,6 +148,11 @@ function SetInteractionPenisWeight(interaction, weight, isHand)
 	--interaction.AutoPenisWeight = weight
 	TMTweenTo(interaction, "AutoPenisWeight", weight, TM_TweenDuration)
 	return weight
+end
+
+function GetInteractionPenisWeightTarget(interaction, isHand)
+	if isHand then return 0 end
+	return TMGetTargetValue(interaction, "AutoPenisWeight")
 end
 
 -------------------------------------------------------------------------------------------------
@@ -155,6 +183,12 @@ function SetInteractionThrustWeight(interaction, weight, isHand)
 	local paramName = isHand and "m_autoHandThrustWeight" or "m_autoThrustWeight"
 	TMTweenTo(interaction, paramName, weight, TM_TweenDuration)
 	return weight
+end
+
+function GetInteractionThrustWeightTarget(interaction, isHand)
+	local paramName = isHand and "m_autoHandThrustWeight" or "m_autoThrustWeight"
+	local rawVal = TMGetTargetValue(interaction, paramName)
+	return NormalizeValue(rawVal, 1, 3)
 end
 
 -------------------------------------------------------------------------------------------------
@@ -191,4 +225,9 @@ function SetInteractionDepth(interaction, depth, isHand, isStartDepth)
 	local paramName = isStartDepth and "m_autoStartDepth" or "m_autoEndDepth"
 	TMTweenTo(interaction, paramName, depth, TM_TweenDuration)
 	return depth
+end
+
+function GetInteractionDepthTarget(interaction, isStartDepth)
+	local paramName = isStartDepth and "m_autoStartDepth" or "m_autoEndDepth"
+	return TMGetTargetValue(interaction, paramName)
 end
