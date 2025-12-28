@@ -33,9 +33,9 @@ label TMMenuOptions(human)
 				Return()
 		+ else	
 			+ "Ambience | " .. AccBool(TM_AllowAmbience)
-			TM_AllowAmbience = true
-			TMPlayAmbienceCurrent()
-			Return()
+				TM_AllowAmbience = true
+				TMPlayAmbienceCurrent()
+				Return()
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
