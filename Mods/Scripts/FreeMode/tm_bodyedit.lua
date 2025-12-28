@@ -1,11 +1,14 @@
 -- TrueMoan v1.3 by illa3d
 -- Menu in: tm_menu_body.lua
+-------------------------------------------------------------------------------------------------
+-- BODY EDIT DEFINITIONS
+-------------------------------------------------------------------------------------------------
 
--- Edit Body Defaults
+-- Body Edit Defaults
 TMBD_RagdollSizeDefault = 0.228
 TMBD_BodyDefault = 0
 
--- Edit Body Definitions
+-- Body Edit Definitions
 TMBE_Neck = "Neck size"
 TMBE_Forearms = "Forearms size"
 TMBE_Upperarms = "Upper arms size"
@@ -21,7 +24,7 @@ TMBE_PenisSize = "Penis size"
 TMBE_Muscle = "Muscle tone"
 TMBE_Body = "Body size"
 
--- Edit Body Variables
+-- Body Edit Variables
 TMB_NeckSize = 0
 TMB_ForearmSize = 0
 TMB_UperArmsize = 0
@@ -39,26 +42,52 @@ TMB_BodySize = 0
 TMB_PenisSkin = 0
 TMB_PenisRagdoll = TMBD_RagdollSizeDefault
 
-function TMBodyEditUp(human, bodypart, value, step, valuemax, valuesafe)
+-- Body Edit Limits
+local TMB_BodyLimits = {
+	{ name = TMBE_Neck,			safemin = 0, min = -1, max = 2 },
+	{ name = TMBE_Forearms,		safemin = 0, min = -0.5, max = 2 },
+	{ name = TMBE_Upperarms,	safemin = 0, min = -0.5, max = 2 },
+	{ name = TMBE_Calf,			safemin = 0, min = -0.5, max = 2 },
+	{ name = TMBE_Thigh,		safemin = 0, min = -0.5, max = 2 },
+	{ name = TMBE_Hips,			safemin = 0, min = -1.5, max = 5 },
+	{ name = TMBE_Waist,		safemin = 0, min = -1, max = 5 },
+	{ name = TMBE_Ass,			safemin = 0, min = -1, max = 10 },
+	{ name = TMBE_Nipples,		safemin = 0, min = -2, max = 2 },
+	{ name = TMBE_Breasts,	 safemin = -0.8, min = -2, max = 10 },
+	{ name = TMBE_PenisLength,	safemin = 0, min = -0.7, max = 5 },
+	{ name = TMBE_PenisSize,	safemin = 0, min = -0.7, max = 20 },
+	{ name = TMBE_Muscle,		safemin = 0, min = -0.3, max = 1 },
+	{ name = TMBE_Body,			safemin = 0, min = -0.9, max = 10 },
+}
+
+local function TMGetBodyPartLimit(bodypart)
+	for _, limit in ipairs(TMB_BodyLimits) do
+		if limit.name == bodypart then
+			return limit
+		end
+	end
+	return { safemin = 0, min = -1, max = 1 }
+end
+
+-------------------------------------------------------------------------------------------------
+-- BODY EDIT
+-------------------------------------------------------------------------------------------------
+
+function TMBodyEditUp(human, bodypart, value, step)
+	local limit = TMGetBodyPartLimit(bodypart)
 	local mult = 1 + math.floor(math.abs(value) / 2) -- step function to multiply step for bigger values
 	value = value + step * mult
-	if TM_BodyEditSafe and valuesafe ~= nil and valuesafe ~= 0 and value > valuesafe then 
-		value = valuesafe
-	elseif value > valuemax then
-		value = valuemax
-	end
+	if limit.max ~= 0 and value > limit.max then value = limit.max end
 	human.Body(bodypart, value)
 	return value
 end
 
-function TMBodyEditDown(human, bodypart, value, step, valuemin, valuesafe)
+function TMBodyEditDown(human, bodypart, value, step)
+	local limit = TMGetBodyPartLimit(bodypart)
 	local mult = 1 + math.floor(math.abs(value) / 2) -- step function to multiply step for bigger values
 	value = value - step * mult
-	if TM_BodyEditSafe and valuesafe ~= nil and valuesafe ~= 0 and value < valuesafe then 
-		value = valuesafe
-	elseif value < valuemin then
-		value = valuemin
-	end
+	if TM_BodyEditSafe and limit.safemin ~= 0 and value < limit.safemin then value = limit.safemin
+	elseif limit.min ~= 0 and value < limit.min then value = limit.min end
 	human.Body(bodypart, value)
 	return value
 end
@@ -85,6 +114,10 @@ function TMBodyEditPenisSkin(human, value)
 	human.Penis.m_penisSkinOut = value
 	return value
 end
+
+-------------------------------------------------------------------------------------------------
+-- BODY EDIT VALUES
+-------------------------------------------------------------------------------------------------
 
 function TMBodyEditResetValues()
 	TMB_NeckSize = TMBD_BodyDefault

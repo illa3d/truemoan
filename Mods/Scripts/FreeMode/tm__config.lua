@@ -33,11 +33,10 @@ TM_TweenTime = 1.0					-- 17. [sec] Time in seconds to transition between sex va
 
 -- Body Edit
 TM_BodyEditSafe = true				-- 18. Turns on safe body editing using SafeMin values
-TM_BreastSafeMin = -0.8				-- 19. Some characters fall apart below this value and game crashes
 
 -- SFX Ambience
-TM_AllowAmbience = true				-- 20. Ambient sounds
-TM_AmbienceVolume = 0.7				-- 21. [0-1] Ambient volume
+TM_AllowAmbience = true				-- 19. Ambient sounds
+TM_AmbienceVolume = 0.7				-- 20. [0-1] Ambient volume
 
 ------------------------------------------------------------------------------------------------------------------
 -- FINE TUNING
