@@ -188,43 +188,51 @@ label TMMenuSex(human)
 
 	-- START / STOP
 	-- GETTER HANDJOB
-	+ "Handjob start" [if human.Penis.m_holdDepth ~= 0 and human.Penis.Interaction.m_autoHandActive == false]
+	+ "Handjob start" [if not TMI_AutoSex and human.Penis.m_holdDepth ~= 0 and human.Penis.Interaction.m_autoHandActive == false]
 		human.Penis.Interaction.m_autoHandActive = true
 		Return()
-	+ "Handjob STOP" [if human.Penis.m_holdDepth ~= 0 and human.Penis.Interaction.m_autoHandActive == true]
+	+ "Handjob STOP" [if not TMI_AutoSex and human.Penis.m_holdDepth ~= 0 and human.Penis.Interaction.m_autoHandActive == true]
 		human.Penis.Interaction.m_autoHandActive = false
 		Return()
 	-- GIVER (MOUTH, VAGINA, ANUS)
-	+ "Sex start" [if human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == false]
+	+ "Sex start" [if not TMI_AutoSex and human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == false]
 		human.Penis.Interaction.AutoActive = true
 		human.Penis.Interaction.AutoPenisWeight = 0.8
 		Return()
-	+ "Sex STOP" [if human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == true]
+	+ "Sex STOP" [if not TMI_AutoSex and human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == true]
 		human.Penis.Interaction.AutoActive = false
 		Return()
 	-- GETTER MOUTH
-	+ "Oral start" [if human.Mouth.Fucker ~= nil and human.Mouth.Fucker.Penis.Interaction.AutoActive == false]
+	+ "Oral start" [if not TMI_AutoSex and human.Mouth.Fucker ~= nil and human.Mouth.Fucker.Penis.Interaction.AutoActive == false]
 		human.Mouth.Fucker.Penis.Interaction.AutoActive = true
 		human.Mouth.Fucker.Penis.Interaction.AutoPenisWeight = 0.2
 		Return()
-	+ "Oral STOP" [if human.Mouth.Fucker ~= nil and human.Mouth.Fucker.Penis.Interaction.AutoActive == true]
+	+ "Oral STOP" [if not TMI_AutoSex and human.Mouth.Fucker ~= nil and human.Mouth.Fucker.Penis.Interaction.AutoActive == true]
 		human.Mouth.Fucker.Penis.Interaction.AutoActive = false
 		Return()
 	-- GETTER ANUS
-	+ "Anal start" [if human.Anus.Fucker ~= nil and human.Anus.Fucker.Penis.Interaction.AutoActive == false]
+	+ "Anal start" [if not TMI_AutoSex and human.Anus.Fucker ~= nil and human.Anus.Fucker.Penis.Interaction.AutoActive == false]
 		human.Anus.Fucker.Penis.Interaction.AutoActive = true
 		human.Anus.Fucker.Penis.Interaction.AutoPenisWeight = 0.2
 		Return()
-	+ "Anal STOP" [if human.Anus.Fucker ~= nil and human.Anus.Fucker.Penis.Interaction.AutoActive == true]
+	+ "Anal STOP" [if not TMI_AutoSex and human.Anus.Fucker ~= nil and human.Anus.Fucker.Penis.Interaction.AutoActive == true]
 		human.Anus.Fucker.Penis.Interaction.AutoActive = false
 		Return()
 	-- GETTER VAGINA
-	+ "Pussy start" [if human.Vagina.Fucker ~= nil and human.Vagina.Fucker.Penis.Interaction.AutoActive == false]
+	+ "Pussy start" [if not TMI_AutoSex and human.Vagina.Fucker ~= nil and human.Vagina.Fucker.Penis.Interaction.AutoActive == false]
 		human.Vagina.Fucker.Penis.Interaction.AutoActive = true
 		human.Vagina.Fucker.Penis.Interaction.AutoPenisWeight = 0.2
 		Return()
-	+ "Pussy STOP" [if human.Vagina.Fucker ~= nil and human.Vagina.Fucker.Penis.Interaction.AutoActive == true]
+	+ "Pussy STOP" [if not TMI_AutoSex and human.Vagina.Fucker ~= nil and human.Vagina.Fucker.Penis.Interaction.AutoActive == true]
 		human.Vagina.Fucker.Penis.Interaction.AutoActive = false
+		Return()
+
+	-- AUTOSEX
+	+ "| Autosex | " .. AccBool(TMI_AutoSex) .. " |" [if TMI_AutoSex] [gold]
+		StopAutoSex(human)
+		Return()
+	+ "| Autosex | " .. AccBool(TMI_AutoSex) .. " |" [if not TMI_AutoSex] [gold]
+		StartAutoSex(human)
 		Return()
 
 	-- HAS PENIS

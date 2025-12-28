@@ -1,4 +1,7 @@
 -- TrueMoan v1.3 by illa3d
+-- Variables
+TMI_AutoSex = false
+
 -- Tween enums
 TMIE_SpeedPenis = "m_autoSpeed"
 TMIE_SpeedHand = "m_autoHandSpeed"
@@ -75,6 +78,48 @@ function TMUpdateTweens(deltaTime)
 	end
 end
 
+
+-------------------------------------------------------------------------------------------------
+-- AUTO SEX
+-------------------------------------------------------------------------------------------------
+function StartAutoSex(human)
+	TMI_AutoSex = true
+	if human.Penis.m_holdDepth ~= 0 and human.Penis.Interaction ~= nil then  StartAutoHandInteraction(human.Penis.Interaction)  end
+	if human.Penis.Hole ~= nil then  StartAutoPenisInteraction(human.Penis.Interaction) end
+	if human.Mouth.Fucker ~= nil then StartAutoPenisInteraction(human.Mouth.Fucker.Penis.Interaction) end
+	if human.Anus.Fucker ~= nil then StartAutoPenisInteraction(human.Anus.Fucker.Penis.Interaction) end
+	if human.Vagina.Fucker ~= nil then StartAutoPenisInteraction(human.Vagina.Fucker.Penis.Interaction) end
+end
+
+function StopAutoSex()
+	TMI_AutoSex = false
+end
+
+function StartAutoHandInteraction(interaction)
+	-- if not TMI_AutoSex or not interaction.m_autoHandActive then return end
+	if not TMI_AutoSex then return end
+	StartRandomLoop(SetInteractionSpeedRandom, interaction, true)
+	StartRandomLoop(SetInteractionThrustWeightRandom, interaction, true)
+	StartRandomLoop(SetInteractionDepthRandom, interaction, true)
+end
+
+function StartAutoPenisInteraction(interaction)
+	-- if not TMI_AutoSex or not interaction.AutoActive then return end
+	if not TMI_AutoSex then return end
+	StartRandomLoop(SetInteractionSpeedRandom, interaction, false)
+	StartRandomLoop(SetInteractionThrustWeightRandom, interaction, false)
+	StartRandomLoop(SetInteractionPenisWeightRandom, interaction, false)
+	StartRandomLoop(SetInteractionDepthRandom, interaction, false)
+end
+
+function StartRandomLoop(randomFunc, interaction, isHand)
+	if not TMI_AutoSex then return end
+	-- if isHand and not interaction.m_autoHandActive then return end
+	-- if not isHand and not interaction.AutoActive then return end
+	randomFunc(interaction, isHand)
+	Delayed(GetRandom(TM_AutoSexTimeMin, TM_AutoSexTimeMax), function() StartRandomLoop(randomFunc, interaction, isHand) end)
+end
+
 -------------------------------------------------------------------------------------------------
 -- INTERACTION
 -------------------------------------------------------------------------------------------------
@@ -99,7 +144,7 @@ function SetInteractionActive(interaction, isActive, isHand)
 end
 
 -------------------------------------------------------------------------------------------------
--- (PENIS/HAND) INTERACTION SPEED (0.001 - 2)
+-- (PENIS/HAND) INTERACTION SPEED (0.001 - 2), UI ALLOWS ONLY (0.001 - 0.5)
 -------------------------------------------------------------------------------------------------
 function ClampInteractionSpeed(value) return ClampValue(value, 0.001, 2) end -- speed value range
 
@@ -113,7 +158,7 @@ function GetInteractionSpeedTarget(interaction, isHand)
 end
 
 function SetInteractionSpeedRandom(interaction, isHand)
-	return SetInteractionSpeed(interaction, GetRandomFloat(0.1, 1), isHand)
+	return SetInteractionSpeed(interaction, GetRandomFloat(0.1, 0.5), isHand)
 end
 
 function SetInteractionSpeedStep(interaction, speedStep, increase, isHand)
@@ -190,7 +235,7 @@ function GetInteractionThrustWeightTarget(interaction, isHand)
 end
 
 function SetInteractionThrustWeightRandom(interaction, isHand)
-	return SetInteractionThrustWeight(interaction, GetRandomFloat(0,0.6), isHand)
+	return SetInteractionThrustWeight(interaction, GetRandomFloat(0,0.5), isHand)
 end
 
 function SetInteractionThrustWeightStep(interaction, weightStep, increase, isHand)
@@ -233,8 +278,8 @@ function GetInteractionDepthTarget(interaction, isStartDepth)
 end
 
 function SetInteractionDepthRandom(interaction, isHand)
-	local startValue = SetInteractionDepth(interaction, GetRandomFloat(0.2, 0.6), isHand, true)
-	local endValue = SetInteractionDepth(interaction, GetRandomFloat(startValue + 0.05, 1), isHand, false)
+	local startValue = SetInteractionDepth(interaction, GetRandomFloat(0.1, 0.4), isHand, true)
+	local endValue = SetInteractionDepth(interaction, GetRandomFloat(0.6, 0.9), isHand, false)
 	return startValue, endValue
 end
 

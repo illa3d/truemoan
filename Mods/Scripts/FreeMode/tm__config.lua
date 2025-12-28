@@ -38,6 +38,10 @@ TM_BodyEditSafe = true				-- 18. Turns on safe body editing using SafeMin values
 TM_AllowAmbience = true				-- 19. Ambient sounds
 TM_AmbienceVolume = 0.7				-- 20. [0-1] Ambient volume
 
+-- AutoInteraction
+TM_AutoSexTimeMin = 5				-- 21. Auto Interaction minimum time to change parameter (speed, thrust, depth) 
+TM_AutoSexTimeMax = 10				-- 22. Auto Interaction maximum time to change parameter (speed, thrust, depth) 
+
 ------------------------------------------------------------------------------------------------------------------
 -- FINE TUNING
 ------------------------------------------------------------------------------------------------------------------

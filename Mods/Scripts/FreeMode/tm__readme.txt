@@ -2,7 +2,7 @@
 --                                               TRUE MOAN                                             --
 ---------------------------------------------------------------------------------------------------------
 
-**Supports: VoiceMod/TalkMenuMM/FaunaLABS | Realistic Moans | BodyEdit | Sex Control | Wet Sex | Animation | Poses | Skyboxes | Ambient Audio | Improved Menu |**
+**Supports: VoiceMod/TalkMenuMM/FaunaLABS | Auto Sex Control | BodyEdit | Realistic Moans | Wet Sex | Animation | Poses | Skyboxes | Ambient Audio | Improved Menu |**
 
 **MOD FEATURES**
 - **Realistic Moans**
@@ -14,8 +14,8 @@
   - Body Size and Type Presets
   - Apply to/reset multiple actors quickly
 - **Sex Control**
-  - Smooth transitions
-  - Speed/Thrust/Depth control + random + presets
+  - Smooth transitions (tweening)
+  - AutoSex/Speed/Thrust/Depth control + random + presets
   - Cum/Wetness controls + random + presets
 - **Wet Sex** (moisting used holes Vag, Anl, Orl)
 - **Animations**
@@ -71,7 +71,8 @@ GitHub Repository - https://github.com/illa3d/truemoan
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_main%20README.txt
 
 [ v1.5 ]
-- SexControl Tweening (natural sex transitions)
+- SexControl Tweening (smooth sex transitions)
+- AutoSex option (all holes at once)
 - Face loops in menu (FaunaLABS)
 - Body Edit added penis foreskin and ragdoll
 
