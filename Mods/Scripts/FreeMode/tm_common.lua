@@ -203,20 +203,20 @@ function SetInteractionSpeedRandom(interaction, isHand)
 	return SetInteractionSpeed(interaction, GetRandomFloat(0.1, 1), isHand)
 end
 
-function SetInteractionSpeed(interaction, speed, isHand)
-	speed = ClampInteractionSpeed(speed)
-	SetInteractionActive(interaction, true, isHand)
-	if isHand then interaction.m_autoHandSpeed = speed
-	else interaction.m_autoSpeed = speed end
-	return speed
-end
-
 function SetInteractionSpeedStep(interaction, speedStep, increase, isHand)
 	local speed = isHand and interaction.m_autoHandSpeed or interaction.m_autoSpeed
 	local increment = 1 + (speedStep / (speed ^ 0.6)) -- 1 + (speed multiplier / (speed / curve))
 	if increase then speed = speed * increment
 	else speed = speed / increment end
 	return SetInteractionSpeed(interaction, speed, isHand)
+end
+
+function SetInteractionSpeed(interaction, speed, isHand)
+	speed = ClampInteractionSpeed(speed)
+	SetInteractionActive(interaction, true, isHand)
+	if isHand then interaction.m_autoHandSpeed = speed
+	else interaction.m_autoSpeed = speed end
+	return speed
 end
 
 -------------------------------------------------------------------------------------------------
