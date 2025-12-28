@@ -2,26 +2,24 @@
 --                                               TRUE MOAN                                             --
 ---------------------------------------------------------------------------------------------------------
 
-**Supports: VoiceMod/TalkMenuMM/FaunaLABS | Auto Sex Control | BodyEdit | Realistic Moans | Wet Sex | Animation | Poses | Skyboxes | Ambient Audio | Improved Menu |**
+**Supports: VoiceMod/TalkMenuMM/FaunaLABS | Auto Sex Control | BodyEdit | Realistic Moans | Wet Sex | Animation | Poses | Ambient Audio | Skyboxes | Improved Menu |**
 
 **MOD FEATURES**
+- **Auto Sex Control**
+  - AutoSex/Speed/Thrust/Depth control + random + presets
+  - Smooth transitions (tweening)
+  - Cum/Wetness controls + random + presets
+- **Body Edit**
+  - Reduce/enlarge body beyond slider limits
+  - Presets/Apply to/reset multiple actors quickly
 - **Realistic Moans**
   - **Generic Voice** for all characters
   - 950+ moans (Slow, Normal, Fast, Faster, Orgasm, Climax)
   - Fluid reaction moans
-- **Body Edit**
-  - Reduce/enlarge body beyond slider limits
-  - Body Size and Type Presets
-  - Apply to/reset multiple actors quickly
-- **Sex Control**
-  - Smooth transitions (tweening)
-  - AutoSex/Speed/Thrust/Depth control + random + presets
-  - Cum/Wetness controls + random + presets
-- **Wet Sex** (moisting used holes Vag, Anl, Orl)
-- **Animations**
-- **Poses** (more poses requires FaunaLABS)
-- **6x ambience audio**
-- **23 Scenes included**
+- **Wet Sex**
+- **Poses/Animation** (requires FaunaLABS)
+- **6x audio ambiences**
+- **23 Scenes**
 - **Improved Menu UX**
 - **Highly Configurable**
 
@@ -68,7 +66,7 @@ https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
 GitHub Repository - https://github.com/illa3d/truemoan
 
 **LATEST CHANGES**
-Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_main%20README.txt
+Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
 
 [ v1.5 ]
 - SexControl Tweening (smooth sex transitions)
