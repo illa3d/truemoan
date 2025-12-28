@@ -14,12 +14,12 @@
   - Body Size and Type Presets
   - Apply to/reset multiple actors quickly
 - **Sex Control**
-  - Presets/Speed/Thrust/Male vs female move
-  - Cum/Wetness controls and presets
+  - Speed/Thrust/Depth control + random + presets
+  - Cum/Wetness controls + random + presets
 - **Wet Sex** (moisting used holes Vag, Anl, Orl)
 - **Poses** (more poses requires FaunaLABS)
 - **6x ambience audio**
-- **14 Scenes included**
+- **22 Scenes included**
 - **Improved Menu UX**
 - **Highly Configurable**
 
@@ -27,15 +27,15 @@
 - **7x skyboxes** (8/4/2k)
 
 **LATEST DOWNLOADS**
-**TrueMoan_v1.2.zip** [2025-12-27] - Just TrueMoan
-**TrueMoan_v1.2_FLABS_v1.02.zip** [2025-12-27] - TrueMoan + Fauna LABS **(recommended)**
+**TrueMoan_v1.4.zip** [2025-12-27] - Just TrueMoan
+**TrueMoan_v1.4_FLABS_v1.02.zip** [2025-12-27] - TrueMoan + Fauna LABS **(recommended)**
 **TrueMoan_Addon_Skyboxes_4k_v1.0.zip** [2025-12-22] - No difference between 8/4k in-game
 **TrueFacials v0.59_Clothes_Preview.zip** [2025-12-22] - Just preview images to find clothes faster
 https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
 
 **REQUIREMENTS**
 - TrueFacials v0.59
-- FaunaLABS v1.02 for full experience
+- FaunaLABS v1.02 (for full experience)
 
 **SUPPORTED MODS**
 - Nf123 Voice Mod, Talk Menu Mod Manager, FaunaLabs
@@ -59,15 +59,8 @@ https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
 -- ADDITIONAL INFO
 ---------------------------------------------------------------------------------------------------------
 
-**MOD CONFIG**
-- Tweak defaults & values `Mods/Scripts/FreeMode/tm__config.lua`
-- Tweak body presets `Mods/Scripts/FreeMode/tm__presets.lua`
-
 **INTEGRATED MODS**
-- `FreeModeHG v0.3.zip` @.heartgrenade https://discord.com/channels/620113492208517120/1312401584910631054/1349491994510233661
-- `FreeModeHG v0.3 - faunap_edit_0.2.zip` @faunap https://discord.com/channels/620113492208517120/1312401584910631054/1355724274224205984
-- `Natural AutoBJ AutoThrust` @masterchief_87971 https://discord.com/channels/620113492208517120/1312401584910631054/1355675724932972634
-- `Face expression looping` @callmedrjones6911 https://discord.com/channels/620113492208517120/1312401584910631054/1349562400105431090
+- `faunaLABS_v1.02 - TMMM Ready.zip` @faunap https://discord.com/channels/620113492208517120/1358287146791866446/1454138284841369701
 
 **SOURCE**
 GitHub Repository - https://github.com/illa3d/truemoan
