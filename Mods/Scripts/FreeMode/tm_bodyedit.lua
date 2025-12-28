@@ -1,6 +1,10 @@
 -- TrueMoan v1.3 by illa3d
 -- Menu in: tm_menu_body.lua
 
+-- Edit Body Defaults
+TMBD_RagdollSizeDefault = 0.228
+TMBD_BodyDefault = 0
+
 -- Edit Body Definitions
 TMBE_Neck = "Neck size"
 TMBE_Forearms = "Forearms size"
@@ -32,6 +36,8 @@ TMB_PenisSize = 0
 TMB_PenisLength = 0
 TMB_MuscleSize = 0
 TMB_BodySize = 0
+TMB_PenisSkin = 0
+TMB_PenisRagdoll = TMBD_RagdollSizeDefault
 
 function TMBodyEditUp(human, bodypart, value, step, valuemax, valuesafe)
 	local mult = 1 + math.floor(math.abs(value) / 2) -- step function to multiply step for bigger values
@@ -68,21 +74,35 @@ function TMBodyEdit(human, bodypart, value)
 	return value
 end
 
+function TMBodyEditPenisRagdoll(human, value)
+	value = ClampValue(value, 0, 2)
+	human.Penis.m_ragdollLength = value
+	return value
+end
+
+function TMBodyEditPenisSkin(human, value)
+	value = Clamp01(value)
+	human.Penis.m_penisSkinOut = value
+	return value
+end
+
 function TMBodyEditResetValues()
-	TMB_NeckSize = 0
-	TMB_ForearmSize = 0
-	TMB_UperArmsize = 0
-	TMB_CalfSize = 0
-	TMB_ThighSize = 0
-	TMB_HipsSize = 0
-	TMB_WaistSize = 0
-	TMB_AssSize = 0
-	TMB_NipplesSize = 0
-	TMB_BreastSize = 0
-	TMB_PenisLength = 0
-	TMB_PenisSize = 0
-	TMB_MuscleSize = 0
-	TMB_BodySize = 0
+	TMB_NeckSize = TMBD_BodyDefault
+	TMB_ForearmSize = TMBD_BodyDefault
+	TMB_UperArmsize = TMBD_BodyDefault
+	TMB_CalfSize = TMBD_BodyDefault
+	TMB_ThighSize = TMBD_BodyDefault
+	TMB_HipsSize = TMBD_BodyDefault
+	TMB_WaistSize = TMBD_BodyDefault
+	TMB_AssSize = TMBD_BodyDefault
+	TMB_NipplesSize = TMBD_BodyDefault
+	TMB_BreastSize = TMBD_BodyDefault
+	TMB_PenisLength = TMBD_BodyDefault
+	TMB_PenisSize = TMBD_BodyDefault
+	TMB_MuscleSize = TMBD_BodyDefault
+	TMB_BodySize = TMBD_BodyDefault
+	TMB_PenisSkin = TMBD_BodyDefault
+	TMB_PenisRagdoll = TMBD_RagdollSizeDefault
 end
 
 function TMBodyEditApplyValues(human)
@@ -100,5 +120,6 @@ function TMBodyEditApplyValues(human)
 	human.Body(TMBE_PenisSize, TMB_PenisSize)
 	human.Body(TMBE_Muscle, TMB_MuscleSize)
 	human.Body(TMBE_Body, TMB_BodySize)
-	human.Penis.m_penisSkinOut = 0
+	human.Penis.m_ragdollLength = TMB_PenisRagdoll
+	human.Penis.m_penisSkinOut = TMB_PenisSkin
 end

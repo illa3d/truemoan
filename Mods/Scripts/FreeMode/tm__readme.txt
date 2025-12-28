@@ -73,6 +73,7 @@ Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/Fre
 [ v1.5 ]
 - SexControl Tweening (natural sex transitions)
 - Face loops in menu (FaunaLABS)
+- Body Edit added penis foreskin and ragdoll
 
 [ v1.4 ]
 - SexControl now has Depth control
