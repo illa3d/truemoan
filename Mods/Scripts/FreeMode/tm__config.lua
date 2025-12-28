@@ -12,7 +12,7 @@ TM_Menu_HideShowUI = false			-- 2. Display Show/hide UI option in Main Menu
 TM_MenuBackButtonEvery = 20			-- 3. [5-20] After how many items back button appear in item lists
 
 -- Sex Menu
-TM_ShowSexStyleControl = true		-- 4. Show/Hide SexControl/Style controls (Male/Thrust) in the menu
+TM_ShowSexStyleControl = true		-- 4. Show Thrust and Depth controls
 
 -- Double click
 TM_DoubleClickInOtherMods = false	-- 5. Allows double clicking in other mods (works only with TMMM stickied option)

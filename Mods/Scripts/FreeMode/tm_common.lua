@@ -85,6 +85,12 @@ function HumanCumEvery(human, sec)
 	return sec
 end
 
+function HumanCumStop(human)
+	game.RemoveAnim(human.Penis)
+	return 0
+end
+
+
 -- WET
 function HumanWetReset(girl)
 	HumanWetSet(girl, 0, "Vagina")

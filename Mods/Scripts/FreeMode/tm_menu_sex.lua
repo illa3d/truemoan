@@ -111,6 +111,7 @@ label TMSexControl(human, interaction, isHand)
 			+ "• Shallow"
 				SetInteractionDepth(interaction, 0.1, isHand, true)
 				SetInteractionDepth(interaction, 0.5, isHand, false)
+				Return()
 			+ "• Tease"
 				SetInteractionDepth(interaction, 0.1, isHand, true)
 				SetInteractionDepth(interaction, 0.3, isHand, false)
@@ -207,38 +208,40 @@ label TMMenuSex(human)
 	-- HAS PENIS
 	+ if human.Penis.IsActive == true
 		+ "Cum control »	| " .. AccStr(tmCumevery .. "s") [gold]
-			+ "• Cum every 1 sec"
-				tmCumevery = HumanCumEvery(human, 1)
-				Return(2)
+			+ "• Cum every 60 sec"
+				tmCumevery = HumanCumEvery(human, 60)
+				Return()
+			+ "• Cum every 30 sec"
+				tmCumevery = HumanCumEvery(human, 30)
+				Return()
+			+ "• Cum every 10 sec"
+				tmCumevery = HumanCumEvery(human, 10)
+				Return()
+			+ "• Cum every 5 sec"
+				tmCumevery = HumanCumEvery(human, 5)
+				Return()
 			+ "• Cum every 2 sec"
 				tmCumevery = HumanCumEvery(human, 2)
-				Return(2)
-			+ "• Cum every 4 sec"
-				tmCumevery = HumanCumEvery(human, 4)
-				Return(2)
-			+ "• Cum every 8 sec"
-				tmCumevery = HumanCumEvery(human, 8)
-				Return(2)
-			+ "• Cum every 16 sec"
-				tmCumevery = HumanCumEvery(human, 16)
-				Return(2)
-			+ "• Cum every 32 sec"
-				tmCumevery = HumanCumEvery(human, 32)
-				Return(2)
-			+ "• Random" [gold]
-				tmCumevery = HumanCumEvery(human, GetRandom(1,32))
+				Return()
+			+ "• Cum every 1 sec"
+				tmCumevery = HumanCumEvery(human, 1)
+				Return()
+			+ "Random | " .. AccStr(tmCumevery .. "s") [gold]
+				tmCumevery = HumanCumEvery(human, GetRandom(1,120))
+				Return()
+			+ "Cum STOP"
+				tmCumevery = HumanCumStop(human)
+				Return()
 			+ TM_MenuBack
 				Return(2)
 			+ TM_MenuClose
 		+ if game.HasAnim(human.Penis)
 			+ "Cum STOP"
-				tmCumevery = 0
-				game.RemoveAnim(human.Penis)
+				tmCumevery = HumanCumStop(human)
 				Return()
 		+ else
 			+ "Cum start"
-				tmCumevery = 4
-				game.AddRepeatAnim(4, || human.Shoot(), human.Penis)
+				tmCumevery = HumanCumEvery(human, GetRandom(4,8))
 				Return()
 
 	-- HAS NO PENIS

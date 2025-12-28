@@ -34,6 +34,9 @@ label TMMenuBodySize(human)
 	+ "• Tiny"
 		tmBodySize = TMBodyEditSize(human, -0.7)
 		Return()
+	+ "Random | " .. AccNum(tmBodySize, 2) [gold]
+		tmBodySize = TMBodyEditSize(human, GetRandomFloat(-0.5,0.5))
+		Return()
 	+ TM_MenuBack
 		Return(2)
 	+ TM_MenuClose
@@ -56,7 +59,7 @@ label TMMenuBodyType(human)
 	+ "• Skinny"
 		TMBEPreset_Skinny(human)
 		Return()
-	+ "Random"
+	+ "Random" [gold]
 		TMBEPreset_Random(human)
 		Return()
 	+ TM_MenuBack

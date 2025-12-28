@@ -79,7 +79,7 @@ label GetMenuItems_Clothes(human, clothesPresets)
 			+ if i % TM_MenuBackButtonEvery == 0
 				+ TM_MenuBack
 					Return(2)
-	+ "Random Clothes"
+	+ "Random" [gold]
 		HumanClothesRandom(human)
 	+ TM_MenuBack
 		Return(2)
