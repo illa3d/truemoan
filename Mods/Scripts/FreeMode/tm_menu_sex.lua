@@ -44,19 +44,19 @@ label TMSexControl(human, interaction, isHand)
 		+ if human.Penis.m_holdDepth ~= 0
 			+ "| Thrust »	| T" .. AccNum(GetActThrustTarget(interaction, isHand), tmSdec) [gold]
 				+ "• Max"
-					SetActThrust(interaction, 1)
+					SetActThrust(interaction, 1, isHand)
 					Return()
 				+ "• Insane"
-					SetActThrust(interaction, 0.75)
+					SetActThrust(interaction, 0.75, isHand)
 					Return()
 				+ "• Fierce"
-					SetActThrust(interaction, 0.5)
+					SetActThrust(interaction, 0.5, isHand)
 					Return()
 				+ "• Strong"
-					SetActThrust(interaction, 0.25)
+					SetActThrust(interaction, 0.25, isHand)
 					Return()
 				+ "• Normal"
-					SetActThrust(interaction, 0)
+					SetActThrust(interaction, 0, isHand)
 					Return()
 				+ TM_UP.."Thrust"
 					SetActThrustStep(interaction, TM_SexThrustStep, true, isHand)
@@ -75,7 +75,7 @@ label TMSexControl(human, interaction, isHand)
 
 		-- THRUST / PENIS WEIGHT (oral/vaginal/anal)
 		+ else 
-			+ "| Thrust »	| T" .. AccNum(GetActThrustTarget(interaction, isHand), tmSdec) .. " | M" .. AccNum(GetActWeightTarget(interaction), tmSdec) [gold]
+			+ "| Thrust »	| T" .. AccNum(GetActThrustTarget(interaction, isHand), tmSdec) .. " | M" .. AccNum(GetActWeightTarget(interaction, isHand), tmSdec) [gold]
 				+ "• Max"
 					SetActThrust(interaction, 1)
 					Return()
@@ -106,7 +106,7 @@ label TMSexControl(human, interaction, isHand)
 				+ TM_DN.."Male"
 					SetActWeightStep(interaction, TM_SexMaleStep, false)
 					Return()
-				+ "RESET Male | " .. AccNum(GetActWeightTarget(interaction), tmSdec)
+				+ "RESET Male | " .. AccNum(GetActWeightTarget(interaction, isHand), tmSdec)
 					SetActWeight(interaction, 0)
 					Return()
 				+ "Random" [gold]
@@ -233,10 +233,10 @@ label TMMenuSex(human)
 				Return()
 		
 	-- AUTOSEX
-	+ "| Autosex	| " .. AccBool(TMI_AutoSex) .. " |" [if TMI_AutoSex] [gold]
+	+ "| Auto Sex	| " .. AccBool(TMI_AutoSex) [if TMI_AutoSex] [gold]
 		StopAutoSex(human)
 		Return()
-	+ "| Autosex	| " .. AccBool(TMI_AutoSex) .. " |" [if not TMI_AutoSex] [gold]
+	+ "| Auto Sex	| " .. AccBool(TMI_AutoSex) [if not TMI_AutoSex] [gold]
 		StartAutoSex(human)
 		Return()
 
@@ -244,7 +244,7 @@ label TMMenuSex(human)
 
 	-- GETTER HANDJOB
 	+ "| Handjob »	| " .. AccNum(GetActSpeedTarget(GetAct(human,Body.Hand)), tmSdec) [if HasSex(human,Body.Hand)] [gold]
-		TMSexControl(human, GetAct(human,Body.Mouth))
+		TMSexControl(human, GetAct(human,Body.Hand))
 	-- GIVER (MOUTH, VAGINA, ANUS)
 	+ "| Sex  »	| " .. AccNum(GetActSpeedTarget(GetAct(human,Body.Penis)), tmSdec) [if HasSex(human,Body.Penis)] [gold]
 		TMSexControl(human, GetAct(human,Body.Penis))

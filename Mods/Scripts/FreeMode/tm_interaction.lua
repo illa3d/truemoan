@@ -257,9 +257,7 @@ end
 function SetActThrust(interaction, weight, isHand)
 	weight = ClampActThrust(DenormalizeValue(weight, 1, 3)) -- denormalized
 	SetInteractionActive(interaction, isHand, true)
-	if TM_TweenSex then
-		local paramName = isHand and ActParam.ThrustHand or ActParam.ThrustPenis
-		TweenActTo(interaction, paramName, weight, TM_TweenTime)
+	if TM_TweenSex then TweenActTo(interaction, GetActParam(ActValue.Thrust, ishand), weight, TM_TweenTime)
 	else SetActValue(interaction, ActValue.Thrust, isHand, weight) end 
 	return weight
 end
