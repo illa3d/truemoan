@@ -2,6 +2,7 @@
 -- Variables
 TMI_AutoSex = false
 
+-- Body enums
 Body = {
 	Hand = "Hand",
 	Penis = "Penis",
@@ -10,14 +11,60 @@ Body = {
 	Vagina = "Vagina",
 }
 
--- Tween enums
-TMIE_SpeedPenis = "m_autoSpeed"
-TMIE_SpeedHand = "m_autoHandSpeed"
-TMIE_ThrustPenis = "m_autoThrustWeight"
-TMIE_ThrustHand = "m_autoHandThrustWeight"
-TMIE_WeightPenis = "AutoPenisWeight" -- no hand weight
-TMIE_DepthStart = "m_autoStartDepth"
-TMIE_DepthEnd = "m_autoEndDepth"
+ActValue = {
+	Active = "Active",
+	Speed = "Speed",
+	Weight = "Weight", -- no hand weight
+	Thrust = "Thrust",
+	DepthStart = "DepthStart",
+	DepthEnd = "DepthEnd",
+}
+
+-- Act (interaction) Parameters (actual names of values in interaction)
+ActParam = {
+	ActivePenis = "AutoActive",
+	ActiveHand = "m_autoHandActive",
+	SpeedPenis = "m_autoSpeed",
+	SpeedHand = "m_autoHandSpeed",
+	ThrustPenis = "m_autoThrustWeight",
+	ThrustHand = "m_autoHandThrustWeight",
+	WeightPenis = "AutoPenisWeight", -- no hand weight
+	DepthStart = "m_autoStartDepth",
+	DepthEnd = "m_autoEndDepth",
+}
+
+-- Get Interaction parameter
+function GetActParam(actValue, isHand)
+	if actValue == ActValue.Active then return isHand and ActParam.ActiveHand or ActParam.ActivePenis
+	elseif actValue == ActValue.Speed then return isHand and ActParam.SpeedHand or ActParam.SpeedPenis
+	elseif actValue == ActValue.Thrust then return isHand and ActParam.ThrustHand or ActParam.ThrustPenis
+	elseif actValue == ActValue.Weight then return ActParam.WeightPenis
+	elseif actValue == ActValue.DepthStart then return ActParam.DepthStart
+	elseif actValue == ActValue.DepthEnd then return ActParam.DepthEnd end
+end
+
+-- Get Interaction value
+function GetActValue(act, actValue, isHand)
+	local function GetActParamValue(act, param) return act[param] end
+	if actValue == ActValue.Active then return isHand and GetActParamValue(act, ActParam.ActiveHand) or GetActParamValue(act, ActParam.ActivePenis)
+	elseif actValue == ActValue.Speed then return isHand and GetActParamValue(act, ActParam.SpeedHand) or GetActParamValue(act, ActParam.SpeedPenis)
+	elseif actValue == ActValue.Thrust then return isHand and GetActParamValue(act, ActParam.ThrustHand) or GetActParamValue(act, ActParam.ThrustPenis)
+	elseif actValue == ActValue.Weight then return GetActParamValue(act, ActParam.WeightPenis)
+	elseif actValue == ActValue.DepthStart then return GetActParamValue(act, ActParam.DepthStart)
+	elseif actValue == ActValue.DepthEnd then return GetActParamValue(act, ActParam.DepthEnd)
+	else return nil end
+end
+
+-- Set Interaction value
+function SetActValue(act, actValue, isHand, value)
+	local function SetActParamValue(act, param, value) act[param] = value end
+	if actValue == ActValue.Active then if isHand then SetActParamValue(act, ActParam.ActiveHand, value) else SetActParamValue(act, ActParam.ActivePenis, value) end
+	elseif actValue == ActValue.Speed then if isHand then SetActParamValue(act, ActParam.SpeedHand, value) else SetActParamValue(act, ActParam.SpeedPenis, value) end
+	elseif actValue == ActValue.Thrust then if isHand then SetActParamValue(act, ActParam.ThrustHand, value) else SetActParamValue(act, ActParam.ThrustPenis, value) end
+	elseif actValue == ActValue.Weight then SetActParamValue(act, ActParam.WeightPenis, value)
+	elseif actValue == ActValue.DepthStart then SetActParamValue(act, ActParam.DepthStart, value)
+	elseif actValue == ActValue.DepthEnd then SetActParamValue(act, ActParam.DepthEnd, value) end
+end
 
 -------------------------------------------------------------------------------------------------
 -- BODY / SEX / INTERACTION
@@ -134,24 +181,15 @@ end
 --  interaction.m_autoStartDepth = depth (0-0.95)
 --  interaction.m_autoEndDepth = depth (0.05-1)
 
-function SetInteractionActive(interaction, isActive, isHand)
-	if isHand then interaction.m_autoHandActive = isActive
-	else interaction.AutoActive = isActive end
-end
+function SetInteractionActive(interaction, isHand, isActive) SetActValue(interaction, ActValue.Active, isHand, isActive) end
 
 -------------------------------------------------------------------------------------------------
 -- (PENIS/HAND) INTERACTION SPEED (0.001 - 2), UI ALLOWS ONLY (0.001 - 0.5)
 -------------------------------------------------------------------------------------------------
 function ClampActSpeed(value) return ClampValue(value, 0.001, 2) end -- speed value range
 
-function GetActSpeed(interaction, isHand)
-	return isHand and interaction.m_autoHandSpeed or interaction.m_autoSpeed
-end
-
-function GetActSpeedTarget(interaction, isHand)
-	local paramName = isHand and TMIE_SpeedHand or TMIE_SpeedPenis
-	return GetActTargetValue(interaction, paramName)
-end
+function GetActSpeed(interaction, isHand) return GetActValue(interaction, ActValue.Speed, isHand) end
+function GetActSpeedTarget(interaction, isHand) return GetActTargetValue(interaction, GetActParam(ActValue.Speed, isHand)) end
 
 function SetActSpeedRandom(interaction, isHand)
 	return SetActSpeed(interaction, GetRandomFloat(0.1, 0.5), isHand)
@@ -167,32 +205,19 @@ end
 
 function SetActSpeed(interaction, speed, isHand)
 	speed = ClampActSpeed(speed)
-	SetInteractionActive(interaction, true, isHand)
-	if TM_TweenSex then
-		local paramName = (isHand and TMIE_SpeedHand or TMIE_SpeedPenis)
-		TweenActTo(interaction, paramName, speed, TM_TweenTime)
-	else
-		if isHand then interaction.m_autoHandSpeed = speed
-		else interaction.m_autoSpeed = speed end
-	end
+	SetInteractionActive(interaction, isHand, true)
+	if TM_TweenSex then TweenActTo(interaction, GetActParam(ActValue.Speed, isHand), speed, TM_TweenTime)
+	else SetActValue(interaction, ActValue.Speed, isHand, speed) end 
 	return speed
 end
 
 -------------------------------------------------------------------------------------------------
 -- (PENIS) INTERACTION WEIGHT (GIVER VS GETTER) (0-1)
 -------------------------------------------------------------------------------------------------
-function GetActWeight(interaction, isHand)
-	return (isHand) and 0 or interaction.AutoPenisWeight -- no interaction weight in handjobs
-end
+function GetActWeight(interaction, isHand) return GetActValue(interaction, ActValue.Weight, isHand) end
+function GetActWeightTarget(interaction, isHand) return isHand and 0 or GetActTargetValue(interaction, ActParam.WeightPenis) end
 
-function GetActWeightTarget(interaction, isHand)
-	if isHand then return 0 end
-	return GetActTargetValue(interaction, TMIE_WeightPenis)
-end
-
-function SetActWeightRandom(interaction, isHand)
-	return SetActWeight(interaction, GetRandomFloat01(), isHand)
-end
+function SetActWeightRandom(interaction, isHand) return SetActWeight(interaction, GetRandomFloat01(), isHand) end
 
 function SetActWeightStep(interaction, weightStep, increase, isHand)
 	local weight = GetActWeightTarget(interaction, isHand) -- Use Target Value to prevent dampening
@@ -204,29 +229,19 @@ end
 function SetActWeight(interaction, weight, isHand)
 	if isHand then return end -- no interaction weight in handjobs
 	weight = Clamp01(weight)
-	SetInteractionActive(interaction, true, isHand)
-	if TM_TweenSex then
-		TweenActTo(interaction, TMIE_WeightPenis, weight, TM_TweenTime)
-	else
-		interaction.AutoPenisWeight = weight
-	end
+	SetInteractionActive(interaction, isHand, true)
+	if TM_TweenSex then TweenActTo(interaction, ActParam.WeightPenis, weight, TM_TweenTime)
+	else SetActValue(interaction, ActValue.Weight, isHand, weight) end 
 	return weight
 end
 
 -------------------------------------------------------------------------------------------------
--- (PENIS/HAND) INTERACTION THRUST WEIGHT (normalized 0-1 to actual 1-3)
+-- (PENIS/HAND) INTERACTION THRUST (normalized 0-1 to actual 1-3)
 -------------------------------------------------------------------------------------------------
 function ClampActThrust(weight) return ClampValue(weight, 1, 3) end -- thrust value range
 
-function GetActThrust(interaction, isHand)
-	return NormalizeValue(isHand and interaction.m_autoHandThrustWeight or interaction.m_autoThrustWeight, 1, 3) -- normalized
-end
-
-function GetActThrustTarget(interaction, isHand)
-	local paramName = isHand and TMIE_ThrustHand or TMIE_ThrustPenis
-	local rawVal = GetActTargetValue(interaction, paramName)
-	return NormalizeValue(rawVal, 1, 3)
-end
+function GetActThrust(interaction, isHand) return NormalizeValue(GetActValue(interaction,ActValue.Thrust, isHand), 1, 3) end
+function GetActThrustTarget(interaction, isHand) return NormalizeValue(GetActTargetValue(interaction, GetActParam(ActValue.Thrust, isHand)), 1, 3) end
 
 function SetActThrustRandom(interaction, isHand)
 	return SetActThrust(interaction, GetRandomFloat(0,0.4), isHand)
@@ -241,14 +256,11 @@ end
 
 function SetActThrust(interaction, weight, isHand)
 	weight = ClampActThrust(DenormalizeValue(weight, 1, 3)) -- denormalized
-	SetInteractionActive(interaction, true, isHand)
+	SetInteractionActive(interaction, isHand, true)
 	if TM_TweenSex then
-		local paramName = isHand and TMIE_ThrustHand or TMIE_ThrustPenis
+		local paramName = isHand and ActParam.ThrustHand or ActParam.ThrustPenis
 		TweenActTo(interaction, paramName, weight, TM_TweenTime)
-	else
-		if isHand then interaction.m_autoHandThrustWeight = weight
-		else interaction.m_autoThrustWeight = weight end
-	end
+	else SetActValue(interaction, ActValue.Thrust, isHand, weight) end 
 	return weight
 end
 
@@ -266,7 +278,7 @@ function GetActDepth(interaction, isStartDepth)
 end
 
 function GetActDepthTarget(interaction, isStartDepth)
-	local paramName = isStartDepth and TMIE_DepthStart or TMIE_DepthEnd
+	local paramName = isStartDepth and ActParam.DepthStart or ActParam.DepthEnd
 	return GetActTargetValue(interaction, paramName)
 end
 
@@ -285,14 +297,12 @@ end
 
 function SetActDepth(interaction, depth, isHand, isStartDepth)
 	depth = ClampActDepth(depth, isStartDepth)
-	SetInteractionActive(interaction, true, isHand)
+	SetInteractionActive(interaction, isHand, true)
 	if TM_TweenSex then
-		local paramName = isStartDepth and TMIE_DepthStart or TMIE_DepthEnd
+		local paramName = isStartDepth and ActParam.DepthStart or ActParam.DepthEnd
 		TweenActTo(interaction, paramName, depth, TM_TweenTime)
-	else
-		if isStartDepth then interaction.m_autoStartDepth = depth
-		else interaction.m_autoEndDepth = depth	end
-	end
+	elseif isStartDepth then SetActValue(interaction, ActValue.DepthStart, isHand, depth)
+	else SetActValue(interaction, ActValue.DepthEnd, isHand, depth) end
 	return depth
 end
 
@@ -301,12 +311,12 @@ end
 -------------------------------------------------------------------------------------------------
 local activeTweens = {}
 
-function GetActTargetValue(object, paramName)
+function GetActTargetValue(act, param)
 	-- SCENARIO A: A tween is currently running.
 	-- We loop through the list to find it.
 	for i = 1, #activeTweens do
 		local t = activeTweens[i]
-		if t.object == object and t.param == paramName then
+		if t.object == act and t.param == param then
 			-- We found a tween! Return where it is GOING (Target), 
 			-- not where it is right now.
 			return t.targetVal 
@@ -316,27 +326,27 @@ function GetActTargetValue(object, paramName)
 	-- SCENARIO B: No tween found. 
 	-- (Either the UI just opened, or the tween finished and was removed).
 	-- We return the underlying value directly from the object.
-	return object[paramName]
+	return act[param]
 end
 
 -- Start a tween on a specific property of the interaction object
-function TweenActTo(object, paramName, targetValue, duration)
+function TweenActTo(act, param, targetValue, duration)
 	-- Remove existing tween for this parameter if it exists to avoid conflicts
 	for i = #activeTweens, 1, -1 do
 		local t = activeTweens[i]
-		if t.object == object and t.param == paramName then
+		if t.object == act and t.param == param then
 			table.remove(activeTweens, i)
 		end
 	end
 	-- Start new tween
-	local startValue = object[paramName]
+	local startValue = act[param]
 	-- Fallback if duration is somehow nil, preventing crash
 	duration = duration or 0.5 
 	-- If duration is effectively zero, set immediately
-	if duration <= 0.001 then object[paramName] = targetValue return end
+	if duration <= 0.001 then act[param] = targetValue return end
 	table.insert(activeTweens, {
-		object = object,
-		param = paramName,
+		object = act,
+		param = param,
 		startVal = startValue,
 		targetVal = targetValue,
 		duration = duration,
