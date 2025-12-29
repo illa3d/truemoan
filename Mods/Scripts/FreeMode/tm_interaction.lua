@@ -44,6 +44,22 @@ ActParam = {
 }
 
 -------------------------------------------------------------------------------------------------
+-- CONFIG VALUES CLAMPING
+-------------------------------------------------------------------------------------------------
+function AllowSextTweening() return TM_TweenSex and GetTweenTime() > 0 end
+function GetTweenTime() return ClampValue(TM_TweenTime, 0.1, 3) end
+function AutoSexMinTime() return ClampValue(TM_AutoSexTimeMin,1,20) end
+function AutoSexMaxTime() return ClampValue(TM_AutoSexTimeMax,1,20) end
+function GetDrift(actvalue)
+	if actvalue == ActValue.Speed then return Clamp01(TM_AutoSexSpeedDrift)
+	elseif actvalue == ActValue.Thrust then return Clamp01(TM_AutoSexThrustDrift)
+	elseif actvalue == ActValue.Weight then return Clamp01(TM_AutoSexWeightDrift)
+	elseif actvalue == ActValue.DepthStart then return Clamp01(TM_AutoSexDepthStartDrift)
+	elseif actvalue == ActValue.DepthEnd then return Clamp01(TM_AutoSexDepthEndDrift)
+	else return 0.5 end
+end
+
+-------------------------------------------------------------------------------------------------
 -- HUMAN STATE
 -------------------------------------------------------------------------------------------------
 local function CopyTable(src)
@@ -180,25 +196,25 @@ end
 
 function StartAutoHandAct(human, interaction)
 	if not AllowAutoSex(human) then return end
-	if (TM_AutoSexSpeedDrift > 0) then StartRandomLoop(human, SetActSpeedRandomClose, interaction, true) end
-	if (TM_AutoSexThrustDrift > 0) then StartRandomLoop(human, SetActThrustRandomClose, interaction, true) end
-	if (TM_AutoSexDepthtDrift > 0) then StartRandomLoop(human, SetActDepthStartRandomClose, interaction, true) end
-	if (TM_AutoSexDepthtDrift > 0) then StartRandomLoop(human, SetActDepthEndRandomClose, interaction, true) end
+	if (GetDrift(ActValue.Speed) > 0) then StartRandomLoop(human, SetActSpeedRandomClose, interaction, true) end
+	if (GetDrift(ActValue.Thrust) > 0) then StartRandomLoop(human, SetActThrustRandomClose, interaction, true) end
+	if (GetDrift(ActValue.DepthStart) > 0) then StartRandomLoop(human, SetActDepthStartRandomClose, interaction, true) end
+	if (GetDrift(ActValue.DepthEnd) > 0) then StartRandomLoop(human, SetActDepthEndRandomClose, interaction, true) end
 end
 
 function StartAutoPenisAct(human, interaction)
 	if not AllowAutoSex(human) then return end
-	if (TM_AutoSexSpeedDrift > 0) then StartRandomLoop(human, SetActSpeedRandomClose, interaction, false) end
-	if (TM_AutoSexThrustDrift > 0) then StartRandomLoop(human, SetActThrustRandomClose, interaction, false) end
-	if (TM_AutoSexWeightDrift > 0) then StartRandomLoop(human, SetActWeightRandomClose, interaction, false) end
-	if (TM_AutoSexDepthtDrift > 0) then StartRandomLoop(human, SetActDepthStartRandomClose, interaction, false) end
-	if (TM_AutoSexDepthtDrift > 0) then StartRandomLoop(human, SetActDepthEndRandomClose, interaction, false) end
+	if (GetDrift(ActValue.Speed) > 0) then StartRandomLoop(human, SetActSpeedRandomClose, interaction, false) end
+	if (GetDrift(ActValue.Thrust) > 0) then StartRandomLoop(human, SetActThrustRandomClose, interaction, false) end
+	if (GetDrift(ActValue.Weight) > 0) then StartRandomLoop(human, SetActWeightRandomClose, interaction, false) end
+	if (GetDrift(ActValue.DepthStart) > 0) then StartRandomLoop(human, SetActDepthStartRandomClose, interaction, false) end
+	if (GetDrift(ActValue.DepthEnd) > 0) then StartRandomLoop(human, SetActDepthEndRandomClose, interaction, false) end
 end
 
 function StartRandomLoop(human, randomFunc, interaction, isHand)
 	if not AllowAutoSex(human) then return end
 	randomFunc(interaction, isHand)
-	Delayed(GetRandom(TM_AutoSexTimeMin, TM_AutoSexTimeMax), function()
+	Delayed(GetRandom(AutoSexMinTime(), AutoSexMaxTime()), function()
 		if GetHumanState(human) then StartRandomLoop(human, randomFunc, interaction, isHand) end
 	end)
 end
@@ -246,7 +262,7 @@ function SetActSpeedRandom(interaction, isHand)
 	return SetActSpeed(interaction, GetRandomFloat(0.1, 0.5), isHand)
 end
 function SetActSpeedRandomClose(interaction, isHand)
-	return SetActSpeed(interaction, GetRandomFloatCloseMinMaxDelta(GetActSpeedTarget(interaction, isHand), TM_AutoSexSpeedDrift, 0.1, 1.9, 0.1), isHand) -- percent, min, max, minDelta
+	return SetActSpeed(interaction, GetRandomFloatCloseMinMaxDelta(GetActSpeedTarget(interaction, isHand), GetDrift(ActValue.Speed), 0.1, 1.9, 0.1), isHand) -- percent, min, max, minDelta
 end
 
 -- SET
@@ -260,7 +276,7 @@ end
 function SetActSpeed(interaction, speed, isHand)
 	local speed = ClampActSpeed(speed)
 	SetInteractionActive(interaction, isHand, true)
-	if TM_TweenSex then TweenActTo(interaction, GetActParam(ActValue.Speed, isHand), speed, TM_TweenTime)
+	if AllowSextTweening() then TweenActTo(interaction, GetActParam(ActValue.Speed, isHand), speed, GetTweenTime())
 	else SetActValue(interaction, ActValue.Speed, isHand, speed) end 
 	return speed
 end
@@ -280,7 +296,7 @@ function SetActWeightRandom(interaction, isHand)
 	return SetActWeight(interaction, GetRandomFloat(0.2,0.8), isHand)
 end
 function SetActWeightRandomClose(interaction, isHand)
-	return SetActWeight(interaction, GetRandomFloatCloseMinMaxDelta(GetActWeightTarget(interaction, isHand), TM_AutoSexWeightDrift, 0.1, 0.9, 0.03), isHand) -- percent, min, max, minDelta
+	return SetActWeight(interaction, GetRandomFloatCloseMinMaxDelta(GetActWeightTarget(interaction, isHand), GetDrift(ActValue.Weight), 0.1, 0.9, 0.03), isHand) -- percent, min, max, minDelta
 end
 
 -- SET
@@ -294,7 +310,7 @@ function SetActWeight(interaction, weight, isHand)
 	if isHand then return end -- no interaction weight in handjobs
 	local weight = Clamp01(weight)
 	SetInteractionActive(interaction, isHand, true)
-	if TM_TweenSex then TweenActTo(interaction, ActParam.WeightPenis, weight, TM_TweenTime)
+	if AllowSextTweening() then TweenActTo(interaction, ActParam.WeightPenis, weight, GetTweenTime())
 	else SetActValue(interaction, ActValue.Weight, isHand, weight) end 
 	return weight
 end
@@ -317,7 +333,7 @@ function SetActThrustRandom(interaction, isHand)
 	return SetActThrust(interaction, GetRandomFloat(0,0.5), isHand)
 end
 function SetActThrustRandomClose(interaction, isHand)
-	return SetActThrust(interaction, GetRandomFloatCloseMinMaxDelta(GetActThrustTarget(interaction, isHand), TM_AutoSexThrustDrift, 0.1, 0.9, 0.05), isHand) -- percent, min, max, minDelta
+	return SetActThrust(interaction, GetRandomFloatCloseMinMaxDelta(GetActThrustTarget(interaction, isHand), GetDrift(ActValue.Thrust), 0.1, 0.9, 0.05), isHand) -- percent, min, max, minDelta
 end
 
 -- SET
@@ -330,7 +346,7 @@ end
 function SetActThrust(interaction, weight, isHand)
 	local weight = ClampActThrust(DenormalizeValue(weight, 1, 3)) -- denormalized
 	SetInteractionActive(interaction, isHand, true)
-	if TM_TweenSex then TweenActTo(interaction, GetActParam(ActValue.Thrust, isHand), weight, TM_TweenTime)
+	if AllowSextTweening() then TweenActTo(interaction, GetActParam(ActValue.Thrust, isHand), weight, GetTweenTime())
 	else SetActValue(interaction, ActValue.Thrust, isHand, weight) end 
 	return weight
 end
@@ -355,12 +371,12 @@ end
 -- RANDOM
 function SetActDepthStartRandom(interaction, isHand) return  SetActDepth(interaction, GetRandomFloat(0.1, 0.4), isHand, true) end
 function SetActDepthStartRandomClose(interaction, isHand)
-	return SetActDepth(interaction, GetRandomFloatCloseMinMaxDelta(GetActDepthTarget(interaction, isHand, true), TM_AutoSexDepthtDrift, 0, 0.6, 0.05), isHand, true) -- percent, min, max, minDelta
+	return SetActDepth(interaction, GetRandomFloatCloseMinMaxDelta(GetActDepthTarget(interaction, isHand, true), GetDrift(ActValue.DepthStart), 0, 0.6, 0.05), isHand, true) -- percent, min, max, minDelta
 end
 
 function SetActDepthEndRandom(interaction, isHand) return SetActDepth(interaction, GetRandomFloat(0.6, 1), isHand, false) end
 function SetActDepthEndRandomClose(interaction, isHand)
-	return SetActDepth(interaction, GetRandomFloatCloseMinMaxDelta(GetActDepthTarget(interaction, isHand, false), TM_AutoSexDepthtDrift, 0.4, 1.2, 0.05), isHand, false) -- percent, min, max, minDelta
+	return SetActDepth(interaction, GetRandomFloatCloseMinMaxDelta(GetActDepthTarget(interaction, isHand, false), GetDrift(ActValue.DepthEnd), 0.4, 1.2, 0.05), isHand, false) -- percent, min, max, minDelta
 end
 
 function SetActDepthRandom(interaction, isHand)
@@ -384,9 +400,9 @@ end
 function SetActDepth(interaction, depth, isHand, isStartDepth)
 	local depth = ClampActDepth(depth, isStartDepth)
 	SetInteractionActive(interaction, isHand, true)
-	if TM_TweenSex then
+	if AllowSextTweening() then
 		local paramName = GetActParam(isStartDepth and ActValue.DepthStart or ActValue.DepthEnd, isHand)
-		TweenActTo(interaction, paramName, depth, TM_TweenTime)
+		TweenActTo(interaction, paramName, depth, GetTweenTime())
 	elseif isStartDepth then SetActValue(interaction, ActValue.DepthStart, isHand, depth)
 	else SetActValue(interaction, ActValue.DepthEnd, isHand, depth) end
 	return depth
@@ -441,7 +457,7 @@ function TweenActTo(act, param, targetValue, duration)
 end
 
 function UpdateActTweens(deltaTime)
-	if not TM_TweenSex then return end
+	if not AllowSextTweening() then return end
 	for i = #activeTweens, 1, -1 do
 		local t = activeTweens[i]
 		t.elapsed = t.elapsed + deltaTime
