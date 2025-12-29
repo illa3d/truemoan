@@ -180,17 +180,17 @@ end
 
 function StartAutoHandAct(human, interaction)
 	if not AllowAutoSex(human) then return end
-	StartRandomLoop(human, SetActSpeedRandom, interaction, true)
-	StartRandomLoop(human, SetActThrustRandom, interaction, true)
+	StartRandomLoop(human, SetActSpeedRandomClose, interaction, true)
+	StartRandomLoop(human, SetActThrustRandomClose, interaction, true)
 	StartRandomLoop(human, SetActDepthStartRandom, interaction, true)
 	StartRandomLoop(human, SetActDepthEndRandom, interaction, true)
 end
 
 function StartAutoPenisAct(human, interaction)
 	if not AllowAutoSex(human) then return end
-	StartRandomLoop(human, SetActSpeedRandom, interaction, false)
-	StartRandomLoop(human, SetActThrustRandom, interaction, false)
-	StartRandomLoop(human, SetActWeightRandom, interaction, false)
+	StartRandomLoop(human, SetActSpeedRandomClose, interaction, false)
+	StartRandomLoop(human, SetActThrustRandomClose, interaction, false)
+	StartRandomLoop(human, SetActWeightRandomClose, interaction, false)
 	StartRandomLoop(human, SetActDepthStartRandom, interaction, false)
 	StartRandomLoop(human, SetActDepthEndRandom, interaction, false)
 end
@@ -233,18 +233,23 @@ function SetInteractionActive(interaction, isHand, isActive) SetActValue(interac
 -------------------------------------------------------------------------------------------------
 function ClampActSpeed(value) return ClampValue(value, 0.001, 2) end -- speed value range
 
+-- GET
 function GetActSpeed(interaction, isHand)
 	return GetActValue(interaction, ActValue.Speed, isHand)
 end
-
 function GetActSpeedTarget(interaction, isHand)
 	return GetActTargetValue(interaction, GetActParam(ActValue.Speed, isHand))
 end
 
+-- RANDOM
 function SetActSpeedRandom(interaction, isHand)
 	return SetActSpeed(interaction, GetRandomFloat(0.1, 0.5), isHand)
 end
+function SetActSpeedRandomClose(interaction, isHand)
+	return SetActSpeed(interaction, GetRandomFloatClose(GetActSpeedTarget(interaction, isHand), TM_AutoSexDrift), isHand)
+end
 
+-- SET
 function SetActSpeedStep(interaction, speedStep, increase, isHand)
 	local speed = GetActSpeedTarget(interaction, isHand) -- Use Target Value to prevent dampening
 	local increment = 1 + (speedStep / (speed ^ 0.6)) -- 1 + (speed multiplier / (speed / curve))
@@ -252,7 +257,6 @@ function SetActSpeedStep(interaction, speedStep, increase, isHand)
 	else speed = speed / increment end
 	return SetActSpeed(interaction, speed, isHand)
 end
-
 function SetActSpeed(interaction, speed, isHand)
 	local speed = ClampActSpeed(speed)
 	SetInteractionActive(interaction, isHand, true)
@@ -266,21 +270,26 @@ end
 -------------------------------------------------------------------------------------------------
 function GetActWeight(interaction, isHand) return GetActValue(interaction, ActValue.Weight, isHand) end
 
+-- GET
 function GetActWeightTarget(interaction, isHand)
 	return isHand and 0 or GetActTargetValue(interaction, ActParam.WeightPenis)
 end
 
+-- RANDOM
 function SetActWeightRandom(interaction, isHand)
 	return SetActWeight(interaction, GetRandomFloat(0.2,0.8), isHand)
 end
+function SetActWeightRandomClose(interaction, isHand)
+	return SetActWeight(interaction, GetRandomFloatClose(GetActWeightTarget(interaction, isHand), TM_AutoSexDrift), isHand)
+end
 
+-- SET
 function SetActWeightStep(interaction, weightStep, increase, isHand)
 	local weight = GetActWeightTarget(interaction, isHand) -- Use Target Value to prevent dampening
 	if increase then weight = weight + weightStep
 	else weight = weight - weightStep end
 	return SetActWeight(interaction, weight, isHand)
 end
-
 function SetActWeight(interaction, weight, isHand)
 	if isHand then return end -- no interaction weight in handjobs
 	local weight = Clamp01(weight)
@@ -295,25 +304,29 @@ end
 -------------------------------------------------------------------------------------------------
 function ClampActThrust(weight) return ClampValue(weight, 1, 3) end -- thrust value range
 
+-- GET
 function GetActThrust(interaction, isHand)
 	return NormalizeValue(GetActValue(interaction, ActValue.Thrust, isHand), 1, 3)
 end
-
 function GetActThrustTarget(interaction, isHand)
 	return NormalizeValue(GetActTargetValue(interaction, GetActParam(ActValue.Thrust, isHand)), 1, 3)
 end
 
+-- RANDOM
 function SetActThrustRandom(interaction, isHand)
 	return SetActThrust(interaction, GetRandomFloat(0,0.4), isHand)
 end
+function SetActThrustRandomClose(interaction, isHand)
+	return SetActWeight(interaction, GetRandomFloatClose(GetActThrustTarget(interaction, isHand), TM_AutoSexDrift), isHand)
+end
 
+-- SET
 function SetActThrustStep(interaction, weightStep, increase, isHand)
 	local weight = GetActThrustTarget(interaction, isHand) -- Use Target Value to prevent dampening
 	if increase then weight = weight + weightStep
 	else weight = weight - weightStep end
 	return SetActThrust(interaction, weight, isHand)
 end
-
 function SetActThrust(interaction, weight, isHand)
 	local weight = ClampActThrust(DenormalizeValue(weight, 1, 3)) -- denormalized
 	SetInteractionActive(interaction, isHand, true)
@@ -330,36 +343,31 @@ function ClampActDepth(depth, isStartDepth)
 	else return ClampValue(depth, 0.05, 1.3) end -- end depth value range
 end
 
+-- GET
 function GetActDepth(interaction, isHand, isStartDepth)
 	return GetActValue(interaction, isStartDepth and ActValue.DepthStart or ActValue.DepthEnd, isHand)
 end
-
 function GetActDepthTarget(interaction, isHand, isStartDepth)
 	local param = GetActParam(isStartDepth and ActValue.DepthStart or ActValue.DepthEnd, isHand)
 	return GetActTargetValue(interaction, param)
 end
 
-function SetActDepthStartRandom(interaction, isHand)
-	return  SetActDepth(interaction, GetRandomFloat(0.1, 0.4), isHand, true)
-end
-
-function SetActDepthEndRandom(interaction, isHand)
-	return SetActDepth(interaction, GetRandomFloat(0.6, 1), isHand, false)
-end
-
+-- RANDOM
+function SetActDepthStartRandom(interaction, isHand) return  SetActDepth(interaction, GetRandomFloat(0.1, 0.4), isHand, true) end
+function SetActDepthEndRandom(interaction, isHand) return SetActDepth(interaction, GetRandomFloat(0.6, 1), isHand, false)end
 function SetActDepthRandom(interaction, isHand)
 	local startValue = SetActDepth(interaction, GetRandomFloat(0.1, 0.4), isHand, true)
 	local endValue = SetActDepth(interaction, GetRandomFloat(0.6, 1), isHand, false)
 	return startValue, endValue
 end
 
+-- SET
 function SetActDepthStep(interaction, depthStep, increase, isHand, isStartDepth)
 	local depth = GetActDepthTarget(interaction, isHand, isStartDepth) -- Use Target Value to prevent dampening
 	if increase then depth = depth + depthStep
 	else depth = depth - depthStep end
 	return SetActDepth(interaction, depth, isHand, isStartDepth)
 end
-
 function SetActDepthStartEnd(interaction, depthStart, depthEnd, isHand)
 	SetActDepth(interaction, depthStart, isHand, true)
 	SetActDepth(interaction, depthEnd, isHand, false)

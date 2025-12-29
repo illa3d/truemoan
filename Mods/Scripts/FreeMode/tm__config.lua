@@ -41,6 +41,7 @@ TM_AmbienceVolume = 0.7				-- 20. [0-1] Ambient volume
 -- AutoInteraction
 TM_AutoSexTimeMin = 5				-- 21. Auto Interaction minimum time to change parameter (speed, thrust, depth) 
 TM_AutoSexTimeMax = 10				-- 22. Auto Interaction maximum time to change parameter (speed, thrust, depth) 
+TM_AutoSexDrift = 0.3				-- 23. [0-1] How close in percent will be next step for speed, thrust and weight
 
 ------------------------------------------------------------------------------------------------------------------
 -- FINE TUNING

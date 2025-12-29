@@ -10,6 +10,7 @@ function DenormalizeValue(t, min, max) return min + t * (max - min) end
 
 function GetRandomFloat01() return (math.random(0,100))/100 end
 function GetRandom(min, max) return (math.random(min ,max)) end
+function GetRandomFloatClose(value, percent) return GetRandomFloat(value*(1-Clamp01(percent)),value*(1+Clamp01(percent))) end
 function GetRandomFloat(min, max) return (math.random(min*100 ,max*100))/100 end
 function GetRandomItem(list)
 	if list == nil or #list == 0 then return end
