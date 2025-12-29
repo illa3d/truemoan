@@ -118,25 +118,23 @@ label TMSexControl(human, interaction, isHand)
 				+ TM_MenuClose
 		-- START / END (handjob/oral/vaginal/anal)
 		+ "| Depth »	| S" .. AccNum(GetActDepthTarget(interaction, isHand, true), tmSdec) .. " | E" .. AccNum(GetActDepthTarget(interaction, isHand, false), tmSdec) [gold]
-			+ "• Max"
-				SetActDepth(interaction, 0.7, isHand, true)
-				SetActDepth(interaction, 0.9, isHand, false)
+			+ "• Deeper"
+				SetActDepthStartEnd(interaction, 0.7, 1.3, isHand)
 				Return()
 			+ "• Deep"
-				SetActDepth(interaction, 0.4, isHand, true)
-				SetActDepth(interaction, 0.8, isHand, false)
+				SetActDepthStartEnd(interaction, 0.4, 1.1, isHand)
 				Return()
 			+ "• Full"
-				SetActDepth(interaction, 0.2, isHand, true)
-				SetActDepth(interaction, 0.8, isHand, false)
+				SetActDepthStartEnd(interaction, 0, 1, isHand)
+				Return()
+			+ "• Medium"
+				SetActDepthStartEnd(interaction, 0.3, 1, isHand)
 				Return()
 			+ "• Shallow"
-				SetActDepth(interaction, 0.1, isHand, true)
-				SetActDepth(interaction, 0.5, isHand, false)
+				SetActDepthStartEnd(interaction, 0.1, 0.5, isHand)
 				Return()
 			+ "• Tease"
-				SetActDepth(interaction, 0.1, isHand, true)
-				SetActDepth(interaction, 0.3, isHand, false)
+				SetActDepthStartEnd(interaction, 0, 0.3, isHand)
 				Return()
 			+ TM_UP.."Start"
 				SetActDepthStep(interaction, TM_SexDepthStep, true, isHand, true)
@@ -154,7 +152,7 @@ label TMSexControl(human, interaction, isHand)
 				SetActDepthStep(interaction, TM_SexDepthStep, false, isHand, false)
 				Return()
 			+ "RESET End | " .. AccNum(GetActDepthTarget(interaction, isHand, false), tmSdec)
-				SetActDepth(interaction, 0.8, isHand, false)
+				SetActDepth(interaction, 1, isHand, false)
 				Return()
 			+ "Random" [gold]
 				SetActDepthRandom(interaction, isHand)

@@ -330,8 +330,8 @@ end
 -- (PENIS/HAND) INTERACTION THRUST DEPTH (0-1)
 -------------------------------------------------------------------------------------------------
 function ClampActDepth(depth, isStartDepth)
-	if isStartDepth then return ClampValue(depth, 0, 0.95) -- start depth value range
-	else return ClampValue(depth, 0.05,1) end -- end depth value range
+	if isStartDepth then return ClampValue(depth, 0, 1) -- start depth value range
+	else return ClampValue(depth, 0.05, 1.3) end -- end depth value range
 end
 
 function GetActDepth(interaction, isHand, isStartDepth)
@@ -345,7 +345,7 @@ end
 
 function SetActDepthRandom(interaction, isHand)
 	local startValue = SetActDepth(interaction, GetRandomFloat(0.1, 0.4), isHand, true)
-	local endValue = SetActDepth(interaction, GetRandomFloat(0.6, 0.9), isHand, false)
+	local endValue = SetActDepth(interaction, GetRandomFloat(0.6, 1), isHand, false)
 	return startValue, endValue
 end
 
@@ -354,6 +354,11 @@ function SetActDepthStep(interaction, depthStep, increase, isHand, isStartDepth)
 	if increase then depth = depth + depthStep
 	else depth = depth - depthStep end
 	return SetActDepth(interaction, depth, isHand, isStartDepth)
+end
+
+function SetActDepthStartEnd(interaction, depthStart, depthEnd, isHand)
+	SetActDepth(interaction, depthStart, isHand, true)
+	SetActDepth(interaction, depthEnd, isHand, false)
 end
 
 function SetActDepth(interaction, depth, isHand, isStartDepth)
