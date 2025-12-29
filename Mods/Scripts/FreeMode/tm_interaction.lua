@@ -80,32 +80,32 @@ end
 -------------------------------------------------------------------------------------------------
 function StartAutoSex(human)
 	TMI_AutoSex = true
-	if human.Penis.m_holdDepth ~= 0 and human.Penis.Interaction ~= nil then  StartAutoHandInteraction(human.Penis.Interaction)  end
-	if human.Penis.Hole ~= nil then  StartAutoPenisInteraction(human.Penis.Interaction) end
-	if human.Mouth.Fucker ~= nil then StartAutoPenisInteraction(human.Mouth.Fucker.Penis.Interaction) end
-	if human.Anus.Fucker ~= nil then StartAutoPenisInteraction(human.Anus.Fucker.Penis.Interaction) end
-	if human.Vagina.Fucker ~= nil then StartAutoPenisInteraction(human.Vagina.Fucker.Penis.Interaction) end
+	if human.Penis.m_holdDepth ~= 0 and human.Penis.Interaction ~= nil then  StartAutoHandAct(human.Penis.Interaction)  end
+	if human.Penis.Hole ~= nil then  StartAutoPenisAct(human.Penis.Interaction) end
+	if human.Mouth.Fucker ~= nil then StartAutoPenisAct(human.Mouth.Fucker.Penis.Interaction) end
+	if human.Anus.Fucker ~= nil then StartAutoPenisAct(human.Anus.Fucker.Penis.Interaction) end
+	if human.Vagina.Fucker ~= nil then StartAutoPenisAct(human.Vagina.Fucker.Penis.Interaction) end
 end
 
 function StopAutoSex()
 	TMI_AutoSex = false
 end
 
-function StartAutoHandInteraction(interaction)
+function StartAutoHandAct(interaction)
 	-- if not TMI_AutoSex or not interaction.m_autoHandActive then return end
 	if not TMI_AutoSex then return end
-	StartRandomLoop(SetInteractionSpeedRandom, interaction, true)
-	StartRandomLoop(SetInteractionThrustWeightRandom, interaction, true)
-	StartRandomLoop(SetInteractionDepthRandom, interaction, true)
+	StartRandomLoop(SetActSpeedRandom, interaction, true)
+	StartRandomLoop(SetActThrustRandom, interaction, true)
+	StartRandomLoop(SetActDepthRandom, interaction, true)
 end
 
-function StartAutoPenisInteraction(interaction)
+function StartAutoPenisAct(interaction)
 	-- if not TMI_AutoSex or not interaction.AutoActive then return end
 	if not TMI_AutoSex then return end
-	StartRandomLoop(SetInteractionSpeedRandom, interaction, false)
-	StartRandomLoop(SetInteractionThrustWeightRandom, interaction, false)
-	StartRandomLoop(SetInteractionPenisWeightRandom, interaction, false)
-	StartRandomLoop(SetInteractionDepthRandom, interaction, false)
+	StartRandomLoop(SetActSpeedRandom, interaction, false)
+	StartRandomLoop(SetActThrustRandom, interaction, false)
+	StartRandomLoop(SetActWeightRandom, interaction, false)
+	StartRandomLoop(SetActDepthRandom, interaction, false)
 end
 
 function StartRandomLoop(randomFunc, interaction, isHand)
@@ -142,35 +142,35 @@ end
 -------------------------------------------------------------------------------------------------
 -- (PENIS/HAND) INTERACTION SPEED (0.001 - 2), UI ALLOWS ONLY (0.001 - 0.5)
 -------------------------------------------------------------------------------------------------
-function ClampInteractionSpeed(value) return ClampValue(value, 0.001, 2) end -- speed value range
+function ClampActSpeed(value) return ClampValue(value, 0.001, 2) end -- speed value range
 
-function GetInteractionSpeed(interaction, isHand)
+function GetActSpeed(interaction, isHand)
 	return isHand and interaction.m_autoHandSpeed or interaction.m_autoSpeed
 end
 
-function GetInteractionSpeedTarget(interaction, isHand)
+function GetActSpeedTarget(interaction, isHand)
 	local paramName = isHand and TMIE_SpeedHand or TMIE_SpeedPenis
-	return TMGetTargetValue(interaction, paramName)
+	return GetActTargetValue(interaction, paramName)
 end
 
-function SetInteractionSpeedRandom(interaction, isHand)
-	return SetInteractionSpeed(interaction, GetRandomFloat(0.1, 0.5), isHand)
+function SetActSpeedRandom(interaction, isHand)
+	return SetActSpeed(interaction, GetRandomFloat(0.1, 0.5), isHand)
 end
 
-function SetInteractionSpeedStep(interaction, speedStep, increase, isHand)
-	local speed = GetInteractionSpeedTarget(interaction, isHand) -- Use Target Value to prevent dampening
+function SetActSpeedStep(interaction, speedStep, increase, isHand)
+	local speed = GetActSpeedTarget(interaction, isHand) -- Use Target Value to prevent dampening
 	local increment = 1 + (speedStep / (speed ^ 0.6)) -- 1 + (speed multiplier / (speed / curve))
 	if increase then speed = speed * increment
 	else speed = speed / increment end
-	return SetInteractionSpeed(interaction, speed, isHand)
+	return SetActSpeed(interaction, speed, isHand)
 end
 
-function SetInteractionSpeed(interaction, speed, isHand)
-	speed = ClampInteractionSpeed(speed)
+function SetActSpeed(interaction, speed, isHand)
+	speed = ClampActSpeed(speed)
 	SetInteractionActive(interaction, true, isHand)
 	if TM_TweenSex then
 		local paramName = (isHand and TMIE_SpeedHand or TMIE_SpeedPenis)
-		TMTweenTo(interaction, paramName, speed, TM_TweenTime)
+		TweenActTo(interaction, paramName, speed, TM_TweenTime)
 	else
 		if isHand then interaction.m_autoHandSpeed = speed
 		else interaction.m_autoSpeed = speed end
@@ -181,32 +181,32 @@ end
 -------------------------------------------------------------------------------------------------
 -- (PENIS) INTERACTION WEIGHT (GIVER VS GETTER) (0-1)
 -------------------------------------------------------------------------------------------------
-function GetInteractionPenisWeight(interaction, isHand)
+function GetActWeight(interaction, isHand)
 	return (isHand) and 0 or interaction.AutoPenisWeight -- no interaction weight in handjobs
 end
 
-function GetInteractionPenisWeightTarget(interaction, isHand)
+function GetActWeightTarget(interaction, isHand)
 	if isHand then return 0 end
-	return TMGetTargetValue(interaction, TMIE_WeightPenis)
+	return GetActTargetValue(interaction, TMIE_WeightPenis)
 end
 
-function SetInteractionPenisWeightRandom(interaction, isHand)
-	return SetInteractionPenisWeight(interaction, GetRandomFloat01(), isHand)
+function SetActWeightRandom(interaction, isHand)
+	return SetActWeight(interaction, GetRandomFloat01(), isHand)
 end
 
-function SetInteractionPenisWeightStep(interaction, weightStep, increase, isHand)
-	local weight = GetInteractionPenisWeightTarget(interaction, isHand) -- Use Target Value to prevent dampening
+function SetActWeightStep(interaction, weightStep, increase, isHand)
+	local weight = GetActWeightTarget(interaction, isHand) -- Use Target Value to prevent dampening
 	if increase then weight = weight + weightStep
 	else weight = weight - weightStep end
-	return SetInteractionPenisWeight(interaction, weight, isHand)
+	return SetActWeight(interaction, weight, isHand)
 end
 
-function SetInteractionPenisWeight(interaction, weight, isHand)
+function SetActWeight(interaction, weight, isHand)
 	if isHand then return end -- no interaction weight in handjobs
 	weight = Clamp01(weight)
 	SetInteractionActive(interaction, true, isHand)
 	if TM_TweenSex then
-		TMTweenTo(interaction, TMIE_WeightPenis, weight, TM_TweenTime)
+		TweenActTo(interaction, TMIE_WeightPenis, weight, TM_TweenTime)
 	else
 		interaction.AutoPenisWeight = weight
 	end
@@ -216,35 +216,35 @@ end
 -------------------------------------------------------------------------------------------------
 -- (PENIS/HAND) INTERACTION THRUST WEIGHT (normalized 0-1 to actual 1-3)
 -------------------------------------------------------------------------------------------------
-function ClampInteractionThrustWeight(weight) return ClampValue(weight, 1, 3) end -- thrust value range
+function ClampActThrust(weight) return ClampValue(weight, 1, 3) end -- thrust value range
 
-function GetInteractionThrustWeight(interaction, isHand)
+function GetActThrust(interaction, isHand)
 	return NormalizeValue(isHand and interaction.m_autoHandThrustWeight or interaction.m_autoThrustWeight, 1, 3) -- normalized
 end
 
-function GetInteractionThrustWeightTarget(interaction, isHand)
+function GetActThrustTarget(interaction, isHand)
 	local paramName = isHand and TMIE_ThrustHand or TMIE_ThrustPenis
-	local rawVal = TMGetTargetValue(interaction, paramName)
+	local rawVal = GetActTargetValue(interaction, paramName)
 	return NormalizeValue(rawVal, 1, 3)
 end
 
-function SetInteractionThrustWeightRandom(interaction, isHand)
-	return SetInteractionThrustWeight(interaction, GetRandomFloat(0,0.5), isHand)
+function SetActThrustRandom(interaction, isHand)
+	return SetActThrust(interaction, GetRandomFloat(0,0.4), isHand)
 end
 
-function SetInteractionThrustWeightStep(interaction, weightStep, increase, isHand)
-	local weight = GetInteractionThrustWeightTarget(interaction, isHand) -- Use Target Value to prevent dampening
+function SetActThrustStep(interaction, weightStep, increase, isHand)
+	local weight = GetActThrustTarget(interaction, isHand) -- Use Target Value to prevent dampening
 	if increase then weight = weight + weightStep
 	else weight = weight - weightStep end
-	return SetInteractionThrustWeight(interaction, weight, isHand)
+	return SetActThrust(interaction, weight, isHand)
 end
 
-function SetInteractionThrustWeight(interaction, weight, isHand)
-	weight = ClampInteractionThrustWeight(DenormalizeValue(weight, 1, 3)) -- denormalized
+function SetActThrust(interaction, weight, isHand)
+	weight = ClampActThrust(DenormalizeValue(weight, 1, 3)) -- denormalized
 	SetInteractionActive(interaction, true, isHand)
 	if TM_TweenSex then
 		local paramName = isHand and TMIE_ThrustHand or TMIE_ThrustPenis
-		TMTweenTo(interaction, paramName, weight, TM_TweenTime)
+		TweenActTo(interaction, paramName, weight, TM_TweenTime)
 	else
 		if isHand then interaction.m_autoHandThrustWeight = weight
 		else interaction.m_autoThrustWeight = weight end
@@ -255,40 +255,40 @@ end
 -------------------------------------------------------------------------------------------------
 -- (PENIS/HAND) INTERACTION THRUST DEPTH (0-1)
 -------------------------------------------------------------------------------------------------
-function ClampInteractionDepth(depth, isStartDepth)
+function ClampActDepth(depth, isStartDepth)
 	if isStartDepth then return ClampValue(depth, 0, 0.95) -- start depth value range
 	else return ClampValue(depth, 0.05,1) end -- end depth value range
 end
 
-function GetInteractionDepth(interaction, isStartDepth)
+function GetActDepth(interaction, isStartDepth)
 	if isStartDepth then return interaction.m_autoStartDepth
 	else return interaction.m_autoEndDepth end
 end
 
-function GetInteractionDepthTarget(interaction, isStartDepth)
+function GetActDepthTarget(interaction, isStartDepth)
 	local paramName = isStartDepth and TMIE_DepthStart or TMIE_DepthEnd
-	return TMGetTargetValue(interaction, paramName)
+	return GetActTargetValue(interaction, paramName)
 end
 
-function SetInteractionDepthRandom(interaction, isHand)
-	local startValue = SetInteractionDepth(interaction, GetRandomFloat(0.1, 0.4), isHand, true)
-	local endValue = SetInteractionDepth(interaction, GetRandomFloat(0.6, 0.9), isHand, false)
+function SetActDepthRandom(interaction, isHand)
+	local startValue = SetActDepth(interaction, GetRandomFloat(0.1, 0.4), isHand, true)
+	local endValue = SetActDepth(interaction, GetRandomFloat(0.6, 0.9), isHand, false)
 	return startValue, endValue
 end
 
-function SetInteractionDepthStep(interaction, depthStep, increase, isHand, isStartDepth)
-	local depth = GetInteractionDepthTarget(interaction, isStartDepth) -- Use Target Value to prevent dampening
+function SetActDepthStep(interaction, depthStep, increase, isHand, isStartDepth)
+	local depth = GetActDepthTarget(interaction, isStartDepth) -- Use Target Value to prevent dampening
 	if increase then depth = depth + depthStep
 	else depth = depth - depthStep end
-	return SetInteractionDepth(interaction, depth, isHand, isStartDepth)
+	return SetActDepth(interaction, depth, isHand, isStartDepth)
 end
 
-function SetInteractionDepth(interaction, depth, isHand, isStartDepth)
-	depth = ClampInteractionDepth(depth, isStartDepth)
+function SetActDepth(interaction, depth, isHand, isStartDepth)
+	depth = ClampActDepth(depth, isStartDepth)
 	SetInteractionActive(interaction, true, isHand)
 	if TM_TweenSex then
 		local paramName = isStartDepth and TMIE_DepthStart or TMIE_DepthEnd
-		TMTweenTo(interaction, paramName, depth, TM_TweenTime)
+		TweenActTo(interaction, paramName, depth, TM_TweenTime)
 	else
 		if isStartDepth then interaction.m_autoStartDepth = depth
 		else interaction.m_autoEndDepth = depth	end
@@ -301,7 +301,7 @@ end
 -------------------------------------------------------------------------------------------------
 local activeTweens = {}
 
-function TMGetTargetValue(object, paramName)
+function GetActTargetValue(object, paramName)
 	-- SCENARIO A: A tween is currently running.
 	-- We loop through the list to find it.
 	for i = 1, #activeTweens do
@@ -320,7 +320,7 @@ function TMGetTargetValue(object, paramName)
 end
 
 -- Start a tween on a specific property of the interaction object
-function TMTweenTo(object, paramName, targetValue, duration)
+function TweenActTo(object, paramName, targetValue, duration)
 	-- Remove existing tween for this parameter if it exists to avoid conflicts
 	for i = #activeTweens, 1, -1 do
 		local t = activeTweens[i]
@@ -344,7 +344,7 @@ function TMTweenTo(object, paramName, targetValue, duration)
 	})
 end
 
-function TMUpdateTweens(deltaTime)
+function UpdateActTweens(deltaTime)
 	if not TM_TweenSex then return end
 	for i = #activeTweens, 1, -1 do
 		local t = activeTweens[i]
