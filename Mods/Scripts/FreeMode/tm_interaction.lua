@@ -182,7 +182,8 @@ function StartAutoHandAct(human, interaction)
 	if not AllowAutoSex(human) then return end
 	StartRandomLoop(human, SetActSpeedRandom, interaction, true)
 	StartRandomLoop(human, SetActThrustRandom, interaction, true)
-	StartRandomLoop(human, SetActDepthRandom, interaction, true)
+	StartRandomLoop(human, SetActDepthStartRandom, interaction, true)
+	StartRandomLoop(human, SetActDepthEndRandom, interaction, true)
 end
 
 function StartAutoPenisAct(human, interaction)
@@ -190,7 +191,8 @@ function StartAutoPenisAct(human, interaction)
 	StartRandomLoop(human, SetActSpeedRandom, interaction, false)
 	StartRandomLoop(human, SetActThrustRandom, interaction, false)
 	StartRandomLoop(human, SetActWeightRandom, interaction, false)
-	StartRandomLoop(human, SetActDepthRandom, interaction, false)
+	StartRandomLoop(human, SetActDepthStartRandom, interaction, false)
+	StartRandomLoop(human, SetActDepthEndRandom, interaction, false)
 end
 
 function StartRandomLoop(human, randomFunc, interaction, isHand)
@@ -200,12 +202,6 @@ function StartRandomLoop(human, randomFunc, interaction, isHand)
 		if GetHumanState(human) then StartRandomLoop(human, randomFunc, interaction, isHand) end
 	end)
 end
-
-Delayed(GetRandom(TM_AutoSexTimeMin, TM_AutoSexTimeMax), function()
-	if GetHumanState(human) then
-		StartRandomLoop(human, randomFunc, interaction, isHand)
-	end
-end)
 
 function AllowAutoSex(human)
 	local state = GetHumanState(human)
@@ -275,7 +271,7 @@ function GetActWeightTarget(interaction, isHand)
 end
 
 function SetActWeightRandom(interaction, isHand)
-	return SetActWeight(interaction, GetRandomFloat01(), isHand)
+	return SetActWeight(interaction, GetRandomFloat(0.2,0.8), isHand)
 end
 
 function SetActWeightStep(interaction, weightStep, increase, isHand)
@@ -341,6 +337,14 @@ end
 function GetActDepthTarget(interaction, isHand, isStartDepth)
 	local param = GetActParam(isStartDepth and ActValue.DepthStart or ActValue.DepthEnd, isHand)
 	return GetActTargetValue(interaction, param)
+end
+
+function SetActDepthStartRandom(interaction, isHand)
+	return  SetActDepth(interaction, GetRandomFloat(0.1, 0.4), isHand, true)
+end
+
+function SetActDepthEndRandom(interaction, isHand)
+	return SetActDepth(interaction, GetRandomFloat(0.6, 1), isHand, false)
 end
 
 function SetActDepthRandom(interaction, isHand)
