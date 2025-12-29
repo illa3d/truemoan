@@ -180,19 +180,19 @@ end
 
 function StartAutoHandAct(human, interaction)
 	if not AllowAutoSex(human) then return end
-	StartRandomLoop(human, SetActSpeedRandomClose, interaction, true)
-	StartRandomLoop(human, SetActThrustRandomClose, interaction, true)
-	StartRandomLoop(human, SetActDepthStartRandomClose, interaction, true)
-	StartRandomLoop(human, SetActDepthEndRandomClose, interaction, true)
+	if (TM_AutoSexSpeedDrift > 0) then StartRandomLoop(human, SetActSpeedRandomClose, interaction, true) end
+	if (TM_AutoSexThrustDrift > 0) then StartRandomLoop(human, SetActThrustRandomClose, interaction, true) end
+	if (TM_AutoSexDepthtDrift > 0) then StartRandomLoop(human, SetActDepthStartRandomClose, interaction, true) end
+	if (TM_AutoSexDepthtDrift > 0) then StartRandomLoop(human, SetActDepthEndRandomClose, interaction, true) end
 end
 
 function StartAutoPenisAct(human, interaction)
 	if not AllowAutoSex(human) then return end
-	StartRandomLoop(human, SetActSpeedRandomClose, interaction, false)
-	StartRandomLoop(human, SetActThrustRandomClose, interaction, false)
-	StartRandomLoop(human, SetActWeightRandomClose, interaction, false)
-	StartRandomLoop(human, SetActDepthStartRandomClose, interaction, false)
-	StartRandomLoop(human, SetActDepthEndRandomClose, interaction, false)
+	if (TM_AutoSexSpeedDrift > 0) then StartRandomLoop(human, SetActSpeedRandomClose, interaction, false) end
+	if (TM_AutoSexThrustDrift > 0) then StartRandomLoop(human, SetActThrustRandomClose, interaction, false) end
+	if (TM_AutoSexWeightDrift > 0) then StartRandomLoop(human, SetActWeightRandomClose, interaction, false) end
+	if (TM_AutoSexDepthtDrift > 0) then StartRandomLoop(human, SetActDepthStartRandomClose, interaction, false) end
+	if (TM_AutoSexDepthtDrift > 0) then StartRandomLoop(human, SetActDepthEndRandomClose, interaction, false) end
 end
 
 function StartRandomLoop(human, randomFunc, interaction, isHand)
@@ -246,7 +246,7 @@ function SetActSpeedRandom(interaction, isHand)
 	return SetActSpeed(interaction, GetRandomFloat(0.1, 0.5), isHand)
 end
 function SetActSpeedRandomClose(interaction, isHand)
-	return SetActSpeed(interaction, GetRandomFloatCloseMinMaxDelta(GetActSpeedTarget(interaction, isHand), TM_AutoSexSpeedDrift, 0.1, 1.9, 0.1), isHand)
+	return SetActSpeed(interaction, GetRandomFloatCloseMinMaxDelta(GetActSpeedTarget(interaction, isHand), TM_AutoSexSpeedDrift, 0.1, 1.9, 0.1), isHand) -- percent, min, max, minDelta
 end
 
 -- SET
@@ -280,7 +280,7 @@ function SetActWeightRandom(interaction, isHand)
 	return SetActWeight(interaction, GetRandomFloat(0.2,0.8), isHand)
 end
 function SetActWeightRandomClose(interaction, isHand)
-	return SetActWeight(interaction, GetRandomFloatCloseMinMaxDelta(GetActWeightTarget(interaction, isHand), TM_AutoSexWeightDrift, 0.1, 0.9, 0.03), isHand)
+	return SetActWeight(interaction, GetRandomFloatCloseMinMaxDelta(GetActWeightTarget(interaction, isHand), TM_AutoSexWeightDrift, 0.1, 0.9, 0.03), isHand) -- percent, min, max, minDelta
 end
 
 -- SET
@@ -317,7 +317,7 @@ function SetActThrustRandom(interaction, isHand)
 	return SetActThrust(interaction, GetRandomFloat(0,0.5), isHand)
 end
 function SetActThrustRandomClose(interaction, isHand)
-	return SetActThrust(interaction, GetRandomFloatCloseMinMaxDelta(GetActThrustTarget(interaction, isHand), TM_AutoSexThrustDrift, 0.1, 0.9, 0.05), isHand)
+	return SetActThrust(interaction, GetRandomFloatCloseMinMaxDelta(GetActThrustTarget(interaction, isHand), TM_AutoSexThrustDrift, 0.1, 0.9, 0.05), isHand) -- percent, min, max, minDelta
 end
 
 -- SET
@@ -355,12 +355,12 @@ end
 -- RANDOM
 function SetActDepthStartRandom(interaction, isHand) return  SetActDepth(interaction, GetRandomFloat(0.1, 0.4), isHand, true) end
 function SetActDepthStartRandomClose(interaction, isHand)
-	return SetActDepth(interaction, GetRandomFloatCloseMinMaxDelta(GetActDepthTarget(interaction, isHand, true), TM_AutoSexThrustDrift, 0, 0.6, 0.05), isHand, true)
+	return SetActDepth(interaction, GetRandomFloatCloseMinMaxDelta(GetActDepthTarget(interaction, isHand, true), TM_AutoSexDepthtDrift, 0, 0.6, 0.05), isHand, true) -- percent, min, max, minDelta
 end
 
 function SetActDepthEndRandom(interaction, isHand) return SetActDepth(interaction, GetRandomFloat(0.6, 1), isHand, false) end
 function SetActDepthEndRandomClose(interaction, isHand)
-	return SetActDepth(interaction, GetRandomFloatCloseMinMaxDelta(GetActDepthTarget(interaction, isHand, false), TM_AutoSexThrustDrift, 0.4, 1.2, 0.05), isHand, false)
+	return SetActDepth(interaction, GetRandomFloatCloseMinMaxDelta(GetActDepthTarget(interaction, isHand, false), TM_AutoSexDepthtDrift, 0.4, 1.2, 0.05), isHand, false) -- percent, min, max, minDelta
 end
 
 function SetActDepthRandom(interaction, isHand)

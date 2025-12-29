@@ -29,7 +29,7 @@ TM_SpawnRandomBody = true			-- 13. Randomizes body types on start, configurable 
 TM_MoanSex = true					-- 14. Moaning during sex
 TM_WetSex = true					-- 15. Moisting holes (vag, anus, mouth)
 TM_TweenSex = true					-- 16. Soft transitions on changing sex values (speed, thrust, depth)
-TM_TweenTime = 1.0					-- 17. [sec] Time in seconds to transition between sex values (speed, thrust, depth)
+TM_TweenTime = 2					-- 17. [sec] Time in seconds to transition between sex values (speed, thrust, depth)
 
 -- Body Edit
 TM_BodyEditSafe = true				-- 18. Turns on safe body editing using SafeMin values
@@ -41,9 +41,10 @@ TM_AmbienceVolume = 0.7				-- 20. [0-1] Ambient volume
 -- AutoInteraction
 TM_AutoSexTimeMin = 2				-- 21. Auto Interaction minimum time to change parameter (speed, thrust, depth) 
 TM_AutoSexTimeMax = 7				-- 22. Auto Interaction maximum time to change parameter (speed, thrust, depth) 
-TM_AutoSexSpeedDrift = 0.2			-- 23. [0-1] How close in percent will be next step for sex speed
-TM_AutoSexThrustDrift = 0.3			-- 24. [0-1] How close in percent will be next step for sex thrust
+TM_AutoSexSpeedDrift = 0.3			-- 23. [0-1] How close in percent will be next step for sex speed
+TM_AutoSexThrustDrift = 0.2			-- 24. [0-1] How close in percent will be next step for sex thrust
 TM_AutoSexWeightDrift = 0.1			-- 25. [0-1] How close in percent will be next step for sex weight (male female)
+TM_AutoSexDepthtDrift = 0.4			-- 25. [0-1] How close in percent will be next step for sex depth (start/end)
 
 ------------------------------------------------------------------------------------------------------------------
 -- FINE TUNING
