@@ -371,12 +371,12 @@ end
 -- RANDOM
 function SetActDepthStartRandom(interaction, isHand) return  SetActDepth(interaction, GetRandomFloat(0.1, 0.4), isHand, true) end
 function SetActDepthStartRandomClose(interaction, isHand)
-	return SetActDepth(interaction, GetRandomFloatCloseMinMaxDelta(GetActDepthTarget(interaction, isHand, true), GetDrift(ActValue.DepthStart), 0, 0.6, 0.05), isHand, true) -- percent, min, max, minDelta
+	return SetActDepth(interaction, GetRandomFloatCloseMinMaxDelta(GetActDepthTarget(interaction, isHand, true), GetDrift(ActValue.DepthStart), 0, 0.5, 0.1), isHand, true) -- percent, min, max, minDelta
 end
 
 function SetActDepthEndRandom(interaction, isHand) return SetActDepth(interaction, GetRandomFloat(0.6, 1), isHand, false) end
 function SetActDepthEndRandomClose(interaction, isHand)
-	return SetActDepth(interaction, GetRandomFloatCloseMinMaxDelta(GetActDepthTarget(interaction, isHand, false), GetDrift(ActValue.DepthEnd), 0.4, 1.2, 0.05), isHand, false) -- percent, min, max, minDelta
+	return SetActDepth(interaction, GetRandomFloatCloseMinMaxDelta(GetActDepthTarget(interaction, isHand, false), GetDrift(ActValue.DepthEnd), 0.6, 1.2, 0.1), isHand, false) -- percent, min, max, minDelta
 end
 
 function SetActDepthRandom(interaction, isHand)
