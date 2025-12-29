@@ -169,102 +169,50 @@ stop
 
 -- SEX MENU
 label TMMenuSex(human)
-	-- SEX CONTROL
-	-- GETTER HANDJOB
-	+ "| Handjob control »	| " .. AccNum(GetInteractionSpeedTarget(human.Penis.Interaction, true), tmSdec) [if human.Penis.m_holdDepth ~= 0] [gold]
-		TMSexControl(human, human.Penis.Interaction, true)
-	-- GIVER (MOUTH, VAGINA, ANUS)
-	+ "| Sex control »	| " .. AccNum(GetInteractionSpeedTarget(human.Penis.Interaction), tmSdec) [if human.Penis.Hole ~= nil] [gold]
-		TMSexControl(human, human.Penis.Interaction)
-	-- GETTER MOUTH
-	+ "| Oral control »	| " .. AccNum(GetInteractionSpeedTarget(human.Mouth.Fucker.Penis.Interaction), tmSdec) [if human.Mouth.Fucker ~= nil] [gold]
-		TMSexControl(human, human.Mouth.Fucker.Penis.Interaction)
-	-- GETTER ANUS
-	+ "| Anal control »	| " .. AccNum(GetInteractionSpeedTarget(human.Anus.Fucker.Penis.Interaction), tmSdec) [if human.Anus.Fucker ~= nil] [gold]
-		TMSexControl(human, human.Anus.Fucker.Penis.Interaction)
-	-- GETTER VAGINA
-	+ "| Pussy control »	| " .. AccNum(GetInteractionSpeedTarget(human.Vagina.Fucker.Penis.Interaction), tmSdec) [if human.Vagina.Fucker ~= nil] [gold]
-		TMSexControl(human, human.Vagina.Fucker.Penis.Interaction)
 
 	-- START / STOP
 	-- GETTER HANDJOB
-	+ "Handjob start" [if not TMI_AutoSex and human.Penis.m_holdDepth ~= 0 and human.Penis.Interaction.m_autoHandActive == false]
+	+ "Handjob start" [if not TMI_AutoSex and HasSex(human,Body.Hand) and not IsSexActive(human,Body.Hand)]
 		human.Penis.Interaction.m_autoHandActive = true
 		Return()
-	+ "Handjob STOP" [if not TMI_AutoSex and human.Penis.m_holdDepth ~= 0 and human.Penis.Interaction.m_autoHandActive == true]
+	+ "Handjob STOP" [if not TMI_AutoSex and HasSex(human,Body.Hand) and IsSexActive(human,Body.Hand)]
 		human.Penis.Interaction.m_autoHandActive = false
 		Return()
 	-- GIVER (MOUTH, VAGINA, ANUS)
-	+ "Sex start" [if not TMI_AutoSex and human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == false]
+	+ "Sex start" [if not TMI_AutoSex and HasSex(human,Body.Penis) and not IsSexActive(human,Body.Penis)]
 		human.Penis.Interaction.AutoActive = true
 		human.Penis.Interaction.AutoPenisWeight = 0.8
 		Return()
-	+ "Sex STOP" [if not TMI_AutoSex and human.Penis.Hole ~= nil and human.Penis.Interaction.AutoActive == true]
+	+ "Sex STOP" [if not TMI_AutoSex and HasSex(human,Body.Penis) and IsSexActive(human,Body.Penis)]
 		human.Penis.Interaction.AutoActive = false
 		Return()
 	-- GETTER MOUTH
-	+ "Oral start" [if not TMI_AutoSex and human.Mouth.Fucker ~= nil and human.Mouth.Fucker.Penis.Interaction.AutoActive == false]
+	+ "Oral start" [if not TMI_AutoSex and HasSex(human,Body.Mouth) and not IsSexActive(human,Body.Mouth)]
 		human.Mouth.Fucker.Penis.Interaction.AutoActive = true
 		human.Mouth.Fucker.Penis.Interaction.AutoPenisWeight = 0.2
 		Return()
-	+ "Oral STOP" [if not TMI_AutoSex and human.Mouth.Fucker ~= nil and human.Mouth.Fucker.Penis.Interaction.AutoActive == true]
+	+ "Oral STOP" [if not TMI_AutoSex and HasSex(human,Body.Mouth) and IsSexActive(human,Body.Mouth)]
 		human.Mouth.Fucker.Penis.Interaction.AutoActive = false
 		Return()
 	-- GETTER ANUS
-	+ "Anal start" [if not TMI_AutoSex and human.Anus.Fucker ~= nil and human.Anus.Fucker.Penis.Interaction.AutoActive == false]
+	+ "Anal start" [if not TMI_AutoSex and HasSex(human,Body.Anus) and not IsSexActive(human,Body.Anus)]
 		human.Anus.Fucker.Penis.Interaction.AutoActive = true
 		human.Anus.Fucker.Penis.Interaction.AutoPenisWeight = 0.2
 		Return()
-	+ "Anal STOP" [if not TMI_AutoSex and human.Anus.Fucker ~= nil and human.Anus.Fucker.Penis.Interaction.AutoActive == true]
+	+ "Anal STOP" [if not TMI_AutoSex and HasSex(human,Body.Anus) and IsSexActive(human,Body.Anus)]
 		human.Anus.Fucker.Penis.Interaction.AutoActive = false
 		Return()
 	-- GETTER VAGINA
-	+ "Pussy start" [if not TMI_AutoSex and human.Vagina.Fucker ~= nil and human.Vagina.Fucker.Penis.Interaction.AutoActive == false]
+	+ "Pussy start" [if not TMI_AutoSex and HasSex(human,Body.Vagina) and not IsSexActive(human,Body.Vagina)]
 		human.Vagina.Fucker.Penis.Interaction.AutoActive = true
 		human.Vagina.Fucker.Penis.Interaction.AutoPenisWeight = 0.2
 		Return()
-	+ "Pussy STOP" [if not TMI_AutoSex and human.Vagina.Fucker ~= nil and human.Vagina.Fucker.Penis.Interaction.AutoActive == true]
+	+ "Pussy STOP" [if not TMI_AutoSex and HasSex(human,Body.Vagina) and IsSexActive(human,Body.Vagina)]
 		human.Vagina.Fucker.Penis.Interaction.AutoActive = false
 		Return()
 
-	-- AUTOSEX
-	+ "| Autosex | " .. AccBool(TMI_AutoSex) .. " |" [if TMI_AutoSex] [gold]
-		StopAutoSex(human)
-		Return()
-	+ "| Autosex | " .. AccBool(TMI_AutoSex) .. " |" [if not TMI_AutoSex] [gold]
-		StartAutoSex(human)
-		Return()
-
-	-- HAS PENIS
+	-- PENIS
 	+ if human.Penis.IsActive == true
-		+ "| Cum control »	| " .. AccStr(tmCumevery .. "s") [gold]
-			+ "• Cum every 60 sec"
-				tmCumevery = HumanCumEvery(human, 60)
-				Return()
-			+ "• Cum every 30 sec"
-				tmCumevery = HumanCumEvery(human, 30)
-				Return()
-			+ "• Cum every 10 sec"
-				tmCumevery = HumanCumEvery(human, 10)
-				Return()
-			+ "• Cum every 5 sec"
-				tmCumevery = HumanCumEvery(human, 5)
-				Return()
-			+ "• Cum every 2 sec"
-				tmCumevery = HumanCumEvery(human, 2)
-				Return()
-			+ "• Cum every 1 sec"
-				tmCumevery = HumanCumEvery(human, 1)
-				Return()
-			+ "RESET | " .. AccStr(tmCumevery .. "s")
-				tmCumevery = HumanCumStop(human)
-				Return()
-			+ "Random" [gold]
-				tmCumevery = HumanCumEvery(human, GetRandom(1,120))
-				Return()
-			+ TM_MenuBack
-				Return(2)
-			+ TM_MenuClose
 		+ if game.HasAnim(human.Penis)
 			+ "Cum STOP"
 				tmCumevery = HumanCumStop(human)
@@ -273,43 +221,100 @@ label TMMenuSex(human)
 			+ "Cum start"
 				tmCumevery = HumanCumEvery(human, GetRandom(4,8))
 				Return()
-
-	-- HAS NO PENIS
-	+ if not human.Penis.IsActive
-		+ "| Wet control »	| " .. AccTextNum3("V",human.m_vagina.m_wetness, "A", human.m_anus.m_wetness, "M", human.m_mouth.m_wetness) [gold]
-			+ "• Squirt"
-				HumanWetSet(human, 10000, "Vagina")
-				Return()
-			+ "• Wet"
-				HumanWetSet(human, 2000, "Vagina")
-				Return()
-			+ "• Default"
-				HumanWetSet(human, 500, "Vagina")
-				Return()
-			+ TM_UP.."Wetness"
-				wett = human.m_vagina.m_wetness + TM_WetnessStep
-				HumanWetSet(human, wett, "Vagina")
-				Return()
-			+ TM_DN.."Wetness"
-				wett = human.m_vagina.m_wetness - TM_WetnessStep
-				if wett < 0
-					wett = 0
-				HumanWetSet(human, wett, "Vagina")
-				Return()
-			+ "RESET | " .. AccTextNum3("V",human.m_vagina.m_wetness, "A", human.m_anus.m_wetness, "M", human.m_mouth.m_wetness)
-				HumanWetReset(human)	
-				Return()
-			+ TM_MenuBack
-				Return(2)
-			+ TM_MenuClose
-		+ if human.m_vagina.m_wetness > 0 or human.m_anus.m_wetness > 0 or human.m_mouth.m_wetness > 0
-			+ "Wet STOP"
+	-- VAGINA
+	+ else 
+		+ if IsWetAny(human)
+			+ "Wetness STOP"
 				HumanWetReset(human)	
 				Return()
 		+ else
 			+ "Squirt start"
 				HumanWetSet(human, 10000, "Vagina")
 				Return()
+		
+	-- AUTOSEX
+	+ "| Autosex	| " .. AccBool(TMI_AutoSex) .. " |" [if TMI_AutoSex] [gold]
+		StopAutoSex(human)
+		Return()
+	+ "| Autosex	| " .. AccBool(TMI_AutoSex) .. " |" [if not TMI_AutoSex] [gold]
+		StartAutoSex(human)
+		Return()
+
+	-- SEX CONTROL
+
+	-- GETTER HANDJOB
+	+ "| Handjob »	| " .. AccNum(GetInteractionSpeedTarget(GetAct(human,Body.Hand)), tmSdec) [if HasSex(human,Body.Hand)] [gold]
+		TMSexControl(human, GetAct(human,Body.Mouth))
+	-- GIVER (MOUTH, VAGINA, ANUS)
+	+ "| Sex  »	| " .. AccNum(GetInteractionSpeedTarget(GetAct(human,Body.Penis)), tmSdec) [if HasSex(human,Body.Penis)] [gold]
+		TMSexControl(human, GetAct(human,Body.Penis))
+	-- GETTER MOUTH
+	+ "| Oral »	| " .. AccNum(GetInteractionSpeedTarget(GetAct(human,Body.Mouth)), tmSdec) [if HasSex(human,Body.Mouth)] [gold]
+		TMSexControl(human, GetAct(human,Body.Mouth))
+	-- GETTER ANUS
+	+ "| Anal »	| " .. AccNum(GetInteractionSpeedTarget(GetAct(human,Body.Anus)), tmSdec) [if HasSex(human,Body.Anus)] [gold]
+		TMSexControl(human, GetAct(human,Body.Anus))
+	-- GETTER VAGINA
+	+ "| Pussy »	| " .. AccNum(GetInteractionSpeedTarget(GetAct(human,Body.Vagina)), tmSdec) [if HasSex(human,Body.Vagina)] [gold]
+		TMSexControl(human, GetAct(human,Body.Vagina))
+
+	-- PENIS
+	+ "| Cum »	| " .. AccStr(tmCumevery .. "s") [if HasPenis(human)] [gold]
+		+ "• Cum every 60 sec"
+			tmCumevery = HumanCumEvery(human, 60)
+			Return()
+		+ "• Cum every 30 sec"
+			tmCumevery = HumanCumEvery(human, 30)
+			Return()
+		+ "• Cum every 10 sec"
+			tmCumevery = HumanCumEvery(human, 10)
+			Return()
+		+ "• Cum every 5 sec"
+			tmCumevery = HumanCumEvery(human, 5)
+			Return()
+		+ "• Cum every 2 sec"
+			tmCumevery = HumanCumEvery(human, 2)
+			Return()
+		+ "• Cum every 1 sec"
+			tmCumevery = HumanCumEvery(human, 1)
+			Return()
+		+ "RESET | " .. AccStr(tmCumevery .. "s")
+			tmCumevery = HumanCumStop(human)
+			Return()
+		+ "Random" [gold]
+			tmCumevery = HumanCumEvery(human, GetRandom(1,120))
+			Return()
+		+ TM_MenuBack
+			Return(2)
+		+ TM_MenuClose
+
+	-- VAGINA
+	+ "| Wetness »	| " .. AccTextNum3("V", GetWet(human,Body.Vagina), "A", GetWet(human,Body.Anus), "M", GetWet(human,Body.Mouth)) [if not HasPenis(human)] [gold]
+		+ "• Squirt"
+			HumanWetSet(human, 10000, "Vagina")
+			Return()
+		+ "• Wet"
+			HumanWetSet(human, 2000, "Vagina")
+			Return()
+		+ "• Default"
+			HumanWetSet(human, 500, "Vagina")
+			Return()
+		+ TM_UP.."Wetness"
+			wett = human.m_vagina.m_wetness + TM_WetnessStep
+			HumanWetSet(human, wett, "Vagina")
+			Return()
+		+ TM_DN.."Wetness"
+			wett = human.m_vagina.m_wetness - TM_WetnessStep
+			if wett < 0
+				wett = 0
+			HumanWetSet(human, wett, "Vagina")
+			Return()
+		+ "RESET | " .. AccTextNum3("V", GetWet(human,Body.Vagina), "A", GetWet(human,Body.Anus), "M", GetWet(human,Body.Mouth))
+			HumanWetReset(human)	
+			Return()
+		+ TM_MenuBack
+			Return(2)
+		+ TM_MenuClose
 	+ TM_MenuBack
 		Return(2)
 	+ TM_MenuClose

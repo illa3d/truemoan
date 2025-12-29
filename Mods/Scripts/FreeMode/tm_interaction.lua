@@ -2,6 +2,14 @@
 -- Variables
 TMI_AutoSex = false
 
+Body = {
+	Hand = "Hand",
+	Penis = "Penis",
+	Mouth = "Mouth",
+	Anus = "Anus",
+	Vagina = "Vagina",
+}
+
 -- Tween enums
 TMIE_SpeedPenis = "m_autoSpeed"
 TMIE_SpeedHand = "m_autoHandSpeed"
@@ -12,72 +20,60 @@ TMIE_DepthStart = "m_autoStartDepth"
 TMIE_DepthEnd = "m_autoEndDepth"
 
 -------------------------------------------------------------------------------------------------
--- TWEENING
+-- BODY / SEX / INTERACTION
 -------------------------------------------------------------------------------------------------
-local activeTweens = {}
 
-function TMGetTargetValue(object, paramName)
-	-- SCENARIO A: A tween is currently running.
-	-- We loop through the list to find it.
-	for i = 1, #activeTweens do
-		local t = activeTweens[i]
-		if t.object == object and t.param == paramName then
-			-- We found a tween! Return where it is GOING (Target), 
-			-- not where it is right now.
-			return t.targetVal 
-		end
-	end
-
-	-- SCENARIO B: No tween found. 
-	-- (Either the UI just opened, or the tween finished and was removed).
-	-- We return the underlying value directly from the object.
-	return object[paramName]
+-- PENIS/VAGINA
+function HasPenis(human)
+	return human.Penis.IsActive
 end
 
--- Start a tween on a specific property of the interaction object
-function TMTweenTo(object, paramName, targetValue, duration)
-	-- Remove existing tween for this parameter if it exists to avoid conflicts
-	for i = #activeTweens, 1, -1 do
-		local t = activeTweens[i]
-		if t.object == object and t.param == paramName then
-			table.remove(activeTweens, i)
-		end
-	end
-	-- Start new tween
-	local startValue = object[paramName]
-	-- Fallback if duration is somehow nil, preventing crash
-	duration = duration or 0.5 
-	-- If duration is effectively zero, set immediately
-	if duration <= 0.001 then object[paramName] = targetValue return end
-	table.insert(activeTweens, {
-		object = object,
-		param = paramName,
-		startVal = startValue,
-		targetVal = targetValue,
-		duration = duration,
-		elapsed = 0
-	})
+-- SEX
+function HasSex(human, body)
+	if body == Body.Hand and human.Penis.m_holdDepth ~= 0 then return true
+	elseif body == Body.Penis and human.Penis.Hole ~= nil then return true
+	elseif body == Body.Mouth and human.Mouth.Fucker ~= nil then return true
+	elseif body == Body.Anus and human.Anus.Fucker ~= nil then return true
+	elseif body == Body.Vagina and human.Vagina.Fucker ~= nil then return true
+	else return false end
 end
 
-function TMUpdateTweens(deltaTime)
-	if not TM_TweenSex then return end
-	for i = #activeTweens, 1, -1 do
-		local t = activeTweens[i]
-		t.elapsed = t.elapsed + deltaTime
-		local progress = t.elapsed / t.duration
-		if progress >= 1 then
-			-- Finished
-			t.object[t.param] = t.targetVal
-			table.remove(activeTweens, i)
-		else
-			-- Interpolate (using SmoothStep / EaseInOut)
-			local ease = progress * progress * (3 - 2 * progress)
-			local currentVal = t.startVal + (t.targetVal - t.startVal) * ease
-			t.object[t.param] = currentVal
-		end
-	end
+function IsSexActive(human, body)
+	if not HasSex(human, body) then return false end
+	if body == Body.Hand and human.Penis.Interaction.m_autoHandActive == true then return true
+	elseif body == Body.Penis and human.Penis.Interaction.AutoActive == true then return true
+	elseif body == Body.Mouth and human.Mouth.Fucker.Penis.Interaction.AutoActive == true then return true
+	elseif body == Body.Anus and human.Anus.Fucker.Penis.Interaction.AutoActive == true then return true
+	elseif body == Body.Vagina and human.Vagina.Fucker.Penis.Interaction.AutoActive == true then return true
+	else return false end
 end
 
+function GetAct(human, body) -- returns: interaction, ishand
+	if not HasSex(human, body) then return nil, false end 
+	if body == Body.Hand then return human.Penis.Interaction, true
+	elseif body == Body.Penis then return human.Penis.Interaction, false
+	elseif body == Body.Mouth then return human.Mouth.Fucker.Penis.Interaction, false
+	elseif body == Body.Anus then return human.Anus.Fucker.Penis.Interaction, false
+	elseif body == Body.Vagina then return human.Vagina.Fucker.Penis.Interaction, false
+	else return nil, false end
+end
+
+-- WETNESS
+function IsWetAny(human) return IsWet(human, Body.Mouth) or IsWet(human, Body.Anus) or IsWet(human, Body.Vagina) end
+
+function IsWet(human, body)
+	if body == Body.Mouth and human.m_mouth.m_wetness > 0 then return true
+	elseif body == Body.Anus and human.m_anus.m_wetness > 0 then return true
+	elseif body == Body.Vagina and human.m_vagina.m_wetness > 0 then return true
+	else return false end
+end
+
+function GetWet(human, body)
+	if body == Body.Mouth then return human.m_mouth.m_wetness
+	elseif body == Body.Anus then return human.m_anus.m_wetness
+	elseif body == Body.Vagina then return human.m_vagina.m_wetness
+	else return 0 end
+end
 
 -------------------------------------------------------------------------------------------------
 -- AUTO SEX
@@ -182,7 +178,6 @@ function SetInteractionSpeed(interaction, speed, isHand)
 	return speed
 end
 
-
 -------------------------------------------------------------------------------------------------
 -- (PENIS) INTERACTION WEIGHT (GIVER VS GETTER) (0-1)
 -------------------------------------------------------------------------------------------------
@@ -217,7 +212,6 @@ function SetInteractionPenisWeight(interaction, weight, isHand)
 	end
 	return weight
 end
-
 
 -------------------------------------------------------------------------------------------------
 -- (PENIS/HAND) INTERACTION THRUST WEIGHT (normalized 0-1 to actual 1-3)
@@ -257,7 +251,6 @@ function SetInteractionThrustWeight(interaction, weight, isHand)
 	end
 	return weight
 end
-
 
 -------------------------------------------------------------------------------------------------
 -- (PENIS/HAND) INTERACTION THRUST DEPTH (0-1)
@@ -301,4 +294,71 @@ function SetInteractionDepth(interaction, depth, isHand, isStartDepth)
 		else interaction.m_autoEndDepth = depth	end
 	end
 	return depth
+end
+
+-------------------------------------------------------------------------------------------------
+-- TWEENING
+-------------------------------------------------------------------------------------------------
+local activeTweens = {}
+
+function TMGetTargetValue(object, paramName)
+	-- SCENARIO A: A tween is currently running.
+	-- We loop through the list to find it.
+	for i = 1, #activeTweens do
+		local t = activeTweens[i]
+		if t.object == object and t.param == paramName then
+			-- We found a tween! Return where it is GOING (Target), 
+			-- not where it is right now.
+			return t.targetVal 
+		end
+	end
+
+	-- SCENARIO B: No tween found. 
+	-- (Either the UI just opened, or the tween finished and was removed).
+	-- We return the underlying value directly from the object.
+	return object[paramName]
+end
+
+-- Start a tween on a specific property of the interaction object
+function TMTweenTo(object, paramName, targetValue, duration)
+	-- Remove existing tween for this parameter if it exists to avoid conflicts
+	for i = #activeTweens, 1, -1 do
+		local t = activeTweens[i]
+		if t.object == object and t.param == paramName then
+			table.remove(activeTweens, i)
+		end
+	end
+	-- Start new tween
+	local startValue = object[paramName]
+	-- Fallback if duration is somehow nil, preventing crash
+	duration = duration or 0.5 
+	-- If duration is effectively zero, set immediately
+	if duration <= 0.001 then object[paramName] = targetValue return end
+	table.insert(activeTweens, {
+		object = object,
+		param = paramName,
+		startVal = startValue,
+		targetVal = targetValue,
+		duration = duration,
+		elapsed = 0
+	})
+end
+
+function TMUpdateTweens(deltaTime)
+	if not TM_TweenSex then return end
+	for i = #activeTweens, 1, -1 do
+		local t = activeTweens[i]
+		t.elapsed = t.elapsed + deltaTime
+		local progress = t.elapsed / t.duration
+		if progress >= 1 then
+			-- Finished
+			t.object[t.param] = t.targetVal
+			table.remove(activeTweens, i)
+		else
+			-- Interpolate (using SmoothStep / EaseInOut)
+			local ease = progress * progress * (3 - 2 * progress)
+			local currentVal = t.startVal + (t.targetVal - t.startVal) * ease
+			t.object[t.param] = currentVal
+		end
+	end
 end
