@@ -182,8 +182,8 @@ function StartAutoHandAct(human, interaction)
 	if not AllowAutoSex(human) then return end
 	StartRandomLoop(human, SetActSpeedRandomClose, interaction, true)
 	StartRandomLoop(human, SetActThrustRandomClose, interaction, true)
-	StartRandomLoop(human, SetActDepthStartRandom, interaction, true)
-	StartRandomLoop(human, SetActDepthEndRandom, interaction, true)
+	StartRandomLoop(human, SetActDepthStartRandomClose, interaction, true)
+	StartRandomLoop(human, SetActDepthEndRandomClose, interaction, true)
 end
 
 function StartAutoPenisAct(human, interaction)
@@ -191,8 +191,8 @@ function StartAutoPenisAct(human, interaction)
 	StartRandomLoop(human, SetActSpeedRandomClose, interaction, false)
 	StartRandomLoop(human, SetActThrustRandomClose, interaction, false)
 	StartRandomLoop(human, SetActWeightRandomClose, interaction, false)
-	StartRandomLoop(human, SetActDepthStartRandom, interaction, false)
-	StartRandomLoop(human, SetActDepthEndRandom, interaction, false)
+	StartRandomLoop(human, SetActDepthStartRandomClose, interaction, false)
+	StartRandomLoop(human, SetActDepthEndRandomClose, interaction, false)
 end
 
 function StartRandomLoop(human, randomFunc, interaction, isHand)
@@ -354,7 +354,15 @@ end
 
 -- RANDOM
 function SetActDepthStartRandom(interaction, isHand) return  SetActDepth(interaction, GetRandomFloat(0.1, 0.4), isHand, true) end
-function SetActDepthEndRandom(interaction, isHand) return SetActDepth(interaction, GetRandomFloat(0.6, 1), isHand, false)end
+function SetActDepthStartRandomClose(interaction, isHand)
+	return SetActDepth(interaction, GetRandomFloatCloseMinMaxDelta(GetActDepthTarget(interaction, isHand, true), TM_AutoSexThrustDrift, 0, 0.6, 0.05), isHand, true)
+end
+
+function SetActDepthEndRandom(interaction, isHand) return SetActDepth(interaction, GetRandomFloat(0.6, 1), isHand, false) end
+function SetActDepthEndRandomClose(interaction, isHand)
+	return SetActDepth(interaction, GetRandomFloatCloseMinMaxDelta(GetActDepthTarget(interaction, isHand, false), TM_AutoSexThrustDrift, 0.4, 1.2, 0.05), isHand, false)
+end
+
 function SetActDepthRandom(interaction, isHand)
 	local startValue = SetActDepth(interaction, GetRandomFloat(0.1, 0.4), isHand, true)
 	local endValue = SetActDepth(interaction, GetRandomFloat(0.6, 1), isHand, false)
