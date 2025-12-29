@@ -3,15 +3,38 @@
 -- SYSTEM
 -------------------------------------------------------------------------------------------------
 
+-- CLAMPING
 function Clamp01(value) return math.max(0, math.min(value, 1)) end
 function ClampValue(value, min, max) return math.max(min, math.min(value, max)) end
+-- NORMALIZATION
 function NormalizeValue(value, min, max) return (value - min) / (max - min) end
 function DenormalizeValue(t, min, max) return min + t * (max - min) end
-
-function GetRandomFloat01() return (math.random(0,100))/100 end
+-- RANDOM FUNCTIONS
 function GetRandom(min, max) return (math.random(min ,max)) end
-function GetRandomFloatClose(value, percent) return GetRandomFloat(value*(1-Clamp01(percent)),value*(1+Clamp01(percent))) end
-function GetRandomFloat(min, max) return (math.random(min*100 ,max*100))/100 end
+function GetRandomFloat(min, max) return min + (max - min) * math.random() end
+function GetRandomFloat01() return (math.random(0,100))/100 end
+function GetRandomFloatClose(value, percent)
+	percent = Clamp01(percent)
+	return GetRandomFloat(value * (1 - percent), value * (1 + percent))
+end
+function GetRandomFloatCloseMinMax(value, percent, minValue, maxValue)
+	percent = Clamp01(percent)
+	local delta = value * percent
+	local result = value + GetRandomFloat(-delta, delta)
+	if minValue and maxValue then result = ClampValue(result, minValue, maxValue) end
+	return result
+end
+function GetRandomFloatCloseMinMaxDelta(value, percent, minValue, maxValue, minDelta)
+	percent = Clamp01(percent)
+	minDelta = minDelta or 0
+	local delta = math.max(math.abs(value) * percent, minDelta)
+	local result = value + GetRandomFloat(-delta, delta)
+	if minValue ~= nil and maxValue ~= nil then
+		if result < minValue then result = minValue + (minValue - result)
+		elseif result > maxValue then result = maxValue - (result - maxValue) end
+	end return result
+end
+-- LIST RANDOMIZATION
 function GetRandomItem(list)
 	if list == nil or #list == 0 then return end
 	return list[math.random(1, #list)]

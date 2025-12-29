@@ -246,7 +246,7 @@ function SetActSpeedRandom(interaction, isHand)
 	return SetActSpeed(interaction, GetRandomFloat(0.1, 0.5), isHand)
 end
 function SetActSpeedRandomClose(interaction, isHand)
-	return SetActSpeed(interaction, GetRandomFloatClose(GetActSpeedTarget(interaction, isHand), TM_AutoSexDrift), isHand)
+	return SetActSpeed(interaction, GetRandomFloatCloseMinMaxDelta(GetActSpeedTarget(interaction, isHand), TM_AutoSexSpeedDrift, 0.1, 0.5, 0.1), isHand)
 end
 
 -- SET
@@ -280,7 +280,7 @@ function SetActWeightRandom(interaction, isHand)
 	return SetActWeight(interaction, GetRandomFloat(0.2,0.8), isHand)
 end
 function SetActWeightRandomClose(interaction, isHand)
-	return SetActWeight(interaction, GetRandomFloatClose(GetActWeightTarget(interaction, isHand), TM_AutoSexDrift), isHand)
+	return SetActWeight(interaction, GetRandomFloatCloseMinMaxDelta(GetActWeightTarget(interaction, isHand), TM_AutoSexWeightDrift, 0.2, 0.8, 0.03), isHand)
 end
 
 -- SET
@@ -314,10 +314,10 @@ end
 
 -- RANDOM
 function SetActThrustRandom(interaction, isHand)
-	return SetActThrust(interaction, GetRandomFloat(0,0.4), isHand)
+	return SetActThrust(interaction, GetRandomFloat(0,0.5), isHand)
 end
 function SetActThrustRandomClose(interaction, isHand)
-	return SetActWeight(interaction, GetRandomFloatClose(GetActThrustTarget(interaction, isHand), TM_AutoSexDrift), isHand)
+	return SetActThrust(interaction, GetRandomFloatCloseMinMaxDelta(GetActThrustTarget(interaction, isHand), TM_AutoSexThrustDrift, 0, 0.5, 0.05), isHand)
 end
 
 -- SET
