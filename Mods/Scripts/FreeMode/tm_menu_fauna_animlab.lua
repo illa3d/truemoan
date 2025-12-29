@@ -2,7 +2,7 @@
 label TMMenuFaunaAnimLab(human, hitTri)
 -- + "animationLAB.."[gold]
 	+ "Info"
-		human "Build your own animations in realtime! Also, penetration toggle can be good for licking scenes!"
+		-- human "Build your own animations in realtime! Also, penetration toggle can be good for licking scenes!"
 		Return()
 	+ if human.m_isMale == false
 		+ "<color=#90ee90><i>Penetration is Turned On"
@@ -469,7 +469,7 @@ label TMMenuFaunaAnimLab(human, hitTri)
 			game.RemoveAnim(human.m_mouth)
 			Return()
 		+ "Info"
-			human "Screenshot your values with F10 and build your own custom animation afterwards! Tutorial in /Mods folder~"
+			-- human "Screenshot your values with F10 and build your own custom animation afterwards! Tutorial in /Mods folder~"
 			Return()
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -628,7 +628,7 @@ label TMMenuFaunaAnimLab(human, hitTri)
 			game.RemoveAnim(human.spineNames)
 			Return()
 		+ "Info"
-			human "Screenshot your values with F10 and build your own custom animation afterwards! Tutorial in /Mods folder~"
+			-- human "Screenshot your values with F10 and build your own custom animation afterwards! Tutorial in /Mods folder~"
 			Return()
 	+ "Neck"[gold]
 		+ "Reset All"
@@ -778,7 +778,7 @@ label TMMenuFaunaAnimLab(human, hitTri)
 			game.RemoveAnim(human.headNames)
 			Return()
 		+ "Info"
-			human "Screenshot your values with F10 and build your own custom animation afterwards! Tutorial in /Mods folder~"
+			-- human "Screenshot your values with F10 and build your own custom animation afterwards! Tutorial in /Mods folder~"
 			Return()
 	+ "Hips"[gold]
 		+ "Reset All"
@@ -927,7 +927,7 @@ label TMMenuFaunaAnimLab(human, hitTri)
 				CL_SMult = CL_SMult - Faun_SpeedIncrement
 				Return()
 		+ "Info"
-			human "Screenshot your values with F10 and build your own custom animation afterwards! Tutorial in /Mods folder~"
+			-- human "Screenshot your values with F10 and build your own custom animation afterwards! Tutorial in /Mods folder~"
 			Return()
 		+ "Stop Hips" [if game.HasAnim(human) == true]
 			game.RemoveAnim(human)

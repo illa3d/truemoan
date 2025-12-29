@@ -61,7 +61,7 @@ label TMMenuOptions(human)
 				Return()
 		+ else
 			+ "Moaning	| Disabled (VoiceMod)"
-				human "I know, right? Don't <b>MOAN</b> about it!\n(VoiceMod active, TrueMoaning disabled)"
+				-- human "I know, right? Don't <b>MOAN</b> about it!\n(VoiceMod active, TrueMoaning disabled)"
 				Return(2)
 		+ "Wet sex	| " .. AccBool(TM_WetSex) [if TM_WetSex]
 			TM_WetSex = false
@@ -76,7 +76,7 @@ label TMMenuOptions(human)
 			TM_TweenSex = true
 			Return()
 		+ "Tween time	| " .. FDec(GetTweenTime(), tmOdec) .. "s"
-			human "To change this setting edit tm-config"
+			-- human "To change this setting edit tm-config"
 			Return()
 		+ TM_MenuBack
 			Return(2)
@@ -88,7 +88,7 @@ label TMMenuOptions(human)
 			TM_UITips_Options = false
 			Return()
 		+ "Delay		| " .. FDec(TM_DoubleClickTime, tmOdec) .. "s"
-			human "To change this setting edit tm-config"
+			-- human "To change this setting edit tm-config"
 			Return()
 		+ "Reset		| " .. AccBool(TM_DoubleClickReset) [if TM_DoubleClickReset]
 			TM_DoubleClickReset = false
@@ -162,7 +162,7 @@ label TMMenuOptions(human)
 					TMMOD_Jump(TMMOD_Menu_FaunaLabs, human, hitTri)
 			+ else
 				+ AccStr("(consider FaunaLABS)")
-					human "Fauna LABS brings: Poses, Faces, Animations and more!\nTrue, TrueMoan is truly empty without it!"
+					-- human "Fauna LABS brings: Poses, Faces, Animations and more!\nTrue, TrueMoan is truly empty without it!"
 					Return()
 				+ "No plugins"
 					Return()

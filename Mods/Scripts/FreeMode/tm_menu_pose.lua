@@ -18,7 +18,7 @@ label TMMenuPose(human)
 			TMMenuItems_Poses(human, TM_PoseBody_Fauna_Stand)
 	+ else
 		+ AccStr("(more with faunalabs)") [gold]
-			human "Why didn't you download the TrueMoan bundled with FaunaLABS?\nI'd run away but there's no pose for it."
+			-- human "Why didn't you download the TrueMoan bundled with FaunaLABS?\nI'd run away but there's no pose for it."
 			Return()
 	-- ORIGINAL
 	+ AccStr(TM_PosePrefix_Orig) .. "Poses »" [gold]

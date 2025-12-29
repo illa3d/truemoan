@@ -10,7 +10,7 @@ label TMMenuFace(human)
 			TMMenuItems_Poses(human, TM_PoseFace_Fauna)
 	+ else
 		+ AccStr("(more with faunalabs)") [gold]
-			human "True Moan page clearly stated you need FaunaLABS for more!\nYour loss! Now watch me with just original faces."
+			-- human "True Moan page clearly stated you need FaunaLABS for more!\nYour loss! Now watch me with just original faces."
 			Return()
 	-- ORIGINAL
 	+ AccStr(TM_PosePrefix_Orig) .. "Face »" [gold]

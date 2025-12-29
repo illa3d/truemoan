@@ -108,7 +108,7 @@ label TMMenuAnim(human)
 		-- END FreemodeHG version 0.3 ~ fauna_LABS_v1.02 (partial menu extract)		
 	+ else
 		+ AccStr("(requires faunalabs)") [gold]
-			human "You were supposed to click the FaunaLABS bundle download!\nNow I suffer in lack of life, I'm like a robot, look at me!"
+			-- human "You were supposed to click the FaunaLABS bundle download!\nNow I suffer in lack of life, I'm like a robot, look at me!"
 			Return(2)
 	+ TM_MenuBack
 		Return(2)

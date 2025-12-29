@@ -10,7 +10,7 @@
 -- MENU: BODY.. / Size..
 label TMMenuBodySize(human)
 	+ "• Fairy Dildo" [if human.Penis.IsActive] [gold]
-		human "Wtf is this, I feel funny... Weeeeee!\n(Sweet idea @void.branding)"
+		-- human "Wtf is this, I feel funny... Weeeeee!\n(Sweet idea @void.branding)"
 		TMBEPreset_Dildo(human)	
 		Return()
 	+ "• Giant"
