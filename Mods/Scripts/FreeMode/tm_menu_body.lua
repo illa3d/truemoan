@@ -118,10 +118,10 @@ label TMMenuBody(human)
 				TMB_BreastSize = TMBodyEdit(human, TMBE_Breasts, TMBD_BodyDefault)
 				Return()
 			+ TM_UP.."Nipples"
-				TMB_NipplesSize = TMBodyEditUp(human, TMBE_Nipples, TMB_NipplesSize, TM_BodyStepA)
+				TMB_NipplesSize = TMBodyEditUp(human, TMBE_Nipples, TMB_NipplesSize, TM_BodyStepA*2)
 				Return()
 			+ TM_DN.."Nipples"
-				TMB_NipplesSize = TMBodyEditDown(human, TMBE_Nipples, TMB_NipplesSize, TM_BodyStepA)
+				TMB_NipplesSize = TMBodyEditDown(human, TMBE_Nipples, TMB_NipplesSize, TM_BodyStepA*2)
 				Return()
 			+ "RESET Nipples | " .. AccNum(TMB_NipplesSize, tmBdec)
 				TMB_NipplesSize = TMBodyEdit(human, TMBE_Nipples, TMBD_BodyDefault)

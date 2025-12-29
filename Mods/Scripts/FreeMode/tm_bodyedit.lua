@@ -52,7 +52,7 @@ local TMB_BodyLimits = {
 	{ name = TMBE_Hips,			safemin = 0, min = -1.5, max = 5 },
 	{ name = TMBE_Waist,		safemin = 0, min = -1, max = 5 },
 	{ name = TMBE_Ass,			safemin = 0, min = -1, max = 10 },
-	{ name = TMBE_Nipples,		safemin = 0, min = -2, max = 2 },
+	{ name = TMBE_Nipples,		safemin = 0, min = -5, max = 5 },
 	{ name = TMBE_Breasts,	 safemin = -0.8, min = -2, max = 10 },
 	{ name = TMBE_PenisLength,	safemin = 0, min = -0.7, max = 5 },
 	{ name = TMBE_PenisSize,	safemin = 0, min = -0.7, max = 20 },
