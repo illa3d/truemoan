@@ -29,8 +29,10 @@ ActParam = {
 	ThrustPenis = "m_autoThrustWeight",
 	ThrustHand = "m_autoHandThrustWeight",
 	WeightPenis = "AutoPenisWeight", -- no hand weight
-	DepthStart = "m_autoStartDepth",
-	DepthEnd = "m_autoEndDepth",
+	DepthStartPenis = "m_autoStartDepth",
+	DepthStartHand = "m_autoHandStartDepth",
+	DepthEndPenis = "m_autoEndDepth",
+	DepthEndHand = "m_autoHandEndDepth",
 }
 
 -- Get Interaction parameter
@@ -38,33 +40,26 @@ function GetActParam(actValue, isHand)
 	if actValue == ActValue.Active then return isHand and ActParam.ActiveHand or ActParam.ActivePenis
 	elseif actValue == ActValue.Speed then return isHand and ActParam.SpeedHand or ActParam.SpeedPenis
 	elseif actValue == ActValue.Thrust then return isHand and ActParam.ThrustHand or ActParam.ThrustPenis
+	elseif actValue == ActValue.DepthStart then return isHand and ActParam.DepthStartHand or ActParam.DepthStartPenis
+	elseif actValue == ActValue.DepthEnd then return isHand and ActParam.DepthEndHand or ActParam.DepthEndPenis
 	elseif actValue == ActValue.Weight then return ActParam.WeightPenis
-	elseif actValue == ActValue.DepthStart then return ActParam.DepthStart
-	elseif actValue == ActValue.DepthEnd then return ActParam.DepthEnd end
+	else return nil end
 end
 
 -- Get Interaction value
 function GetActValue(act, actValue, isHand)
 	local function GetActParamValue(act, param) return act[param] end
-	if actValue == ActValue.Active then return isHand and GetActParamValue(act, ActParam.ActiveHand) or GetActParamValue(act, ActParam.ActivePenis)
-	elseif actValue == ActValue.Speed then return isHand and GetActParamValue(act, ActParam.SpeedHand) or GetActParamValue(act, ActParam.SpeedPenis)
-	elseif actValue == ActValue.Thrust then return isHand and GetActParamValue(act, ActParam.ThrustHand) or GetActParamValue(act, ActParam.ThrustPenis)
+	if actValue == ActValue.Active then return GetActParamValue(act, GetActParam(ActValue.Active, isHand))
+	elseif actValue == ActValue.Speed then return GetActParamValue(act, GetActParam(ActValue.Speed, isHand))
+	elseif actValue == ActValue.Thrust then return GetActParamValue(act, GetActParam(ActValue.Thrust, isHand))
+	elseif actValue == ActValue.DepthStart then return GetActParamValue(act, GetActParam(ActValue.DepthStart, isHand))
+	elseif actValue == ActValue.DepthEnd then return GetActParamValue(act, GetActParam(ActValue.DepthEnd, isHand))
 	elseif actValue == ActValue.Weight then return GetActParamValue(act, ActParam.WeightPenis)
-	elseif actValue == ActValue.DepthStart then return GetActParamValue(act, ActParam.DepthStart)
-	elseif actValue == ActValue.DepthEnd then return GetActParamValue(act, ActParam.DepthEnd)
 	else return nil end
 end
 
 -- Set Interaction value
-function SetActValue(act, actValue, isHand, value)
-	local function SetActParamValue(act, param, value) act[param] = value end
-	if actValue == ActValue.Active then if isHand then SetActParamValue(act, ActParam.ActiveHand, value) else SetActParamValue(act, ActParam.ActivePenis, value) end
-	elseif actValue == ActValue.Speed then if isHand then SetActParamValue(act, ActParam.SpeedHand, value) else SetActParamValue(act, ActParam.SpeedPenis, value) end
-	elseif actValue == ActValue.Thrust then if isHand then SetActParamValue(act, ActParam.ThrustHand, value) else SetActParamValue(act, ActParam.ThrustPenis, value) end
-	elseif actValue == ActValue.Weight then SetActParamValue(act, ActParam.WeightPenis, value)
-	elseif actValue == ActValue.DepthStart then SetActParamValue(act, ActParam.DepthStart, value)
-	elseif actValue == ActValue.DepthEnd then SetActParamValue(act, ActParam.DepthEnd, value) end
-end
+function SetActValue(act, actValue, isHand, value) act[GetActParam(actValue, isHand)] = value end
 
 -------------------------------------------------------------------------------------------------
 -- BODY / SEX / INTERACTION
@@ -95,14 +90,14 @@ function IsSexActive(human, body)
 	else return false end
 end
 
-function GetAct(human, body) -- returns: interaction, ishand
-	if not HasSex(human, body) then return nil, false end 
-	if body == Body.Hand then return human.Penis.Interaction, true
-	elseif body == Body.Penis then return human.Penis.Interaction, false
-	elseif body == Body.Mouth then return human.Mouth.Fucker.Penis.Interaction, false
-	elseif body == Body.Anus then return human.Anus.Fucker.Penis.Interaction, false
-	elseif body == Body.Vagina then return human.Vagina.Fucker.Penis.Interaction, false
-	else return nil, false end
+function GetAct(human, body)
+	if not HasSex(human, body) then return nil end
+	if body == Body.Hand then return human.Penis.Interaction
+	elseif body == Body.Penis then return human.Penis.Interaction
+	elseif body == Body.Mouth then return human.Mouth.Fucker.Penis.Interaction
+	elseif body == Body.Anus then return human.Anus.Fucker.Penis.Interaction
+	elseif body == Body.Vagina then return human.Vagina.Fucker.Penis.Interaction
+	else return nil end
 end
 
 -- WETNESS
@@ -188,8 +183,13 @@ function SetInteractionActive(interaction, isHand, isActive) SetActValue(interac
 -------------------------------------------------------------------------------------------------
 function ClampActSpeed(value) return ClampValue(value, 0.001, 2) end -- speed value range
 
-function GetActSpeed(interaction, isHand) return GetActValue(interaction, ActValue.Speed, isHand) end
-function GetActSpeedTarget(interaction, isHand) return GetActTargetValue(interaction, GetActParam(ActValue.Speed, isHand)) end
+function GetActSpeed(interaction, isHand)
+	return GetActValue(interaction, ActValue.Speed, isHand)
+end
+
+function GetActSpeedTarget(interaction, isHand)
+	return GetActTargetValue(interaction, GetActParam(ActValue.Speed, isHand))
+end
 
 function SetActSpeedRandom(interaction, isHand)
 	return SetActSpeed(interaction, GetRandomFloat(0.1, 0.5), isHand)
@@ -204,7 +204,7 @@ function SetActSpeedStep(interaction, speedStep, increase, isHand)
 end
 
 function SetActSpeed(interaction, speed, isHand)
-	speed = ClampActSpeed(speed)
+	local speed = ClampActSpeed(speed)
 	SetInteractionActive(interaction, isHand, true)
 	if TM_TweenSex then TweenActTo(interaction, GetActParam(ActValue.Speed, isHand), speed, TM_TweenTime)
 	else SetActValue(interaction, ActValue.Speed, isHand, speed) end 
@@ -215,9 +215,14 @@ end
 -- (PENIS) INTERACTION WEIGHT (GIVER VS GETTER) (0-1)
 -------------------------------------------------------------------------------------------------
 function GetActWeight(interaction, isHand) return GetActValue(interaction, ActValue.Weight, isHand) end
-function GetActWeightTarget(interaction, isHand) return isHand and 0 or GetActTargetValue(interaction, ActParam.WeightPenis) end
 
-function SetActWeightRandom(interaction, isHand) return SetActWeight(interaction, GetRandomFloat01(), isHand) end
+function GetActWeightTarget(interaction, isHand)
+	return isHand and 0 or GetActTargetValue(interaction, ActParam.WeightPenis)
+end
+
+function SetActWeightRandom(interaction, isHand)
+	return SetActWeight(interaction, GetRandomFloat01(), isHand)
+end
 
 function SetActWeightStep(interaction, weightStep, increase, isHand)
 	local weight = GetActWeightTarget(interaction, isHand) -- Use Target Value to prevent dampening
@@ -228,7 +233,7 @@ end
 
 function SetActWeight(interaction, weight, isHand)
 	if isHand then return end -- no interaction weight in handjobs
-	weight = Clamp01(weight)
+	local weight = Clamp01(weight)
 	SetInteractionActive(interaction, isHand, true)
 	if TM_TweenSex then TweenActTo(interaction, ActParam.WeightPenis, weight, TM_TweenTime)
 	else SetActValue(interaction, ActValue.Weight, isHand, weight) end 
@@ -240,8 +245,13 @@ end
 -------------------------------------------------------------------------------------------------
 function ClampActThrust(weight) return ClampValue(weight, 1, 3) end -- thrust value range
 
-function GetActThrust(interaction, isHand) return NormalizeValue(GetActValue(interaction,ActValue.Thrust, isHand), 1, 3) end
-function GetActThrustTarget(interaction, isHand) return NormalizeValue(GetActTargetValue(interaction, GetActParam(ActValue.Thrust, isHand)), 1, 3) end
+function GetActThrust(interaction, isHand)
+	return NormalizeValue(GetActValue(interaction, ActValue.Thrust, isHand), 1, 3)
+end
+
+function GetActThrustTarget(interaction, isHand)
+	return NormalizeValue(GetActTargetValue(interaction, GetActParam(ActValue.Thrust, isHand)), 1, 3)
+end
 
 function SetActThrustRandom(interaction, isHand)
 	return SetActThrust(interaction, GetRandomFloat(0,0.4), isHand)
@@ -255,9 +265,9 @@ function SetActThrustStep(interaction, weightStep, increase, isHand)
 end
 
 function SetActThrust(interaction, weight, isHand)
-	weight = ClampActThrust(DenormalizeValue(weight, 1, 3)) -- denormalized
+	local weight = ClampActThrust(DenormalizeValue(weight, 1, 3)) -- denormalized
 	SetInteractionActive(interaction, isHand, true)
-	if TM_TweenSex then TweenActTo(interaction, GetActParam(ActValue.Thrust, ishand), weight, TM_TweenTime)
+	if TM_TweenSex then TweenActTo(interaction, GetActParam(ActValue.Thrust, isHand), weight, TM_TweenTime)
 	else SetActValue(interaction, ActValue.Thrust, isHand, weight) end 
 	return weight
 end
@@ -270,14 +280,13 @@ function ClampActDepth(depth, isStartDepth)
 	else return ClampValue(depth, 0.05,1) end -- end depth value range
 end
 
-function GetActDepth(interaction, isStartDepth)
-	if isStartDepth then return interaction.m_autoStartDepth
-	else return interaction.m_autoEndDepth end
+function GetActDepth(interaction, isHand, isStartDepth)
+	return GetActValue(interaction, isStartDepth and ActValue.DepthStart or ActValue.DepthEnd, isHand)
 end
 
-function GetActDepthTarget(interaction, isStartDepth)
-	local paramName = isStartDepth and ActParam.DepthStart or ActParam.DepthEnd
-	return GetActTargetValue(interaction, paramName)
+function GetActDepthTarget(interaction, isHand, isStartDepth)
+	local param = GetActParam(isStartDepth and ActValue.DepthStart or ActValue.DepthEnd, isHand)
+	return GetActTargetValue(interaction, param)
 end
 
 function SetActDepthRandom(interaction, isHand)
@@ -287,17 +296,17 @@ function SetActDepthRandom(interaction, isHand)
 end
 
 function SetActDepthStep(interaction, depthStep, increase, isHand, isStartDepth)
-	local depth = GetActDepthTarget(interaction, isStartDepth) -- Use Target Value to prevent dampening
+	local depth = GetActDepthTarget(interaction, isHand, isStartDepth) -- Use Target Value to prevent dampening
 	if increase then depth = depth + depthStep
 	else depth = depth - depthStep end
 	return SetActDepth(interaction, depth, isHand, isStartDepth)
 end
 
 function SetActDepth(interaction, depth, isHand, isStartDepth)
-	depth = ClampActDepth(depth, isStartDepth)
+	local depth = ClampActDepth(depth, isStartDepth)
 	SetInteractionActive(interaction, isHand, true)
 	if TM_TweenSex then
-		local paramName = isStartDepth and ActParam.DepthStart or ActParam.DepthEnd
+		local paramName = GetActParam(isStartDepth and ActValue.DepthStart or ActValue.DepthEnd, isHand)
 		TweenActTo(interaction, paramName, depth, TM_TweenTime)
 	elseif isStartDepth then SetActValue(interaction, ActValue.DepthStart, isHand, depth)
 	else SetActValue(interaction, ActValue.DepthEnd, isHand, depth) end

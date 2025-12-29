@@ -117,7 +117,7 @@ label TMSexControl(human, interaction, isHand)
 					Return(2)
 				+ TM_MenuClose
 		-- START / END (handjob/oral/vaginal/anal)
-		+ "| Depth »	| S" .. AccNum(GetActDepthTarget(interaction, true), tmSdec) .. " | E" .. AccNum(GetActDepthTarget(interaction, false), tmSdec) [gold]
+		+ "| Depth »	| S" .. AccNum(GetActDepthTarget(interaction, isHand, true), tmSdec) .. " | E" .. AccNum(GetActDepthTarget(interaction, isHand, false), tmSdec) [gold]
 			+ "• Max"
 				SetActDepth(interaction, 0.7, isHand, true)
 				SetActDepth(interaction, 0.9, isHand, false)
@@ -144,7 +144,7 @@ label TMSexControl(human, interaction, isHand)
 			+ TM_DN.."Start"
 				SetActDepthStep(interaction, TM_SexDepthStep, false, isHand, true)
 				Return()
-			+ "RESET Start | " .. AccNum(GetActDepthTarget(interaction, true), tmSdec)
+			+ "RESET Start | " .. AccNum(GetActDepthTarget(interaction, isHand, true), tmSdec)
 				SetActDepth(interaction, 0.2, isHand, true)
 				Return()
 			+ TM_UP.."End"
@@ -153,7 +153,7 @@ label TMSexControl(human, interaction, isHand)
 			+ TM_DN.."End"
 				SetActDepthStep(interaction, TM_SexDepthStep, false, isHand, false)
 				Return()
-			+ "RESET End | " .. AccNum(GetActDepthTarget(interaction, false), tmSdec)
+			+ "RESET End | " .. AccNum(GetActDepthTarget(interaction, isHand, false), tmSdec)
 				SetActDepth(interaction, 0.8, isHand, false)
 				Return()
 			+ "Random" [gold]
@@ -243,20 +243,20 @@ label TMMenuSex(human)
 	-- SEX CONTROL
 
 	-- GETTER HANDJOB
-	+ "| Handjob »	| " .. AccNum(GetActSpeedTarget(GetAct(human,Body.Hand)), tmSdec) [if HasSex(human,Body.Hand)] [gold]
-		TMSexControl(human, GetAct(human,Body.Hand))
+	+ "| Handjob »	| " .. AccNum(GetActSpeedTarget(GetAct(human,Body.Hand), true), tmSdec) [if HasSex(human,Body.Hand)] [gold]
+		TMSexControl(human, GetAct(human,Body.Hand), true)
 	-- GIVER (MOUTH, VAGINA, ANUS)
-	+ "| Sex  »	| " .. AccNum(GetActSpeedTarget(GetAct(human,Body.Penis)), tmSdec) [if HasSex(human,Body.Penis)] [gold]
-		TMSexControl(human, GetAct(human,Body.Penis))
+	+ "| Sex  »	| " .. AccNum(GetActSpeedTarget(GetAct(human,Body.Penis), false), tmSdec) [if HasSex(human,Body.Penis)] [gold]
+		TMSexControl(human, GetAct(human,Body.Penis), false)
 	-- GETTER MOUTH
-	+ "| Oral »	| " .. AccNum(GetActSpeedTarget(GetAct(human,Body.Mouth)), tmSdec) [if HasSex(human,Body.Mouth)] [gold]
-		TMSexControl(human, GetAct(human,Body.Mouth))
+	+ "| Oral »	| " .. AccNum(GetActSpeedTarget(GetAct(human,Body.Mouth), false), tmSdec) [if HasSex(human,Body.Mouth)] [gold]
+		TMSexControl(human, GetAct(human,Body.Mouth), false)
 	-- GETTER ANUS
-	+ "| Anal »	| " .. AccNum(GetActSpeedTarget(GetAct(human,Body.Anus)), tmSdec) [if HasSex(human,Body.Anus)] [gold]
-		TMSexControl(human, GetAct(human,Body.Anus))
+	+ "| Anal »	| " .. AccNum(GetActSpeedTarget(GetAct(human,Body.Anus), false), tmSdec) [if HasSex(human,Body.Anus)] [gold]
+		TMSexControl(human, GetAct(human,Body.Anus), false)
 	-- GETTER VAGINA
-	+ "| Pussy »	| " .. AccNum(GetActSpeedTarget(GetAct(human,Body.Vagina)), tmSdec) [if HasSex(human,Body.Vagina)] [gold]
-		TMSexControl(human, GetAct(human,Body.Vagina))
+	+ "| Pussy »	| " .. AccNum(GetActSpeedTarget(GetAct(human,Body.Vagina), false), tmSdec) [if HasSex(human,Body.Vagina)] [gold]
+		TMSexControl(human, GetAct(human,Body.Vagina), false)
 
 	-- PENIS
 	+ "| Cum »	| " .. AccStr(tmCumevery .. "s") [if HasPenis(human)] [gold]
