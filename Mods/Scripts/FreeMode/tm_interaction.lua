@@ -1,6 +1,14 @@
 -- TrueMoan v1.3 by illa3d
--- Variables
-TMI_AutoSex = false
+
+-- Human states
+TM_HumanStates = TM_HumanStates or {}
+TM_NextHumanId = TM_NextHumanId or 1
+
+HumanState = {
+	ID = nil,
+	Name = nil,
+	AutoSex = false,
+}
 
 -- Body enums
 Body = {
@@ -35,6 +43,40 @@ ActParam = {
 	DepthEndHand = "m_autoHandEndDepth",
 }
 
+-------------------------------------------------------------------------------------------------
+-- HUMAN STATE
+-------------------------------------------------------------------------------------------------
+local function CopyTable(src)
+	local t = {}
+	for k, v in pairs(src) do t[k] = v end
+	return t
+end
+
+-- must be hooked to OnCreateHuman
+function AddHuman(human)
+	if not human then return end
+	local state = CopyTable(HumanState)
+	state.ID = TM_NextHumanId
+	TM_NextHumanId = TM_NextHumanId + 1
+	state.Name = human.Name
+	TM_HumanStates[human] = state
+end
+
+-- must be hooked to OnRemoveHuman
+function RemoveHuman(human)
+	if not human then return end
+	TM_HumanStates[human] = nil
+end
+
+function GetHumanState(human)
+	if not human then return nil end
+	return TM_HumanStates[human]
+end
+
+-------------------------------------------------------------------------------------------------
+-- INTERACTION PARAMETERS/VALUES SET/GET
+-------------------------------------------------------------------------------------------------
+
 -- Get Interaction parameter
 function GetActParam(actValue, isHand)
 	if actValue == ActValue.Active then return isHand and ActParam.ActiveHand or ActParam.ActivePenis
@@ -67,7 +109,7 @@ function SetActValue(act, actValue, isHand, value) act[GetActParam(actValue, isH
 
 -- PENIS/VAGINA
 function HasPenis(human)
-	return human.Penis.IsActive
+	return human and human.Penis and human.Penis.IsActive
 end
 
 -- SEX
@@ -121,41 +163,53 @@ end
 -- AUTO SEX
 -------------------------------------------------------------------------------------------------
 function StartAutoSex(human)
-	TMI_AutoSex = true
-	if human.Penis.m_holdDepth ~= 0 and human.Penis.Interaction ~= nil then  StartAutoHandAct(human.Penis.Interaction)  end
-	if human.Penis.Hole ~= nil then  StartAutoPenisAct(human.Penis.Interaction) end
-	if human.Mouth.Fucker ~= nil then StartAutoPenisAct(human.Mouth.Fucker.Penis.Interaction) end
-	if human.Anus.Fucker ~= nil then StartAutoPenisAct(human.Anus.Fucker.Penis.Interaction) end
-	if human.Vagina.Fucker ~= nil then StartAutoPenisAct(human.Vagina.Fucker.Penis.Interaction) end
+	local state = GetHumanState(human)
+	if not state then return end
+	state.AutoSex = true
+	if HasSex(human, Body.Hand) then StartAutoHandAct(human, human.Penis.Interaction) end
+	if HasSex(human, Body.Penis) then StartAutoPenisAct(human, human.Penis.Interaction) end
+	if HasSex(human, Body.Mouth) then StartAutoPenisAct(human, human.Mouth.Fucker.Penis.Interaction) end
+	if HasSex(human, Body.Anus) then StartAutoPenisAct(human, human.Anus.Fucker.Penis.Interaction) end
+	if HasSex(human, Body.Vagina) then StartAutoPenisAct(human, human.Vagina.Fucker.Penis.Interaction) end
 end
 
-function StopAutoSex()
-	TMI_AutoSex = false
+function StopAutoSex(human)
+	local state = GetHumanState(human)
+	if state ~= nil then state.AutoSex = false end
 end
 
-function StartAutoHandAct(interaction)
-	-- if not TMI_AutoSex or not interaction.m_autoHandActive then return end
-	if not TMI_AutoSex then return end
-	StartRandomLoop(SetActSpeedRandom, interaction, true)
-	StartRandomLoop(SetActThrustRandom, interaction, true)
-	StartRandomLoop(SetActDepthRandom, interaction, true)
+function StartAutoHandAct(human, interaction)
+	if not AllowAutoSex(human) then return end
+	StartRandomLoop(human, SetActSpeedRandom, interaction, true)
+	StartRandomLoop(human, SetActThrustRandom, interaction, true)
+	StartRandomLoop(human, SetActDepthRandom, interaction, true)
 end
 
-function StartAutoPenisAct(interaction)
-	-- if not TMI_AutoSex or not interaction.AutoActive then return end
-	if not TMI_AutoSex then return end
-	StartRandomLoop(SetActSpeedRandom, interaction, false)
-	StartRandomLoop(SetActThrustRandom, interaction, false)
-	StartRandomLoop(SetActWeightRandom, interaction, false)
-	StartRandomLoop(SetActDepthRandom, interaction, false)
+function StartAutoPenisAct(human, interaction)
+	if not AllowAutoSex(human) then return end
+	StartRandomLoop(human, SetActSpeedRandom, interaction, false)
+	StartRandomLoop(human, SetActThrustRandom, interaction, false)
+	StartRandomLoop(human, SetActWeightRandom, interaction, false)
+	StartRandomLoop(human, SetActDepthRandom, interaction, false)
 end
 
-function StartRandomLoop(randomFunc, interaction, isHand)
-	if not TMI_AutoSex then return end
-	-- if isHand and not interaction.m_autoHandActive then return end
-	-- if not isHand and not interaction.AutoActive then return end
+function StartRandomLoop(human, randomFunc, interaction, isHand)
+	if not AllowAutoSex(human) then return end
 	randomFunc(interaction, isHand)
-	Delayed(GetRandom(TM_AutoSexTimeMin, TM_AutoSexTimeMax), function() StartRandomLoop(randomFunc, interaction, isHand) end)
+	Delayed(GetRandom(TM_AutoSexTimeMin, TM_AutoSexTimeMax), function()
+		if GetHumanState(human) then StartRandomLoop(human, randomFunc, interaction, isHand) end
+	end)
+end
+
+Delayed(GetRandom(TM_AutoSexTimeMin, TM_AutoSexTimeMax), function()
+	if GetHumanState(human) then
+		StartRandomLoop(human, randomFunc, interaction, isHand)
+	end
+end)
+
+function AllowAutoSex(human)
+	local state = GetHumanState(human)
+	return state and state.AutoSex
 end
 
 -------------------------------------------------------------------------------------------------

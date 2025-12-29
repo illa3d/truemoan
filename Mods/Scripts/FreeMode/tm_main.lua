@@ -62,6 +62,7 @@ function TMOnUpdate_GenericChat()
 end
 
 function TMOnCreateHuman(human)
+	AddHuman(human)
 	HumanWetReset(human)
 	if TM_SpawnRandomBody then TMBEPreset_RandomStart(human) end
 	if TM_SpawnNaked then HumanClothes(human) end
@@ -72,6 +73,7 @@ function TMOnCreateHuman(human)
 end
 
 function TMOnRemoveHuman(human)
+	RemoveHuman(human)
 	game.PlayRandomCharacterMusic()
 end
 
