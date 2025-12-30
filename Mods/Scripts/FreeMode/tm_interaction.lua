@@ -530,7 +530,9 @@ function ActTweensUpdate(deltaTime)
 			actActiveTweens[#actActiveTweens] = nil
 		else
 			local p = t.elapsed / t.duration
-			local ease = p * p * (3 - 2 * p)
+			-- EASING - https://easings.net
+			-- local ease = p * p * (3 - 2 * p) --SmoothStep
+			local ease = 1 - (1 - p) * (1 - p) --OutQuad
 			t.object[t.param] = t.startVal + (t.targetVal - t.startVal) * ease
 		end
 	end
