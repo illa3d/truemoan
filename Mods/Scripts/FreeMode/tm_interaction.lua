@@ -198,7 +198,8 @@ end
 function ActValueGet_Current(interaction, actValue, isHand)
 	if not interaction then return 0 end
 	if actValue == ActValue.Active then return ActTweenOrValueGet(interaction, ActValueParamNameGet(actValue, isHand)) and 1 or 0 end
-	if actValue == ActValue.Weight and isHand then return 0 end -- no hand
+	if actValue == ActValue.Weight and isHand then return 0 end
+	if actValue == ActValue.Thrust then return NormalizeValue(ActTweenOrValueGet(interaction, ActValueParamNameGet(actValue, isHand)),1,3) end-- IMPORTANT: return NORMALIZED thrust (0–1)
 	return ActTweenOrValueGet(interaction, ActValueParamNameGet(actValue, isHand))
 end
 
