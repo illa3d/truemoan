@@ -254,7 +254,7 @@ label TMMenuSex(human)
 		TMSexControl(human, ActGet(human,ActBody.Vagina), false)
 
 	-- PENIS
-	+ "| Cum »	| " .. AccStr(tmCumevery .. "s") [if HasPenis(human)] [gold]
+	+ "| Cum »	| " .. AccStr(tmCumevery .. "s") [if HumanHasPenis(human)] [gold]
 		+ "• Cum every 60 sec"
 			tmCumevery = HumanCumEvery(human, 60)
 			Return()
@@ -284,7 +284,7 @@ label TMMenuSex(human)
 		+ TM_MenuClose
 
 	-- VAGINA
-	+ "| Wetness »	| " .. AccTextNum3("V", WetValue(human,ActBody.Vagina), "A", WetValue(human,ActBody.Anus), "M", WetValue(human,ActBody.Mouth)) [if not HasPenis(human)] [gold]
+	+ "| Wetness »	| " .. AccTextNum3("V", WetValue(human,ActBody.Vagina), "A", WetValue(human,ActBody.Anus), "M", WetValue(human,ActBody.Mouth)) [if not HumanHasPenis(human)] [gold]
 		+ "• Squirt"
 			HumanWetSet(human, 10000, "Vagina")
 			Return()

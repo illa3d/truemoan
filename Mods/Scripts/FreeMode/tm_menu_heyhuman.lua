@@ -20,10 +20,10 @@ label TMMenuHeyHuman(human)
 		Return()
 	+ if not human.m_isMale
 		+ "Penis | " .. AccStr("OFF") [if not human.Penis.IsActive]
-			HumanPenis(human, true)
+			HumanPenisSet(human, true)
 			Return(2)
 		+ "Penis | " .. AccStr("ON") [if human.Penis.IsActive]
-			HumanPenis(human, false)
+			HumanPenisSet(human, false)
 			Return(2)
 	+ "Penetration | " .. AccStr("ON") [if not human.m_isMale]
 		HumanMaleSet(human, true)

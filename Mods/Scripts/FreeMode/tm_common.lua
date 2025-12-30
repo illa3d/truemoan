@@ -10,21 +10,35 @@ function ClampValue(value, min, max) return math.max(min, math.min(value, max)) 
 function NormalizeValue(value, min, max) return (value - min) / (max - min) end
 function DenormalizeValue(t, min, max) return min + t * (max - min) end
 -- RANDOM FUNCTIONS
+
+-- Returns a random integer between min and max (inclusive).
 function GetRandom(min, max) return (math.random(min ,max)) end
+
+-- Returns a random float between min and max.
 function GetRandomFloat(min, max) return min + (max - min) * math.random() end
-function GetRandomFloat01() return (math.random(0,100))/100 end
-function GetRandomFloatClose(value, percent)
+
+-- Returns a random float between 0 and 1.
+function GetRandomFloat01() return math.random() end
+
+-- Returns a random float within ±percent of value, clamped to [0,1].
+function GetRandomFloatAround(value, percent)
 	percent = Clamp01(percent)
 	return GetRandomFloat(value * (1 - percent), value * (1 + percent))
 end
-function GetRandomFloatCloseMinMax(value, percent, minValue, maxValue)
+
+-- Returns a random float around value and clamps it to min/max
+-- Percent controls deviation range
+function GetRandomFloatAroundClamped(value, percent, minValue, maxValue)
 	percent = Clamp01(percent)
 	local delta = value * percent
 	local result = value + GetRandomFloat(-delta, delta)
 	if minValue and maxValue then result = ClampValue(result, minValue, maxValue) end
 	return result
 end
-function GetRandomFloatCloseMinMaxDelta(value, percent, minValue, maxValue, minDelta)
+
+-- Returns a random float near value with minimum deviation
+-- Reflects result back into bounds if exceeded
+function GetRandomFloatNear(value, percent, minValue, maxValue, minDelta)
 	percent = Clamp01(percent)
 	minDelta = minDelta or 0
 	local delta = math.max(math.abs(value) * percent, minDelta)
@@ -34,7 +48,9 @@ function GetRandomFloatCloseMinMaxDelta(value, percent, minValue, maxValue, minD
 		elseif result > maxValue then result = maxValue - (result - maxValue) end
 	end return result
 end
--- LIST RANDOMIZATION
+
+-- Returns a random element from a list
+-- Returns nil if the list is empty or nil.
 function GetRandomItem(list)
 	if list == nil or #list == 0 then return end
 	return list[math.random(1, #list)]
@@ -95,14 +111,18 @@ function HumanClothes(human, show)
 	else
 		hadpenis = human.Penis.IsActive
 		human.CustomizeAll(99)
-		if hadpenis then HumanPenis(human, true)
-		else HumanPenis(human, false) end
+		if hadpenis then HumanPenisSet(human, true)
+		else HumanPenisSet(human, false) end
 	end
 	return show
 end
 
--- CROSS GENDER STUFF
-function HumanPenis(girl, show)
+-- PENIS/VAGINA
+function HumanHasPenis(human)
+	return human and human.Penis and human.Penis.IsActive
+end
+
+function HumanPenisSet(girl, show)
 	if show then girl.Customize("Penis", 1)
 	else girl.Customize("Penis", 0) end
 end

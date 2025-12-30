@@ -2,6 +2,9 @@
 -------------------------------------------------------------------------------------------------
 -- AUTOSEX DEFINITIONS (Act = Interaction)
 -------------------------------------------------------------------------------------------------
+-- Sex Tweens
+local actActiveTweens = {}
+
 -- Body enums
 ActBody = {
 	Hand = "Hand",
@@ -80,6 +83,47 @@ function AutoSexDrift(actValue)
 end
 
 -------------------------------------------------------------------------------------------------
+-- BODY / SEX / INTERACTION
+-------------------------------------------------------------------------------------------------
+
+-- SEX
+function HasSex(human, body)
+	if body == ActBody.Hand and human.Penis.m_holdDepth ~= 0 then return true
+	elseif body == ActBody.Penis and human.Penis.Hole ~= nil then return true
+	elseif body == ActBody.Mouth and human.Mouth.Fucker ~= nil then return true
+	elseif body == ActBody.Anus and human.Anus.Fucker ~= nil then return true
+	elseif body == ActBody.Vagina and human.Vagina.Fucker ~= nil then return true
+	else return false end
+end
+
+function IsSexActive(human, body)
+	if not HasSex(human, body) then return false end
+	if body == ActBody.Hand and human.Penis.Interaction.m_autoHandActive == true then return true
+	elseif body == ActBody.Penis and human.Penis.Interaction.AutoActive == true then return true
+	elseif body == ActBody.Mouth and human.Mouth.Fucker.Penis.Interaction.AutoActive == true then return true
+	elseif body == ActBody.Anus and human.Anus.Fucker.Penis.Interaction.AutoActive == true then return true
+	elseif body == ActBody.Vagina and human.Vagina.Fucker.Penis.Interaction.AutoActive == true then return true
+	else return false end
+end
+
+-- WETNESS
+function IsWet(human) return IsWetBody(human, ActBody.Mouth) or IsWetBody(human, ActBody.Anus) or IsWetBody(human, ActBody.Vagina) end
+
+function IsWetBody(human, body)
+	if body == ActBody.Mouth and human.m_mouth.m_wetness > 0 then return true
+	elseif body == ActBody.Anus and human.m_anus.m_wetness > 0 then return true
+	elseif body == ActBody.Vagina and human.m_vagina.m_wetness > 0 then return true
+	else return false end
+end
+
+function WetValue(human, body)
+	if body == ActBody.Mouth then return human.m_mouth.m_wetness
+	elseif body == ActBody.Anus then return human.m_anus.m_wetness
+	elseif body == ActBody.Vagina then return human.m_vagina.m_wetness
+	else return 0 end
+end
+
+-------------------------------------------------------------------------------------------------
 -- INTERACTION CONVERSIONS
 -------------------------------------------------------------------------------------------------
 -- Get Interaction parameter
@@ -120,56 +164,9 @@ function ActGet(human, body)
 end
 
 -------------------------------------------------------------------------------------------------
--- BODY / SEX / INTERACTION
--------------------------------------------------------------------------------------------------
-
--- PENIS/VAGINA
-function HasPenis(human)
-	return human and human.Penis and human.Penis.IsActive
-end
-
--- SEX
-function HasSex(human, body)
-	if body == ActBody.Hand and human.Penis.m_holdDepth ~= 0 then return true
-	elseif body == ActBody.Penis and human.Penis.Hole ~= nil then return true
-	elseif body == ActBody.Mouth and human.Mouth.Fucker ~= nil then return true
-	elseif body == ActBody.Anus and human.Anus.Fucker ~= nil then return true
-	elseif body == ActBody.Vagina and human.Vagina.Fucker ~= nil then return true
-	else return false end
-end
-
-function IsSexActive(human, body)
-	if not HasSex(human, body) then return false end
-	if body == ActBody.Hand and human.Penis.Interaction.m_autoHandActive == true then return true
-	elseif body == ActBody.Penis and human.Penis.Interaction.AutoActive == true then return true
-	elseif body == ActBody.Mouth and human.Mouth.Fucker.Penis.Interaction.AutoActive == true then return true
-	elseif body == ActBody.Anus and human.Anus.Fucker.Penis.Interaction.AutoActive == true then return true
-	elseif body == ActBody.Vagina and human.Vagina.Fucker.Penis.Interaction.AutoActive == true then return true
-	else return false end
-end
-
--- WETNESS
-function IsWet(human) return IsWetBody(human, ActBody.Mouth) or IsWetBody(human, ActBody.Anus) or IsWetBody(human, ActBody.Vagina) end
-
-function IsWetBody(human, body)
-	if body == ActBody.Mouth and human.m_mouth.m_wetness > 0 then return true
-	elseif body == ActBody.Anus and human.m_anus.m_wetness > 0 then return true
-	elseif body == ActBody.Vagina and human.m_vagina.m_wetness > 0 then return true
-	else return false end
-end
-
-function WetValue(human, body)
-	if body == ActBody.Mouth then return human.m_mouth.m_wetness
-	elseif body == ActBody.Anus then return human.m_anus.m_wetness
-	elseif body == ActBody.Vagina then return human.m_vagina.m_wetness
-	else return 0 end
-end
-
--------------------------------------------------------------------------------------------------
 -- AUTO SEX
 -------------------------------------------------------------------------------------------------
 function IsAutoSex(human) return game.HasAnim(human) end
-
 function AutoSexToggle(human) AutoSex(human, not IsAutoSex(human)) end
 function AutoSexStart(human) AutoSex(human, true) end
 function AutoSexStop(human) AutoSex(human, false) end
@@ -221,24 +218,18 @@ function ActValueGet_ByBody(human, body, actValue)
 end
 
 -------------------------------------------------------------------------------------------------
--- (PENIS/HAND) INTERACTION SPEED (0.001 - 2), UI ALLOWS ONLY (0.001 - 0.5)
+-- INTERACTION SPEED (PENIS/HAND) (0.001 - 2), UI ALLOWS ONLY (0.001 - 0.5)
 -------------------------------------------------------------------------------------------------
 function ActSpeedClamp(value) return ClampValue(value, 0.001, 2) end -- speed value range
 
 -- GET
-function ActSpeedGet_Raw(interaction, isHand)
-	return ActValueGet_Raw(interaction, ActValue.Speed, isHand)
-end
-function ActSpeedGet(interaction, isHand)
-	return ActValueGet(interaction, ActValueParamNameGet(ActValue.Speed, isHand))
-end
+function ActSpeedGet_Raw(interaction, isHand) return ActValueGet_Raw(interaction, ActValue.Speed, isHand) end
+function ActSpeedGet(interaction, isHand) return ActValueGet(interaction, ActValueParamNameGet(ActValue.Speed, isHand)) end
 
 -- RANDOM
-function ActSpeedSet_Random(interaction, isHand)
-	return ActSpeedSet(interaction, GetRandomFloat(0.1, 0.5), isHand)
-end
+function ActSpeedSet_Random(interaction, isHand) return ActSpeedSet(interaction, GetRandomFloat(0.1, 0.5), isHand) end
 function ActSpeedSet_RandomNear(interaction, isHand)
-	return ActSpeedSet(interaction, GetRandomFloatCloseMinMaxDelta(ActSpeedGet(interaction, isHand), AutoSexDrift(ActValue.Speed), 0.1, 1.9, 0.1), isHand) -- percent, min, max, minDelta
+	return ActSpeedSet(interaction, GetRandomFloatNear(ActSpeedGet(interaction, isHand), AutoSexDrift(ActValue.Speed), 0.1, 1.9, 0.1), isHand) -- percent, min, max, minDelta
 end
 
 -- SET
@@ -258,21 +249,17 @@ function ActSpeedSet(interaction, speed, isHand)
 end
 
 -------------------------------------------------------------------------------------------------
--- (PENIS) INTERACTION WEIGHT (GIVER VS GETTER) (0-1)
+-- INTERACTION WEIGHT (PENIS) (GIVER VS GETTER) (0-1)
 -------------------------------------------------------------------------------------------------
-function ActWeightGet_Raw(interaction, isHand) return ActValueGet_Raw(interaction, ActValue.Weight, isHand) end
 
 -- GET
-function ActWeightGet(interaction, isHand)
-	return isHand and 0 or ActValueGet(interaction, ActParam.WeightPenis)
-end
+function ActWeightGet_Raw(interaction, isHand) return ActValueGet_Raw(interaction, ActValue.Weight, isHand) end
+function ActWeightGet(interaction, isHand) return isHand and 0 or ActValueGet(interaction, ActParam.WeightPenis) end
 
 -- RANDOM
-function ActWeightSet_Random(interaction, isHand)
-	return ActWeightSet(interaction, GetRandomFloat(0.2,0.8), isHand)
-end
+function ActWeightSet_Random(interaction, isHand) return ActWeightSet(interaction, GetRandomFloat(0.2,0.8), isHand) end
 function ActWeightSet_RandomNear(interaction, isHand)
-	return ActWeightSet(interaction, GetRandomFloatCloseMinMaxDelta(ActWeightGet(interaction, isHand), AutoSexDrift(ActValue.Weight), 0.1, 0.9, 0.03), isHand) -- percent, min, max, minDelta
+	return ActWeightSet(interaction, GetRandomFloatNear(ActWeightGet(interaction, isHand), AutoSexDrift(ActValue.Weight), 0.1, 0.9, 0.03), isHand) -- percent, min, max, minDelta
 end
 
 -- SET
@@ -292,24 +279,18 @@ function ActWeightSet(interaction, weight, isHand)
 end
 
 -------------------------------------------------------------------------------------------------
--- (PENIS/HAND) INTERACTION THRUST (normalized 0-1 to actual 1-3)
+-- INTERACTION THRUST (PENIS/HAND) (normalized 0-1 to actual 1-3)
 -------------------------------------------------------------------------------------------------
 function ActThrustClamp(weight) return ClampValue(weight, 1, 3) end -- thrust value range
 
 -- GET
-function ActThrustGet_Raw(interaction, isHand)
-	return NormalizeValue(ActValueGet_Raw(interaction, ActValue.Thrust, isHand), 1, 3)
-end
-function ActThrustGet(interaction, isHand)
-	return NormalizeValue(ActValueGet(interaction, ActValueParamNameGet(ActValue.Thrust, isHand)), 1, 3)
-end
+function ActThrustGet_Raw(interaction, isHand) return NormalizeValue(ActValueGet_Raw(interaction, ActValue.Thrust, isHand), 1, 3) end
+function ActThrustGet(interaction, isHand) return NormalizeValue(ActValueGet(interaction, ActValueParamNameGet(ActValue.Thrust, isHand)), 1, 3) end
 
 -- RANDOM
-function ActThrustSet_Random(interaction, isHand)
-	return ActThrustSet(interaction, GetRandomFloat(0,0.5), isHand)
-end
+function ActThrustSet_Random(interaction, isHand) return ActThrustSet(interaction, GetRandomFloat(0,0.5), isHand) end
 function ActThrustSet_RandomNear(interaction, isHand)
-	return ActThrustSet(interaction, GetRandomFloatCloseMinMaxDelta(ActThrustGet(interaction, isHand), AutoSexDrift(ActValue.Thrust), 0.1, 0.9, 0.05), isHand) -- percent, min, max, minDelta
+	return ActThrustSet(interaction, GetRandomFloatNear(ActThrustGet(interaction, isHand), AutoSexDrift(ActValue.Thrust), 0.1, 0.9, 0.05), isHand) -- percent, min, max, minDelta
 end
 
 -- SET
@@ -328,7 +309,7 @@ function ActThrustSet(interaction, weight, isHand)
 end
 
 -------------------------------------------------------------------------------------------------
--- (PENIS/HAND) INTERACTION THRUST DEPTH (0-1)
+-- INTERACTION THRUST DEPTH (PENIS/HAND) (0-1)
 -------------------------------------------------------------------------------------------------
 function ActDepthClamp(depth, isStartDepth)
 	if isStartDepth then return ClampValue(depth, 0, 1) -- start depth value range
@@ -345,16 +326,14 @@ function ActDepthGet(interaction, isHand, isStartDepth)
 end
 
 -- RANDOM
-function ActDepthStartSet_Random(interaction, isHand) return
-	ActDepthSet(interaction, GetRandomFloat(0.1, 0.4), isHand, true)
-end
+function ActDepthStartSet_Random(interaction, isHand) return ActDepthSet(interaction, GetRandomFloat(0.1, 0.4), isHand, true) end
 function ActDepthStartSet_RandomNear(interaction, isHand)
-	return ActDepthSet(interaction, GetRandomFloatCloseMinMaxDelta(ActDepthGet(interaction, isHand, true), AutoSexDrift(ActValue.DepthStart), 0, 0.5, 0.1), isHand, true) -- percent, min, max, minDelta
+	return ActDepthSet(interaction, GetRandomFloatNear(ActDepthGet(interaction, isHand, true), AutoSexDrift(ActValue.DepthStart), 0, 0.5, 0.1), isHand, true) -- percent, min, max, minDelta
 end
 
 function ActDepthEndSet_Random(interaction, isHand) return ActDepthSet(interaction, GetRandomFloat(0.6, 1), isHand, false) end
 function ActDepthEndSet_RandomNear(interaction, isHand)
-	return ActDepthSet(interaction, GetRandomFloatCloseMinMaxDelta(ActDepthGet(interaction, isHand, false), AutoSexDrift(ActValue.DepthEnd), 0.6, 1.2, 0.1), isHand, false) -- percent, min, max, minDelta
+	return ActDepthSet(interaction, GetRandomFloatNear(ActDepthGet(interaction, isHand, false), AutoSexDrift(ActValue.DepthEnd), 0.6, 1.2, 0.1), isHand, false) -- percent, min, max, minDelta
 end
 
 function ActDepthSet_Random(interaction, isHand)
@@ -389,8 +368,6 @@ end
 -------------------------------------------------------------------------------------------------
 -- TWEENING
 -------------------------------------------------------------------------------------------------
-local actActiveTweens = {}
-
 -- Gets value from TWEEN TARGET or RAW
 -- If the tween is runnin, value is fetched from the target, since RAW is being animated
 function ActValueGet(act, param)
