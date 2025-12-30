@@ -27,8 +27,8 @@
 - **7x skyboxes** (8/4/2k)
 
 **LATEST DOWNLOADS**
-**TrueMoan_v1.6.zip** [2025-12-27] - Just TrueMoan
-**TrueMoan_v1.6_FLABS_v1.02.zip** [2025-12-27] - TrueMoan + Fauna LABS **(recommended)**
+**TrueMoan_v1.7.zip** [2025-12-27] - Just TrueMoan
+**TrueMoan_v1.7_FLABS_v1.02.zip** [2025-12-27] - TrueMoan + Fauna LABS **(recommended)**
 **TrueMoan_Addon_Skyboxes_4k_v1.0.zip** [2025-12-22] - No difference between 8/4k in-game
 **TrueFacials v0.59_Clothes_Preview.zip** [2025-12-22] - Just preview images to find clothes faster
 https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
@@ -67,6 +67,12 @@ GitHub Repository - https://github.com/illa3d/truemoan
 
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
+
+[ v1.7 ]
+- AutoSex improvements (as an animation instead of flag)
+- Multiple actors don't mix with autosex parameters
+- Fixed Autosex issue when changing characters/clothes
+- AutoSex on spawn option
 
 [ v1.6 ]
 - AutoSex improvements (acts more organically)

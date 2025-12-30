@@ -4,11 +4,8 @@ TM_UITip_Options = "Tip: edit defaults in tm-config"
 tmOdec = 2
 
 label TMMenuOptions(human)
-	+ "Pause | " .. AccBool(game.m_freezeAllActors) [if game.m_freezeAllActors]
-		HumansFreeze(false)
-		Return()
-	+ "Pause | " .. AccBool(game.m_freezeAllActors) [if not game.m_freezeAllActors]
-		HumansFreeze(true)
+	+ "Pause | " .. AccBool(game.m_freezeAllActors)
+		HumansFreeze(not game.m_freezeAllActors)
 		Return()
 	+ "Hide UI" [if TM_UIVisible]
 		TM_UIVisible = ShowUI(false)
@@ -19,7 +16,7 @@ label TMMenuOptions(human)
 		TMMenuItems_Music(TM_MusicTracks)
 
 	-- AMBIENCE
-	+ "Ambience.. | " .. AccBool(TM_AllowAmbience) [gold]
+	+ "Ambience » | " .. AccBool(TM_AllowAmbience) [gold]
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
@@ -47,33 +44,21 @@ label TMMenuOptions(human)
 			TM_UITips_Options = false
 			Return()
 		+ if TM_AllowVoice
-			+ "Moan sex	| " .. AccBool(TM_MoanSex) [if TM_MoanSex]
-				TM_MoanSex = false
+			+ "Moan sex	| " .. AccBool(TM_MoanSex)
+				TM_MoanSex = not TM_MoanSex
 				Return()
-			+ "Moan sex	| " .. AccBool(TM_MoanSex) [if not TM_MoanSex]
-				TM_MoanSex = true
-				Return()
-			+ "Moan cum	| " .. AccBool(game.FluidReaction) [if game.FluidReaction]
-				game.FluidReaction = false
-				Return()
-			+ "Moan cum	| " .. AccBool(game.FluidReaction) [if not game.FluidReaction]
-				game.FluidReaction = true
+			+ "Moan cum	| " .. AccBool(game.FluidReaction)
+				game.FluidReaction = not game.FluidReaction
 				Return()
 		+ else
 			+ "Moaning	| Disabled (VoiceMod)"
 				-- human "I know, right? Don't <b>MOAN</b> about it!\n(VoiceMod active, TrueMoaning disabled)"
 				Return(2)
-		+ "Wet sex	| " .. AccBool(TM_WetSex) [if TM_WetSex]
-			TM_WetSex = false
+		+ "Wet sex	| " .. AccBool(TM_WetSex)
+			TM_WetSex = not TM_WetSex
 			Return()
-		+ "Wet sex	| " .. AccBool(TM_WetSex) [if not TM_WetSex]
-			TM_WetSex = true
-			Return()
-		+ "Tween sex	| " .. AccBool(TM_TweenSex) [if TM_TweenSex]
-			TM_TweenSex = false
-			Return()
-		+ "Tween sex	| " .. AccBool(TM_TweenSex) [if not TM_TweenSex]
-			TM_TweenSex = true
+		+ "Tween sex	| " .. AccBool(TM_TweenSex)
+			TM_TweenSex = not TM_TweenSex
 			Return()
 		+ "Tween time	| " .. FDec(SexTweenTime(), tmOdec) .. "s"
 			-- human "To change this setting edit tm-config"
@@ -90,29 +75,17 @@ label TMMenuOptions(human)
 		+ "Delay		| " .. FDec(TM_DoubleClickTime, tmOdec) .. "s"
 			-- human "To change this setting edit tm-config"
 			Return()
-		+ "Reset		| " .. AccBool(TM_DoubleClickReset) [if TM_DoubleClickReset]
-			TM_DoubleClickReset = false
+		+ "Reset		| " .. AccBool(TM_DoubleClickReset)
+			TM_DoubleClickReset = not TM_DoubleClickReset
 			Return()
-		+ "Reset		| " .. AccBool(TM_DoubleClickReset) [if not TM_DoubleClickReset]
-			TM_DoubleClickReset = true
+		+ "Undress	| " .. AccBool(TM_DoubleClickUndress)
+			TM_DoubleClickUndress = not TM_DoubleClickUndress
 			Return()
-		+ "Undress	| " .. AccBool(TM_DoubleClickUndress) [if TM_DoubleClickUndress]
-			TM_DoubleClickUndress = false
+		+ "Moaning	| " .. AccBool(TM_DoubleClickMoan) [if not TMMOD_VoiceMod]
+			TM_DoubleClickMoan = not TM_DoubleClickMoan
 			Return()
-		+ "Undress	| " .. AccBool(TM_DoubleClickUndress) [if not TM_DoubleClickUndress]
-			TM_DoubleClickUndress = true
-			Return()
-		+ "Moaning	| " .. AccBool(TM_DoubleClickMoan) [if TM_DoubleClickMoan and not TMMOD_VoiceMod]
-			TM_DoubleClickMoan = false
-			Return()
-		+ "Moaning	| " .. AccBool(TM_DoubleClickMoan) [if not TM_DoubleClickMoan and not TMMOD_VoiceMod]
-			TM_DoubleClickMoan = true
-			Return()
-		+ "In other mods | " .. AccBool(TM_DoubleClickInOtherMods) [if TM_DoubleClickInOtherMods]
-			TM_DoubleClickInOtherMods = false
-			Return()
-		+ "In other mods | " .. AccBool(TM_DoubleClickInOtherMods) [if not TM_DoubleClickInOtherMods]
-			TM_DoubleClickInOtherMods = true
+		+ "In other mods | " .. AccBool(TM_DoubleClickInOtherMods)
+			TM_DoubleClickInOtherMods = not TM_DoubleClickInOtherMods
 			Return()
 		+ TM_MenuBack
 			Return(2)
@@ -123,29 +96,23 @@ label TMMenuOptions(human)
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
-		+ "Random body	| " .. AccBool(TM_SpawnRandomBody) [if TM_SpawnRandomBody]
-			TM_SpawnRandomBody = false
+		+ "AutoSex 		| " .. AccBool(TM_SpawnAutoSexOn)
+			TM_SpawnAutoSexOn = not TM_SpawnAutoSexOn
 			Return()
-		+ "Random body	| " .. AccBool(TM_SpawnRandomBody) [if not TM_SpawnRandomBody]
-			TM_SpawnRandomBody = true
+		+ "Random body	| " .. AccBool(TM_SpawnRandomBody)
+			TM_SpawnRandomBody = not TM_SpawnRandomBody
 			Return()
-		+ "Naked			| " .. AccBool(TM_SpawnNaked) [if TM_SpawnNaked]
-			TM_SpawnNaked = false
+		+ "Naked			| " .. AccBool(TM_SpawnNaked)
+			TM_SpawnNaked = not TM_SpawnNaked
 			Return()
-		+ "Naked			| " .. AccBool(TM_SpawnNaked) [if not TM_SpawnNaked]
-			TM_SpawnNaked = true
+		+ "Naked			| " .. AccBool(TM_SpawnNaked)
+			TM_SpawnNaked = not TM_SpawnNaked
 			Return()
-		+ "No sex		| " .. AccBool(TM_SpawnReset) [if TM_SpawnReset]
-			TM_SpawnReset = false
+		+ "No sex		| " .. AccBool(TM_SpawnReset)
+			TM_SpawnReset = not TM_SpawnReset
 			Return()
-		+ "No sex		| " .. AccBool(TM_SpawnReset) [if not TM_SpawnReset]
-			TM_SpawnReset = true
-			Return()
-		+ "No futa		| " .. AccBool(TM_SpawnNoFuta) [if TM_SpawnNoFuta]
-			TM_SpawnNoFuta = false
-			Return()
-		+ "No futa		| " .. AccBool(TM_SpawnNoFuta) [if not TM_SpawnNoFuta]
-			TM_SpawnNoFuta = true
+		+ "No futa		| " .. AccBool(TM_SpawnNoFuta)
+			TM_SpawnNoFuta = not TM_SpawnNoFuta
 			Return()
 		+ TM_MenuBack
 			Return(2)
