@@ -238,19 +238,19 @@ label TMMenuSex(human)
 	-- SEX CONTROL
 
 	-- GETTER HANDJOB
-	+ "| Handjob »	| " .. AccNum(GetActSpeedTarget(GetAct(human,Body.Hand), true), tmSdec) [if HasSex(human,Body.Hand)] [gold]
+	+ "| Handjob »	| " .. AccNum(GetActTarget(human,Body.Hand, ActValue.Speed), tmSdec) [if HasSex(human,Body.Hand)] [gold]
 		TMSexControl(human, GetAct(human,Body.Hand), true)
 	-- GIVER (MOUTH, VAGINA, ANUS)
-	+ "| Sex  »	| " .. AccNum(GetActSpeedTarget(GetAct(human,Body.Penis), false), tmSdec) [if HasSex(human,Body.Penis)] [gold]
+	+ "| Sex  »	| " .. AccNum(GetActTarget(human,Body.Penis, ActValue.Speed), tmSdec) [if HasSex(human,Body.Penis)] [gold]
 		TMSexControl(human, GetAct(human,Body.Penis), false)
 	-- GETTER MOUTH
-	+ "| Oral »	| " .. AccNum(GetActSpeedTarget(GetAct(human,Body.Mouth), false), tmSdec) [if HasSex(human,Body.Mouth)] [gold]
+	+ "| Oral »	| " .. AccNum(GetActTarget(human,Body.Mouth, ActValue.Speed), tmSdec) [if HasSex(human,Body.Mouth)] [gold]
 		TMSexControl(human, GetAct(human,Body.Mouth), false)
 	-- GETTER ANUS
-	+ "| Anal »	| " .. AccNum(GetActSpeedTarget(GetAct(human,Body.Anus), false), tmSdec) [if HasSex(human,Body.Anus)] [gold]
+	+ "| Anal »	| " .. AccNum(GetActTarget(human,Body.Anus, ActValue.Speed), tmSdec) [if HasSex(human,Body.Anus)] [gold]
 		TMSexControl(human, GetAct(human,Body.Anus), false)
 	-- GETTER VAGINA
-	+ "| Pussy »	| " .. AccNum(GetActSpeedTarget(GetAct(human,Body.Vagina), false), tmSdec) [if HasSex(human,Body.Vagina)] [gold]
+	+ "| Pussy »	| " .. AccNum(GetActTarget(human,Body.Vagina, ActValue.Speed), tmSdec) [if HasSex(human,Body.Vagina)] [gold]
 		TMSexControl(human, GetAct(human,Body.Vagina), false)
 
 	-- PENIS

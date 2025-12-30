@@ -1,4 +1,7 @@
 -- TrueMoan v1.7 by illa3d
+-------------------------------------------------------------------------------------------------
+-- AUTOSEX DEFINITIONS
+-------------------------------------------------------------------------------------------------
 -- Body enums
 Body = {
 	Hand = "Hand",
@@ -31,6 +34,23 @@ ActParam = {
 	DepthEndPenis = "m_autoEndDepth",
 	DepthEndHand = "m_autoHandEndDepth",
 }
+-- Act Parameters descriptions
+-- ENABLE (penis, hand)
+--  interaction.AutoActive = true
+--  interaction.m_autoHandActive = true
+-- SPEED (penis, hand)
+--  interaction.m_autoSpeed = speed (0.001 - 2)
+--  interaction.m_autoHandSpeed = speed (0.001 - 2)
+-- THRUST (penis, hand)
+--  interaction.m_autoThrustWeight = weight (1-3)
+--  interaction.m_autoHandThrustWeight = weight (1-3)
+-- DEPTH (penis, hand)
+--  interaction.m_autoStartDepth = depth (0-0.1.25)
+--  interaction.m_autoEndDepth = depth (0.05-1.3)
+--  interaction.m_autoHandStartDepth = depth (0-1.25)
+--  interaction.m_autoHandEndDepth = depth (0.05-1.3)
+-- GIVER VS GETTER (penis)
+--  interaction.AutoPenisWeight = weight (0-1)
 
 -- AutoSexParams
 AutoSexTimers = AutoSexTimers or {}
@@ -42,6 +62,7 @@ AutoSexParams = {
 	DeptE = { ActValue.DepthEnd, "SetActDepthEndRandomClose", true },
 	Weigh = { ActValue.Weight, "SetActWeightRandomClose", false } -- hands dont have weight
 }
+
 -------------------------------------------------------------------------------------------------
 -- CONFIG VALUES CLAMPING
 -------------------------------------------------------------------------------------------------
@@ -49,19 +70,18 @@ function AllowSextTweening() return TM_TweenSex and GetTweenTime() > 0 end
 function GetTweenTime() return ClampValue(TM_TweenTime, 0.1, 3) end
 function AutoSexMinTime() return ClampValue(TM_AutoSexTimeMin,1,20) end
 function AutoSexMaxTime() return ClampValue(TM_AutoSexTimeMax,1,20) end
-function GetDrift(actvalue)
-	if actvalue == ActValue.Speed then return Clamp01(TM_AutoSexSpeedDrift)
-	elseif actvalue == ActValue.Thrust then return Clamp01(TM_AutoSexThrustDrift)
-	elseif actvalue == ActValue.Weight then return Clamp01(TM_AutoSexWeightDrift)
-	elseif actvalue == ActValue.DepthStart then return Clamp01(TM_AutoSexDepthStartDrift)
-	elseif actvalue == ActValue.DepthEnd then return Clamp01(TM_AutoSexDepthEndDrift)
+function GetDrift(actValue)
+	if actValue == ActValue.Speed then return Clamp01(TM_AutoSexSpeedDrift)
+	elseif actValue == ActValue.Thrust then return Clamp01(TM_AutoSexThrustDrift)
+	elseif actValue == ActValue.Weight then return Clamp01(TM_AutoSexWeightDrift)
+	elseif actValue == ActValue.DepthStart then return Clamp01(TM_AutoSexDepthStartDrift)
+	elseif actValue == ActValue.DepthEnd then return Clamp01(TM_AutoSexDepthEndDrift)
 	else return 0.5 end
 end
 
 -------------------------------------------------------------------------------------------------
 -- INTERACTION PARAMETERS/VALUES SET/GET
 -------------------------------------------------------------------------------------------------
-
 -- Get Interaction parameter
 function GetActParam(actValue, isHand)
 	if actValue == ActValue.Active then return isHand and ActParam.ActiveHand or ActParam.ActivePenis
@@ -186,25 +206,18 @@ end
 -------------------------------------------------------------------------------------------------
 -- INTERACTION
 -------------------------------------------------------------------------------------------------
--- ENABLE (penis, hand)
---  interaction.AutoActive = true
---  interaction.m_autoHandActive = true
--- SPEED (penis, hand)
---  interaction.m_autoSpeed = speed (0.001 - 2)
---  interaction.m_autoHandSpeed = speed (0.001 - 2)
--- GIVER VS GETTER (penis)
---  interaction.AutoPenisWeight = weight (0-1)
--- THRUST (penis, hand)
---  interaction.m_autoThrustWeight = weight (1-3)
---  interaction.m_autoHandThrustWeight = weight (1-3)
--- DEPTH (penis)
---  interaction.m_autoStartDepth = depth (0-0.1.25)
---  interaction.m_autoEndDepth = depth (0.05-1.3)
--- DEPTH (hand)
---  interaction.m_autoHandStartDepth = depth (0-1.25)
---  interaction.m_autoHandEndDepth = depth (0.05-1.3)
-
+function SetInteractionActive(human, body, isActive) SetInteractionActive(GetAct(human, body), body == Body.Hand, isActive) end
 function SetInteractionActive(interaction, isHand, isActive) SetActValue(interaction, ActValue.Active, isHand, isActive) end
+
+function GetActTarget(human, body, actValue)
+	local isHand = body == Body.Hand
+	if actValue == ActValue.Speed then return GetActSpeedTarget(GetAct(human, body), isHand)
+	elseif actValue == ActValue.Thrust then return GetActThrustTarget(GetAct(human, body), isHand)
+	elseif actValue == ActValue.Weight then return GetActWeightTarget(GetAct(human, body), isHand)
+	elseif actValue == ActValue.DepthStart then return GetActDepthTarget(GetAct(human, body), isHand, true)
+	elseif actValue == ActValue.DepthEnd then return GetActDepthTarget(GetAct(human, body), isHand, false)
+	else return 0 end
+end
 
 -------------------------------------------------------------------------------------------------
 -- (PENIS/HAND) INTERACTION SPEED (0.001 - 2), UI ALLOWS ONLY (0.001 - 0.5)
