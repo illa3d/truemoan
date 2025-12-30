@@ -1,4 +1,4 @@
--- TrueMoan v1.3 by illa3d
+-- TrueMoan v1.7 by illa3d
 tmAdec = 2 -- decimals
 
 label TMMenuAnim(human)

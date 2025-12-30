@@ -1,4 +1,4 @@
--- TrueMoan v1.3 by illa3d
+-- TrueMoan v1.7 by illa3d
 ------------------------------------------------------------------------------------------------------------------
 -- TRUE MOAN DEFAULTS CONFIG (Values changed in options reset after scene load, here you set that permanent)
 ------------------------------------------------------------------------------------------------------------------
