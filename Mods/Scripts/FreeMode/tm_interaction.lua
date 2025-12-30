@@ -232,7 +232,7 @@ function AutoSexTick(human)
 	-- prevent multiple actors setting autosex on same interactions
 	if IsSexActive(human, ActBody.Mouth) and not IsAutoSexPartner(human, ActBody.Mouth) then AutoSexAct(ActGet(human, ActBody.Mouth), false) end
 	if IsSexActive(human, ActBody.Anus) and not IsAutoSexPartner(human, ActBody.Anus) then AutoSexAct(ActGet(human, ActBody.Anus), false) end
-	if IsSexActive(human, ActBody.Vagina) and not IsAutoSexPartner(human, ActBody.Anus) then AutoSexAct(ActGet(human, ActBody.Vagina), false) end
+	if IsSexActive(human, ActBody.Vagina) and not IsAutoSexPartner(human, ActBody.Vagina) then AutoSexAct(ActGet(human, ActBody.Vagina), false) end
 end
 
 -- Calculate timer against ticker and fire events for each active interaction
@@ -363,7 +363,7 @@ function ActThrustSet_Step(interaction, weightStep, increase, isHand)
 	return ActThrustSet(interaction, weight, isHand)
 end
 function ActThrustSet(interaction, weight, isHand)
-	local weight = DenormalizeValue(ActValueGet_RawMinMaxClamp(weight, ActValue.Thrust),1,3)
+	local weight = DenormalizeValue(Clamp01(weight), 1, 3)
 	ActActiveSet(interaction, isHand, true)
 	if SexTweenAllow() then ActTweenTo(interaction, ActValueParamNameGet(ActValue.Thrust, isHand), weight, SexTweenTime())
 	else ActValueSet_Raw(interaction, ActValue.Thrust, isHand, weight) end
