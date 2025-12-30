@@ -1,15 +1,4 @@
 -- TrueMoan v1.3 by illa3d
-
--- Human states
-TM_HumanStates = TM_HumanStates or {}
-TM_NextHumanId = TM_NextHumanId or 1
-
-HumanState = {
-	ID = nil,
-	Name = nil,
-	AutoSex = false,
-}
-
 -- Body enums
 Body = {
 	Hand = "Hand",
@@ -43,6 +32,16 @@ ActParam = {
 	DepthEndHand = "m_autoHandEndDepth",
 }
 
+-- AutoSexParams
+AutoSexTimers = AutoSexTimers or {}
+AutoSexTickTime = 0.25
+AutoSexParams = {
+	Speed = { ActValue.Speed, "SetActSpeedRandomClose", true },
+	Thrus = { ActValue.Thrust, "SetActThrustRandomClose", true },
+	DeptS = { ActValue.DepthStart,"SetActDepthStartRandomClose", true },
+	DeptE = { ActValue.DepthEnd, "SetActDepthEndRandomClose", true },
+	Weigh = { ActValue.Weight, "SetActWeightRandomClose", false } -- hands dont have weight
+}
 -------------------------------------------------------------------------------------------------
 -- CONFIG VALUES CLAMPING
 -------------------------------------------------------------------------------------------------
@@ -57,36 +56,6 @@ function GetDrift(actvalue)
 	elseif actvalue == ActValue.DepthStart then return Clamp01(TM_AutoSexDepthStartDrift)
 	elseif actvalue == ActValue.DepthEnd then return Clamp01(TM_AutoSexDepthEndDrift)
 	else return 0.5 end
-end
-
--------------------------------------------------------------------------------------------------
--- HUMAN STATE
--------------------------------------------------------------------------------------------------
-local function CopyTable(src)
-	local t = {}
-	for k, v in pairs(src) do t[k] = v end
-	return t
-end
-
--- must be hooked to OnCreateHuman
-function AddHuman(human)
-	if not human then return end
-	local state = CopyTable(HumanState)
-	state.ID = TM_NextHumanId
-	TM_NextHumanId = TM_NextHumanId + 1
-	state.Name = human.Name
-	TM_HumanStates[human] = state
-end
-
--- must be hooked to OnRemoveHuman
-function RemoveHuman(human)
-	if not human then return end
-	TM_HumanStates[human] = nil
-end
-
-function GetHumanState(human)
-	if not human then return nil end
-	return TM_HumanStates[human]
 end
 
 -------------------------------------------------------------------------------------------------
@@ -178,50 +147,40 @@ end
 -------------------------------------------------------------------------------------------------
 -- AUTO SEX
 -------------------------------------------------------------------------------------------------
-function StartAutoSex(human)
-	local state = GetHumanState(human)
-	if not state then return end
-	state.AutoSex = true
-	if HasSex(human, Body.Hand) then StartAutoHandAct(human, human.Penis.Interaction) end
-	if HasSex(human, Body.Penis) then StartAutoPenisAct(human, human.Penis.Interaction) end
-	if HasSex(human, Body.Mouth) then StartAutoPenisAct(human, human.Mouth.Fucker.Penis.Interaction) end
-	if HasSex(human, Body.Anus) then StartAutoPenisAct(human, human.Anus.Fucker.Penis.Interaction) end
-	if HasSex(human, Body.Vagina) then StartAutoPenisAct(human, human.Vagina.Fucker.Penis.Interaction) end
+function IsAutoSex(human) return game.HasAnim(human) end
+
+function AutoSexToggle(human) AutoSex(human, not IsAutoSex(human)) end
+function StartAutoSex(human) AutoSex(human, true) end
+function StopAutoSex(human) AutoSex(human, false) end
+function AutoSex(human, active)
+	if active then game.AddRepeatAnim(AutoSexTickTime, || AutoSexTick(human), human)
+	else game.RemoveAnim(human) end
 end
 
-function StopAutoSex(human)
-	local state = GetHumanState(human)
-	if state ~= nil then state.AutoSex = false end
+-- Randomize all active interactions
+function AutoSexTick(human)
+	if IsSexActive(human, Body.Hand) then AutoSexAct(GetAct(human, Body.Hand), true) end
+	if IsSexActive(human, Body.Penis) then AutoSexAct(GetAct(human, Body.Penis), false) end
+	if IsSexActive(human, Body.Mouth) then AutoSexAct(GetAct(human, Body.Mouth), false) end
+	if IsSexActive(human, Body.Anus) then AutoSexAct(GetAct(human, Body.Anus), false) end
+	if IsSexActive(human, Body.Vagina) then AutoSexAct(GetAct(human, Body.Vagina), false) end
 end
 
-function StartAutoHandAct(human, interaction)
-	if not AllowAutoSex(human) then return end
-	if (GetDrift(ActValue.Speed) > 0) then StartRandomLoop(human, SetActSpeedRandomClose, interaction, true) end
-	if (GetDrift(ActValue.Thrust) > 0) then StartRandomLoop(human, SetActThrustRandomClose, interaction, true) end
-	if (GetDrift(ActValue.DepthStart) > 0) then StartRandomLoop(human, SetActDepthStartRandomClose, interaction, true) end
-	if (GetDrift(ActValue.DepthEnd) > 0) then StartRandomLoop(human, SetActDepthEndRandomClose, interaction, true) end
-end
-
-function StartAutoPenisAct(human, interaction)
-	if not AllowAutoSex(human) then return end
-	if (GetDrift(ActValue.Speed) > 0) then StartRandomLoop(human, SetActSpeedRandomClose, interaction, false) end
-	if (GetDrift(ActValue.Thrust) > 0) then StartRandomLoop(human, SetActThrustRandomClose, interaction, false) end
-	if (GetDrift(ActValue.Weight) > 0) then StartRandomLoop(human, SetActWeightRandomClose, interaction, false) end
-	if (GetDrift(ActValue.DepthStart) > 0) then StartRandomLoop(human, SetActDepthStartRandomClose, interaction, false) end
-	if (GetDrift(ActValue.DepthEnd) > 0) then StartRandomLoop(human, SetActDepthEndRandomClose, interaction, false) end
-end
-
-function StartRandomLoop(human, randomFunc, interaction, isHand)
-	if not AllowAutoSex(human) then return end
-	randomFunc(interaction, isHand)
-	Delayed(GetRandom(AutoSexMinTime(), AutoSexMaxTime()), function()
-		if GetHumanState(human) then StartRandomLoop(human, randomFunc, interaction, isHand) end
-	end)
-end
-
-function AllowAutoSex(human)
-	local state = GetHumanState(human)
-	return state and state.AutoSex
+-- Calculate timer against ticker and fire events for each active interaction
+function AutoSexAct(interaction, isHand)
+	if not interaction then return end
+	local timer = AutoSexTimers[interaction]
+	if not timer then timer = {} AutoSexTimers[interaction] = timer end
+	for key, p in pairs(AutoSexParams) do
+		local actValue, funcName, allowHand = p[1], p[2], p[3]
+		if GetDrift(actValue) > 0 and (not isHand or allowHand) then
+			timer[key] = (timer[key] or 0) - AutoSexTickTime
+			if timer[key] <= 0 then
+				_G[funcName](interaction, isHand)
+				timer[key] = GetRandom(AutoSexMinTime(), AutoSexMaxTime())
+			end
+		end
+	end
 end
 
 -------------------------------------------------------------------------------------------------
@@ -238,9 +197,12 @@ end
 -- THRUST (penis, hand)
 --  interaction.m_autoThrustWeight = weight (1-3)
 --  interaction.m_autoHandThrustWeight = weight (1-3)
--- DEPTH (penis, hand)
---  interaction.m_autoStartDepth = depth (0-0.95)
---  interaction.m_autoEndDepth = depth (0.05-1)
+-- DEPTH (penis)
+--  interaction.m_autoStartDepth = depth (0-0.1.25)
+--  interaction.m_autoEndDepth = depth (0.05-1.3)
+-- DEPTH (hand)
+--  interaction.m_autoHandStartDepth = depth (0-1.25)
+--  interaction.m_autoHandEndDepth = depth (0.05-1.3)
 
 function SetInteractionActive(interaction, isHand, isActive) SetActValue(interaction, ActValue.Active, isHand, isActive) end
 

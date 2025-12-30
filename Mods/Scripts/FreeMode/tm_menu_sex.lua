@@ -231,11 +231,8 @@ label TMMenuSex(human)
 				Return()
 		
 	-- AUTOSEX
-	+ "| Auto Sex	| " .. AccBool(GetHumanState(human).AutoSex) [if GetHumanState(human).AutoSex] [gold]
-		StopAutoSex(human)
-		Return()
-	+ "| Auto Sex	| " .. AccBool(GetHumanState(human).AutoSex) [if not GetHumanState(human).AutoSex] [gold]
-		StartAutoSex(human)
+	+ "| Auto Sex	| " .. AccBool(IsAutoSex(human)) [gold]
+		AutoSexToggle(human)
 		Return()
 
 	-- SEX CONTROL
