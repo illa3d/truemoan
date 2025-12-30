@@ -3,7 +3,10 @@
 -- AUTOSEX DEFINITIONS (Act = Interaction)
 -------------------------------------------------------------------------------------------------
 -- Sex Tweens
+-- Active tweens list (for update loop)
 local actActiveTweens = {}
+-- Fast lookup map: act -> param -> tween
+local actActiveTweenMap = {}
 
 -- Body enums
 ActBody = {
@@ -425,19 +428,19 @@ end
 -------------------------------------------------------------------------------------------------
 
 -- Gets value from TWEEN TARGET or RAW
--- If the tween is runnin, value is fetched from the target, since RAW is being animated
+-- If a tween exists, return its TARGET (not interpolated value)
 function ActTweenOrValueGet(act, param)
 	-- SCENARIO A: A tween is currently running.
 	-- We loop through the list to find it.
-	for i = 1, #actActiveTweens do
-		local t = actActiveTweens[i]
-		if t.object == act and t.param == param then
+	local actMap = actActiveTweenMap[act]
+	if actMap then
+		local t = actMap[param]
+		if t then
 			-- We found a tween! Return where it is GOING (Target), 
 			-- not where it is right now.
-			return t.targetVal 
+			return t.targetVal
 		end
 	end
-
 	-- SCENARIO B: No tween found. 
 	-- (Either the UI just opened, or the tween finished and was removed).
 	-- We return the underlying value directly from the object.
@@ -446,29 +449,40 @@ end
 
 -- Start a tween on a specific property of the interaction object
 function ActTweenTo(act, param, targetValue, duration)
-	-- Remove existing tween for this parameter if it exists to avoid conflicts
-	for i = #actActiveTweens, 1, -1 do
-		local t = actActiveTweens[i]
-		if t.object == act and t.param == param then
-			table.remove(actActiveTweens, i)
+	if not act or not param then return end
+	-- Initialize map for this interaction
+	actActiveTweenMap[act] = actActiveTweenMap[act] or {}
+	local actMap = actActiveTweenMap[act]
+	-- Remove existing tween for this parameter
+	local existing = actMap[param]
+	if existing then
+		for i = #actActiveTweens, 1, -1 do
+			if actActiveTweens[i] == existing then
+				table.remove(actActiveTweens, i)
+				break
+			end
 		end
+		actMap[param] = nil
 	end
-	-- Start new tween
-	local startValue = act[param]
-	-- Fallback if duration is somehow nil, preventing crash
-	duration = duration or 0.5 
-	-- If duration is effectively zero, set immediately
-	if duration <= 0.001 then act[param] = targetValue return end
-	table.insert(actActiveTweens, {
+	-- Duration fallback
+	duration = duration or 0.5
+	-- Instant set
+	if duration <= 0.001 then act[param] = targetValue return
+	end
+	-- Create tween
+	local tween = {
 		object = act,
 		param = param,
-		startVal = startValue,
+		startVal = act[param],
 		targetVal = targetValue,
 		duration = duration,
 		elapsed = 0
-	})
+	}
+	table.insert(actActiveTweens, tween)
+	actMap[param] = tween
 end
 
+-- Update all active tweens
 function ActTweensUpdate(deltaTime)
 	if not SexTweenAllow() then return end
 	for i = #actActiveTweens, 1, -1 do
@@ -476,14 +490,21 @@ function ActTweensUpdate(deltaTime)
 		t.elapsed = t.elapsed + deltaTime
 		local progress = t.elapsed / t.duration
 		if progress >= 1 then
-			-- Finished
+			-- Finish tween
 			t.object[t.param] = t.targetVal
+			-- Remove from map
+			local actMap = actActiveTweenMap[t.object]
+			if actMap then
+				actMap[t.param] = nil
+				if next(actMap) == nil then
+					actActiveTweenMap[t.object] = nil
+				end
+			end
 			table.remove(actActiveTweens, i)
 		else
-			-- Interpolate (using SmoothStep / EaseInOut)
+			-- SmoothStep interpolation
 			local ease = progress * progress * (3 - 2 * progress)
-			local currentVal = t.startVal + (t.targetVal - t.startVal) * ease
-			t.object[t.param] = currentVal
+			t.object[t.param] = t.startVal + (t.targetVal - t.startVal) * ease
 		end
 	end
 end
