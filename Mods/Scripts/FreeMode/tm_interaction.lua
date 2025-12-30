@@ -238,14 +238,13 @@ end
 -- Calculate timer against ticker and fire events for each active interaction
 function AutoSexAct(interaction, isHand)
 	if not interaction then return end
-	-- BLOWJOB STOPS HANDJOB
-	-- local timer = ActAutoSexTimers[interaction]
-	-- if not timer then timer = {} ActAutoSexTimers[interaction] = timer end
-	-- BLOWJOB AND HANDJOB TOGETHER
-	ActAutoSexTimers[interaction] = ActAutoSexTimers[interaction] or {}
-	local timer = ActAutoSexTimers[interaction][isHand]
-	if not timer then timer = {} ActAutoSexTimers[interaction][isHand] = timer end
-	-- end of choice
+	-- Pre-init timers once per interaction
+	local timers = ActAutoSexTimers[interaction]
+	if not timers then
+		timers = { [true] = {}, [false] = {} }
+		ActAutoSexTimers[interaction] = timers
+	end
+	local timer = timers[isHand]
 	for key, p in pairs(ActAutoSexParams) do
 		local actValue, funcName, allowHand = p[1], p[2], p[3]
 		if AutoSexDrift(actValue) > 0 and (not isHand or allowHand) then
