@@ -230,13 +230,6 @@ label TMMenuSex(human)
 				HumanWetSet(human, 10000, "Vagina")
 				Return()
 		
-	-- AUTOSEX
-	+ "| Auto Sex	| " .. AccBool(IsAutoSex(human)) [gold]
-		AutoSexToggle(human)
-		Return()
-
-	-- SEX CONTROL
-
 	-- GETTER HANDJOB
 	+ "| Handjob »	| " .. AccNum(ActValueGet_ByBody(human,ActBody.Hand, ActValue.Speed), tmSdec) [if HasSex(human,ActBody.Hand)] [gold]
 		TMSexControl(human, ActGet(human,ActBody.Hand), true)
@@ -252,6 +245,10 @@ label TMMenuSex(human)
 	-- GETTER VAGINA
 	+ "| Pussy »	| " .. AccNum(ActValueGet_ByBody(human,ActBody.Vagina, ActValue.Speed), tmSdec) [if HasSex(human,ActBody.Vagina)] [gold]
 		TMSexControl(human, ActGet(human,ActBody.Vagina), false)
+	-- AUTOSEX
+	+ "| Auto Sex	| " .. AccBool(IsAutoSex(human)) [gold]
+		AutoSexToggle(human)
+		Return()
 
 	-- PENIS
 	+ "| Cum »	| " .. AccStr(tmCumevery .. "s") [if HumanHasPenis(human)] [gold]

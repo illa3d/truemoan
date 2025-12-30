@@ -23,22 +23,21 @@ ActValue = {
 	DepthEnd = "DepthEnd",
 }
 
-ActMinMax = {
+ActRawMinMax = { -- values as they are in TrueFacials
 	Speed = { Min = 0.001, Max = 2 },
 	Weight = { Min = 0, Max = 1 },
-	Thrust = { Min = 1, Max = 3 },
+	Thrust = { Min = 1, Max = 3 }, -- raw thrust values
 	DepthStart = { Min = 0, Max = 1.2 },
 	DepthEnd = { Min = 0.1, Max = 1.3 }
 }
 
-ActRandomNear = {
+ActRandomNear = { -- values with thrust normalized. bias is minimum move
 	Speed = { Min = 0.1, Max = 1.9, Bias = 0.1 },
 	Weight = { Min = 0.1, Max = 0.9, Bias = 0.03 },
-	Thrust = { Min = 0.1, Max = 0.9, Bias = 0.05 },
+	Thrust = { Min = 0.1, Max = 0.9, Bias = 0.05 }, -- normalized thrust values
 	DepthStart = { Min = 0, Max = 0.5, Bias = 0.1 },
 	DepthEnd = { Min = 0.6, Max = 1.2, Bias = 0.1 },
 }
-
 
 -- Act (interaction) Parameters (actual names of values in interaction)
 ActParam = {
@@ -201,7 +200,7 @@ function ActValueGet_Current(interaction, actValue, isHand)
 end
 
 function ActValueGet_MinMax(value, actValue)
-	local mm = ActMinMax[actValue]
+	local mm = ActRawMinMax[actValue]
 	return mm and ClampValue(value, mm.Min, mm.Max) or value
 end
 
@@ -391,7 +390,7 @@ end
 
 -- RANDOM TOGETHER
 function ActDepthSet_RandomNear(interaction, isHand)
-	ActDepthStartEndSet(interaction, ActValueGet_RandomNear(interaction, ActValue.DepthStart, isHand), ActValueGet_RandomNear(interaction, ActValue.DepthEnd, isHand), isHand)
+	ActDepthSet_StartEnd(interaction, ActValueGet_RandomNear(interaction, ActValue.DepthStart, isHand), ActValueGet_RandomNear(interaction, ActValue.DepthEnd, isHand), isHand)
 end
 
 -- SET STEP
@@ -402,7 +401,7 @@ function ActDepthSet_Step(interaction, depthStep, increase, isHand, isStartDepth
 	return ActDepthSet(interaction, depth, isHand, isStartDepth)
 end
 -- SET TOGETHER
-function ActDepthStartEndSet(interaction, depthStart, depthEnd, isHand)
+function ActDepthSet_StartEnd(interaction, depthStart, depthEnd, isHand)
 	ActDepthSet(interaction, depthStart, isHand, true)
 	ActDepthSet(interaction, depthEnd, isHand, false)
 end
