@@ -79,10 +79,10 @@ ActAutoSexTimers = ActAutoSexTimers or {}
 ActAutoSexTickTime = 0.5
 ActAutoSexParams = {
 	Speed = { ActValue.Speed, "ActSpeedSet_RandomNear", true },
-	Thrus = { ActValue.Thrust, "ActThrustSet_RandomNear", true },
-	DeptS = { ActValue.DepthStart,"ActDepthStartSet_RandomNear", true },
-	DeptE = { ActValue.DepthEnd, "ActDepthEndSet_RandomNear", true },
-	Weigh = { ActValue.Weight, "ActWeightSet_RandomNear", false } -- hands dont have weight
+	Thrust = { ActValue.Thrust, "ActThrustSet_RandomNear", true },
+	DepthStart = { ActValue.DepthStart,"ActDepthStartSet_RandomNear", true },
+	DepthEnd = { ActValue.DepthEnd, "ActDepthEndSet_RandomNear", true },
+	Weight = { ActValue.Weight, "ActWeightSet_RandomNear", false } -- hands dont have weight
 }
 
 -------------------------------------------------------------------------------------------------
@@ -202,7 +202,7 @@ function ActValueGet_Current(interaction, actValue, isHand)
 	return ActTweenOrValueGet(interaction, ActValueParamNameGet(actValue, isHand))
 end
 
-function ActValueGet_MinMax(value, actValue)
+function ActValueGet_RawMinMaxClamp(value, actValue)
 	local mm = ActRawMinMax[actValue]
 	return mm and ClampValue(value, mm.Min, mm.Max) or value
 end
@@ -307,7 +307,7 @@ function ActSpeedSet_Step(interaction, speedStep, increase, isHand)
 	return ActSpeedSet(interaction, speed, isHand)
 end
 function ActSpeedSet(interaction, speed, isHand)
-	local speed = ActValueGet_MinMax(speed, ActValue.Speed)
+	local speed = ActValueGet_RawMinMaxClamp(speed, ActValue.Speed)
 	ActActiveSet(interaction, isHand, true)
 	if SexTweenAllow() then ActTweenTo(interaction, ActValueParamNameGet(ActValue.Speed, isHand), speed, SexTweenTime())
 	else ActValueSet_Raw(interaction, ActValue.Speed, isHand, speed) end
@@ -336,7 +336,7 @@ function ActWeightSet_Step(interaction, weightStep, increase, isHand)
 end
 function ActWeightSet(interaction, weight, isHand)
 	if isHand then return end -- no interaction weight in handjobs
-	local weight = ActValueGet_MinMax(weight, ActValue.Weight)
+	local weight = ActValueGet_RawMinMaxClamp(weight, ActValue.Weight)
 	ActActiveSet(interaction, false, true)
 	if SexTweenAllow() then ActTweenTo(interaction, ActParam.WeightPenis, weight, SexTweenTime())
 	else ActValueSet_Raw(interaction, ActValue.Weight, false, weight) end
@@ -363,7 +363,7 @@ function ActThrustSet_Step(interaction, weightStep, increase, isHand)
 	return ActThrustSet(interaction, weight, isHand)
 end
 function ActThrustSet(interaction, weight, isHand)
-	local weight = DenormalizeValue(ActValueGet_MinMax(weight, ActValue.Thrust),1,3)
+	local weight = DenormalizeValue(ActValueGet_RawMinMaxClamp(weight, ActValue.Thrust),1,3)
 	ActActiveSet(interaction, isHand, true)
 	if SexTweenAllow() then ActTweenTo(interaction, ActValueParamNameGet(ActValue.Thrust, isHand), weight, SexTweenTime())
 	else ActValueSet_Raw(interaction, ActValue.Thrust, isHand, weight) end
@@ -409,7 +409,7 @@ function ActDepthSet_StartEnd(interaction, depthStart, depthEnd, isHand)
 end
 -- SET SPLIT
 function ActDepthSet(interaction, depth, isHand, isStartDepth)
-	depth = ActValueGet_MinMax(depth, isStartDepth and ActValue.DepthStart or ActValue.DepthEnd )
+	depth = ActValueGet_RawMinMaxClamp(depth, isStartDepth and ActValue.DepthStart or ActValue.DepthEnd )
 	ActActiveSet(interaction, isHand, true)
 	if SexTweenAllow() then
 		local paramName = ActValueParamNameGet(isStartDepth and ActValue.DepthStart or ActValue.DepthEnd, isHand)
