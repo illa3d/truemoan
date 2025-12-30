@@ -31,14 +31,6 @@ ActMinMax = {
 	DepthEnd = { Min = 0.1, Max = 1.3 }
 }
 
-ActRandom = {
-	Speed = { Min = 0, Max = 0.0 },
-	Weight = { Min = 0.0, Max = 0.0 },
-	Thrust = { Min = 0.0, Max = 0.0 },
-	DepthStart = { Min = 0, Max = 0.0 },
-	DepthEnd = { Min = 0.0, Max = 0.0 },
-}
-
 ActRandomNear = {
 	Speed = { Min = 0.1, Max = 1.9, Bias = 0.1 },
 	Weight = { Min = 0.1, Max = 0.9, Bias = 0.03 },
@@ -213,10 +205,6 @@ function ActValueGet_MinMax(value, actValue)
 	return mm and ClampValue(value, mm.Min, mm.Max) or value
 end
 
-function ActValueGet_Random(actValue)
-	local r = ActRandom[actValue] return r and GetRandomFloat(r.Min, r.Max) or 0
-end
-
 function ActValueGet_RandomNear(interaction, actValue, isHand)
 	local rn = ActRandomNear[actValue] if not rn then return 0 end
 	return GetRandomFloatNear(ActValueGet_Current(interaction, actValue, isHand), AutoSexDrift(actValue), rn.Min, rn.Max, rn.Bias )
@@ -305,7 +293,6 @@ function ActSpeedGet_Raw(interaction, isHand) return ActValueGet_Raw(interaction
 function ActSpeedGet(interaction, isHand) return ActTweenOrValueGet(interaction, ActValueParamNameGet(ActValue.Speed, isHand)) end
 
 -- RANDOM
-function ActSpeedSet_Random(interaction, isHand) return ActSpeedSet(interaction, GetRandomFloat(0.1, 0.5), isHand) end
 function ActSpeedSet_RandomNear(interaction, isHand)
 	return ActSpeedSet(interaction, ActValueGet_RandomNear(interaction, ActValue.Speed, isHand), isHand )
 end
@@ -335,7 +322,6 @@ function ActWeightGet_Raw(interaction, isHand) return ActValueGet_Raw(interactio
 function ActWeightGet(interaction, isHand) return isHand and 0 or ActTweenOrValueGet(interaction, ActParam.WeightPenis) end
 
 -- RANDOM
-function ActWeightSet_Random(interaction, isHand) return ActWeightSet(interaction, GetRandomFloat(0.2,0.8), isHand) end
 function ActWeightSet_RandomNear(interaction, isHand)
 	return ActWeightSet(interaction, ActValueGet_RandomNear(interaction, ActValue.Weight, false), false) -- ignore isHand (hands don't have weights)
 end
@@ -364,7 +350,6 @@ function ActThrustGet_Raw(interaction, isHand) return NormalizeValue(ActValueGet
 function ActThrustGet(interaction, isHand) return NormalizeValue(ActTweenOrValueGet(interaction, ActValueParamNameGet(ActValue.Thrust, isHand)), 1, 3) end
 
 -- RANDOM
-function ActThrustSet_Random(interaction, isHand) return ActThrustSet(interaction, GetRandomFloat(0,0.5), isHand) end
 function ActThrustSet_RandomNear(interaction, isHand)
 	return ActThrustSet(interaction, ActValueGet_RandomNear(interaction, ActValue.Thrust, isHand), isHand)
 end
@@ -397,25 +382,16 @@ function ActDepthGet(interaction, isHand, isStartDepth)
 end
 
 -- RANDOM SPLIT
-function ActDepthStartSet_Random(interaction, isHand) return ActDepthSet(interaction, GetRandomFloat(0.1, 0.4), isHand, true) end
 function ActDepthStartSet_RandomNear(interaction, isHand)
 	return ActDepthSet(interaction, ActValueGet_RandomNear(interaction, ActValue.DepthStart, isHand), isHand, true)
 end
-
-function ActDepthEndSet_Random(interaction, isHand) return ActDepthSet(interaction, GetRandomFloat(0.6, 1), isHand, false) end
 function ActDepthEndSet_RandomNear(interaction, isHand)
 	return ActDepthSet(interaction, ActValueGet_RandomNear(interaction, ActValue.DepthEnd, isHand), isHand, false)
 end
 
 -- RANDOM TOGETHER
-function ActDepthSet_Random(interaction, isHand)
-	local startValue = ActDepthSet(interaction, GetRandomFloat(0.1, 0.4), isHand, true)
-	local endValue = ActDepthSet(interaction, GetRandomFloat(0.6, 1), isHand, false)
-	return startValue, endValue
-end
-
 function ActDepthSet_RandomNear(interaction, isHand)
-	ActDepthSet_StartEnd(interaction, ActValueGet_RandomNear(interaction, ActValue.DepthStart, isHand), ActValueGet_RandomNear(interaction, ActValue.DepthEnd, isHand), isHand)
+	ActDepthStartEndSet(interaction, ActValueGet_RandomNear(interaction, ActValue.DepthStart, isHand), ActValueGet_RandomNear(interaction, ActValue.DepthEnd, isHand), isHand)
 end
 
 -- SET STEP
@@ -426,7 +402,7 @@ function ActDepthSet_Step(interaction, depthStep, increase, isHand, isStartDepth
 	return ActDepthSet(interaction, depth, isHand, isStartDepth)
 end
 -- SET TOGETHER
-function ActDepthSet_StartEnd(interaction, depthStart, depthEnd, isHand)
+function ActDepthStartEndSet(interaction, depthStart, depthEnd, isHand)
 	ActDepthSet(interaction, depthStart, isHand, true)
 	ActDepthSet(interaction, depthEnd, isHand, false)
 end
