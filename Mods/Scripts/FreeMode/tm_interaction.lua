@@ -109,7 +109,7 @@ function AutoSexDrift(actValue)
 	elseif actValue == ActValue.Weight then return Clamp01(TM_AutoSexWeightDrift)
 	elseif actValue == ActValue.DepthStart then return Clamp01(TM_AutoSexDepthStartDrift)
 	elseif actValue == ActValue.DepthEnd then return Clamp01(TM_AutoSexDepthEndDrift)
-	else return 0.5 end
+	else return 0 end
 end
 
 -------------------------------------------------------------------------------------------------
@@ -266,7 +266,8 @@ function AutoSexAct(interaction, isHand)
 		if AutoSexDrift(actValue) > 0 and (not isHand or allowHand) then
 			timer[key] = (timer[key] or 0) - ActAutoSexTickTime
 			if timer[key] <= 0 then
-				_G[funcName](interaction, isHand)
+				local f = _G[funcName]
+				if f then f(interaction, isHand) end
 				timer[key] = GetRandom(AutoSexMinTime(), AutoSexMaxTime())
 			end
 		end
@@ -293,7 +294,7 @@ function ActValueGet_ByBody(human, body, actValue)
 	elseif actValue == ActValue.Weight then return ActWeightGet(ActGet(human, body), isHand)
 	elseif actValue == ActValue.DepthStart then return ActDepthGet(ActGet(human, body), isHand, true)
 	elseif actValue == ActValue.DepthEnd then return ActDepthGet(ActGet(human, body), isHand, false)
-	else return 0 end
+	elseif actValue == ActValue.Active then return IsSexActive(human, body) and 1 or 0 end
 end
 
 -------------------------------------------------------------------------------------------------
