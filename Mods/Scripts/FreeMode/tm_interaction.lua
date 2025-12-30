@@ -484,15 +484,13 @@ end
 
 -- Update all active tweens
 function ActTweensUpdate(deltaTime)
-	if not SexTweenAllow() then return end
+	if not SexTweenAllow() or #actActiveTweens == 0 then return end
 	for i = #actActiveTweens, 1, -1 do
 		local t = actActiveTweens[i]
 		t.elapsed = t.elapsed + deltaTime
-		local progress = t.elapsed / t.duration
-		if progress >= 1 then
-			-- Finish tween
+		if t.elapsed >= t.duration then
+			-- finish
 			t.object[t.param] = t.targetVal
-			-- Remove from map
 			local actMap = actActiveTweenMap[t.object]
 			if actMap then
 				actMap[t.param] = nil
@@ -500,10 +498,12 @@ function ActTweensUpdate(deltaTime)
 					actActiveTweenMap[t.object] = nil
 				end
 			end
-			table.remove(actActiveTweens, i)
+			-- swap-remove
+			actActiveTweens[i] = actActiveTweens[#actActiveTweens]
+			actActiveTweens[#actActiveTweens] = nil
 		else
-			-- SmoothStep interpolation
-			local ease = progress * progress * (3 - 2 * progress)
+			local p = t.elapsed / t.duration
+			local ease = p * p * (3 - 2 * p)
 			t.object[t.param] = t.startVal + (t.targetVal - t.startVal) * ease
 		end
 	end
