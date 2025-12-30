@@ -88,6 +88,7 @@ end
 
 -- SEX
 function HasSex(human, body)
+	if human == nil then return false
 	if body == ActBody.Hand and human.Penis.m_holdDepth ~= 0 then return true
 	elseif body == ActBody.Penis and human.Penis.Hole ~= nil then return true
 	elseif body == ActBody.Mouth and human.Mouth.Fucker ~= nil then return true
@@ -97,12 +98,20 @@ function HasSex(human, body)
 end
 
 function IsSexActive(human, body)
-	if not HasSex(human, body) then return false end
+	if human == nil or not HasSex(human, body) or ActGet(human, body) == nil then return false end
 	if body == ActBody.Hand and human.Penis.Interaction.m_autoHandActive == true then return true
 	elseif body == ActBody.Penis and human.Penis.Interaction.AutoActive == true then return true
 	elseif body == ActBody.Mouth and human.Mouth.Fucker.Penis.Interaction.AutoActive == true then return true
 	elseif body == ActBody.Anus and human.Anus.Fucker.Penis.Interaction.AutoActive == true then return true
 	elseif body == ActBody.Vagina and human.Vagina.Fucker.Penis.Interaction.AutoActive == true then return true
+	else return false end
+end
+
+function IsAutoSexPartner(human, body)
+	if human == nil or not HasSex(human, body) then return false
+	if body == ActBody.Mouth and IsAutoSex(human.Mouth.Fucker) then return true
+	elseif body == ActBody.Anus and IsAutoSex(human.Anus.Fucker) then return true
+	elseif body == ActBody.Vagina and IsAutoSex(human.Vagina.Fucker) then return true
 	else return false end
 end
 
@@ -166,22 +175,24 @@ end
 -------------------------------------------------------------------------------------------------
 -- AUTO SEX
 -------------------------------------------------------------------------------------------------
-function IsAutoSex(human) return game.HasAnim(human) end
 function AutoSexToggle(human) AutoSex(human, not IsAutoSex(human)) end
 function AutoSexStart(human) AutoSex(human, true) end
 function AutoSexStop(human) AutoSex(human, false) end
 function AutoSex(human, active)
-	if active then game.AddRepeatAnim(ActAutoSexTickTime, || AutoSexTick(human), human)
-	else game.RemoveAnim(human) end
+	if active then game.AddRepeatAnim(ActAutoSexTickTime, || AutoSexTick(human), human.calfNames)
+	else game.RemoveAnim(human.calfNames) end 
 end
+function IsAutoSex(human) return human and game.HasAnim(human.calfNames) end -- faunalabs took most of the assignments, this is one that exists lol
 
 -- Randomize all active interactions
 function AutoSexTick(human)
+	if human == nil then return end
 	if IsSexActive(human, ActBody.Hand) then AutoSexAct(ActGet(human, ActBody.Hand), true) end
 	if IsSexActive(human, ActBody.Penis) then AutoSexAct(ActGet(human, ActBody.Penis), false) end
-	if IsSexActive(human, ActBody.Mouth) then AutoSexAct(ActGet(human, ActBody.Mouth), false) end
-	if IsSexActive(human, ActBody.Anus) then AutoSexAct(ActGet(human, ActBody.Anus), false) end
-	if IsSexActive(human, ActBody.Vagina) then AutoSexAct(ActGet(human, ActBody.Vagina), false) end
+	-- prevent multiple actors setting autosex on same interactions
+	if IsSexActive(human, ActBody.Mouth) and not IsAutoSexPartner(human, ActBody.Mouth) then AutoSexAct(ActGet(human, ActBody.Mouth), false) end
+	if IsSexActive(human, ActBody.Anus) and not IsAutoSexPartner(human, ActBody.Anus) then AutoSexAct(ActGet(human, ActBody.Anus), false) end
+	if IsSexActive(human, ActBody.Vagina) and not IsAutoSexPartner(human, ActBody.Anus) then AutoSexAct(ActGet(human, ActBody.Vagina), false) end
 end
 
 -- Calculate timer against ticker and fire events for each active interaction
@@ -204,8 +215,15 @@ end
 -------------------------------------------------------------------------------------------------
 -- INTERACTION
 -------------------------------------------------------------------------------------------------
-function ActActiveSet_Human(human, body, isActive) ActActiveSet(ActGet(human, body), body == ActBody.Hand, isActive) end
 function ActActiveSet(interaction, isHand, isActive) ActValueSet_Raw(interaction, ActValue.Active, isHand, isActive) end
+function ActActiveSet_Human(human, actBody, isActive) ActActiveSet(ActGet(human, actBody), actBody == ActBody.Hand, isActive) end
+function ActActiveSetAll_Human(human, isActive)
+	if IsSexActive(human, ActBody.Hand) then ActActiveSet(ActGet(human, body.Mouth), true, isActive) end
+	if IsSexActive(human, ActBody.Penis) then ActActiveSet(ActGet(human, body.Penis), false, isActive) end
+	if IsSexActive(human, ActBody.Mouth) then ActActiveSet(ActGet(human, body.Mouth), false, isActive) end
+	if IsSexActive(human, ActBody.Vagina) then ActActiveSet(ActGet(human, body.Mouth), false, isActive) end
+	if IsSexActive(human, ActBody.Anus) then ActActiveSet(ActGet(human, body.Mouth), false, isActive) end
+end
 
 function ActValueGet_ByBody(human, body, actValue)
 	local isHand = body == ActBody.Hand

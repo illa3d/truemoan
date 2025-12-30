@@ -67,6 +67,7 @@ function TMOnCreateHuman(human)
 	if TM_SpawnNaked then HumanClothes(human) end
 	if TM_SpawnNoFuta then Delayed(0.05, function() HumanPenisSet(human, false) end) end
 	if TM_SpawnReset then Delayed(0.1, function() HumanReset(human) end) end
+	if TM_SpawnAutoSexOn then AutoSex(human, true) end
 	game.PlayCharacterMusic(human)
 	if TM_AllowGenericChat then human.Say("Greeting") end
 end

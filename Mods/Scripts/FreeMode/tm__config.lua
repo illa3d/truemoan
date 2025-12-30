@@ -26,27 +26,28 @@ TM_SpawnNaked = false				-- 10. Characters naked when spawned / changing
 TM_SpawnReset = false				-- 11. Characters reset when spawned / changing (no sucking lol)
 TM_SpawnNoFuta = false				-- 12. Females spawn without penises (no sucking lol)
 TM_SpawnRandomBody = true			-- 13. Randomizes body types on start, configurable in tm__presets.lua
-TM_MoanSex = true					-- 14. Moaning during sex
-TM_WetSex = true					-- 15. Moisting holes (vag, anus, mouth)
-TM_TweenSex = true					-- 16. Soft transitions on changing sex values (speed, thrust, depth)
-TM_TweenTime = 1					-- 17. [0 = off, max 3] Time in seconds to transition between sex values (speed, thrust, depth)
+TM_SpawnAutoSexOn = true			-- 14
+TM_MoanSex = true					-- 15. Moaning during sex
+TM_WetSex = true					-- 16. Moisting holes (vag, anus, mouth)
+TM_TweenSex = true					-- 17. Soft transitions on changing sex values (speed, thrust, depth)
+TM_TweenTime = 1					-- 18. [0 = off, max 3] Time in seconds to transition between sex values (speed, thrust, depth)
 
 -- Body Edit
-TM_BodyEditSafe = true				-- 18. Turns on safe body editing using SafeMin values
+TM_BodyEditSafe = true				-- 19. Turns on safe body editing using SafeMin values
 
 -- SFX Ambience
-TM_AllowAmbience = true				-- 19. Ambient sounds
-TM_AmbienceVolume = 0.7				-- 20. [0-1] Ambient volume
+TM_AllowAmbience = true				-- 20. Ambient sounds
+TM_AmbienceVolume = 0.7				-- 21. [0-1] Ambient volume
 
 -- AutoInteraction
-TM_AutoSexTimeMin = 2				-- 21. [1-20] Auto Interaction minimum time to change parameter (speed, thrust, depth) 
-TM_AutoSexTimeMax = 7				-- 22. [1-20] Auto Interaction maximum time to change parameter (speed, thrust, depth) 
-TM_AutoSexSpeedDrift = 0.3			-- 23. [0-1] How close in percent will be next step for sex speed
-TM_AutoSexThrustDrift = 0.2			-- 24. [0-1] How close in percent will be next step for sex thrust
-TM_AutoSexWeightDrift = 0.1			-- 25. [0-1] How close in percent will be next step for sex weight (male female)
-TM_AutoSexDepthStartDrift = 0.2		-- 26. [0-1] How close in percent will be next step for sex depth (start/end)
-TM_AutoSexDepthEndDrift = 0.3		-- 27. [0-1] How close in percent will be next step for sex depth (start/end)
-									-- setting values [23. - 27.] to zero turns them off
+TM_AutoSexTimeMin = 2				-- 22. [1-20] Auto Interaction minimum time to change parameter (speed, thrust, depth) 
+TM_AutoSexTimeMax = 7				-- 23. [1-20] Auto Interaction maximum time to change parameter (speed, thrust, depth) 
+TM_AutoSexSpeedDrift = 0.3			-- 24. [0-1] How close in percent will be next step for sex speed
+TM_AutoSexThrustDrift = 0.2			-- 25. [0-1] How close in percent will be next step for sex thrust
+TM_AutoSexWeightDrift = 0.1			-- 26. [0-1] How close in percent will be next step for sex weight (male female)
+TM_AutoSexDepthStartDrift = 0.2		-- 27. [0-1] How close in percent will be next step for sex depth (start/end)
+TM_AutoSexDepthEndDrift = 0.3		-- 28. [0-1] How close in percent will be next step for sex depth (start/end)
+									-- setting values [24. - 28.] to zero turns them off
 
 ------------------------------------------------------------------------------------------------------------------
 -- FINE TUNING
