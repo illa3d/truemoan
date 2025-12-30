@@ -75,7 +75,7 @@ label TMMenuOptions(human)
 		+ "Tween sex	| " .. AccBool(TM_TweenSex) [if not TM_TweenSex]
 			TM_TweenSex = true
 			Return()
-		+ "Tween time	| " .. FDec(GetTweenTime(), tmOdec) .. "s"
+		+ "Tween time	| " .. FDec(SexTweenTime(), tmOdec) .. "s"
 			-- human "To change this setting edit tm-config"
 			Return()
 		+ TM_MenuBack

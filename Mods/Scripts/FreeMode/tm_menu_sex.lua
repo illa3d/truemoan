@@ -7,155 +7,155 @@ tmSdec = 3
 -- SEX CONTROL (in many menus)
 label TMSexControl(human, interaction, isHand)
 	+ "• Max"
-		SetActSpeed(interaction, TM_SexSpeedMax, isHand)
+		ActSpeedSet(interaction, TM_SexSpeedMax, isHand)
 		Return()
 	+ "• Fast"
-		SetActSpeed(interaction, TM_SexSpeedFast, isHand)
+		ActSpeedSet(interaction, TM_SexSpeedFast, isHand)
 		Return()
 	+ "• Normal"
-		SetActSpeed(interaction, TM_SexSpeedNormal, isHand)
+		ActSpeedSet(interaction, TM_SexSpeedNormal, isHand)
 		Return()
 	+ "• Medium"
-		SetActSpeed(interaction, TM_SexSpeedMedium, isHand)
+		ActSpeedSet(interaction, TM_SexSpeedMedium, isHand)
 		Return()
 	+ "• Slow"
-		SetActSpeed(interaction, TM_SexSpeedSlow, isHand)
+		ActSpeedSet(interaction, TM_SexSpeedSlow, isHand)
 		Return()
 	+ TM_UP.."Speed"
-		SetActSpeedStep(interaction, TM_SexSpeedStep, true, isHand)
+		ActSpeedSet_Step(interaction, TM_SexSpeedStep, true, isHand)
 		Return()
 	+ TM_DN.."Speed"
-		SetActSpeedStep(interaction, TM_SexSpeedStep, false, isHand)
+		ActSpeedSet_Step(interaction, TM_SexSpeedStep, false, isHand)
 		Return()
-	+ "RESET Speed	| " .. AccNum(GetActSpeedTarget(interaction, isHand), tmSdec)
-		SetActSpeed(interaction, 0, isHand)
+	+ "RESET Speed	| " .. AccNum(ActSpeedGet(interaction, isHand), tmSdec)
+		ActSpeedSet(interaction, 0, isHand)
 		Return()
 	+ "Random Speed" [gold]
-		SetActSpeedRandom(interaction, isHand)
+		ActSpeedSet_RandomNear(interaction, isHand)
 		Return()
 	+ "Feeling Lucky" [gold]
 		--SetInteractionSpeedRandom(interaction, isHand) -- random speed control is above
-		SetActThrustRandom(interaction, isHand)
-		SetActWeightRandom(interaction, isHand)
-		SetActDepthRandom(interaction, isHand)
+		ActThrustSet_Random(interaction, isHand)
+		ActWeightSet_Random(interaction, isHand)
+		ActDepthSet_Random(interaction, isHand)
 		Return()
 	+ if TM_ShowSexStyleControl
 		-- THRUST (handjob)
 		+ if human.Penis.m_holdDepth ~= 0
-			+ "| Thrust »	| T" .. AccNum(GetActThrustTarget(interaction, isHand), tmSdec) [gold]
+			+ "| Thrust »	| T" .. AccNum(ActThrustGet(interaction, isHand), tmSdec) [gold]
 				+ "• Max"
-					SetActThrust(interaction, 1, isHand)
+					ActThrustSet(interaction, 1, isHand)
 					Return()
 				+ "• Insane"
-					SetActThrust(interaction, 0.75, isHand)
+					ActThrustSet(interaction, 0.75, isHand)
 					Return()
 				+ "• Fierce"
-					SetActThrust(interaction, 0.5, isHand)
+					ActThrustSet(interaction, 0.5, isHand)
 					Return()
 				+ "• Strong"
-					SetActThrust(interaction, 0.25, isHand)
+					ActThrustSet(interaction, 0.25, isHand)
 					Return()
 				+ "• Normal"
-					SetActThrust(interaction, 0, isHand)
+					ActThrustSet(interaction, 0, isHand)
 					Return()
 				+ TM_UP.."Thrust"
-					SetActThrustStep(interaction, TM_SexThrustStep, true, isHand)
+					ActThrustSet_Step(interaction, TM_SexThrustStep, true, isHand)
 					Return()
 				+ TM_DN.."Thrust"
-					SetActThrustStep(interaction, TM_SexThrustStep, false, isHand)
+					ActThrustSet_Step(interaction, TM_SexThrustStep, false, isHand)
 					Return()
-				+ "RESET Thrust | " .. AccNum(GetActThrustTarget(interaction, isHand), tmSdec)
-					SetActThrust(interaction, 0, isHand)
+				+ "RESET Thrust | " .. AccNum(ActThrustGet(interaction, isHand), tmSdec)
+					ActThrustSet(interaction, 0, isHand)
 					Return()
 				+ "Random" [gold]
-					SetActThrustRandom(interaction, isHand)
+					ActThrustSet_Random(interaction, isHand)
 				+ TM_MenuBack
 					Return(2)
 				+ TM_MenuClose
 
 		-- THRUST / PENIS WEIGHT (oral/vaginal/anal)
 		+ else 
-			+ "| Thrust »	| T" .. AccNum(GetActThrustTarget(interaction, isHand), tmSdec) .. " | M" .. AccNum(GetActWeightTarget(interaction, isHand), tmSdec) [gold]
+			+ "| Thrust »	| T" .. AccNum(ActThrustGet(interaction, isHand), tmSdec) .. " | M" .. AccNum(ActWeightGet(interaction, isHand), tmSdec) [gold]
 				+ "• Max"
-					SetActThrust(interaction, 1)
+					ActThrustSet(interaction, 1)
 					Return()
 				+ "• Insane"
-					SetActThrust(interaction, 0.75)
+					ActThrustSet(interaction, 0.75)
 					Return()
 				+ "• Fierce"
-					SetActThrust(interaction, 0.5)
+					ActThrustSet(interaction, 0.5)
 					Return()
 				+ "• Strong"
-					SetActThrust(interaction, 0.25)
+					ActThrustSet(interaction, 0.25)
 					Return()
 				+ "• Normal"
-					SetActThrust(interaction, 0)
+					ActThrustSet(interaction, 0)
 					Return()
 				+ TM_UP.."Thrust"
-					SetActThrustStep(interaction, TM_SexThrustStep, true)
+					ActThrustSet_Step(interaction, TM_SexThrustStep, true)
 					Return()
 				+ TM_DN.."Thrust"
-					SetActThrustStep(interaction, TM_SexThrustStep, false)
+					ActThrustSet_Step(interaction, TM_SexThrustStep, false)
 					Return()
-				+ "RESET Thrust | " .. AccNum(GetActThrustTarget(interaction, isHand), tmSdec)
-					SetActThrust(interaction, 0)
+				+ "RESET Thrust | " .. AccNum(ActThrustGet(interaction, isHand), tmSdec)
+					ActThrustSet(interaction, 0)
 					Return()
 				+ TM_UP.."Male"
-					SetActWeightStep(interaction, TM_SexMaleStep, true)
+					ActWeightSet_Step(interaction, TM_SexMaleStep, true)
 					Return()
 				+ TM_DN.."Male"
-					SetActWeightStep(interaction, TM_SexMaleStep, false)
+					ActWeightSet_Step(interaction, TM_SexMaleStep, false)
 					Return()
-				+ "RESET Male | " .. AccNum(GetActWeightTarget(interaction, isHand), tmSdec)
-					SetActWeight(interaction, 0)
+				+ "RESET Male | " .. AccNum(ActWeightGet(interaction, isHand), tmSdec)
+					ActWeightSet(interaction, 0)
 					Return()
 				+ "Random" [gold]
-					SetActThrustRandom(interaction, isHand)
-					SetActWeightRandom(interaction, isHand)
+					ActThrustSet_Random(interaction, isHand)
+					ActWeightSet_Random(interaction, isHand)
 					Return()
 				+ TM_MenuBack
 					Return(2)
 				+ TM_MenuClose
 		-- START / END (handjob/oral/vaginal/anal)
-		+ "| Depth »	| S" .. AccNum(GetActDepthTarget(interaction, isHand, true), tmSdec) .. " | E" .. AccNum(GetActDepthTarget(interaction, isHand, false), tmSdec) [gold]
+		+ "| Depth »	| S" .. AccNum(ActDepthGet(interaction, isHand, true), tmSdec) .. " | E" .. AccNum(ActDepthGet(interaction, isHand, false), tmSdec) [gold]
 			+ "• Deeper"
-				SetActDepthStartEnd(interaction, 0.7, 1.3, isHand)
+				ActDepthSet_StartEnd(interaction, 0.7, 1.3, isHand)
 				Return()
 			+ "• Deep"
-				SetActDepthStartEnd(interaction, 0.4, 1.1, isHand)
+				ActDepthSet_StartEnd(interaction, 0.4, 1.1, isHand)
 				Return()
 			+ "• Full"
-				SetActDepthStartEnd(interaction, 0, 1, isHand)
+				ActDepthSet_StartEnd(interaction, 0, 1, isHand)
 				Return()
 			+ "• Medium"
-				SetActDepthStartEnd(interaction, 0.3, 1, isHand)
+				ActDepthSet_StartEnd(interaction, 0.3, 1, isHand)
 				Return()
 			+ "• Shallow"
-				SetActDepthStartEnd(interaction, 0.1, 0.5, isHand)
+				ActDepthSet_StartEnd(interaction, 0.1, 0.5, isHand)
 				Return()
 			+ "• Tease"
-				SetActDepthStartEnd(interaction, 0, 0.3, isHand)
+				ActDepthSet_StartEnd(interaction, 0, 0.3, isHand)
 				Return()
 			+ TM_UP.."Start"
-				SetActDepthStep(interaction, TM_SexDepthStep, true, isHand, true)
+				ActDepthSet_Step(interaction, TM_SexDepthStep, true, isHand, true)
 				Return()
 			+ TM_DN.."Start"
-				SetActDepthStep(interaction, TM_SexDepthStep, false, isHand, true)
+				ActDepthSet_Step(interaction, TM_SexDepthStep, false, isHand, true)
 				Return()
-			+ "RESET Start | " .. AccNum(GetActDepthTarget(interaction, isHand, true), tmSdec)
-				SetActDepth(interaction, 0.2, isHand, true)
+			+ "RESET Start | " .. AccNum(ActDepthGet(interaction, isHand, true), tmSdec)
+				ActDepthSet(interaction, 0.2, isHand, true)
 				Return()
 			+ TM_UP.."End"
-				SetActDepthStep(interaction, TM_SexDepthStep, true, isHand, false)
+				ActDepthSet_Step(interaction, TM_SexDepthStep, true, isHand, false)
 				Return()
 			+ TM_DN.."End"
-				SetActDepthStep(interaction, TM_SexDepthStep, false, isHand, false)
+				ActDepthSet_Step(interaction, TM_SexDepthStep, false, isHand, false)
 				Return()
-			+ "RESET End | " .. AccNum(GetActDepthTarget(interaction, isHand, false), tmSdec)
-				SetActDepth(interaction, 1, isHand, false)
+			+ "RESET End | " .. AccNum(ActDepthGet(interaction, isHand, false), tmSdec)
+				ActDepthSet(interaction, 1, isHand, false)
 				Return()
 			+ "Random" [gold]
-				SetActDepthRandom(interaction, isHand)
+				ActDepthSet_Random(interaction, isHand)
 				Return()
 			+ TM_MenuBack
 				Return(2)
@@ -170,42 +170,42 @@ label TMMenuSex(human)
 
 	-- START / STOP
 	-- GETTER HANDJOB
-	+ "Handjob start" [if not TMI_AutoSex and HasSex(human,Body.Hand) and not IsSexActive(human,Body.Hand)]
+	+ "Handjob start" [if not TMI_AutoSex and HasSex(human,ActBody.Hand) and not IsSexActive(human,ActBody.Hand)]
 		human.Penis.Interaction.m_autoHandActive = true
 		Return()
-	+ "Handjob STOP" [if not TMI_AutoSex and HasSex(human,Body.Hand) and IsSexActive(human,Body.Hand)]
+	+ "Handjob STOP" [if not TMI_AutoSex and HasSex(human,ActBody.Hand) and IsSexActive(human,ActBody.Hand)]
 		human.Penis.Interaction.m_autoHandActive = false
 		Return()
 	-- GIVER (MOUTH, VAGINA, ANUS)
-	+ "Sex start" [if not TMI_AutoSex and HasSex(human,Body.Penis) and not IsSexActive(human,Body.Penis)]
+	+ "Sex start" [if not TMI_AutoSex and HasSex(human,ActBody.Penis) and not IsSexActive(human,ActBody.Penis)]
 		human.Penis.Interaction.AutoActive = true
 		human.Penis.Interaction.AutoPenisWeight = 0.8
 		Return()
-	+ "Sex STOP" [if not TMI_AutoSex and HasSex(human,Body.Penis) and IsSexActive(human,Body.Penis)]
+	+ "Sex STOP" [if not TMI_AutoSex and HasSex(human,ActBody.Penis) and IsSexActive(human,ActBody.Penis)]
 		human.Penis.Interaction.AutoActive = false
 		Return()
 	-- GETTER MOUTH
-	+ "Oral start" [if not TMI_AutoSex and HasSex(human,Body.Mouth) and not IsSexActive(human,Body.Mouth)]
+	+ "Oral start" [if not TMI_AutoSex and HasSex(human,ActBody.Mouth) and not IsSexActive(human,ActBody.Mouth)]
 		human.Mouth.Fucker.Penis.Interaction.AutoActive = true
 		human.Mouth.Fucker.Penis.Interaction.AutoPenisWeight = 0.2
 		Return()
-	+ "Oral STOP" [if not TMI_AutoSex and HasSex(human,Body.Mouth) and IsSexActive(human,Body.Mouth)]
+	+ "Oral STOP" [if not TMI_AutoSex and HasSex(human,ActBody.Mouth) and IsSexActive(human,ActBody.Mouth)]
 		human.Mouth.Fucker.Penis.Interaction.AutoActive = false
 		Return()
 	-- GETTER ANUS
-	+ "Anal start" [if not TMI_AutoSex and HasSex(human,Body.Anus) and not IsSexActive(human,Body.Anus)]
+	+ "Anal start" [if not TMI_AutoSex and HasSex(human,ActBody.Anus) and not IsSexActive(human,ActBody.Anus)]
 		human.Anus.Fucker.Penis.Interaction.AutoActive = true
 		human.Anus.Fucker.Penis.Interaction.AutoPenisWeight = 0.2
 		Return()
-	+ "Anal STOP" [if not TMI_AutoSex and HasSex(human,Body.Anus) and IsSexActive(human,Body.Anus)]
+	+ "Anal STOP" [if not TMI_AutoSex and HasSex(human,ActBody.Anus) and IsSexActive(human,ActBody.Anus)]
 		human.Anus.Fucker.Penis.Interaction.AutoActive = false
 		Return()
 	-- GETTER VAGINA
-	+ "Pussy start" [if not TMI_AutoSex and HasSex(human,Body.Vagina) and not IsSexActive(human,Body.Vagina)]
+	+ "Pussy start" [if not TMI_AutoSex and HasSex(human,ActBody.Vagina) and not IsSexActive(human,ActBody.Vagina)]
 		human.Vagina.Fucker.Penis.Interaction.AutoActive = true
 		human.Vagina.Fucker.Penis.Interaction.AutoPenisWeight = 0.2
 		Return()
-	+ "Pussy STOP" [if not TMI_AutoSex and HasSex(human,Body.Vagina) and IsSexActive(human,Body.Vagina)]
+	+ "Pussy STOP" [if not TMI_AutoSex and HasSex(human,ActBody.Vagina) and IsSexActive(human,ActBody.Vagina)]
 		human.Vagina.Fucker.Penis.Interaction.AutoActive = false
 		Return()
 
@@ -221,7 +221,7 @@ label TMMenuSex(human)
 				Return()
 	-- VAGINA
 	+ else 
-		+ if IsWetAny(human)
+		+ if IsWet(human)
 			+ "Wetness STOP"
 				HumanWetReset(human)	
 				Return()
@@ -238,20 +238,20 @@ label TMMenuSex(human)
 	-- SEX CONTROL
 
 	-- GETTER HANDJOB
-	+ "| Handjob »	| " .. AccNum(GetActTarget(human,Body.Hand, ActValue.Speed), tmSdec) [if HasSex(human,Body.Hand)] [gold]
-		TMSexControl(human, GetAct(human,Body.Hand), true)
+	+ "| Handjob »	| " .. AccNum(ActValueGet_ByBody(human,ActBody.Hand, ActValue.Speed), tmSdec) [if HasSex(human,ActBody.Hand)] [gold]
+		TMSexControl(human, ActGet(human,ActBody.Hand), true)
 	-- GIVER (MOUTH, VAGINA, ANUS)
-	+ "| Sex  »	| " .. AccNum(GetActTarget(human,Body.Penis, ActValue.Speed), tmSdec) [if HasSex(human,Body.Penis)] [gold]
-		TMSexControl(human, GetAct(human,Body.Penis), false)
+	+ "| Sex  »	| " .. AccNum(ActValueGet_ByBody(human,ActBody.Penis, ActValue.Speed), tmSdec) [if HasSex(human,ActBody.Penis)] [gold]
+		TMSexControl(human, ActGet(human,ActBody.Penis), false)
 	-- GETTER MOUTH
-	+ "| Oral »	| " .. AccNum(GetActTarget(human,Body.Mouth, ActValue.Speed), tmSdec) [if HasSex(human,Body.Mouth)] [gold]
-		TMSexControl(human, GetAct(human,Body.Mouth), false)
+	+ "| Oral »	| " .. AccNum(ActValueGet_ByBody(human,ActBody.Mouth, ActValue.Speed), tmSdec) [if HasSex(human,ActBody.Mouth)] [gold]
+		TMSexControl(human, ActGet(human,ActBody.Mouth), false)
 	-- GETTER ANUS
-	+ "| Anal »	| " .. AccNum(GetActTarget(human,Body.Anus, ActValue.Speed), tmSdec) [if HasSex(human,Body.Anus)] [gold]
-		TMSexControl(human, GetAct(human,Body.Anus), false)
+	+ "| Anal »	| " .. AccNum(ActValueGet_ByBody(human,ActBody.Anus, ActValue.Speed), tmSdec) [if HasSex(human,ActBody.Anus)] [gold]
+		TMSexControl(human, ActGet(human,ActBody.Anus), false)
 	-- GETTER VAGINA
-	+ "| Pussy »	| " .. AccNum(GetActTarget(human,Body.Vagina, ActValue.Speed), tmSdec) [if HasSex(human,Body.Vagina)] [gold]
-		TMSexControl(human, GetAct(human,Body.Vagina), false)
+	+ "| Pussy »	| " .. AccNum(ActValueGet_ByBody(human,ActBody.Vagina, ActValue.Speed), tmSdec) [if HasSex(human,ActBody.Vagina)] [gold]
+		TMSexControl(human, ActGet(human,ActBody.Vagina), false)
 
 	-- PENIS
 	+ "| Cum »	| " .. AccStr(tmCumevery .. "s") [if HasPenis(human)] [gold]
@@ -284,7 +284,7 @@ label TMMenuSex(human)
 		+ TM_MenuClose
 
 	-- VAGINA
-	+ "| Wetness »	| " .. AccTextNum3("V", GetWet(human,Body.Vagina), "A", GetWet(human,Body.Anus), "M", GetWet(human,Body.Mouth)) [if not HasPenis(human)] [gold]
+	+ "| Wetness »	| " .. AccTextNum3("V", WetValue(human,ActBody.Vagina), "A", WetValue(human,ActBody.Anus), "M", WetValue(human,ActBody.Mouth)) [if not HasPenis(human)] [gold]
 		+ "• Squirt"
 			HumanWetSet(human, 10000, "Vagina")
 			Return()
@@ -304,7 +304,7 @@ label TMMenuSex(human)
 				wett = 0
 			HumanWetSet(human, wett, "Vagina")
 			Return()
-		+ "RESET | " .. AccTextNum3("V", GetWet(human,Body.Vagina), "A", GetWet(human,Body.Anus), "M", GetWet(human,Body.Mouth))
+		+ "RESET | " .. AccTextNum3("V", WetValue(human,ActBody.Vagina), "A", WetValue(human,ActBody.Anus), "M", WetValue(human,ActBody.Mouth))
 			HumanWetReset(human)	
 			Return()
 		+ TM_MenuBack

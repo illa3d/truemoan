@@ -43,7 +43,7 @@ end
 function TMOnUpdate()
 	TM_DeltaTime = Timer("TMDeltaTime")
 	ResetTimer("TMDeltaTime")
-	UpdateActTweens(TM_DeltaTime)
+	ActTweensUpdate(TM_DeltaTime)
 end
 
 -- Updated every frame
