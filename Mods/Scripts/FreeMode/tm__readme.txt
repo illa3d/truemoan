@@ -72,7 +72,8 @@ Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/Fre
 - AutoSex improvements (as an animation instead of flag)
 - Multiple actors don't mix with autosex parameters
 - Fixed Autosex issue when changing characters/clothes
-- AutoSex on spawn option
+- AutoSex on spawn option (on by default for all actors)
+- FaunaLAB bundled version with - faunaLABS_v1.02 - TMMM-BlackScreen FIX2.zip
 
 [ v1.6 ]
 - AutoSex improvements (acts more organically)
