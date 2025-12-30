@@ -76,7 +76,7 @@ ActParam = {
 
 -- AutoSexParams
 ActAutoSexTimers = ActAutoSexTimers or {}
-ActAutoSexTickTime = 0.25
+ActAutoSexTickTime = 0.5
 ActAutoSexParams = {
 	Speed = { ActValue.Speed, "ActSpeedSet_RandomNear", true },
 	Thrus = { ActValue.Thrust, "ActThrustSet_RandomNear", true },
