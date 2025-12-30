@@ -457,7 +457,8 @@ function ActTweenTo(act, param, targetValue, duration)
 	if existing then
 		for i = #actActiveTweens, 1, -1 do
 			if actActiveTweens[i] == existing then
-				table.remove(actActiveTweens, i)
+				actActiveTweens[i] = actActiveTweens[#actActiveTweens]
+				actActiveTweens[#actActiveTweens] = nil
 				break
 			end
 		end
