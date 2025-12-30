@@ -263,11 +263,11 @@ end
 function ActActiveSet(interaction, isHand, isActive) ActValueSet_Raw(interaction, ActValue.Active, isHand, isActive) end
 function ActActiveSet_Human(human, actBody, isActive) ActActiveSet(ActGet(human, actBody), actBody == ActBody.Hand, isActive) end
 function ActActiveSetAll_Human(human, isActive)
-	if IsSexActive(human, ActBody.Hand) then ActActiveSet(ActGet(human, body.Mouth), true, isActive) end
-	if IsSexActive(human, ActBody.Penis) then ActActiveSet(ActGet(human, body.Penis), false, isActive) end
-	if IsSexActive(human, ActBody.Mouth) then ActActiveSet(ActGet(human, body.Mouth), false, isActive) end
-	if IsSexActive(human, ActBody.Vagina) then ActActiveSet(ActGet(human, body.Mouth), false, isActive) end
-	if IsSexActive(human, ActBody.Anus) then ActActiveSet(ActGet(human, body.Mouth), false, isActive) end
+	if IsSexActive(human, ActBody.Hand) then ActActiveSet(ActGet(human, ActBody.Hand), true, isActive) end
+	if IsSexActive(human, ActBody.Penis) then ActActiveSet(ActGet(human, ActBody.Penis), false, isActive) end
+	if IsSexActive(human, ActBody.Mouth) then ActActiveSet(ActGet(human, ActBody.Mouth), false, isActive) end
+	if IsSexActive(human, ActBody.Vagina) then ActActiveSet(ActGet(human, ActBody.Vagina), false, isActive) end
+	if IsSexActive(human, ActBody.Anus) then ActActiveSet(ActGet(human, ActBody.Anus), false, isActive) end
 end
 
 function ActValueGet_ByBody(human, body, actValue)
