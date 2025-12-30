@@ -26,7 +26,8 @@ ActValue = {
 	DepthEnd = "DepthEnd",
 }
 
-ActRawMinMax = { -- values as they are in TrueFacials
+-- values as they are in TrueFacials
+ActRawMinMax = {
 	Speed = { Min = 0.001, Max = 2 },
 	Weight = { Min = 0, Max = 1 },
 	Thrust = { Min = 1, Max = 3 }, -- raw thrust values
@@ -34,7 +35,17 @@ ActRawMinMax = { -- values as they are in TrueFacials
 	DepthEnd = { Min = 0.1, Max = 1.3 }
 }
 
-ActRandomNear = { -- values with thrust normalized. bias is minimum move
+-- values with thrust normalized
+ActMenuMinMax = {
+	Speed = { Min = 0.1, Max = 1 },
+	Weight = { Min = 0, Max = 1 },
+	Thrust = { Min = 0, Max = 0.6 },
+	DepthStart = { Min = 0.2, Max = 0.6 },
+	DepthEnd = { Min = 0.5, Max = 1.1 },
+}
+
+-- values with thrust normalized. bias is minimum move
+ActAutosexMinMax = {
 	Speed = { Min = 0.1, Max = 1.9, Bias = 0.1 },
 	Weight = { Min = 0.1, Max = 0.9, Bias = 0.03 },
 	Thrust = { Min = 0.1, Max = 0.9, Bias = 0.05 }, -- normalized thrust values
@@ -78,11 +89,11 @@ ActParam = {
 ActAutoSexTimers = ActAutoSexTimers or {}
 ActAutoSexTickTime = 0.5
 ActAutoSexParams = {
-	Speed = { ActValue.Speed, "ActSpeedSet_RandomNear", true },
-	Thrust = { ActValue.Thrust, "ActThrustSet_RandomNear", true },
-	DepthStart = { ActValue.DepthStart,"ActDepthStartSet_RandomNear", true },
-	DepthEnd = { ActValue.DepthEnd, "ActDepthEndSet_RandomNear", true },
-	Weight = { ActValue.Weight, "ActWeightSet_RandomNear", false } -- hands dont have weight
+	Speed = { ActValue.Speed, "ActSpeedSet_AutoSexRandom", true },
+	Thrust = { ActValue.Thrust, "ActThrustSet_AutoSexRandom", true },
+	DepthStart = { ActValue.DepthStart,"ActDepthStartSet_AutoSexRandom", true },
+	DepthEnd = { ActValue.DepthEnd, "ActDepthEndSet_AutoSexRandom", true },
+	Weight = { ActValue.Weight, "ActWeightSet_AutoSexRandom", false } -- hands dont have weight
 }
 
 -------------------------------------------------------------------------------------------------
@@ -199,17 +210,21 @@ function ActValueGet_Current(interaction, actValue, isHand)
 	if not interaction then return 0 end
 	if actValue == ActValue.Active then return ActTweenOrValueGet(interaction, ActValueParamNameGet(actValue, isHand)) and 1 or 0 end
 	if actValue == ActValue.Weight and isHand then return 0 end
-	if actValue == ActValue.Thrust then return NormalizeValue(ActTweenOrValueGet(interaction, ActValueParamNameGet(actValue, isHand)),1,3) end-- IMPORTANT: return NORMALIZED thrust (0–1)
+	if actValue == ActValue.Thrust then return NormalizeValue(ActTweenOrValueGet(interaction, ActValueParamNameGet(actValue, isHand)),1,3) end-- IMPORTANT: return NORMALIZED thrust (0-1)
 	return ActTweenOrValueGet(interaction, ActValueParamNameGet(actValue, isHand))
 end
 
-function ActValueGet_RawMinMaxClamp(value, actValue)
+function ActValueGet_RawMinMax(value, actValue)
 	local mm = ActRawMinMax[actValue]
 	return mm and ClampValue(value, mm.Min, mm.Max) or value
 end
 
-function ActValueGet_RandomNear(interaction, actValue, isHand)
-	local rn = ActRandomNear[actValue] if not rn then return 0 end
+function ActValueGet_MenuMinMax(actValue)
+	local r = ActMenuMinMax[actValue] return r and GetRandomFloat(r.Min, r.Max) or 0
+end
+
+function ActValueGet_AutoSexMinMax(interaction, actValue, isHand)
+	local rn = ActAutosexMinMax[actValue] if not rn then return 0 end
 	return GetRandomFloatNear(ActValueGet_Current(interaction, actValue, isHand), AutoSexDrift(actValue), rn.Min, rn.Max, rn.Bias )
 end
 
@@ -295,8 +310,9 @@ function ActSpeedGet_Raw(interaction, isHand) return ActValueGet_Raw(interaction
 function ActSpeedGet(interaction, isHand) return ActTweenOrValueGet(interaction, ActValueParamNameGet(ActValue.Speed, isHand)) end
 
 -- RANDOM
-function ActSpeedSet_RandomNear(interaction, isHand)
-	return ActSpeedSet(interaction, ActValueGet_RandomNear(interaction, ActValue.Speed, isHand), isHand )
+function ActSpeedSet_MenuRandom(interaction, isHand) return ActSpeedSet(interaction, ActValueGet_MenuMinMax(ActValue.Speed), isHand) end
+function ActSpeedSet_AutoSexRandom(interaction, isHand)
+	return ActSpeedSet(interaction, ActValueGet_AutoSexMinMax(interaction, ActValue.Speed, isHand), isHand )
 end
 
 -- SET
@@ -308,7 +324,7 @@ function ActSpeedSet_Step(interaction, speedStep, increase, isHand)
 	return ActSpeedSet(interaction, speed, isHand)
 end
 function ActSpeedSet(interaction, speed, isHand)
-	local speed = ActValueGet_RawMinMaxClamp(speed, ActValue.Speed)
+	local speed = ActValueGet_RawMinMax(speed, ActValue.Speed)
 	ActActiveSet(interaction, isHand, true)
 	if SexTweenAllow() then ActTweenTo(interaction, ActValueParamNameGet(ActValue.Speed, isHand), speed, SexTweenTime())
 	else ActValueSet_Raw(interaction, ActValue.Speed, isHand, speed) end
@@ -324,8 +340,9 @@ function ActWeightGet_Raw(interaction, isHand) return ActValueGet_Raw(interactio
 function ActWeightGet(interaction, isHand) return isHand and 0 or ActTweenOrValueGet(interaction, ActParam.WeightPenis) end
 
 -- RANDOM
-function ActWeightSet_RandomNear(interaction, isHand)
-	return ActWeightSet(interaction, ActValueGet_RandomNear(interaction, ActValue.Weight, false), false) -- ignore isHand (hands don't have weights)
+function ActWeightSet_MenuRandom(interaction, isHand) return ActWeightSet(interaction, ActValueGet_MenuMinMax(ActValue.Weight), isHand) end
+function ActWeightSet_AutoSexRandom(interaction, isHand)
+	return ActWeightSet(interaction, ActValueGet_AutoSexMinMax(interaction, ActValue.Weight, false), false) -- ignore isHand (hands don't have weights)
 end
 
 -- SET
@@ -337,7 +354,7 @@ function ActWeightSet_Step(interaction, weightStep, increase, isHand)
 end
 function ActWeightSet(interaction, weight, isHand)
 	if isHand then return end -- no interaction weight in handjobs
-	local weight = ActValueGet_RawMinMaxClamp(weight, ActValue.Weight)
+	local weight = ActValueGet_RawMinMax(weight, ActValue.Weight)
 	ActActiveSet(interaction, false, true)
 	if SexTweenAllow() then ActTweenTo(interaction, ActParam.WeightPenis, weight, SexTweenTime())
 	else ActValueSet_Raw(interaction, ActValue.Weight, false, weight) end
@@ -352,8 +369,9 @@ function ActThrustGet_Raw(interaction, isHand) return NormalizeValue(ActValueGet
 function ActThrustGet(interaction, isHand) return NormalizeValue(ActTweenOrValueGet(interaction, ActValueParamNameGet(ActValue.Thrust, isHand)), 1, 3) end
 
 -- RANDOM
-function ActThrustSet_RandomNear(interaction, isHand)
-	return ActThrustSet(interaction, ActValueGet_RandomNear(interaction, ActValue.Thrust, isHand), isHand)
+function ActThrustSet_MenuRandom(interaction, isHand) return ActThrustSet(interaction, ActValueGet_MenuMinMax(ActValue.Thrust), isHand) end
+function ActThrustSet_AutoSexRandom(interaction, isHand)
+	return ActThrustSet(interaction, ActValueGet_AutoSexMinMax(interaction, ActValue.Thrust, isHand), isHand)
 end
 
 -- SET
@@ -384,16 +402,23 @@ function ActDepthGet(interaction, isHand, isStartDepth)
 end
 
 -- RANDOM SPLIT
-function ActDepthStartSet_RandomNear(interaction, isHand)
-	return ActDepthSet(interaction, ActValueGet_RandomNear(interaction, ActValue.DepthStart, isHand), isHand, true)
+function ActDepthStartSet_MenuRandom(interaction, isHand) return ActDepthSet(interaction, ActValueGet_MenuMinMax(ActValue.DepthStart), isHand, true) end
+function ActDepthStartSet_AutoSexRandom(interaction, isHand)
+	return ActDepthSet(interaction, ActValueGet_AutoSexMinMax(interaction, ActValue.DepthStart, isHand), isHand, true)
 end
-function ActDepthEndSet_RandomNear(interaction, isHand)
-	return ActDepthSet(interaction, ActValueGet_RandomNear(interaction, ActValue.DepthEnd, isHand), isHand, false)
+function ActDepthEndSet_MenuRandom(interaction, isHand) return ActDepthSet(interaction, ActValueGet_MenuMinMax(ActValue.DepthEnd), isHand, false) end
+function ActDepthEndSet_AutoSexRandom(interaction, isHand)
+	return ActDepthSet(interaction, ActValueGet_AutoSexMinMax(interaction, ActValue.DepthEnd, isHand), isHand, false)
 end
 
 -- RANDOM TOGETHER
-function ActDepthSet_RandomNear(interaction, isHand)
-	ActDepthSet_StartEnd(interaction, ActValueGet_RandomNear(interaction, ActValue.DepthStart, isHand), ActValueGet_RandomNear(interaction, ActValue.DepthEnd, isHand), isHand)
+function ActDepthSet_MenuRandom(interaction, isHand)
+	local startValue = ActDepthSet(interaction, ActValueGet_MenuMinMax(ActValue.DepthStart), isHand, true)
+	local endValue = ActDepthSet(interaction, ActValueGet_MenuMinMax(ActValue.DepthEnd), isHand, false)
+	return startValue, endValue
+end
+function ActDepthSet_AutoSexRandom(interaction, isHand)
+	ActDepthSet_StartEnd(interaction, ActValueGet_AutoSexMinMax(interaction, ActValue.DepthStart, isHand), ActValueGet_AutoSexMinMax(interaction, ActValue.DepthEnd, isHand), isHand)
 end
 
 -- SET STEP
@@ -410,7 +435,7 @@ function ActDepthSet_StartEnd(interaction, depthStart, depthEnd, isHand)
 end
 -- SET SPLIT
 function ActDepthSet(interaction, depth, isHand, isStartDepth)
-	depth = ActValueGet_RawMinMaxClamp(depth, isStartDepth and ActValue.DepthStart or ActValue.DepthEnd )
+	depth = ActValueGet_RawMinMax(depth, isStartDepth and ActValue.DepthStart or ActValue.DepthEnd )
 	ActActiveSet(interaction, isHand, true)
 	if SexTweenAllow() then
 		local paramName = ActValueParamNameGet(isStartDepth and ActValue.DepthStart or ActValue.DepthEnd, isHand)
