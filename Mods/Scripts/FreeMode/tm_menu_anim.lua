@@ -6,7 +6,7 @@ label TMMenuAnim(human)
 	+ if TMMOD_FaunaLabs
 		+ TM_MenuBack
 			Return(2)
-		+ AccStr(TM_PosePrefix_Faun) .. "SET Speed »	| " .. AccNum(CL_SMult, tmAdec) [gold]
+		+ AccStr(TMMenuTag_Fauna) .. "SET Speed »	| " .. AccNum(CL_SMult, tmAdec) [gold]
 			+ TM_UP.."Speed"
 				CL_SMult = CL_SMult + Faun_SpeedIncrement
 				Return()
@@ -19,7 +19,7 @@ label TMMenuAnim(human)
 			+ TM_MenuBack.. " (applied to new anims)"
 				Return(2)
 			+ TM_MenuClose
-		+ AccStr(TM_PosePrefix_Faun) .. "SET Ease »	| " .. AccTextNum2("I", CLV_A, "O", CLV_B, tmAdec) [gold]
+		+ AccStr(TMMenuTag_Fauna) .. "SET Ease »	| " .. AccTextNum2("I", CLV_A, "O", CLV_B, tmAdec) [gold]
 			+ TM_UP.."Ease In"
 				CLV_A = CLV_A + Faun_EaseIncrement
 				Return()
@@ -41,33 +41,33 @@ label TMMenuAnim(human)
 			+ TM_MenuBack.. " (applied to new anims)"
 				Return(2)
 			+ TM_MenuClose
-		+ AccStr(TM_PosePrefix_Faun) .. AccStr("EDIT Anim »") [gold]
+		+ AccStr(TMMenuTag_Fauna) .. AccStr("EDIT Anim »") [gold]
 			TMMenuFaunaAnimLab(human, hitTri)
-		+ AccStr(TM_PosePrefix_Faun) .. "Feet »" [gold]
+		+ AccStr(TMMenuTag_Fauna) .. "Feet »" [gold]
 		-- + AccStr(TM_PosePrefix_Faun) .. "Feet »" [if bot game.HasAnim(human.footNames) == false] [gold]
 			TMMenuFaunaAnim_Feet(human, hitTri)
-		+ AccStr(TM_PosePrefix_Faun) .. "Licking »" [gold]
+		+ AccStr(TMMenuTag_Fauna) .. "Licking »" [gold]
 		-- + AccStr(TM_PosePrefix_Faun) .. "Licking »" [if not game.HasAnim(human.m_mouth) == false] [gold]
 			TMMenuFaunaAnim_Licking(human, hitTri)
-		+ AccStr(TM_PosePrefix_Faun) .. "Blowjob »" [gold]
+		+ AccStr(TMMenuTag_Fauna) .. "Blowjob »" [gold]
 			TMMenuFaunaAnim_Blowjob(human, hitTri)
-		+ AccStr(TM_PosePrefix_Faun) .. "Face »" [gold]
+		+ AccStr(TMMenuTag_Fauna) .. "Face »" [gold]
 			TMMenuFaunaLoops(human, hitTri)
-		+ AccStr(TM_PosePrefix_Faun) .. "Neck »" [if not game.HasAnim(human.headNames) == false] [gold]
+		+ AccStr(TMMenuTag_Fauna) .. "Neck »" [if not game.HasAnim(human.headNames) == false] [gold]
 		-- + AccStr(TM_PosePrefix_Faun) .. "Neck »" [if not game.HasAnim(human.headNames) == false] [gold]
 			TMMenuFaunaAnim_Neck(human, hitTri)
-		+ AccStr(TM_PosePrefix_Faun) .. "Hand R »" [gold]
+		+ AccStr(TMMenuTag_Fauna) .. "Hand R »" [gold]
 		-- + AccStr(TM_PosePrefix_Faun) .. "Hand R »" [if not game.HasAnim(human.handNames) == false] [gold]
 			TMMenuFaunaAnim_HandR(human, hitTri)
-		+ AccStr(TM_PosePrefix_Faun) .. "Hand L »" [gold]
+		+ AccStr(TMMenuTag_Fauna) .. "Hand L »" [gold]
 		-- + AccStr(TM_PosePrefix_Faun) .. "Hand L »" [if not game.HasAnim(human.forearmNames) == false] [gold]
 			TMMenuFaunaAnim_HandL(human, hitTri)
-		+ AccStr(TM_PosePrefix_Faun) .. "Hips »" [gold]
+		+ AccStr(TMMenuTag_Fauna) .. "Hips »" [gold]
 			TMMenuFaunaAnim_Hips(human, hitTri)
-		+ AccStr(TM_PosePrefix_Faun) .. "Breasts »" [gold]
+		+ AccStr(TMMenuTag_Fauna) .. "Breasts »" [gold]
 		-- + AccStr(TM_PosePrefix_Faun) .. "Breasts »" [if not game.HasAnim(human.chestNames) == false] [gold]
 			TMMenuFaunaAnim_Breasts(human, hitTri)
-		+ AccStr(TM_PosePrefix_Faun) .. "Bouncing »" [gold]
+		+ AccStr(TMMenuTag_Fauna) .. "Bouncing »" [gold]
 		-- + AccStr(TM_PosePrefix_Faun) .. "Bouncing »" [if game.HasAnim(human.breastNames) == false] [gold]
 			TMMenuFaunaAnim_Bouncing(human, hitTri)
 

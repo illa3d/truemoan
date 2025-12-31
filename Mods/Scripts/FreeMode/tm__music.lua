@@ -1,6 +1,6 @@
 -- TrueMoan v1.7 by illa3d
 --------------------------------------------------------------------------------------------------------------
--- MUSIC TRACKS (displayed in Options/Music)
+-- MUSIC TRACKS (displayed in TalkMenu/Options/Music)
 --------------------------------------------------------------------------------------------------------------
 TM_MusicTracks = {
 	"01_Dreamy_Whisper",

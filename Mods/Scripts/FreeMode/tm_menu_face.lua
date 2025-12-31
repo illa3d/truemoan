@@ -2,22 +2,24 @@
 label TMMenuFace(human)
 	-- FAUNA
 	+ if TMMOD_FaunaLabs
-		+ AccStr(TM_PosePrefix_Faun) .. AccStr("EDIT Face »") [gold]
+		+ AccStr(TMMenuTag_Fauna) .. AccStr("EDIT Face »") [gold]
 			TMMenuFaunaFaceLab(human, hitTri)
-		+ AccStr(TM_PosePrefix_Faun) .. "Kiss/Tongue »" [gold]
-			TMMenuItems_Poses(human, TM_PoseKissTongue_Fauna)
-		+ AccStr(TM_PosePrefix_Faun) .. "Face »" [gold]
-			TMMenuItems_Poses(human, TM_PoseFace_Fauna)
+		+ AccStr(TMMenuTag_Fauna) .. "Kiss/Tongue »" [gold]
+			TMMenuList_Poses(human, TMMenuItems_Fauna_Kiss)
+		+ AccStr(TMMenuTag_Fauna) .. "Face »" [gold]
+			TMMenuList_Poses(human, TMMenuItems_Fauna_Face)
 	+ else
 		+ AccStr("(more with faunalabs)") [gold]
 			-- human "True Moan page clearly stated you need FaunaLABS for more!\nYour loss! Now watch me with just original faces."
 			Return()
 	-- ORIGINAL
-	+ AccStr(TM_PosePrefix_Orig) .. "Face »" [gold]
-		TMMenuItems_Poses(human, TM_PoseFace_Original)
+	+ AccStr(TMMenuTag_Orig) .. "Face »" [gold]
+		TMMenuList_Poses(human, TMMenuItems_OrigFaces)
+	+ AccStr(TMMenuTag_TrueFace) .. "TrueFace »" [gold]
+		TMMenuList_TrueFace(human, TMMenuItems_TrueFace)
 	+ if #TM_PoseFace_Custom > 0
 		+ AccStr(TM_PosePrefix_Custom) .. "Face »" [gold]
-		TMMenuItems_Poses(human, TM_PoseFace_Custom)
+		TMMenuList_Poses(human, TM_PoseFace_Custom)
 	+ "Stop Anim" [if game.HasAnim(human)]
 		game.RemoveAnim(human)
 		Return()

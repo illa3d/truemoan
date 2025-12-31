@@ -34,22 +34,22 @@ label TMMenuHeyHuman(human)
 	+ "Look at »" [gold]
 		+ "• Look at " .. AccStr("cam")
 			HumanLookAt(human, CameraPos())
-			Return(2)
+			Return()
 		+ "• Face " .. AccStr("cam")
 			HumanLookAt(human, CameraPos())
 			HumanFaceAt(human, CameraPos())
-			Return(2)
+			Return()
 		+ "Eyes | " .. AccStr("Closed")  [if not TMEyesOpen]
 			TMEyesOpen = HumanEyesOpen(human, true)
-			Return(2)
+			Return()
 		+ "Eyes | " .. AccStr("Open") [if TMEyesOpen]
 			TMEyesOpen = HumanEyesOpen(human, false)
-			Return(2)
+			Return()
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
 	+ "Clothes From »" [gold]
-		TMMenuItems_Clothes(human, TM_Clothes_Custom)
+		TMMenuList_Clothes(human, TM_Clothes_Custom)
 	+ "Clothes " .. AccStr("on")
 		HumanClothes(human, true)
 		Return()

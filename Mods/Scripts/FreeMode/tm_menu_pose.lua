@@ -2,32 +2,32 @@
 label TMMenuPose(human)
 	-- FAUNA
 	+ if TMMOD_FaunaLabs
-		+ AccStr(TM_PosePrefix_Faun) .. AccStr("EDIT Fingers »") [gold]
+		+ AccStr(TMMenuTag_Fauna) .. AccStr("EDIT Fingers »") [gold]
 			TMMenuFaunaFingerLab(human, hitTri)
-		+ AccStr(TM_PosePrefix_Faun) .. "Arms »" [gold]
-			TMMenuItems_Poses(human, TM_PoseArms_Fauna)
-		+ AccStr(TM_PosePrefix_Faun) .. "Hands »" [gold]
-			TMMenuItems_Poses(human, TM_PoseHands_Fauna)
-		+ AccStr(TM_PosePrefix_Faun) .. "Lay »" [gold]
-			TMMenuItems_Poses(human, TM_PoseBody_Fauna_Lay)
-		+ AccStr(TM_PosePrefix_Faun) .. "Kneel »" [gold]
-			TMMenuItems_Poses(human, TM_PoseBody_Fauna_Kneel)
-		+ AccStr(TM_PosePrefix_Faun) .. "Sit »" [gold]
-			TMMenuItems_Poses(human, TM_PoseBody_Fauna_Sit)
-		+ AccStr(TM_PosePrefix_Faun) .. "Stand »" [gold]
-			TMMenuItems_Poses(human, TM_PoseBody_Fauna_Stand)
+		+ AccStr(TMMenuTag_Fauna) .. "Arms »" [gold]
+			TMMenuList_Poses(human, TMMenuItems_Fauna_Arms)
+		+ AccStr(TMMenuTag_Fauna) .. "Hands »" [gold]
+			TMMenuList_Poses(human, TMMenuItems_Fauna_Hands)
+		+ AccStr(TMMenuTag_Fauna) .. "Lay »" [gold]
+			TMMenuList_Poses(human, TMMenuItems_Fauna_Lay)
+		+ AccStr(TMMenuTag_Fauna) .. "Kneel »" [gold]
+			TMMenuList_Poses(human, TMMenuItems_Fauna_Kneel)
+		+ AccStr(TMMenuTag_Fauna) .. "Sit »" [gold]
+			TMMenuList_Poses(human, TMMenuItems_Fauna_Sit)
+		+ AccStr(TMMenuTag_Fauna) .. "Stand »" [gold]
+			TMMenuList_Poses(human, TMMenuItems_Fauna_Stand)
 	+ else
 		+ AccStr("(more with faunalabs)") [gold]
 			-- human "Why didn't you download the TrueMoan bundled with FaunaLABS?\nI'd run away but there's no pose for it."
 			Return()
 	-- ORIGINAL
-	+ AccStr(TM_PosePrefix_Orig) .. "Poses »" [gold]
-		TMMenuItems_Poses(human, TM_PoseBody_Original)
+	+ AccStr(TMMenuTag_Orig) .. "Poses »" [gold]
+		TMMenuList_Poses(human, TMMenuItems_OrigPoses)
 	+ if #TM_PoseHands_Custom > 0
 		+ AccStr(TM_PosePrefix_Custom) .. "Hands »" [gold]
-			TMMenuItems_Poses(human, TM_PoseHands_Custom)
+			TMMenuList_Poses(human, TM_PoseHands_Custom)
 		+ AccStr(TM_PosePrefix_Custom) .. "Poses »" [gold]
-			TMMenuItems_Poses(human, TM_PoseBody_Custom)
+			TMMenuList_Poses(human, TM_PoseBody_Custom)
 	+ "RESET Face"
 		human.Pose(FaceNeutral())
 		Return()

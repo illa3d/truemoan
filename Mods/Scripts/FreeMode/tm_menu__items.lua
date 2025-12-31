@@ -4,9 +4,8 @@
 -------------------------------------------------------------------------------------------------
 -- POSES - ORIGINAL
 -------------------------------------------------------------------------------------------------
-TM_PosePrefix_Orig = "|or| "
-
-TM_PoseBody_Original = {
+TMMenuTag_Orig = "|or| "
+TMMenuItems_OrigPoses = {
 	{ name = "Camel pose", preset = CamelPose },
 	{ name = "Jack-o pose", preset = JackoPose },
 	{ name = "Lay|side|L", preset = LayDownSide },
@@ -23,7 +22,7 @@ TM_PoseBody_Original = {
 	{ name = "Stand", preset = StandUp }
 }
 
-TM_PoseFace_Original = {
+TMMenuItems_OrigFaces = {
 	{ name = "Ahegao", preset = FaceAhegao },
 	{ name = "Disgusted", preset = FaceDisgusted },
 	{ name = "Sad", preset = FaceSad },
@@ -37,10 +36,10 @@ TM_PoseFace_Original = {
 -------------------------------------------------------------------------------------------------
 -- POSES - FAUNA LABS
 -------------------------------------------------------------------------------------------------
-TM_PosePrefix_Faun = "|fa| "
+TMMenuTag_Fauna = "|fa| "
 
 -- BODY
-TM_PoseBody_Fauna_Lay = {
+TMMenuItems_Fauna_Lay = {
 	{ name = "Jack-o pose", preset = JackO },
 	{ name = "Lay|hanging", preset = Hanging_1 },
 	{ name = "Lay|side|R", preset = LayDownSideL },
@@ -49,7 +48,7 @@ TM_PoseBody_Fauna_Lay = {
 	{ name = "Lay|back", preset = LayDownBack1 },
 }
 
-TM_PoseBody_Fauna_Kneel = {
+TMMenuItems_Fauna_Kneel = {
 	{ name = "Kneel|doggy|bond|B", preset = Doggystyle_Bound },
 	{ name = "Kneel|doggy|bond|F", preset = Doggystyle_Exhausted },
 	{ name = "Kneel|doggy|lick", preset = All42 },
@@ -61,14 +60,14 @@ TM_PoseBody_Fauna_Kneel = {
 	{ name = "Kneel|front", preset = KneelDown1 },
 }
 
-TM_PoseBody_Fauna_Sit = {
+TMMenuItems_Fauna_Sit = {
 	{ name = "Sit|eifel", preset = Eiffel },
 	{ name = "Sit|spread", preset = SitDownSpreadLegs },
 	{ name = "Sit|defense", preset = SitDown2 },
 	{ name = "Sit", preset = SitDown1 },
 }
 
-TM_PoseBody_Fauna_Stand = {
+TMMenuItems_Fauna_Stand = {
 	{ name = "Stand|handstand2", preset = Handstand_2 },
 	{ name = "Stand|handstand1", preset = Handstand_1 },
 	{ name = "Stand|squat|bond", preset = Squat },
@@ -79,7 +78,7 @@ TM_PoseBody_Fauna_Stand = {
 }
 
 -- ARMS
-TM_PoseArms_Fauna = {
+TMMenuItems_Fauna_Arms = {
 	{ name = "Arms|victory", preset = DoubleV },
 	{ name = "Arms|behind4", preset = HandsBehind3 },
 	{ name = "Arms|behind3", preset = HandsBehind },
@@ -89,7 +88,7 @@ TM_PoseArms_Fauna = {
 	{ name = "Arms|front1", preset = HandsInfront_1 },
 }
 
-TM_PoseHands_Fauna = {
+TMMenuItems_Fauna_Hands = {
 	{ name = "Hand|peace|R", preset = PeaceR },
 	{ name = "Hand|peace|L", preset = PeaceL },
 	{ name = "Hand|shh|R", preset = Shush },
@@ -102,7 +101,7 @@ TM_PoseHands_Fauna = {
 }
 
 -- FACE
-TM_PoseFace_Fauna = {
+TMMenuItems_Fauna_Face = {
 	{ name = "Teeth2", preset = GritTeeth2 },
 	{ name = "Teeth1", preset = GritTeeth },
 	{ name = "Pogged", preset = Pog },
@@ -116,7 +115,7 @@ TM_PoseFace_Fauna = {
 	{ name = "OpenWide", preset = OpenWide },
 }
 
-TM_PoseKissTongue_Fauna = {
+TMMenuItems_Fauna_Kiss = {
 	{ name = "Tongue3", preset = TongueOut2 },
 	{ name = "Tongue2", preset = TongueOut3 },
 	{ name = "Tongue1", preset = TongueOut },
