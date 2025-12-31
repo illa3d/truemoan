@@ -8,151 +8,200 @@
 TMBD_RagdollSizeDefault = 0.228
 TMBD_BodyDefault = 0
 
--- Body Edit Definitions
-TMBE_Neck = "Neck size"
-TMBE_Forearms = "Forearms size"
-TMBE_Upperarms = "Upper arms size"
-TMBE_Calf = "Calf size"
-TMBE_Thigh = "Thigh size"
-TMBE_Hips = "Hips size"
-TMBE_Waist = "Waist size"
-TMBE_Ass = "Ass size"
-TMBE_Nipples = "Nipples size"
-TMBE_Breasts = "Breasts size"
-TMBE_PenisLength = "Penis length"
-TMBE_PenisSize = "Penis size"
-TMBE_Muscle = "Muscle tone"
-TMBE_Body = "Body size"
-
--- Body Edit Variables
-TMB_NeckSize = 0
-TMB_ForearmSize = 0
-TMB_UperArmsize = 0
-TMB_CalfSize = 0
-TMB_ThighSize = 0
-TMB_WaistSize = 0
-TMB_HipsSize = 0
-TMB_AssSize = 0
-TMB_NipplesSize = 0
-TMB_BreastSize = 0
-TMB_PenisSize = 0
-TMB_PenisLength = 0
-TMB_MuscleSize = 0
-TMB_BodySize = 0
-TMB_PenisSkin = 0
-TMB_PenisRagdoll = TMBD_RagdollSizeDefault
-
--- Body Edit Limits
-local TMB_BodyLimits = {
-	{ name = TMBE_Neck,			safemin = 0, min = -1, max = 2 },
-	{ name = TMBE_Forearms,		safemin = 0, min = -0.5, max = 2 },
-	{ name = TMBE_Upperarms,	safemin = 0, min = -0.5, max = 2 },
-	{ name = TMBE_Calf,			safemin = 0, min = -0.5, max = 2 },
-	{ name = TMBE_Thigh,		safemin = 0, min = -0.5, max = 2 },
-	{ name = TMBE_Hips,			safemin = 0, min = -1.5, max = 5 },
-	{ name = TMBE_Waist,		safemin = 0, min = -1, max = 5 },
-	{ name = TMBE_Ass,			safemin = 0, min = -1, max = 10 },
-	{ name = TMBE_Nipples,		safemin = 0, min = -5, max = 5 },
-	{ name = TMBE_Breasts,	 safemin = -0.8, min = -2, max = 10 },
-	{ name = TMBE_PenisLength,	safemin = 0, min = -0.7, max = 5 },
-	{ name = TMBE_PenisSize,	safemin = 0, min = -0.7, max = 20 },
-	{ name = TMBE_Muscle,		safemin = 0, min = -0.3, max = 1 },
-	{ name = TMBE_Body,			safemin = 0, min = -0.9, max = 10 },
+-- Body Edit Values
+TMBValue = {
+	Neck = 0,
+	Forearms = 0,
+	UpperArms = 0,
+	Calf = 0,
+	Thigh = 0,
+	Hips = 0,
+	Waist = 0,
+	Ass = 0,
+	Nipples = 0,
+	Breasts = 0,
+	PenisLength = 0,
+	PenisSize = 0,
+	Muscle = 0,
+	Body = 0,
+	PenisSkin = 0,
+	PenisRagdoll = TMBD_RagdollSizeDefault,
 }
 
-local function TMGetBodyPartLimit(bodypart)
-	for _, limit in ipairs(TMB_BodyLimits) do
-		if limit.name == bodypart then
-			return limit
-		end
-	end
-	return { safemin = 0, min = -1, max = 1 }
+-- Body Edit Enum
+TMBody = {
+	Neck = "Neck",
+	Forearms = "Forearms",
+	UpperArms = "UpperArms",
+	Calf = "Calf",
+	Thigh = "Thigh",
+	Hips = "Hips",
+	Waist = "Waist",
+	Ass = "Ass",
+	Nipples = "Nipples",
+	Breasts = "Breasts",
+	PenisLength = "PenisLength",
+	PenisSize = "PenisSize",
+	Muscle = "Muscle",
+	Body = "Body",
+	PenisSkin = "PenisSkin", -- this is separate function TMBodyEditPenisRagdoll
+	PenisRagdoll = "PenisRagdoll" -- this is separate function TMBodyEditPenisSkin
+}
+
+-- TrueFacials Body parameter names
+TMBodyParamName = {
+	[TMBody.Neck] = "Neck size",
+	[TMBody.Forearms] = "Forearms size",
+	[TMBody.UpperArms] = "Upper arms size",
+	[TMBody.Calf] = "Calf size",
+	[TMBody.Thigh] = "Thigh size",
+	[TMBody.Hips] = "Hips size",
+	[TMBody.Waist] = "Waist size",
+	[TMBody.Ass] = "Ass size",
+	[TMBody.Nipples] = "Nipples size",
+	[TMBody.Breasts] = "Breasts size",
+	[TMBody.PenisLength] = "Penis length",
+	[TMBody.PenisSize] = "Penis size",
+	[TMBody.Muscle] = "Muscle tone",
+	[TMBody.Body] = "Body size",
+}
+
+-- Body Edit Limits (game min max)
+local TMBLimits = {
+	Neck = 			{ safemin = 0,		min = -1,	max = 2 },
+	Forearms =		{ safemin = 0,		min = -0.5,	max = 2 },
+	UpperArms =		{ safemin = 0,		min = -0.5,	max = 2 },
+	Calf =			{ safemin = 0,		min = -0.5,	max = 2 },
+	Thigh =			{ safemin = 0,		min = -0.5,	max = 2 },
+	Hips =			{ safemin = 0,		min = -1.5,	max = 5 },
+	Waist =			{ safemin = 0,		min = -1,	max = 5 },
+	Ass =			{ safemin = 0,		min = -1,	max = 10 },
+	Nipples =		{ safemin = 0,		min = -5,	max = 5 },
+	Breasts =		{ safemin = -0.8,	min = -2,	max = 10 },
+	PenisLength =	{ safemin = 0,		min = -0.7,	max = 5 },
+	PenisSize =		{ safemin = 0,		min = -0.7,	max = 20 },
+	Muscle =		{ safemin = 0,		min = -0.3,	max = 1 },
+	Body =			{ safemin = 0,		min = -0.9,	max = 10 },
+	PenisSkin =		{ safemin = 0,		min = 0,	max = 1 },
+	PenisRagdoll =	{ safemin = 0,		min = 0,	max = 2 },
+}
+
+-- Body Edit Random Limits (random min max)
+local TMBRandomLimits = {
+	Neck = 			{ min = -0.2,	max = 0.2 },
+	Forearms =		{ min = -0.1,	max = 0.2 },
+	UpperArms =		{ min = -0.1,	max = 0.2 },
+	Calf =			{ min = -0.1,	max = 0.2 },
+	Thigh =			{ min = -0.2,	max = 0.2 },
+	Hips =			{ min = -0.2,	max = 0.5 },
+	Waist =			{ min = -0.2,	max = 0.5 },
+	Ass =			{ min = -1,	max = 1.5 },
+	Nipples =		{ min = -1,	max = 1 },
+	Breasts =		{ min = -0.8,	max = 1 },
+	Muscle =		{ min = -0.3,	max = 0.3 },
+	-- PenisLength =	{ min = 0,	max = 0 }, -- ignored for random
+	-- PenisSize =		{ min = 0,	max = 0 },
+	-- Body =			{ min = 0,	max = 0 },
+	-- PenisSkin =		{ min = 0,	max = 0 },
+	-- PenisRagdoll =	{ min = 0,	max = 0 },
+}
+
+local TMBodyRandomBlocked = {
+	[TMBody.PenisLength]	= true,
+	[TMBody.PenisSize]		= true,
+	[TMBody.Body]			= true,
+	[TMBody.PenisSkin]		= true,
+	[TMBody.PenisRagdoll]	= true,
+}
+
+-------------------------------------------------------------------------------------------------
+
+local function TMBodyEdit_ClampMinMax(tmBody, value)
+	local limit = TMBLimits[tmBody]
+	if not limit then return value end
+	if TM_BodyEditSafe and not limit.safemin == 0 and value < limit.safemin then return limit.safemin end
+	return ClampValue(value, limit.min, limit.max)
+end
+
+local function TMBodyGetRandom(tmBody)
+	local limit = TMBRandomLimits[tmBody]
+	if not limit then return 0 end
+	return GetRandomFloat(limit.min, limit.max)
 end
 
 -------------------------------------------------------------------------------------------------
 -- BODY EDIT
 -------------------------------------------------------------------------------------------------
 
-function TMBodyEditUp(human, bodypart, value, step)
-	local limit = TMGetBodyPartLimit(bodypart)
+function TMBodyEditAllRandom(human)
+	for part, _ in pairs(TMBody) do
+		if not TMBodyRandomBlocked[part] then TMBodyEditRandom(human, part) end
+	end
+end
+
+function TMBodyEditRandom(human, tmBody)
+	if not tmBody then return 0 end
+	TMBodyEdit(human, tmBody, TMBodyGetRandom(tmBody))
+end
+
+function TMBodyEdit_Up(human, tmBody, step)
+	if not tmBody then return end
+	local value = TMBValue[tmBody]
 	local mult = 1 + math.floor(math.abs(value) / 2) -- step function to multiply step for bigger values
 	value = value + step * mult
-	if limit.max ~= 0 and value > limit.max then value = limit.max end
-	human.Body(bodypart, value)
-	return value
+	TMBodyEdit(human, tmBody, value)
 end
 
-function TMBodyEditDown(human, bodypart, value, step)
-	local limit = TMGetBodyPartLimit(bodypart)
+function TMBodyEdit_Down(human, tmBody, step)
+	if not tmBody then return end
+	local value = TMBValue[tmBody]
 	local mult = 1 + math.floor(math.abs(value) / 2) -- step function to multiply step for bigger values
 	value = value - step * mult
-	if TM_BodyEditSafe and limit.safemin ~= 0 and value < limit.safemin then value = limit.safemin
-	elseif limit.min ~= 0 and value < limit.min then value = limit.min end
-	human.Body(bodypart, value)
-	return value
+	TMBodyEdit(human, tmBody, value)
 end
 
-function TMBodyEditSize(human, value)
-	human.Body(TMBE_Body, value)
-	return value
+function TMBodyEdit(human, tmBody, value)
+	if not tmBody then return end
+	if tmBody == TMBody.PenisSkin then TMBodyEdit_PenisSkin(human, value) return end
+	if tmBody == TMBody.PenisRagdoll then TMBodyEdit_PenisRagdoll(human, value) return end
+	TMBValue[tmBody] = TMBodyEdit_ClampMinMax(tmBody, value)
+	human.Body(TMBodyParamName[tmBody], TMBValue[tmBody])
 end
 
-function TMBodyEdit(human, bodypart, value)
-	if not bodypart or type(bodypart) ~= "string" then return value end
-	human.Body(bodypart, value)
-	return value
+-- PENIS
+function TMBodyEdit_PenisSkin(human, value)
+	TMBValue.PenisSkin = TMBodyEdit_ClampMinMax(TMBody.PenisSkin, value)
+	human.Penis.m_penisSkinOut = TMBValue.PenisSkin
 end
 
-function TMBodyEditPenisRagdoll(human, value)
-	value = ClampValue(value, 0, 2)
-	human.Penis.m_ragdollLength = value
-	return value
-end
-
-function TMBodyEditPenisSkin(human, value)
-	value = Clamp01(value)
-	human.Penis.m_penisSkinOut = value
-	return value
+function TMBodyEdit_PenisRagdoll(human, value)
+	TMBValue.PenisRagdoll = TMBodyEdit_ClampMinMax(TMBody.PenisRagdoll, value)
+	human.Penis.m_ragdollLength = TMBValue.PenisRagdoll
 end
 
 -------------------------------------------------------------------------------------------------
 -- BODY EDIT VALUES
 -------------------------------------------------------------------------------------------------
 
-function TMBodyEditResetValues()
-	TMB_NeckSize = TMBD_BodyDefault
-	TMB_ForearmSize = TMBD_BodyDefault
-	TMB_UperArmsize = TMBD_BodyDefault
-	TMB_CalfSize = TMBD_BodyDefault
-	TMB_ThighSize = TMBD_BodyDefault
-	TMB_HipsSize = TMBD_BodyDefault
-	TMB_WaistSize = TMBD_BodyDefault
-	TMB_AssSize = TMBD_BodyDefault
-	TMB_NipplesSize = TMBD_BodyDefault
-	TMB_BreastSize = TMBD_BodyDefault
-	TMB_PenisLength = TMBD_BodyDefault
-	TMB_PenisSize = TMBD_BodyDefault
-	TMB_MuscleSize = TMBD_BodyDefault
-	TMB_BodySize = TMBD_BodyDefault
-	TMB_PenisSkin = TMBD_BodyDefault
-	TMB_PenisRagdoll = TMBD_RagdollSizeDefault
+function TMBodyEdit_ResetValues()
+	TMBValue.Neck = TMBD_BodyDefault
+	TMBValue.Forearms = TMBD_BodyDefault
+	TMBValue.UpperArms = TMBD_BodyDefault
+	TMBValue.Calf = TMBD_BodyDefault
+	TMBValue.Thigh = TMBD_BodyDefault
+	TMBValue.Waist = TMBD_BodyDefault
+	TMBValue.Hips = TMBD_BodyDefault
+	TMBValue.Ass = TMBD_BodyDefault
+	TMBValue.Nipples = TMBD_BodyDefault
+	TMBValue.Breasts = TMBD_BodyDefault
+	TMBValue.PenisLength = TMBD_BodyDefault
+	TMBValue.PenisSize = TMBD_BodyDefault
+	TMBValue.Muscle = TMBD_BodyDefault
+	TMBValue.Body = TMBD_BodyDefault
+	TMBValue.PenisSkin = TMBD_BodyDefault
+	TMBValue.PenisRagdoll = TMBD_RagdollSizeDefault
 end
 
-function TMBodyEditApplyValues(human)
-	human.Body(TMBE_Neck, TMB_NeckSize)
-	human.Body(TMBE_Forearms, TMB_ForearmSize)
-	human.Body(TMBE_Upperarms, TMB_UperArmsize)
-	human.Body(TMBE_Calf, TMB_CalfSize)
-	human.Body(TMBE_Thigh, TMB_ThighSize)
-	human.Body(TMBE_Hips, TMB_HipsSize)
-	human.Body(TMBE_Waist, TMB_WaistSize)
-	human.Body(TMBE_Ass, TMB_AssSize)
-	human.Body(TMBE_Nipples, TMB_NipplesSize)
-	human.Body(TMBE_Breasts, TMB_BreastSize)
-	human.Body(TMBE_PenisLength, TMB_PenisLength)
-	human.Body(TMBE_PenisSize, TMB_PenisSize)
-	human.Body(TMBE_Muscle, TMB_MuscleSize)
-	human.Body(TMBE_Body, TMB_BodySize)
-	human.Penis.m_ragdollLength = TMB_PenisRagdoll
-	human.Penis.m_penisSkinOut = TMB_PenisSkin
+function TMBodyEdit_ApplyValues(human)
+	for part, value in pairs(TMBValue) do TMBodyEdit(human, part, value) end
 end

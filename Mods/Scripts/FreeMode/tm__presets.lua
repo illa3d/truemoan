@@ -9,33 +9,35 @@
 
 -- MENU: BODY.. / Size..
 label TMMenuBodySize(human)
+-- MENU PRESETS START ===========================================================================================================================
 	+ "• Fairy Dildo" [if human.Penis.IsActive] [gold]
 		-- human "Wtf is this, I feel funny... Weeeeee!\n(Sweet idea @void.branding)"
 		TMBEPreset_Dildo(human)	
 		Return()
 	+ "• Giant"
-		TMB_BodySize = TMBodyEditSize(human, 0.7)
+		TMBodyEditSize(human, 0.7)
 		Return()
 	+ "• Huge"
-		TMB_BodySize = TMBodyEditSize(human, 0.15)
+		TMBodyEditSize(human, 0.15)
 		Return()
 	+ "• Big"
-		TMB_BodySize = TMBodyEditSize(human, 0.075)
+		TMBodyEditSize(human, 0.075)
 		Return()
 	+ "• Normal" [gold]
-		TMB_BodySize = TMBodyEditSize(human, 0)
+		TMBodyEditSize(human, 0)
 		Return()
 	+ "• Medium"
-		TMB_BodySize = TMBodyEditSize(human, -0.075)
+		TMBodyEditSize(human, -0.075)
 		Return()
 	+ "• Small"
-		TMB_BodySize = TMBodyEditSize(human, -0.15)
+		TMBodyEditSize(human, -0.15)
 		Return()
 	+ "• Tiny"
-		TMB_BodySize = TMBodyEditSize(human, -0.7)
+		TMBodyEditSize(human, -0.7)
 		Return()
-	+ "Random | " .. AccNum(TMB_BodySize, 2) [gold]
-		TMB_BodySize = TMBodyEditSize(human, GetRandomFloat(-0.5,0.5))
+-- MENU PRESETS END ===========================================================================================================================
+	+ "Random | " .. AccNum(TMBValue.Body, 2) [gold]
+		TMBodyEdit(human, TMBody.Body, GetRandomFloat(-0.5,0.5))
 		Return()
 	+ TM_MenuBack
 		Return(2)
@@ -44,6 +46,7 @@ stop
 
 -- MENU: BODY.. / Type..
 label TMMenuBodyType(human)
+	-- MENU PRESETS - !!ADD MENU PRESETS HERE!!
 	+ "• Obese"
 		TMBEPreset_Obese(human)
 		Return()
@@ -60,7 +63,10 @@ label TMMenuBodyType(human)
 		TMBEPreset_Skinny(human)
 		Return()
 	+ "Random" [gold]
-		TMBEPreset_Random(human)
+		TMBEPreset_RandomPreset(human)
+		Return()
+	+ "Generate" [gold]
+		TMBodyEditAllRandom(human)
 		Return()
 	+ TM_MenuBack
 		Return(2)
@@ -74,145 +80,126 @@ stop
 -- Called from tm_main on character creation
 function TMBEPreset_RandomStart(human)
 	local randomPresets = {
+-- SPAWN RANDOM PRESETS START ===========================================================================================================================
 		TMBEPreset_Skinny,
 		TMBEPreset_Slim,
 		TMBEPreset_Normal,
 		TMBEPreset_Curvy,
 		TMBEPreset_Obese,
-	}
-	(randomPresets[math.random(#randomPresets)] or TMBEPreset_Normal)(human)
+-- SPAWN RANDOM PRESETS END ===========================================================================================================================
+	} (randomPresets[math.random(#randomPresets)] or TMBEPreset_Normal)(human)
 end
 
 -- Called from BodyEdit menu
-function TMBEPreset_Random(human)
+function TMBEPreset_RandomPreset(human)
 	local randomPresets = {
+-- RANDOM PRESETS START  ==============================================================================
 		TMBEPreset_Skinny,
 		TMBEPreset_Slim,
 		TMBEPreset_Normal,
 		TMBEPreset_Curvy,
 		TMBEPreset_Obese,
+-- RANDOM PRESETS END ===============================================================================
 	}
 	(randomPresets[math.random(#randomPresets)] or TMBEPreset_Normal)(human)
 end
 
+-- PRESETS START  ==============================================================================
 function TMBEPreset_Dildo(human)
 	HumanClothes(human, false)
 	TMBEPreset_Normal(human)
-	TMB_PenisSize = TMBodyEdit(human, TMBE_PenisSize, 8)
-	TMB_BodySize = TMBodyEdit(human, TMBE_Body, -0.9)
+	TMBValue.PenisSize = TMBodyEdit(human, TMBody.PenisSize, 8)
+	TMBValue.Body = TMBodyEdit(human, TMBody.Body, -0.9)
 	HumanReset(human)
 end
 
 function TMBEPreset_Obese(human)
-	TMB_NeckSize = TMBodyEdit(human, TMBE_Neck, 0.2)
-	TMB_ForearmSize = TMBodyEdit(human, TMBE_Forearms, 0.2)
-	TMB_UperArmsize = TMBodyEdit(human, TMBE_Upperarms, 0.4)
-	TMB_CalfSize = TMBodyEdit(human, TMBE_Calf, 0.2)
-	TMB_ThighSize = TMBodyEdit(human, TMBE_Thigh, 0.2)
-	TMB_HipsSize = TMBodyEdit(human, TMBE_Hips, 0.8)
-	TMB_WaistSize = TMBodyEdit(human, TMBE_Waist, 0.8)
-	TMB_AssSize = TMBodyEdit(human, TMBE_Ass, 2)
-	TMB_NipplesSize = TMBodyEdit(human, TMBE_Nipples, 0)
-	TMB_BreastSize = TMBodyEdit(human, TMBE_Breasts, 0.7)
-	-- TMB_PenisLength = TMBodyEdit(human, TMBE_PenisLen, 0)
-	-- TMB_PenisSize = TMBodyEdit(human, TMBE_PenisSize, 0)
-	TMB_MuscleSize = TMBodyEdit(human, TMBE_Muscle, -0.3)
-	-- TMB_BodySize = TMBodyEdit(human, TMBE_Body, 0)
-	-- human.Penis.m_ragdollLength = TMBD_BodyDefault
-	-- human.Penis.m_penisSkinOut = 0
+	TMBodyEdit(human, TMBody.Neck, 0.2)
+	TMBodyEdit(human, TMBody.Forearms, 0.2)
+	TMBodyEdit(human, TMBody.UpperArms, 0.4)
+	TMBodyEdit(human, TMBody.Calf, 0.2)
+	TMBodyEdit(human, TMBody.Thigh, 0.2)
+	TMBodyEdit(human, TMBody.Hips, 0.8)
+	TMBodyEdit(human, TMBody.Waist, 0.8)
+	TMBodyEdit(human, TMBody.Ass, 2)
+	TMBodyEdit(human, TMBody.Nipples, 0)
+	TMBodyEdit(human, TMBody.Breasts, 0.7)
+	TMBodyEdit(human, TMBody.Muscle, -0.3)
 end
 
 function TMBEPreset_Curvy(human)
-	TMB_NeckSize = TMBodyEdit(human, TMBE_Neck, 0.1)
-	TMB_ForearmSize = TMBodyEdit(human, TMBE_Forearms, 0.1)
-	TMB_UperArmsize = TMBodyEdit(human, TMBE_Upperarms, 0.2)
-	TMB_CalfSize = TMBodyEdit(human, TMBE_Calf, 0.1)
-	TMB_ThighSize = TMBodyEdit(human, TMBE_Thigh, 0.1)
-	TMB_HipsSize = TMBodyEdit(human, TMBE_Hips, 0.4)
-	TMB_WaistSize = TMBodyEdit(human, TMBE_Waist, 0.4)
-	TMB_AssSize = TMBodyEdit(human, TMBE_Ass, 1)
-	TMB_NipplesSize = TMBodyEdit(human, TMBE_Nipples, 0)
-	TMB_BreastSize = TMBodyEdit(human, TMBE_Breasts, 0.3)
-	-- TMB_PenisLength = TMBodyEdit(human, TMBE_PenisLen, 0)
-	-- TMB_PenisSize = TMBodyEdit(human, TMBE_PenisSize, 0)
-	TMB_MuscleSize = TMBodyEdit(human,TMBE_Muscle, -0.2)
-	-- TMB_BodySize = TMBodyEdit(human, TMBE_Body, 0)
-	-- human.Penis.m_ragdollLength = TMBD_BodyDefault
-	-- human.Penis.m_penisSkinOut = 0
+	TMBodyEdit(human, TMBody.Neck, 0.1)
+	TMBodyEdit(human, TMBody.Forearms, 0.1)
+	TMBodyEdit(human, TMBody.UpperArms, 0.2)
+	TMBodyEdit(human, TMBody.Calf, 0.1)
+	TMBodyEdit(human, TMBody.Thigh, 0.1)
+	TMBodyEdit(human, TMBody.Hips, 0.4)
+	TMBodyEdit(human, TMBody.Waist, 0.4)
+	TMBodyEdit(human, TMBody.Ass, 1)
+	TMBodyEdit(human, TMBody.Nipples, 0)
+	TMBodyEdit(human, TMBody.Breasts, 0.3)
+	TMBodyEdit(human,TMBody.Muscle, -0.2)
 end
 
 function TMBEPreset_Normal(human)
-	TMB_NeckSize = TMBodyEdit(human, TMBE_Neck, 0)
-	TMB_ForearmSize = TMBodyEdit(human, TMBE_Forearms, 0)
-	TMB_UperArmsize = TMBodyEdit(human, TMBE_Upperarms, 0)
-	TMB_CalfSize = TMBodyEdit(human, TMBE_Calf, 0)
-	TMB_ThighSize = TMBodyEdit(human, TMBE_Thigh, 0)
-	TMB_HipsSize = TMBodyEdit(human, TMBE_Hips, 0)
-	TMB_WaistSize = TMBodyEdit(human, TMBE_Waist, 0)
-	TMB_AssSize = TMBodyEdit(human, TMBE_Ass, 0)
-	TMB_NipplesSize = TMBodyEdit(human, TMBE_Nipples, 0)
-	TMB_BreastSize = TMBodyEdit(human, TMBE_Breasts, 0)
-	-- TMB_PenisLength = TMBodyEdit(human, TMBE_PenisLen, 0)
-	-- TMB_PenisSize = TMBodyEdit(human, TMBE_PenisSize, 0)
-	TMB_MuscleSize = TMBodyEdit(human, TMBE_Muscle, 0)
-	-- TMB_BodySize = TMBodyEdit(human, TMBE_Body, 0)
-	-- human.Penis.m_ragdollLength = TMBD_BodyDefault
-	-- human.Penis.m_penisSkinOut = 0
+	TMBodyEdit(human, TMBody.Neck, 0)
+	TMBodyEdit(human, TMBody.Forearms, 0)
+	TMBodyEdit(human, TMBody.UpperArms, 0)
+	TMBodyEdit(human, TMBody.Calf, 0)
+	TMBodyEdit(human, TMBody.Thigh, 0)
+	TMBodyEdit(human, TMBody.Hips, 0)
+	TMBodyEdit(human, TMBody.Waist, 0)
+	TMBodyEdit(human, TMBody.Ass, 0)
+	TMBodyEdit(human, TMBody.Nipples, 0)
+	TMBodyEdit(human, TMBody.Breasts, 0)
+	TMBodyEdit(human, TMBody.Muscle, 0)
 end
 
 function TMBEPreset_Slim(human)
-	TMB_NeckSize = TMBodyEdit(human, TMBE_Neck, 0)
-	TMB_ForearmSize = TMBodyEdit(human, TMBE_Forearms, -0.05)
-	TMB_UperArmsize = TMBodyEdit(human, TMBE_Upperarms, -0.05)
-	TMB_CalfSize = TMBodyEdit(human, TMBE_Calf, -0.05)
-	TMB_ThighSize = TMBodyEdit(human, TMBE_Thigh, -0.1)
-	TMB_HipsSize = TMBodyEdit(human, TMBE_Hips, -0.1)
-	TMB_WaistSize = TMBodyEdit(human, TMBE_Waist, 0)
-	TMB_AssSize = TMBodyEdit(human, TMBE_Ass, -0.5)
-	TMB_NipplesSize = TMBodyEdit(human, TMBE_Nipples, 0)
-	TMB_BreastSize = TMBodyEdit(human, TMBE_Breasts, -0.5)
-	-- TMB_PenisLength = TMBodyEdit(human,TMBE_PenisLen, 0)
-	-- TMB_PenisSize = TMBodyEdit(human,TMBE_PenisSize, 0)
-	TMB_MuscleSize = TMBodyEdit(human, TMBE_Muscle, 0.2)
-	-- TMB_BodySize = TMBodyEdit(human, TMBE_Body, 0)
-	-- human.Penis.m_ragdollLength = TMBD_BodyDefault
-	-- human.Penis.m_penisSkinOut = 0
+	TMBodyEdit(human, TMBody.Neck, 0)
+	TMBodyEdit(human, TMBody.Forearms, -0.05)
+	TMBodyEdit(human, TMBody.UpperArms, -0.05)
+	TMBodyEdit(human, TMBody.Calf, -0.05)
+	TMBodyEdit(human, TMBody.Thigh, -0.1)
+	TMBodyEdit(human, TMBody.Hips, -0.1)
+	TMBodyEdit(human, TMBody.Waist, 0)
+	TMBodyEdit(human, TMBody.Ass, -0.5)
+	TMBodyEdit(human, TMBody.Nipples, 0)
+	TMBodyEdit(human, TMBody.Breasts, -0.5)
+	TMBodyEdit(human, TMBody.Muscle, 0.2)
 end
 
 function TMBEPreset_Skinny(human)
-	TMB_NeckSize = TMBodyEdit(human, TMBE_Neck, 0)
-	TMB_ForearmSize = TMBodyEdit(human, TMBE_Forearms, -0.1)
-	TMB_UperArmsize = TMBodyEdit(human, TMBE_Upperarms, -0.1)
-	TMB_CalfSize = TMBodyEdit(human, TMBE_Calf, -0.1)
-	TMB_ThighSize = TMBodyEdit(human, TMBE_Thigh, -0.2)
-	TMB_HipsSize = TMBodyEdit(human, TMBE_Hips, -0.2)
-	TMB_WaistSize = TMBodyEdit(human, TMBE_Waist, 0)
-	TMB_AssSize = TMBodyEdit(human, TMBE_Ass, -1)
-	TMB_NipplesSize = TMBodyEdit(human, TMBE_Nipples, 0)
-	TMB_BreastSize = TMBodyEdit(human, TMBE_Breasts, -0.8)
-	-- TMB_PenisLength = TMBodyEdit(human, TMBE_PenisLen, 0)
-	-- TMB_PenisSize = TMBodyEdit(human, TMBE_PenisSize, 0)
-	TMB_MuscleSize = TMBodyEdit(human, TMBE_Muscle, 0.3)
-	-- TMB_BodySize = TMBodyEdit(human, TMBE_Body, 0)
-	-- human.Penis.m_ragdollLength = TMBD_BodyDefault
-	-- human.Penis.m_penisSkinOut = 0
+	TMBodyEdit(human, TMBody.Neck, 0)
+	TMBodyEdit(human, TMBody.Forearms, -0.1)
+	TMBodyEdit(human, TMBody.UpperArms, -0.1)
+	TMBodyEdit(human, TMBody.Calf, -0.1)
+	TMBodyEdit(human, TMBody.Thigh, -0.2)
+	TMBodyEdit(human, TMBody.Hips, -0.2)
+	TMBodyEdit(human, TMBody.Waist, 0)
+	TMBodyEdit(human, TMBody.Ass, -1)
+	TMBodyEdit(human, TMBody.Nipples, 0)
+	TMBodyEdit(human, TMBody.Breasts, -0.8)
+	TMBodyEdit(human, TMBody.Muscle, 0.3)
 end
+-- PRESETS END  ==============================================================================
 
 function TMBEPreset_Reset(human)
-	TMB_NeckSize = TMBodyEdit(human, TMBE_Neck, TMBD_BodyDefault)
-	TMB_ForearmSize = TMBodyEdit(human, TMBE_Forearms, TMBD_BodyDefault)
-	TMB_UperArmsize = TMBodyEdit(human, TMBE_Upperarms, TMBD_BodyDefault)
-	TMB_CalfSize = TMBodyEdit(human, TMBE_Calf, TMBD_BodyDefault)
-	TMB_ThighSize = TMBodyEdit(human, TMBE_Thigh, TMBD_BodyDefault)
-	TMB_HipsSize = TMBodyEdit(human, TMBE_Hips, TMBD_BodyDefault)
-	TMB_WaistSize = TMBodyEdit(human, TMBE_Waist, TMBD_BodyDefault)
-	TMB_AssSize = TMBodyEdit(human, TMBE_Ass, TMBD_BodyDefault)
-	TMB_NipplesSize = TMBodyEdit(human, TMBE_Nipples, TMBD_BodyDefault)
-	TMB_BreastSize = TMBodyEdit(human, TMBE_Breasts, TMBD_BodyDefault)
-	TMB_PenisLength = TMBodyEdit(human, TMBE_PenisLength, TMBD_BodyDefault)
-	TMB_PenisSize = TMBodyEdit(human, TMBE_PenisSize, TMBD_BodyDefault)
-	TMB_MuscleSize = TMBodyEdit(human, TMBE_Muscle, TMBD_BodyDefault)
-	TMB_BodySize = TMBodyEdit(human, TMBE_Body, TMBD_BodyDefault)
-	human.Penis.m_ragdollLength = TMBD_BodyDefault
-	human.Penis.m_penisSkinOut = 0
+	TMBodyEdit(human, TMBody.Neck, TMBD_BodyDefault)
+	TMBodyEdit(human, TMBody.Forearms, TMBD_BodyDefault)
+	TMBodyEdit(human, TMBody.UpperArms, TMBD_BodyDefault)
+	TMBodyEdit(human, TMBody.Calf, TMBD_BodyDefault)
+	TMBodyEdit(human, TMBody.Thigh, TMBD_BodyDefault)
+	TMBodyEdit(human, TMBody.Hips, TMBD_BodyDefault)
+	TMBodyEdit(human, TMBody.Waist, TMBD_BodyDefault)
+	TMBodyEdit(human, TMBody.Ass, TMBD_BodyDefault)
+	TMBodyEdit(human, TMBody.Nipples, TMBD_BodyDefault)
+	TMBodyEdit(human, TMBody.Breasts, TMBD_BodyDefault)
+	TMBodyEdit(human, TMBody.PenisLength, TMBD_BodyDefault)
+	TMBodyEdit(human, TMBody.PenisSize, TMBD_BodyDefault)
+	TMBodyEdit(human, TMBody.Muscle, TMBD_BodyDefault)
+	TMBodyEdit(human, TMBody.Body, TMBD_BodyDefault)
+	TMBodyEdit(human, TMBody.PenisLength, TMBD_BodyDefault)
+	TMBodyEdit(human, TMBody.PenisSkin, TMBD_BodyDefault)
+	TMBodyEdit(human, TMBody.PenisRagdoll, TMBD_RagdollSizeDefault)
 end
