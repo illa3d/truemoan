@@ -1,4 +1,4 @@
--- TrueMoan v1.7 by illa3d
+-- TrueMoan v1.8 by illa3d
 TM_UITips_Options = true
 TM_UITip_Options = "Tip: edit defaults in tm-config"
 tmOdec = 2
@@ -68,7 +68,7 @@ label TMMenuOptions(human)
 		+ TM_MenuClose
 
 	-- DOUBLE CLICK
-	+ "Click2x »" [gold]
+	+ "Click 2x »" [gold]
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
@@ -101,9 +101,6 @@ label TMMenuOptions(human)
 			Return()
 		+ "Random body	| " .. AccBool(TM_SpawnRandomBody)
 			TM_SpawnRandomBody = not TM_SpawnRandomBody
-			Return()
-		+ "Naked			| " .. AccBool(TM_SpawnNaked)
-			TM_SpawnNaked = not TM_SpawnNaked
 			Return()
 		+ "Naked			| " .. AccBool(TM_SpawnNaked)
 			TM_SpawnNaked = not TM_SpawnNaked

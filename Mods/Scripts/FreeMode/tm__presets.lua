@@ -1,4 +1,4 @@
--- TrueMoan v1.7 by illa3d
+-- TrueMoan v1.8 by illa3d
 -------------------------------------------------------------------------------------------------
 -- BODYEDIT PRESETS (TMBE - TrueMoanBodyEdit)
 -------------------------------------------------------------------------------------------------
@@ -77,8 +77,8 @@ function TMBEPreset_RandomStart(human)
 		TMBEPreset_Skinny,
 		TMBEPreset_Slim,
 		TMBEPreset_Normal,
-		--TMBEPreset_Curvy,
-		--TMBEPreset_Obese,
+		TMBEPreset_Curvy,
+		TMBEPreset_Obese,
 	}
 	(randomPresets[math.random(#randomPresets)] or TMBEPreset_Normal)(human)
 end

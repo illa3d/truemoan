@@ -1,4 +1,4 @@
--- TrueMoan v1.7 by illa3d
+-- TrueMoan v1.8 by illa3d
 -------------------------------------------------------------------------------------------------
 -- MAIN MENU
 -------------------------------------------------------------------------------------------------
@@ -36,13 +36,6 @@ label TMTalkMenu(human, hitTri)
 		+ "Exit POV"
 			game.PovHuman = nil
 			Return()
-
-	+ "Test MIN"
-		TrueFaceStart(human, TFPreset_Min)
-		Return()
-	+ "Test MAX"
-		TrueFaceStart(human, TFPreset_Max)
-		Return()
 	+ TM_MenuClose
 stop
 

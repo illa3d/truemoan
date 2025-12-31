@@ -1,4 +1,4 @@
--- TrueMoan v1.7 by illa3d
+-- TrueMoan v1.8 by illa3d
 ------------------------------------------------------------------------------------------------------------------
 -- TRUE MOAN DEFAULTS CONFIG (Values changed in options reset after scene load, here you set that permanent)
 ------------------------------------------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ TM_DoubleClickTime = 0.25			-- 9. [sec, 0.2-0.4] Time to register double click (
 TM_SpawnNaked = false				-- 10. Characters naked when spawned / changing
 TM_SpawnReset = false				-- 11. Characters reset when spawned / changing (no sucking lol)
 TM_SpawnNoFuta = false				-- 12. Females spawn without penises (no sucking lol)
-TM_SpawnRandomBody = true			-- 13. Randomizes body types on start, configurable in tm__presets.lua
+TM_SpawnRandomBody = false			-- 13. Randomizes body types on start, configurable in tm__presets.lua
 TM_SpawnAutoSexOn = true			-- 14. AutoSex on for everyone at spawn
 TM_MoanSex = true					-- 15. Moaning during sex
 TM_WetSex = true					-- 16. Moisting holes (vag, anus, mouth)

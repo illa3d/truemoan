@@ -9,17 +9,19 @@
   - AutoSex/Speed/Thrust/Depth control + random + presets
   - Smooth transitions (tweening)
   - Cum/Wetness controls + random + presets
+- **TrueFace**
+  - Procedural face animation system + presets
 - **Body Edit**
   - Reduce/enlarge body beyond slider limits
   - Presets/Apply to/reset multiple actors quickly
 - **Realistic Moans**
   - **Generic Voice** for all characters
-  - 950+ moans (Slow, Normal, Fast, Faster, Orgasm, Climax)
+  - 950+ moans (Slow,Normal,Fast,Faster,Orgasm,Climax)
   - Fluid reaction moans
 - **Wet Sex**
 - **Poses/Animation** (requires FaunaLABS)
 - **6x audio ambiences**
-- **24 Scenes**
+- **29 Scenes**
 - **Improved Menu UX**
 - **Highly Configurable**
 
@@ -27,10 +29,9 @@
 - **7x skyboxes** (8/4/2k)
 
 **LATEST DOWNLOADS**
-**TrueMoan_v1.7.zip** [2025-12-27] - Just TrueMoan
-**TrueMoan_v1.7_FLABS_v1.02.zip** [2025-12-27] - TrueMoan + Fauna LABS **(recommended)**
-**TrueMoan_Addon_Skyboxes_4k_v1.0.zip** [2025-12-22] - No difference between 8/4k in-game
-**TrueFacials v0.59_Clothes_Preview.zip** [2025-12-22] - Just preview images to find clothes faster
+**TrueMoan_v1.8.zip** [2025-12-27] - Just TrueMoan
+**TrueMoan_v1.8_FLABS_v1.02.zip** [2025-12-27] - TrueMoan + Fauna LABS **(recommended)**
+**TrueMoan_Addon_Skyboxes_4k_v1.0.zip** [2025-12-22]
 https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
 
 **REQUIREMENTS**
@@ -67,6 +68,12 @@ GitHub Repository - https://github.com/illa3d/truemoan
 
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
+
+[ v1.8 ]
+- Added TrueFace procedural facial animation system
+- Added TrueFace presets (TalkMenu/Face/TrueFace)
+- Improved SexControl random for all parameters
+- Bugfixes, optimizations (thanks @tamp0844 XD)
 
 [ v1.7 ]
 - AutoSex improvements (as an animation instead of flag)
