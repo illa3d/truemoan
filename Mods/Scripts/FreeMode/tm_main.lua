@@ -122,9 +122,7 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 
 	-- Variables
 	local keyMoan = "TMSexMoan_" .. girl.Name .. holeName
-	local keyImpreg = "TMSexImpreg_" .. girl.Name
 	local lastMoanTime = Timer(keyMoan)
-	local lastImpregnationTime = Timer(keyImpreg)
 	local tier = ""
 	local pauseMax = 0
 	local tierMin = 0
@@ -133,37 +131,37 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 
 	-- Tier selection + boundary detection
 	if inVelocity > TM_ClimaxTreshold then
-		tier = "climax"
+		tier = TMMoanTier.Climax
 		pauseMax = 0.1 -- Audio files: ~0.3s + pause
 		tierMax = TM_ClimaxTreshold + 1
 		tierMin = TM_ClimaxTreshold
 		wetness = 10000
 	elseif inVelocity > TM_OrgasmTreshold then
-		tier = "orgasm"
+		tier = TMMoanTier.Orgasm
 		pauseMax = 0.4 -- Audio files: ~0.4s + pause
 		tierMax = TM_ClimaxTreshold
 		tierMin = TM_OrgasmTreshold
 		wetness = 1000
 	elseif inVelocity > TM_FasterTreshold then
-		tier = "faster"
+		tier = TMMoanTier.Faster
 		pauseMax = 0.5 -- Audio files: ~0.5s + pause
 		tierMax = TM_OrgasmTreshold
 		tierMin = TM_FasterTreshold
 		wetness = 100
 	elseif inVelocity > TM_FastTreshold then
-		tier = "fast"
+		tier = TMMoanTier.Fast
 		pauseMax = 0.6 -- Audio files: ~0.5s + pause
 		tierMax = TM_FasterTreshold
 		tierMin = TM_FastTreshold
 		wetness = 10
 	elseif inVelocity > TM_NormalTreshold then
-		tier = "normal"
+		tier = TMMoanTier.Normal
 		pauseMax = 1.3 -- Audio files: ~0.8s + pause
 		tierMax = TM_FastTreshold
 		tierMin = TM_NormalTreshold
 		wetness = 5
 	else
-		tier = "slow"
+		tier = TMMoanTier.Slow
 		pauseMax = 10.0 -- VERY long pauses when not moving
 		tierMax = TM_NormalTreshold
 		tierMin = 0.0
@@ -171,13 +169,7 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	end
 
 	-- Impregnation
-	if TM_ImpregAllow and lastImpregnationTime > TMH_ImpregStepTime then
-		partner = GetSexPartner(girl, holeName)
-		if partner and HumanIsCumming(partner) then
-			TMHStatImpregStep(girl)
-			ResetTimer(keyImpreg)
-		end
-	end
+	TMHStatImpregUpdate(girl, holeName)
 
 	-- Organic Speed-based pause scaling: longer to zero near tier end
 	local t = (inVelocity - tierMin) / (tierMax - tierMin)

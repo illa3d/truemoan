@@ -50,9 +50,9 @@ TM_AutoSexDepthEndDrift = 0.3		-- 28. [0-1] How close in percent will be next st
 									-- setting values [24. - 28.] to zero turns them off
 
 -- Impregnation
-TM_ImpregAllow = false
-TM_ImpregStepUp = 0.01
-TM_ImpregStepDown = 0.015
+TM_ImpregAllow = true
+TM_ImpregStepUp = 0.005
+TM_ImpregStepDown = 0.01
 TM_ImpregSizeLimit = 1.5
 
 ------------------------------------------------------------------------------------------------------------------

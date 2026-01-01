@@ -7,7 +7,8 @@ local TMH_LastUpdateClock = os.clock()
 TMH_DefaultArousalIncrease = 0.10
 TMH_DefaultArousalDecay = 0.05
 TMH_ImpregStepTime = 0.1
-TMH_ImpregTimeout = 1
+TMH_ImpregEffectTime = 0.5
+TMH_ImpregPauseTime = 1
 
 -- DEFINITION (never update this, USE TMHStatsSet_BodyEdit or BodyEdit functions)
 TMHumanStatsDefault = {
@@ -21,6 +22,7 @@ TMHumanStatsDefault = {
 	-- Impregnation
 	ImpregLastTime = nil,
 	ImpregLastUpdate = nil,
+	ImpregEffectLastTime = nil,
 	ImpregHipsSize = nil,
 	ImpregHipsSizeOrig = nil,
 }
@@ -68,7 +70,7 @@ function OnUpdate_HumanStats()
 		if stats.NeedsBodyApply == true then TMHStats_TMBApply(human) end
 		-- Sexy features
 		TMStatArousalUpdate(stats, deltaTime)
-		TMStatImpregUpdate(human, stats)
+		TMStatImpregDeflateUpdate(human, stats)
 		-- Last update time
 		stats.LastUpdate = os.time()
 		
@@ -93,27 +95,18 @@ function TMStatArousalUpdate(stats, deltaTime)
 end
 
 -- IMPREGNATION
-function TMStatImpregUpdate(human, stats)
-	if not TM_ImpregAllow or not stats or not stats.ImpregHipsSizeOrig or stats.ImpregHipsSize == 0 then return end
-	if HasSexPartnerHoles(human) then return end -- don't deflate if still having sex
-	if not stats.ImpregLastTime or not stats.ImpregLastUpdate then return end
-	if os.time() - stats.ImpregLastTime < TMH_ImpregTimeout then return end
-	if os.time() - stats.ImpregLastUpdate < TMH_ImpregStepTime then return end
-	stats.ImpregLastUpdate = os.time()
-	stats.ImpregHipsSize = math.max( stats.ImpregHipsSize - TM_ImpregStepDown, stats.ImpregHipsSizeOrig)
-	TMBodyEdit(human, TMBody.Hips, stats.ImpregHipsSize)
-	WetSet(human, 50000, ActBody.Vagina)
-	if stats.ImpregHipsSize <= stats.ImpregHipsSizeOrig then
-		stats.ImpregLastTime = nil
-		stats.ImpregLastUpdate = nil
-		stats.ImpregHipsSize = nil
-		stats.ImpregHipsSizeOrig = nil
+function TMHStatImpregUpdate(girl, holeName)
+	if not TM_ImpregAllow or not girl or girl.m_isMale then return end
+	local stats = TMHStatsGet(girl)
+	if not stats then return end
+	-- throttle only if we have a previous update time
+	if stats.ImpregLastUpdate and os.time() - stats.ImpregLastUpdate < TMH_ImpregStepTime then return end
+	local partner = GetSexPartner(girl, holeName)
+	if partner and not HumanIsCumming(partner) then return end
+	if TMHCanPlayImpregEffect(stats) then
+		TMPlayGirlMoan(girl, TMMoanTier.Orgasm)
+		stats.ImpregEffectLastTime = os.time()
 	end
-end
-
-function TMHStatImpregStep(human)
-	if not TM_ImpregAllow then return end
-	local stats = TMHStatsGet(human)
 	if stats.ImpregHipsSize == nil then
 		stats.ImpregHipsSizeOrig = stats.TMBValue.Hips
 		stats.ImpregHipsSize = stats.ImpregHipsSizeOrig
@@ -124,7 +117,51 @@ function TMHStatImpregStep(human)
 	stats.ImpregLastTime = os.time()
 	stats.ImpregLastUpdate = os.time()
 	stats.ImpregHipsSize = math.min(stats.ImpregHipsSize + TM_ImpregStepUp, TM_ImpregSizeLimit)
-	TMBodyEdit(human, TMBody.Hips, stats.ImpregHipsSize)
+	TMBodyEdit(girl, TMBody.Hips, stats.ImpregHipsSize)
+end
+
+function TMStatImpregDeflateUpdate(girl, stats)
+	if not TM_ImpregAllow or not girl or girl.m_isMale or not stats then return end
+	if not stats.ImpregHipsSizeOrig or stats.ImpregHipsSize == 0 then return end
+	if HasSexPartnerHoles(girl) then return end -- still having sex
+	-- must have valid timers
+	if not stats.ImpregLastTime or not stats.ImpregLastUpdate then return end
+	-- Wait for timeout since last impregnation
+	if os.time() - stats.ImpregLastTime < TMH_ImpregPauseTime then return end
+	-- throttle deflation steps
+	if os.time() - stats.ImpregLastUpdate < TMH_ImpregStepTime then return end
+	-- Deflate start
+	stats.ImpregLastUpdate = os.time()
+	stats.ImpregHipsSize = math.max(stats.ImpregHipsSize - TM_ImpregStepDown, stats.ImpregHipsSizeOrig)
+	TMBodyEdit(girl, TMBody.Hips, stats.ImpregHipsSize)
+	-- Deflate effects
+	if TMHCanPlayImpregEffect(stats) then
+		TMPlayGirlMoan(girl, TMMoanTier.Faster)
+		WetSet(girl, 50000, ActBody.Vagina)
+		stats.ImpregEffectLastTime = os.time()
+	end
+	-- Deflate done
+	if stats.ImpregHipsSize <= stats.ImpregHipsSizeOrig then
+		TMBodyEdit(girl, TMBody.Hips, stats.ImpregHipsSizeOrig)
+		WetSet(girl, 1000, ActBody.Vagina)
+		Delayed(0.5, function() TMPlayGirlMoan(girl, TMMoanTier.Fast) end)
+		Delayed(1, function() TMPlayGirlMoan(girl, TMMoanTier.Fast) end)
+		Delayed(1.5, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end)
+		Delayed(3, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end)
+		Delayed(5, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
+		Delayed(10, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
+		Delayed(15, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
+		stats.ImpregLastTime = nil
+		stats.ImpregEffectLastTime = nil
+		stats.ImpregLastUpdate = nil
+		stats.ImpregHipsSize = nil
+		stats.ImpregHipsSizeOrig = nil
+	end
+end
+
+function TMHCanPlayImpregEffect(stats)
+	if not stats.ImpregEffectLastTime then return true end
+	return os.time() - stats.ImpregEffectLastTime >= TMH_ImpregEffectTime
 end
 
 -------------------------------------------------------------------------------------------------

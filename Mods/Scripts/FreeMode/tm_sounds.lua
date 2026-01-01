@@ -8,12 +8,22 @@ tmLoopingAmbience = false
 tmAmbienceTrack = 0
 tmAmbienceTimer = "AmbienceTimer"
 
+-- Moan Tier "Enum" (actual filenames)
+TMMoanTier = {
+	Climax = "climax",
+	Orgasm = "orgasm",
+	Faster = "faster",
+	Fast = "fast",
+	Normal = "normal",
+	Slow = "slow",
+}
+
 -- MOANS
-function TMPlayGirlMoan(actor, tier)
+function TMPlayGirlMoan(girl, tmMoanTier)
 	-- don't moan with other voice mods
-	if not TM_AllowVoice or actor.m_isMale then return end
-	if actor == nil then return end
-	actor.SayCustom("tm_" .. tier)
+	if not TM_AllowVoice or girl.m_isMale then return end
+	if girl == nil then return end
+	girl.SayCustom("tm_" .. tmMoanTier)
 end
 
 -- MUSIC
