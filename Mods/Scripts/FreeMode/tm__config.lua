@@ -85,6 +85,6 @@ TM_MoanCumBodyTime = 5	-- Cum on body
 TM_WetnessStep = 200	-- Wetness Control step
 
 -- Cumflation (belly inflation by cumming inside)
-TM_CumflateStepUp = 0.005		-- Increment (each 0.1sec) of hip size increase
-TM_CumflateStepDown = 0.01		-- Decrement (each 0.1sec) of hip size reduction
+TM_CumflateStepUp = 0.005		-- Increment (each 0.1sec once) of hip size increase
+TM_CumflateStepDown = 0.02		-- Decrement (each 0.1sec once) of hip size reduction
 TM_CumflateHipSizeLimit = 1.5	-- Maximum amout to increase to (deformed afer 1.5)
