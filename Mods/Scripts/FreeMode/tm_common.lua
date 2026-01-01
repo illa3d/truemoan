@@ -56,6 +56,13 @@ function GetRandomItem(list)
 	return list[math.random(1, #list)]
 end
 
+-- TABLES
+function GetTableClone(source)
+	if not source then return nil end
+	local clone = {} for k, v in pairs(source) do clone[k] = v end
+	return clone
+end
+
 -------------------------------------------------------------------------------------------------
 -- FORMATTING
 -------------------------------------------------------------------------------------------------

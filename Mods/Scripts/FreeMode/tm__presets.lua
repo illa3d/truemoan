@@ -36,7 +36,7 @@ label TMMenuBodySize(human)
 		TMBodyEdit(human, TMBody.Body, 0.7)
 		Return()
 -- MENU PRESETS END ===========================================================================================================================
-	+ "Random | " .. AccNum(TMBValue.Body, 2) [gold]
+	+ "Random | " .. AccNum(TMBodyValueUI.Body, 2) [gold]
 		TMBodyEdit(human, TMBody.Body, GetRandomFloat(-0.5,0.5))
 		Return()
 	+ TM_MenuBack
@@ -107,8 +107,8 @@ end
 function TMBEPreset_Dildo(human)
 	HumanClothes(human, false)
 	TMBEPreset_Normal(human)
-	TMBValue.PenisSize = TMBodyEdit(human, TMBody.PenisSize, 8)
-	TMBValue.Body = TMBodyEdit(human, TMBody.Body, -0.9)
+	TMBodyEdit(human, TMBody.PenisSize, 8)
+	TMBodyEdit(human, TMBody.Body, -0.9)
 	HumanReset(human)
 end
 

@@ -8,9 +8,16 @@
 TMBD_RagdollSizeDefault = 0.228
 TMBD_BodyDefault = 0
 
+-------------------------------------------------------------------------------------------------
+-- BODY EDIT VALUES
+-------------------------------------------------------------------------------------------------
 -- Body Edit Values Definition
--- In runtime, This is a UI copy of the AUTHORITATIVE TM_HumanStats[human].TMBValue <- this is a single source of truth
-TMBValue = {
+-- This is a AUTHORITATIVE UI stats
+-- Each human has TM_HumanStats[human].TMBValue
+
+TMBodyValueUI = {} -- AUTHORITATIVE UI use only
+--- DEFINITION (never update this)
+TMBodyValueDefault = {
 	Neck = 0,
 	Forearms = 0,
 	UpperArms = 0,
@@ -28,11 +35,17 @@ TMBValue = {
 	PenisSkin = 0,
 	PenisRagdoll = TMBD_RagdollSizeDefault,
 }
+function TMBodyValueCloneDefault() return GetTableClone(TMBodyValueDefault) end
+function TMBodyValueClone(tmBodyValue) return GetTableClone(tmBodyValue) end
+function TMBodyEdit_ResetUIValues()
+	TMBodyValueUI = TMBodyValueCloneDefault()
+end
+function TMBodyEdit_ApplyUIValues(human)
+	local snapshot = TMBodyValueClone(TMBodyValueUI)
+	for part, value in pairs(snapshot) do TMBodyEdit(human, part, value) end
+end
 
-function TMBValueDefaultGet() return TMBValueClone(TMBValue) end
-function TMBValueClone(tmbValue) local clone = {} for k, v in pairs(tmbValue) do clone[k] = v end return clone end
-
--- Body Edit Enum
+-- Body Edit "Enum"
 TMBody = {
 	Neck = "Neck",
 	Forearms = "Forearms",
@@ -52,7 +65,7 @@ TMBody = {
 	PenisRagdoll = "PenisRagdoll" -- this is separate function TMBodyEditPenisSkin
 }
 
--- TrueFacials Body parameter names
+-- TrueFacials Body parameter "Enum"
 TMBodyParamName = {
 	[TMBody.Neck] = "Neck size",
 	[TMBody.Forearms] = "Forearms size",
@@ -137,9 +150,9 @@ end
 -- BODY EDIT
 -------------------------------------------------------------------------------------------------
 function TMBodyEditHuman(human)
-	local tmb = TMHStatsGet_TMBValue(human)
-	if not tmb then return end
-	TMBValue = TMBValueClone(tmb) -- Cloning from AUTHORITATIVE, for UI use only
+	local tmBodyValues = TMHStatsGet_TMBValue(human)
+	if not tmBodyValues then return end
+	TMBodyValueUI = TMBodyValueClone(tmBodyValues)
 end
 
 function TMBodyEditAllRandom(human)
@@ -155,7 +168,7 @@ end
 
 function TMBodyEdit_Up(human, tmBody, step)
 	if not tmBody then return end
-	local value = TMBValue[tmBody]
+	local value = TMBodyValueUI[tmBody]
 	local mult = 1 + math.floor(math.abs(value) / 2) -- step function to multiply step for bigger values
 	value = value + step * mult
 	TMBodyEdit(human, tmBody, value)
@@ -163,7 +176,7 @@ end
 
 function TMBodyEdit_Down(human, tmBody, step)
 	if not tmBody then return end
-	local value = TMBValue[tmBody]
+	local value = TMBodyValueUI[tmBody]
 	local mult = 1 + math.floor(math.abs(value) / 2) -- step function to multiply step for bigger values
 	value = value - step * mult
 	TMBodyEdit(human, tmBody, value)
@@ -171,10 +184,12 @@ end
 
 function TMBodyEdit(human, tmBody, value)
 	if not tmBody then return end
-	TMBValue[tmBody] = TMBodyEdit_ClampMinMax(tmBody, value) -- update UI COPY TMBValue
-	TMHStatsSet_BodyEdit(human, tmBody, TMBValue[tmBody], false) -- update AUTHORITATIVE TMBValue, don't APPLY (feedback loop)
-	TMBodyEdit_Apply(human, tmBody, TMBValue[tmBody])
+	TMBodyValueUI[tmBody] = TMBodyEdit_ClampMinMax(tmBody, value) -- update UI COPY TMBValue
+	TMHStatsSet_BodyEdit(human, tmBody, TMBodyValueUI[tmBody], false) -- update AUTHORITATIVE TMBValue, don't APPLY (feedback loop)
+	TMBodyEdit_Apply(human, tmBody, TMBodyValueUI[tmBody])
 end
+
+-------------------------------------------------------------------------------------------------
 
 -- DONT USE - Direct application to the human (called exclusively from BodyEdit and HumanStat functions)
 function TMBodyEdit_Apply(human, tmBody, value)
@@ -182,32 +197,4 @@ function TMBodyEdit_Apply(human, tmBody, value)
 	if tmBody == TMBody.PenisSkin and human.Penis then human.Penis.m_penisSkinOut = value
 	elseif tmBody == TMBody.PenisRagdoll and human.Penis then human.Penis.m_ragdollLength = value
 	else human.Body(TMBodyParamName[tmBody], value) end
-end
-
--------------------------------------------------------------------------------------------------
--- BODY EDIT VALUES
--------------------------------------------------------------------------------------------------
-
-function TMBodyEdit_ResetUIValues()
-	TMBValue.Neck = TMBD_BodyDefault
-	TMBValue.Forearms = TMBD_BodyDefault
-	TMBValue.UpperArms = TMBD_BodyDefault
-	TMBValue.Calf = TMBD_BodyDefault
-	TMBValue.Thigh = TMBD_BodyDefault
-	TMBValue.Waist = TMBD_BodyDefault
-	TMBValue.Hips = TMBD_BodyDefault
-	TMBValue.Ass = TMBD_BodyDefault
-	TMBValue.Nipples = TMBD_BodyDefault
-	TMBValue.Breasts = TMBD_BodyDefault
-	TMBValue.PenisLength = TMBD_BodyDefault
-	TMBValue.PenisSize = TMBD_BodyDefault
-	TMBValue.Muscle = TMBD_BodyDefault
-	TMBValue.Body = TMBD_BodyDefault
-	TMBValue.PenisSkin = TMBD_BodyDefault
-	TMBValue.PenisRagdoll = TMBD_RagdollSizeDefault
-end
-
-function TMBodyEdit_ApplyUIValues(human)
-	local snapshot = TMBValueClone(TMBValue)
-	for part, value in pairs(snapshot) do TMBodyEdit(human, part, value) end
 end

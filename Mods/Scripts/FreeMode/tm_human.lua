@@ -1,6 +1,6 @@
 -- TrueMoan v1.8 by illa3d
 -- Per-human AUTHORITATIVE stat storage (including EditBody data)
-TM_HumanStats = {}
+TM_HumanStatsList = {}
 local TMH_LastUpdateClock = os.clock()
 
 -- CONFIG
@@ -9,41 +9,48 @@ TMH_DefaultArousalDecay = 0.05
 TMH_ImpregStepTime = 0.1
 TMH_ImpregTimeout = 1
 
+-- DEFINITION (never update this, USE TMHStatsSet_BodyEdit or BodyEdit functions)
+TMHumanStatsDefault = {
+	TMBValue = nil,
+	IsHavingSex = false,
+	LastSeen = 0,
+	LastUpdate = 0,
+	NeedsBodyApply = false,
+	-- Arousal
+	Arousal = 0,
+	-- Impregnation
+	ImpregLastTime = nil,
+	ImpregLastUpdate = nil,
+	ImpregHipsSize = nil,
+	ImpregHipsSizeOrig = nil,
+}
+function THMHumanStatsCloneDefault() return GetTableClone(TMHumanStatsDefault) end
+
 -------------------------------------------------------------------------------------------------
 -- HUMAN STATS
 -------------------------------------------------------------------------------------------------
 
-local function TMHStatsCreate(human)
-	TM_HumanStats[human] = {
-		--TMBValue is AUTHORITATIVE source of Human Body customization values
-		TMBValue = TMBValueDefaultGet(), -- NEVER CHANGE THESE VALUES DIRECTLY, USE TMHStatsSet_BodyEdit or BodyEdit functions
-		IsHavingSex = false,
-		LastSeen = os.time(),
-		LastUpdate = os.time(),
-		NeedsBodyApply = false,
-		-- Arousal
-		Arousal = 0,
-		-- Impregnation
-		ImpregLastTime = nil,
-		ImpregLastUpdate = nil,
-		ImpregHipsSize = nil,
-		ImpregHipsSizeOrig = nil,
-	}
+local function TMHStatsNew(human)
+	local clone = THMHumanStatsCloneDefault() -- TMHUmanStatus is authoritative source of Status for each human
+	clone.TMBValue = TMBodyValueCloneDefault() --TMBValue is AUTHORITATIVE source of Human Body customization values
+	clone.LastSeen = os.time()
+	clone.LastUpdate = os.time()
+	TM_HumanStatsList[human] = clone
 end
 
 local function TMHStatsRemove(human)
-	TM_HumanStats[human] = nil
+	TM_HumanStatsList[human] = nil
 end
 
 function TMHStatsGet(human)
 	if not human then return nil end
-	if TM_HumanStats[human] == nil then TMHStatsCreate(human) end
-	return TM_HumanStats[human]
+	if TM_HumanStatsList[human] == nil then TMHStatsNew(human) end
+	return TM_HumanStatsList[human]
 end
 
 function TMHStatsReset(human)
 	TMHStatsRemove(human)
-	TMHStatsCreate(human)
+	TMHStatsNew(human)
 end
 
 -- HUMAN STATS UPDATE
@@ -68,7 +75,7 @@ function OnUpdate_HumanStats()
 	end
 
 	-- Cleanup non existing humans
-	for human, _ in pairs(TM_HumanStats) do
+	for human, _ in pairs(TM_HumanStatsList) do
 		if Seen[human] ~= true then
 			TMHStatsRemove(human)
 		end
@@ -104,7 +111,7 @@ function TMStatImpregUpdate(human, stats)
 	end
 end
 
-function TMHStatImpregnanteStep(human)
+function TMHStatImpregStep(human)
 	if not TM_ImpregAllow then return end
 	local stats = TMHStatsGet(human)
 	if stats.ImpregHipsSize == nil then
@@ -135,7 +142,7 @@ function TMHStatsReplace_TMBValue(human, tmbValue)
 	if not tmbValue then return end
 	local stats = TMHStatsGet(human)
 	if not stats then return end
-	stats.TMBValue = TMBValueClone(tmbValue)
+	stats.TMBValue = TMBodyValueClone(tmbValue)
 	stats.NeedsBodyApply = true
 end
 
@@ -155,7 +162,7 @@ function TMHStats_TMBApply(human)
 	local stats = TMHStatsGet(human)
 	if not stats or not stats.NeedsBodyApply then return end
 	-- don't allow changing values in the table while iterating (lua rules)
-	local snapshot = TMBValueClone(stats.TMBValue)
+	local snapshot = TMBodyValueClone(stats.TMBValue)
 	for part, value in pairs(snapshot) do TMBodyEdit_Apply(human, part, value) end
 	stats.NeedsBodyApply = false
 end

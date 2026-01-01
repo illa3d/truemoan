@@ -174,7 +174,7 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	if TM_ImpregAllow and lastImpregnationTime > TMH_ImpregStepTime then
 		partner = GetSexPartner(girl, holeName)
 		if partner and HumanIsCumming(partner) then
-			TMHStatImpregnanteStep(girl)
+			TMHStatImpregStep(girl)
 			ResetTimer(keyImpreg)
 		end
 	end
