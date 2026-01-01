@@ -218,10 +218,10 @@ function TMOnPenetration_Cum(girl, holeName)
 	local stats = TMHStatsGet(girl)
 	if not stats then return end
 	-- throttle only if we have a previous update time
-	if stats.CumLastUpdate and os.time() - stats.CumLastUpdate < TMH_CumStepTime then return end
+	local now = os.time()
+	if stats.CumLastUpdate and now - stats.CumLastUpdate < TMH_CumStepTime then return end
 	local partner = GetSexPartner(girl, holeName)
 	if partner and not HumanIsCumming(partner) then return end
-	local now = os.time()
 	stats.CumLastTime = now
 	stats.CumLastUpdate = now
 	-- Cum & Cumflation effects (same)
@@ -242,15 +242,27 @@ function TMOnPenetration_Cum(girl, holeName)
 		stats.CumflateHipsSize = math.min(stats.CumflateHipsSize + TM_CumflateStepUp, TM_CumflateHipSizeLimit)
 		TMBodyEdit(girl, TMBody.Hips, stats.CumflateHipsSize)
 	elseif stats.CumflateHipsSize ~= nil then
-		-- Reset cumflation (in case it was siwtched mid cumflation)
+		-- Reset cumflation (in case it was switched mid cumflation)
 		TMBodyEdit(girl, TMBody.Hips, stats.CumflateHipsSizeOrig)
 		stats.CumflateHipsSize = nil
 		stats.CumflateHipsSizeOrig = nil
 	end 
 end
 
--- Updated on pullout after cum inside reaction
 function TMOnUpdate_CumFinish(girl)
+	if not girl or girl.m_isMale then return end
+	local stats = TMHStatsGet(girl)
+	if not stats or not stats.CumLastTime then return end
+
+	local now = os.time()
+	-- throttle expensive logic
+	if stats.CumLastUpdate and now - stats.CumLastUpdate < TMH_CumStepTime then return end
+	-- wait after last cum
+	if now - stats.CumLastTime < TMH_CumPauseTime then return end
+	-- still having sex
+	if HasSexPartnerHoles(girl) then return end
+	stats.CumLastUpdate = now
+
 	local function ResetCumStats(stats)
 		stats.CumLastTime = nil
 		stats.CumEffectLastTime = nil
@@ -258,37 +270,25 @@ function TMOnUpdate_CumFinish(girl)
 		stats.CumflateHipsSize = nil
 		stats.CumflateHipsSizeOrig = nil
 	end
-	if not girl or girl.m_isMale then return end
-	if HasSexPartnerHoles(girl) then return end -- still having sex
-	local stats = TMHStatsGet(girl)
-	if not stats then return end
-	-- must have had cum
-	if not stats.CumLastTime then return end
-	-- wait after last cum
-	local now = os.time()
-	if now - stats.CumLastTime < TMH_CumPauseTime then return end
-	-- throttle updates
-	if stats.CumLastUpdate and now - stats.CumLastUpdate < TMH_CumStepTime then return end
-	stats.CumLastUpdate = now
+
 	-- CUMFLATION DEFLATE
 	if TM_Cumflate and stats.CumflateHipsSizeOrig and stats.CumflateHipsSize then
-		-- still deflating
 		if stats.CumflateHipsSize > stats.CumflateHipsSizeOrig then
 			if TMHCanPlayCumEffect(stats) then
 				TMPlayGirlMoan(girl, TMMoanTier.Faster)
 				WetSet(girl, 50000, ActBody.Vagina)
 				stats.CumEffectLastTime = now
 			end
-			stats.CumflateHipsSize = math.max(stats.CumflateHipsSize - TM_CumflateStepDown,stats.CumflateHipsSizeOrig)
+			stats.CumflateHipsSize = math.max(stats.CumflateHipsSize - TM_CumflateStepDown, stats.CumflateHipsSizeOrig)
 			TMBodyEdit(girl, TMBody.Hips, stats.CumflateHipsSize)
 		else
-			-- deflate done
+			-- Deflate done
 			TMBodyEdit(girl, TMBody.Hips, stats.CumflateHipsSizeOrig)
 			ResetCumStats(stats)
 			TMOnCumflatePulloutEffects(girl)
 		end
-	-- NORMAL CUM (no cumflation)
 	else
+		-- NORMAL CUM (no cumflation)
 		ResetCumStats(stats)
 		TMOnCumPulloutEffects(girl)
 	end
