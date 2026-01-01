@@ -15,25 +15,25 @@ label TMMenuBodySize(human)
 		TMBEPreset_Dildo(human)	
 		Return()
 	+ "• Giant"
-		TMBodyEditSize(human, 0.7)
+		TMBodyEdit(human, TMBody.Body, 0.7)
 		Return()
 	+ "• Huge"
-		TMBodyEditSize(human, 0.15)
+		TMBodyEdit(human, TMBody.Body, 0.15)
 		Return()
 	+ "• Big"
-		TMBodyEditSize(human, 0.075)
+		TMBodyEdit(human, TMBody.Body, 0.075)
 		Return()
 	+ "• Normal" [gold]
-		TMBodyEditSize(human, 0)
+		TMBodyEdit(human, TMBody.Body, 0)
 		Return()
 	+ "• Medium"
-		TMBodyEditSize(human, -0.075)
+		TMBodyEdit(human, TMBody.Body, 0.075)
 		Return()
 	+ "• Small"
-		TMBodyEditSize(human, -0.15)
+		TMBodyEdit(human, TMBody.Body, 0.15)
 		Return()
 	+ "• Tiny"
-		TMBodyEditSize(human, -0.7)
+		TMBodyEdit(human, TMBody.Body, 0.7)
 		Return()
 -- MENU PRESETS END ===========================================================================================================================
 	+ "Random | " .. AccNum(TMBValue.Body, 2) [gold]
@@ -73,14 +73,14 @@ label TMMenuBodyType(human)
 	+ TM_MenuClose
 stop
 
--------------------------------------------------------------------------------------------------
--- PRESETS
--------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------
+----- PRESETS
+------------------------------------------------------------------------------------------------
 
 -- Called from tm_main on character creation
 function TMBEPreset_RandomStart(human)
 	local randomPresets = {
--- SPAWN RANDOM PRESETS START ===========================================================================================================================
+-- SPAWN RANDOM PRESETS ========================================================================
 		TMBEPreset_Skinny,
 		TMBEPreset_Slim,
 		TMBEPreset_Normal,
@@ -93,13 +93,12 @@ end
 -- Called from BodyEdit menu
 function TMBEPreset_RandomPreset(human)
 	local randomPresets = {
--- RANDOM PRESETS START  ==============================================================================
-		TMBEPreset_Skinny,
+-- MENU RANDOM PRESETS MENU ====================================================================
 		TMBEPreset_Slim,
 		TMBEPreset_Normal,
 		TMBEPreset_Curvy,
 		TMBEPreset_Obese,
--- RANDOM PRESETS END ===============================================================================
+-- RANDOM PRESETS END ==========================================================================
 	}
 	(randomPresets[math.random(#randomPresets)] or TMBEPreset_Normal)(human)
 end
