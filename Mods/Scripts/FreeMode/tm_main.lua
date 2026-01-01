@@ -208,28 +208,39 @@ end
 -------------------------------------------------------------------------------------------------
 -- Updated on cum inside reaction
 function TMOnCumUpdate(girl, holeName)
-	if not TM_Cumflate or not girl or girl.m_isMale then return end
+	if not girl or girl.m_isMale then return end
 	local stats = TMHStatsGet(girl)
 	if not stats then return end
 	-- throttle only if we have a previous update time
 	if stats.CumLastUpdate and os.time() - stats.CumLastUpdate < TMH_CumStepTime then return end
 	local partner = GetSexPartner(girl, holeName)
 	if partner and not HumanIsCumming(partner) then return end
+	local now = os.time()
+	stats.CumLastTime = now
+	stats.CumLastUpdate = now
+	-- Cum & Cumflation effects (same)
 	if TMHCanPlayCumEffect(stats) then
 		TMPlayGirlMoan(girl, TMMoanTier.Orgasm)
-		stats.CumEffectLastTime = os.time()
+		stats.CumEffectLastTime = now
 	end
-	if stats.CumflateHipsSize == nil then
-		stats.CumflateHipsSizeOrig = stats.TMBValue.Hips
-		stats.CumflateHipsSize = stats.CumflateHipsSizeOrig
-		stats.CumLastTime = os.time()
-		stats.CumLastUpdate = os.time()
-		return
-	end
-	stats.CumLastTime = os.time()
-	stats.CumLastUpdate = os.time()
-	stats.CumflateHipsSize = math.min(stats.CumflateHipsSize + TM_CumflateStepUp, TM_CumflateHipSizeLimit)
-	TMBodyEdit(girl, TMBody.Hips, stats.CumflateHipsSize)
+	-- Cumflation
+	if TM_Cumflate then
+		if stats.CumflateHipsSize == nil then
+			-- run once to intialize cumflation
+			stats.CumflateHipsSizeOrig = stats.TMBValue.Hips
+			stats.CumflateHipsSize = stats.CumflateHipsSizeOrig
+			TMBodyEdit(girl, TMBody.Hips, stats.CumflateHipsSize)
+			return
+		end
+		-- run every other time while penetration is on
+		stats.CumflateHipsSize = math.min(stats.CumflateHipsSize + TM_CumflateStepUp, TM_CumflateHipSizeLimit)
+		TMBodyEdit(girl, TMBody.Hips, stats.CumflateHipsSize)
+	elseif stats.CumflateHipsSize ~= nil then
+		-- Reset cumflation (in case it was siwtched mid cumflation)
+		TMBodyEdit(girl, TMBody.Hips, stats.CumflateHipsSizeOrig)
+		stats.CumflateHipsSize = nil
+		stats.CumflateHipsSizeOrig = nil
+	end 
 end
 
 -- Updated on pullout after cum inside reaction
@@ -272,6 +283,18 @@ function TMHCanPlayCumEffect(stats)
 end
 
 function TMOnCumPulloutEffects(girl)
+	if not girl then return end
+	WetSet(girl, 1000, ActBody.Vagina)
+	Delayed(0.5, function() TMPlayGirlMoan(girl, TMMoanTier.Fast) end)
+	Delayed(1, function() TMPlayGirlMoan(girl, TMMoanTier.Fast) end)
+	Delayed(1.5, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end)
+	Delayed(3, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end)
+	Delayed(5, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
+	Delayed(10, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
+	Delayed(15, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
+end
+
+function TMOnCumflatePulloutEffects(girl)
 	if not girl then return end
 	WetSet(girl, 1000, ActBody.Vagina)
 	Delayed(0.5, function() TMPlayGirlMoan(girl, TMMoanTier.Fast) end)
