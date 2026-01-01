@@ -29,31 +29,26 @@ TM_SpawnRandomBody = false			-- 13. Randomizes body types on start (overwrites b
 TM_SpawnAutoSexOn = true			-- 14. AutoSex on for everyone at spawn
 TM_MoanSex = true					-- 15. Moaning during sex
 TM_WetSex = true					-- 16. Moisting holes (vag, anus, mouth)
-TM_TweenSex = true					-- 17. Soft transitions on changing sex values (speed, thrust, depth)
-TM_TweenTime = 1					-- 18. [0 = off, max 3] Time in seconds to transition between sex values (speed, thrust, depth)
+TM_Cumflate = true					-- 17. Allow belly inflation by cumming inside
+TM_TweenSex = true					-- 18. Soft transitions on changing sex values (speed, thrust, depth)
+TM_TweenTime = 1					-- 19. [0 = off, max 3] Time in seconds to transition between sex values (speed, thrust, depth)
 
 -- Body Edit
-TM_BodyEditSafe = true				-- 19. Turns on safe body editing using SafeMin values
+TM_BodyEditSafe = true				-- 20. Turns on safe body editing using SafeMin values
 
 -- SFX Ambience
-TM_AllowAmbience = true				-- 20. Ambient sounds
-TM_AmbienceVolume = 0.7				-- 21. [0-1] Ambient volume
+TM_AllowAmbience = true				-- 21. Ambient sounds
+TM_AmbienceVolume = 0.7				-- 22. [0-1] Ambient volume
 
 -- AutoInteraction
-TM_AutoSexTimeMin = 2				-- 22. [1-20] Auto Interaction minimum time to change parameter (speed, thrust, depth) 
-TM_AutoSexTimeMax = 7				-- 23. [1-20] Auto Interaction maximum time to change parameter (speed, thrust, depth) 
-TM_AutoSexSpeedDrift = 0.3			-- 24. [0-1] How close in percent will be next step for sex speed
-TM_AutoSexThrustDrift = 0.2			-- 25. [0-1] How close in percent will be next step for sex thrust
-TM_AutoSexWeightDrift = 0.1			-- 26. [0-1] How close in percent will be next step for sex weight (male female)
-TM_AutoSexDepthStartDrift = 0.2		-- 27. [0-1] How close in percent will be next step for sex depth (start/end)
-TM_AutoSexDepthEndDrift = 0.3		-- 28. [0-1] How close in percent will be next step for sex depth (start/end)
+TM_AutoSexTimeMin = 2				-- 23. [1-20] Auto Interaction minimum time to change parameter (speed, thrust, depth) 
+TM_AutoSexTimeMax = 7				-- 24. [1-20] Auto Interaction maximum time to change parameter (speed, thrust, depth) 
+TM_AutoSexSpeedDrift = 0.3			-- 25. [0-1] How close in percent will be next step for sex speed
+TM_AutoSexThrustDrift = 0.2			-- 26. [0-1] How close in percent will be next step for sex thrust
+TM_AutoSexWeightDrift = 0.1			-- 27. [0-1] How close in percent will be next step for sex weight (male female)
+TM_AutoSexDepthStartDrift = 0.2		-- 28. [0-1] How close in percent will be next step for sex depth (start/end)
+TM_AutoSexDepthEndDrift = 0.3		-- 29. [0-1] How close in percent will be next step for sex depth (start/end)
 									-- setting values [24. - 28.] to zero turns them off
-
--- Impregnation
-TM_ImpregAllow = true
-TM_ImpregStepUp = 0.005
-TM_ImpregStepDown = 0.01
-TM_ImpregSizeLimit = 1.5
 
 ------------------------------------------------------------------------------------------------------------------
 -- FINE TUNING
@@ -88,3 +83,8 @@ TM_MoanCumEyeTime = 1	-- Cum in eye
 TM_MoanCumLipsTime = 3	-- Cum on lips
 TM_MoanCumBodyTime = 5	-- Cum on body
 TM_WetnessStep = 200	-- Wetness Control step
+
+-- Cumflation (belly inflation by cumming inside)
+TM_CumflateStepUp = 0.005		-- Increment (each 0.1sec) of hip size increase
+TM_CumflateStepDown = 0.01		-- Decrement (each 0.1sec) of hip size reduction
+TM_CumflateHipSizeLimit = 1.5	-- Maximum amout to increase to (deformed afer 1.5)

@@ -8,7 +8,10 @@ TM_UIVisible = true -- TrueFacials UI
 TM_AllowVoice = true
 TM_AllowGenericChat = false
 TM_DeltaTime = 0
-
+-- Cum reactions
+TMH_CumStepTime = 0.1
+TMH_CumEffectTime = 0.5
+TMH_CumPauseTime = 1
 ------------------------------------------------------------------------------------------------
 -- FREE MODE START (called from TrueFacials)
 -------------------------------------------------------------------------------------------------
@@ -44,7 +47,11 @@ function TMOnUpdate()
 	TM_DeltaTime = Timer("TMDeltaTime")
 	ResetTimer("TMDeltaTime")
 	OnUpdate_ActTweens(TM_DeltaTime)
-	OnUpdate_HumanStats()
+	TMOnUpdate_HumanStats()
+	-- Iterate and call for every human in the scene
+	for _, human in ipairs(game.GetHumans()) do
+		TMOnUpdate_CumFinishUpdate(human)
+	end
 end
 
 -- Updated every frame
@@ -78,7 +85,7 @@ function TMOnRemoveHuman(human)
 end
 
 -------------------------------------------------------------------------------------------------
--- VOICE
+-- FLUID REACTIONS
 -------------------------------------------------------------------------------------------------
 -- Updated on fluid hit (cum)
 function TMOnFluidHit(hitActor, bodyArea, shootActor)
@@ -116,8 +123,12 @@ function TMOnFluidHit(hitActor, bodyArea, shootActor)
 	end
 end
 
+-------------------------------------------------------------------------------------------------
+-- SEX REACTIONS
+-------------------------------------------------------------------------------------------------
 -- Updated on penetration (holeName: "Vagina" "Anus" Mouth")
 function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
+	TMOnCumUpdate(girl, holeName)
 	if inVelocity < outVelocity or TM_MoanSex == false  then return end
 
 	-- Variables
@@ -168,9 +179,6 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 		wetness = 1
 	end
 
-	-- Impregnation
-	TMHStatImpregUpdate(girl, holeName)
-
 	-- Organic Speed-based pause scaling: longer to zero near tier end
 	local t = (inVelocity - tierMin) / (tierMax - tierMin)
 	t = math.max(0, math.min(t, 1))
@@ -193,4 +201,84 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 		end
 		ResetTimer(keyMoan)
 	end
+end
+
+-------------------------------------------------------------------------------------------------
+-- CUM REACTIONS
+-------------------------------------------------------------------------------------------------
+-- Updated on cum inside reaction
+function TMOnCumUpdate(girl, holeName)
+	if not TM_Cumflate or not girl or girl.m_isMale then return end
+	local stats = TMHStatsGet(girl)
+	if not stats then return end
+	-- throttle only if we have a previous update time
+	if stats.CumLastUpdate and os.time() - stats.CumLastUpdate < TMH_CumStepTime then return end
+	local partner = GetSexPartner(girl, holeName)
+	if partner and not HumanIsCumming(partner) then return end
+	if TMHCanPlayCumEffect(stats) then
+		TMPlayGirlMoan(girl, TMMoanTier.Orgasm)
+		stats.CumEffectLastTime = os.time()
+	end
+	if stats.CumflateHipsSize == nil then
+		stats.CumflateHipsSizeOrig = stats.TMBValue.Hips
+		stats.CumflateHipsSize = stats.CumflateHipsSizeOrig
+		stats.CumLastTime = os.time()
+		stats.CumLastUpdate = os.time()
+		return
+	end
+	stats.CumLastTime = os.time()
+	stats.CumLastUpdate = os.time()
+	stats.CumflateHipsSize = math.min(stats.CumflateHipsSize + TM_CumflateStepUp, TM_CumflateHipSizeLimit)
+	TMBodyEdit(girl, TMBody.Hips, stats.CumflateHipsSize)
+end
+
+-- Updated on pullout after cum inside reaction
+function TMOnUpdate_CumFinishUpdate(girl)
+	if not TM_Cumflate or not girl or girl.m_isMale then return end
+	local stats = TMHStatsGet(girl)
+	if not stats or not stats.CumflateHipsSizeOrig or stats.CumflateHipsSize == 0 then return end
+	if HasSexPartnerHoles(girl) then return end -- still having sex
+	-- must have valid timers
+	if not stats.CumLastTime or not stats.CumLastUpdate then return end
+	-- Wait for timeout since last cumflation
+	if os.time() - stats.CumLastTime < TMH_CumPauseTime then return end
+	-- throttle deflation steps
+	if os.time() - stats.CumLastUpdate < TMH_CumStepTime then return end
+	-- Deflate start
+	stats.CumLastUpdate = os.time()
+	stats.CumflateHipsSize = math.max(stats.CumflateHipsSize - TM_CumflateStepDown, stats.CumflateHipsSizeOrig)
+	TMBodyEdit(girl, TMBody.Hips, stats.CumflateHipsSize)
+	-- Deflate effects
+	if TMHCanPlayCumEffect(stats) then
+		TMPlayGirlMoan(girl, TMMoanTier.Faster)
+		WetSet(girl, 50000, ActBody.Vagina)
+		stats.CumEffectLastTime = os.time()
+	end
+	-- Deflate done
+	if stats.CumflateHipsSize <= stats.CumflateHipsSizeOrig then
+		TMBodyEdit(girl, TMBody.Hips, stats.CumflateHipsSizeOrig)
+		TMOnCumPulloutEffects(girl)
+		stats.CumLastTime = nil
+		stats.CumEffectLastTime = nil
+		stats.CumLastUpdate = nil
+		stats.CumflateHipsSize = nil
+		stats.CumflateHipsSizeOrig = nil
+	end
+end
+
+function TMHCanPlayCumEffect(stats)
+	if not stats.CumEffectLastTime then return true end
+	return os.time() - stats.CumEffectLastTime >= TMH_CumEffectTime
+end
+
+function TMOnCumPulloutEffects(girl)
+	if not girl then return end
+	WetSet(girl, 1000, ActBody.Vagina)
+	Delayed(0.5, function() TMPlayGirlMoan(girl, TMMoanTier.Fast) end)
+	Delayed(1, function() TMPlayGirlMoan(girl, TMMoanTier.Fast) end)
+	Delayed(1.5, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end)
+	Delayed(3, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end)
+	Delayed(5, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
+	Delayed(10, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
+	Delayed(15, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
 end
