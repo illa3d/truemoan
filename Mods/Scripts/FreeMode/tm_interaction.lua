@@ -529,7 +529,7 @@ function ActTweenTo(act, param, targetValue, duration)
 end
 
 -- Update all active tweens
-function ActTweensUpdate(deltaTime)
+function OnUpdate_ActTweens(deltaTime)
 	if not SexTweenAllow() or #actActiveTweens == 0 then return end
 	for i = #actActiveTweens, 1, -1 do
 		local t = actActiveTweens[i]

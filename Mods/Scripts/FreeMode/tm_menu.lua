@@ -25,6 +25,7 @@ label TMTalkMenu(human, hitTri)
 	+ "SEX »" [gold]
 		TMMenuSex(human)
 	+ "BODY »" [gold]
+		TMBodyEditHuman(human)
 		TMMenuBody(human)
 	+ "HEY, " .. AccStr(human.Name) .. " »" [gold]
 		TMMenuHeyHuman(human)

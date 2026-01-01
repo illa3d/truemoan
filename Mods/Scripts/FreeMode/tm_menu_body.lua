@@ -4,16 +4,12 @@
 tmBdec = 3
 
 label TMMenuBody(human)
-	+ "Edit safe | " .. AccBool(TM_BodyEditSafe) [if TM_BodyEditSafe]
-		TM_BodyEditSafe = false
-		-- human "Warning: Game can crash for Breasts <-0.8 and BodySize <-0.9!\nMake sure you save before :)"
+	+ "Edit safe | " .. AccBool(TM_BodyEditSafe) .. (TM_BodyEditSafe and "" or "(can crash app)") [if TM_BodyEditSafe]
+		TM_BodyEditSafe = not TM_BodyEditSafe
 		Return()
-	+ "Edit safe | " .. AccBool(TM_BodyEditSafe) .. "(can crash app)" [if not TM_BodyEditSafe]
-		TM_BodyEditSafe = true
-		Return()
-	+ "RESET Values"
-		TMBodyEdit_ResetValues()
-		Return()
+	-- + "RESET Values"
+	-- 	TMBodyEdit_ResetValues()
+	-- 	Return()
 	+ "| Neck »	| " .. AccTextNum1("N", TMBValue.Neck, tmBdec) [gold]
 		+ TM_UP.."Neck"
 			TMBodyEdit_Up(human, TMBody.Neck, TM_BodyStepB)
@@ -200,12 +196,12 @@ label TMMenuBody(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "Apply values" [if TM_BodyEditSafe]
-		TMBodyEdit_ApplyValues(human)
-		Return()
-	+ "Apply values " .. AccStr("(safe off)") [if not TM_BodyEditSafe]
-		TMBodyEdit_ApplyValues(human)
-		Return()
+	-- + "Apply values" [if TM_BodyEditSafe]
+	-- 	TMBodyEdit_ApplyValues(human)
+	-- 	Return()
+	-- + "Apply values " .. AccStr("(safe off)") [if not TM_BodyEditSafe]
+	-- 	TMBodyEdit_ApplyValues(human)
+	-- 	Return()
 	+ "Body sizes »" [gold]
 		TMMenuBodySize(human)
 	+ "Body types »" [gold]

@@ -43,7 +43,8 @@ end
 function TMOnUpdate()
 	TM_DeltaTime = Timer("TMDeltaTime")
 	ResetTimer("TMDeltaTime")
-	ActTweensUpdate(TM_DeltaTime)
+	OnUpdate_ActTweens(TM_DeltaTime)
+	OnUpdate_HumanStats()
 end
 
 -- Updated every frame
@@ -120,8 +121,10 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	if inVelocity < outVelocity or TM_MoanSex == false  then return end
 
 	-- Variables
-	local key = "TMSexMoan_" .. girl.Name .. holeName
-	local lastMoanTime = Timer(key)
+	local keyMoan = "TMSexMoan_" .. girl.Name .. holeName
+	local keyImpreg = "TMSexImpreg_" .. girl.Name
+	local lastMoanTime = Timer(keyMoan)
+	local lastImpregnationTime = Timer(keyImpreg)
 	local tier = ""
 	local pauseMax = 0
 	local tierMin = 0
@@ -167,6 +170,15 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 		wetness = 1
 	end
 
+	-- Impregnation
+	if lastImpregnationTime > 0.5 then
+		partner = GetSexPartner(girl, holeName)
+		if partner and HumanIsCumming(partner) then
+			TMHStatImpregnanteStep(girl)
+			ResetTimer(keyImpreg)
+		end
+	end
+
 	-- Organic Speed-based pause scaling: longer to zero near tier end
 	local t = (inVelocity - tierMin) / (tierMax - tierMin)
 	t = math.max(0, math.min(t, 1))
@@ -187,6 +199,6 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 		else
 			HumanWetSet(girl, 0, holeName)
 		end
-		ResetTimer(key)
+		ResetTimer(keyMoan)
 	end
 end
