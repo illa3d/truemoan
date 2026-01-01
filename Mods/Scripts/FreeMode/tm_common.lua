@@ -142,6 +142,10 @@ function HumanCumStop(human)
 	return 0
 end
 
+function HumanIsCumming(human)
+	return human and human.Penis and game.HasAnim(human.Penis)
+end
+
 
 -- WET
 function HumanWetReset(girl)

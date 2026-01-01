@@ -117,8 +117,8 @@ end
 -------------------------------------------------------------------------------------------------
 
 -- SEX
-function HasSex(human, body)
-	if human == nil then return false
+function HasSexPartner(human, body)
+	if human == nil then return false end
 	if body == ActBody.Hand and human.Penis.m_holdDepth ~= 0 then return true
 	elseif body == ActBody.Penis and human.Penis.Hole ~= nil then return true
 	elseif body == ActBody.Mouth and human.Mouth.Fucker ~= nil then return true
@@ -127,8 +127,27 @@ function HasSex(human, body)
 	else return false end
 end
 
+function GetSexPartner(human, body)
+	if human == nil then return nil end
+	if body == ActBody.Mouth and human.Mouth.Fucker ~= nil then return human.Mouth.Fucker
+	elseif body == ActBody.Anus and human.Anus.Fucker ~= nil then return human.Anus.Fucker
+	elseif body == ActBody.Vagina and human.Vagina.Fucker ~= nil then return human.Vagina.Fucker
+	else return nil end
+end
+
+function GetSexPartners(human)
+	local partners = {}
+	if human == nil then return partners end
+	for _, body in pairs(ActBody) do
+		if HasSexPartner(human, body) then
+			local partner = GetSexPartner(human, body)
+			if partner ~= nil then table.insert(partners, partner) end
+		end
+	end return partners
+end
+
 function IsSexActive(human, body)
-	if human == nil or not HasSex(human, body) or ActGet(human, body) == nil then return false end
+	if human == nil or not HasSexPartner(human, body) or ActGet(human, body) == nil then return false end
 	if body == ActBody.Hand and human.Penis.Interaction.m_autoHandActive == true then return true
 	elseif body == ActBody.Penis and human.Penis.Interaction.AutoActive == true then return true
 	elseif body == ActBody.Mouth and human.Mouth.Fucker.Penis.Interaction.AutoActive == true then return true
@@ -138,7 +157,7 @@ function IsSexActive(human, body)
 end
 
 function IsAutoSexPartner(human, body)
-	if human == nil or not HasSex(human, body) then return false
+	if human == nil or not HasSexPartner(human, body) then return false
 	if body == ActBody.Mouth and IsAutoSex(human.Mouth.Fucker) then return true
 	elseif body == ActBody.Anus and IsAutoSex(human.Anus.Fucker) then return true
 	elseif body == ActBody.Vagina and IsAutoSex(human.Vagina.Fucker) then return true
@@ -193,7 +212,7 @@ end
 
 -- Get interaction from human and body part
 function ActGet(human, body)
-	if not HasSex(human, body) then return nil end
+	if not HasSexPartner(human, body) then return nil end
 	if body == ActBody.Hand then return human.Penis.Interaction
 	elseif body == ActBody.Penis then return human.Penis.Interaction
 	elseif body == ActBody.Mouth then return human.Mouth.Fucker.Penis.Interaction
