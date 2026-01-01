@@ -227,11 +227,11 @@ label TMMenuSex(human)
 	+ else 
 		+ if IsWet(human)
 			+ "Wet " ..AccStr("stop")
-				HumanWetReset(human)	
+				WetReset(human)	
 				Return()
 		+ else
 			+ "Wet start"
-				HumanWetSet(human, 10000, "Vagina")
+				WetSet(human, 10000, ActBody.Vagina)
 				Return()
 		
 	-- GETTER HANDJOB
@@ -282,28 +282,28 @@ label TMMenuSex(human)
 		+ TM_MenuClose
 
 	-- VAGINA
-	+ "| Wet »	| " .. AccTextNum3("V", WetValue(human,ActBody.Vagina), "A", WetValue(human,ActBody.Anus), "M", WetValue(human,ActBody.Mouth)) [if not HumanHasPenis(human)] [gold]
+	+ "| Wet »	| " .. AccTextNum3("V", WetGet(human,ActBody.Vagina), "A", WetGet(human,ActBody.Anus), "M", WetGet(human,ActBody.Mouth)) [if not HumanHasPenis(human)] [gold]
 		+ "• Squirt"
-			HumanWetSet(human, 10000, "Vagina")
+			WetSet(human, 10000, ActBody.Vagina)
 			Return()
 		+ "• Wet"
-			HumanWetSet(human, 2000, "Vagina")
+			WetSet(human, 2000, ActBody.Vagina)
 			Return()
 		+ "• Default"
-			HumanWetSet(human, 500, "Vagina")
+			WetSet(human, 500, ActBody.Vagina)
 			Return()
 		+ TM_UP.."Wetness"
 			wett = human.m_vagina.m_wetness + TM_WetnessStep
-			HumanWetSet(human, wett, "Vagina")
+			WetSet(human, wett, ActBody.Vagina)
 			Return()
 		+ TM_DN.."Wetness"
 			wett = human.m_vagina.m_wetness - TM_WetnessStep
 			if wett < 0
 				wett = 0
-			HumanWetSet(human, wett, "Vagina")
+			WetSet(human, wett, ActBody.Vagina)
 			Return()
-		+ "RESET | " .. AccTextNum3("V", WetValue(human,ActBody.Vagina), "A", WetValue(human,ActBody.Anus), "M", WetValue(human,ActBody.Mouth))
-			HumanWetReset(human)	
+		+ "RESET | " .. AccTextNum3("V", WetGet(human,ActBody.Vagina), "A", WetGet(human,ActBody.Anus), "M", WetGet(human,ActBody.Mouth))
+			WetReset(human)	
 			Return()
 		+ TM_MenuBack
 			Return(2)

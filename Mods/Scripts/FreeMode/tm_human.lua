@@ -6,9 +6,8 @@ local TMH_LastUpdateClock = os.clock()
 -- CONFIG
 TMH_DefaultArousalIncrease = 0.10
 TMH_DefaultArousalDecay = 0.05
-TMH_ImpregnateIncrement = 0.1
-TMH_ImpregnateDecay = 0.05
-TMH_ImpregnateHipsLimit = 1.5
+TMH_ImpregStepTime = 0.1
+TMH_ImpregTimeout = 1
 
 -------------------------------------------------------------------------------------------------
 -- HUMAN STATS
@@ -19,12 +18,16 @@ local function TMHStatsCreate(human)
 		--TMBValue is AUTHORITATIVE source of Human Body customization values
 		TMBValue = TMBValueDefaultGet(), -- NEVER CHANGE THESE VALUES DIRECTLY, USE TMHStatsSet_BodyEdit or BodyEdit functions
 		IsHavingSex = false,
-		Arousal = 0,
 		LastSeen = os.time(),
 		LastUpdate = os.time(),
 		NeedsBodyApply = false,
-		HipsOriginal = 0,
-		HipsImpregnate = 0,
+		-- Arousal
+		Arousal = 0,
+		-- Impregnation
+		ImpregLastTime = nil,
+		ImpregLastUpdate = nil,
+		ImpregHipsSize = nil,
+		ImpregHipsSizeOrig = nil,
 	}
 end
 
@@ -55,15 +58,13 @@ function OnUpdate_HumanStats()
 		Seen[human] = true
 		local stats = TMHStatsGet(human)
 		stats.LastSeen = os.time()
-		-- Arousal
-		if stats.IsHavingSex == true then stats.Arousal = math.min(stats.Arousal + deltaTime * TMH_DefaultArousalIncrease,1.0)
-		else stats.Arousal = math.max(stats.Arousal - deltaTime * TMH_DefaultArousalDecay,0) end
-		-- Impregnation
-		if stats.HipsImpregnate and stats.HipsImpregnate > 0 then TMHStatImpregnateDecrease(human) end
-		-- Body Edit check
 		if stats.NeedsBodyApply == true then TMHStats_TMBApply(human) end
+		-- Sexy features
+		TMStatArousalUpdate(stats, deltaTime)
+		TMStatImpregUpdate(human, stats)
 		-- Last update time
 		stats.LastUpdate = os.time()
+		
 	end
 
 	-- Cleanup non existing humans
@@ -75,35 +76,53 @@ function OnUpdate_HumanStats()
 end
 
 -------------------------------------------------------------------------------------------------
--- BODY EDIT VALUES
+-- HUMAN SEX STATS
 -------------------------------------------------------------------------------------------------
+-- AROUSAL
+function TMStatArousalUpdate(stats, deltaTime)
+	if not stats then return end
+	if stats.IsHavingSex == true then stats.Arousal = math.min(stats.Arousal + deltaTime * TMH_DefaultArousalIncrease,1.0)
+	else stats.Arousal = math.max(stats.Arousal - deltaTime * TMH_DefaultArousalDecay,0) end
+end
+
+-- IMPREGNATION
+function TMStatImpregUpdate(human, stats)
+	if not TM_ImpregAllow or not stats or not stats.ImpregHipsSizeOrig or stats.ImpregHipsSize == 0 then return end
+	if HasSexPartnerHoles(human) then return end -- don't deflate if still having sex
+	if not stats.ImpregLastTime or not stats.ImpregLastUpdate then return end
+	if os.time() - stats.ImpregLastTime < TMH_ImpregTimeout then return end
+	if os.time() - stats.ImpregLastUpdate < TMH_ImpregStepTime then return end
+	stats.ImpregLastUpdate = os.time()
+	stats.ImpregHipsSize = math.max( stats.ImpregHipsSize - TM_ImpregStepDown, stats.ImpregHipsSizeOrig)
+	TMBodyEdit(human, TMBody.Hips, stats.ImpregHipsSize)
+	WetSet(human, 50000, ActBody.Vagina)
+	if stats.ImpregHipsSize <= stats.ImpregHipsSizeOrig then
+		stats.ImpregLastTime = nil
+		stats.ImpregLastUpdate = nil
+		stats.ImpregHipsSize = nil
+		stats.ImpregHipsSizeOrig = nil
+	end
+end
 
 function TMHStatImpregnanteStep(human)
+	if not TM_ImpregAllow then return end
 	local stats = TMHStatsGet(human)
-	if stats.HipsImpregnate == 0 then 
-		stats.HipsOriginal = stats.TMBValue.Hips
-		stats.HipsImpregnate = stats.HipsOriginal
+	if stats.ImpregHipsSize == nil then
+		stats.ImpregHipsSizeOrig = stats.TMBValue.Hips
+		stats.ImpregHipsSize = stats.ImpregHipsSizeOrig
+		stats.ImpregLastTime = os.time()
+		stats.ImpregLastUpdate = os.time()
+		return
 	end
-	stats.HipsImpregnate = math.min(stats.HipsImpregnate + TMH_ImpregnateIncrement, TMH_ImpregnateHipsLimit)
-	TMBodyEdit(human, TMBody.Hips, stats.HipsImpregnate)
+	stats.ImpregLastTime = os.time()
+	stats.ImpregLastUpdate = os.time()
+	stats.ImpregHipsSize = math.min(stats.ImpregHipsSize + TM_ImpregStepUp, TM_ImpregSizeLimit)
+	TMBodyEdit(human, TMBody.Hips, stats.ImpregHipsSize)
 end
 
-function TMHStatImpregnateDecrease(human)
-	local stats = TMHStatsGet(human)
-	if not stats then return end
-	-- Nothing to decay
-	if not stats.HipsImpregnate or not stats.HipsOriginal then return end
-	-- Move back toward original value
-	stats.HipsImpregnate = math.max(stats.HipsImpregnate - TMH_ImpregnateDecay,stats.HipsOriginal)
-	-- Apply via authoritative path
-	TMBodyEdit(human, TMBody.Hips, stats.HipsImpregnate)
-	-- Fully reset when done
-	if stats.HipsImpregnate <= stats.HipsOriginal then
-		stats.HipsImpregnate = 0
-		stats.HipsOriginal = nil
-	end
-end
-
+-------------------------------------------------------------------------------------------------
+-- BODY EDIT VALUES
+-------------------------------------------------------------------------------------------------
 -- Direct access to per-human TMBValue table
 function TMHStatsGet_TMBValue(human)
 	local stats = TMHStatsGet(human)

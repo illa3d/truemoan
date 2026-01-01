@@ -146,27 +146,6 @@ function HumanIsCumming(human)
 	return human and human.Penis and game.HasAnim(human.Penis)
 end
 
-
--- WET
-function HumanWetReset(girl)
-	HumanWetSet(girl, 0, "Vagina")
-	HumanWetSet(girl, 0, "Anus")
-	HumanWetSet(girl, 0, "Mouth")
-end
-
-function HumanWetSet(girl, value, holename)
-	--holeName:"Vagina" "Anus" Mouth"
-	if girl == nil or value == nil or girl.m_isMale == true then return end
-	if holename ~= nil and holename == "Mouth" then
-		girl.m_mouth.m_wetness = value
-	elseif holename ~= nil and holename == "Anus" then
-		girl.m_anus.m_wetness = value
-	else
-		girl.m_vagina.m_wetness = value
-	end
-	return value
-end
-
 -------------------------------------------------------------------------------------------------
 -- HUMAN POSES
 -------------------------------------------------------------------------------------------------

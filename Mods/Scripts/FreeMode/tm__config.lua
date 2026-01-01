@@ -25,7 +25,7 @@ TM_DoubleClickTime = 0.25			-- 9. [sec, 0.2-0.4] Time to register double click (
 TM_SpawnNaked = false				-- 10. Characters naked when spawned / changing
 TM_SpawnReset = false				-- 11. Characters reset when spawned / changing (no sucking lol)
 TM_SpawnNoFuta = false				-- 12. Females spawn without penises (no sucking lol)
-TM_SpawnRandomBody = false			-- 13. Randomizes body types on start, configurable in tm__presets.lua
+TM_SpawnRandomBody = false			-- 13. Randomizes body types on start (overwrites body sizes from saves/captures!!)
 TM_SpawnAutoSexOn = true			-- 14. AutoSex on for everyone at spawn
 TM_MoanSex = true					-- 15. Moaning during sex
 TM_WetSex = true					-- 16. Moisting holes (vag, anus, mouth)
@@ -48,6 +48,12 @@ TM_AutoSexWeightDrift = 0.1			-- 26. [0-1] How close in percent will be next ste
 TM_AutoSexDepthStartDrift = 0.2		-- 27. [0-1] How close in percent will be next step for sex depth (start/end)
 TM_AutoSexDepthEndDrift = 0.3		-- 28. [0-1] How close in percent will be next step for sex depth (start/end)
 									-- setting values [24. - 28.] to zero turns them off
+
+-- Impregnation
+TM_ImpregAllow = false
+TM_ImpregStepUp = 0.01
+TM_ImpregStepDown = 0.015
+TM_ImpregSizeLimit = 1.5
 
 ------------------------------------------------------------------------------------------------------------------
 -- FINE TUNING

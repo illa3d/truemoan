@@ -117,6 +117,10 @@ end
 -------------------------------------------------------------------------------------------------
 
 -- SEX
+function HasSexPartnerHoles(human) return HasSexPartner(human, ActBody.Mouth) or HasSexPartner(human, ActBody.Anus) or HasSexPartner(human, ActBody.Vagina) end
+function HasSexPartnerHand(human) return HasSexPartner(human, ActBody.Hand) end
+function HasSexPartnerPenis(human) return HasSexPartner(human, ActBody.Penis) end
+
 function HasSexPartner(human, body)
 	if human == nil then return false end
 	if body == ActBody.Hand and human.Penis.m_holdDepth ~= 0 then return true
@@ -174,11 +178,24 @@ function IsWetBody(human, body)
 	else return false end
 end
 
-function WetValue(human, body)
+function WetGet(human, body)
 	if body == ActBody.Mouth then return human.m_mouth.m_wetness
 	elseif body == ActBody.Anus then return human.m_anus.m_wetness
 	elseif body == ActBody.Vagina then return human.m_vagina.m_wetness
 	else return 0 end
+end
+
+function WetReset(girl)
+	WetSet(girl, 0, ActBody.Vagina)
+	WetSet(girl, 0, ActBody.Anus)
+	WetSet(girl, 0, ActBody.Mouth)
+end
+
+function WetSet(girl, value, actBody)
+	if girl == nil or value == nil  or actBody == nil or girl.m_isMale == true then return end
+	if actBody == ActBody.Mouth then girl.m_mouth.m_wetness = value
+	elseif actBody == ActBody.Anus then girl.m_anus.m_wetness = value
+	elseif actBody == ActBody.Vagina then girl.m_vagina.m_wetness = value end
 end
 
 -------------------------------------------------------------------------------------------------

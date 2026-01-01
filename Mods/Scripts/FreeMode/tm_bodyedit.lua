@@ -179,9 +179,9 @@ end
 -- DONT USE - Direct application to the human (called exclusively from BodyEdit and HumanStat functions)
 function TMBodyEdit_Apply(human, tmBody, value)
 	if not tmBody then return end
-	if tmBody == TMBody.PenisSkin and human.Penis then human.Penis.m_penisSkinOut = TMBValue[tmBody]
-	elseif tmBody == TMBody.PenisRagdoll and human.Penis then human.Penis.m_ragdollLength = TMBValue[tmBody]
-	else human.Body(TMBodyParamName[tmBody], TMBValue[tmBody]) end
+	if tmBody == TMBody.PenisSkin and human.Penis then human.Penis.m_penisSkinOut = value
+	elseif tmBody == TMBody.PenisRagdoll and human.Penis then human.Penis.m_ragdollLength = value
+	else human.Body(TMBodyParamName[tmBody], value) end
 end
 
 -------------------------------------------------------------------------------------------------

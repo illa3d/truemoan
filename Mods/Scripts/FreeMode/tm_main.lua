@@ -63,7 +63,7 @@ function TMOnUpdate_GenericChat()
 end
 
 function TMOnCreateHuman(human)
-	HumanWetReset(human)
+	WetReset(human)
 	if TM_SpawnRandomBody then TMBEPreset_RandomStart(human) end
 	if TM_SpawnNaked then HumanClothes(human) end
 	if TM_SpawnNoFuta then Delayed(0.05, function() HumanPenisSet(human, false) end) end
@@ -171,7 +171,7 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	end
 
 	-- Impregnation
-	if lastImpregnationTime > 0.5 then
+	if TM_ImpregAllow and lastImpregnationTime > TMH_ImpregStepTime then
 		partner = GetSexPartner(girl, holeName)
 		if partner and HumanIsCumming(partner) then
 			TMHStatImpregnanteStep(girl)
@@ -195,9 +195,9 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 		TMPlayGirlMoan(girl, tier)
 		-- Auto Wetness
 		if TM_WetSex then
-			HumanWetSet(girl, wetness, holeName)
+			WetSet(girl, wetness, holeName)
 		else
-			HumanWetSet(girl, 0, holeName)
+			WetSet(girl, 0, holeName)
 		end
 		ResetTimer(keyMoan)
 	end
