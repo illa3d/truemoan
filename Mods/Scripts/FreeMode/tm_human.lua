@@ -23,14 +23,14 @@ TMHumanStatsDefault = {
 	CumflateHipsSize = nil,
 	CumflateHipsSizeOrig = nil,
 }
-function THMHumanStatsCloneDefault() return GetTableClone(TMHumanStatsDefault) end
+function TMHumanStatsCloneDefault() return GetTableClone(TMHumanStatsDefault) end
 
 -------------------------------------------------------------------------------------------------
 -- HUMAN STATS
 -------------------------------------------------------------------------------------------------
 
 local function TMHStatsNew(human)
-	local clone = THMHumanStatsCloneDefault() -- TMHUmanStatus is authoritative source of Status for each human
+	local clone = TMHumanStatsCloneDefault() -- TMHUmanStatus is authoritative source of Status for each human
 	clone.TMBValue = TMBodyValueCloneDefault() --TMBValue is AUTHORITATIVE source of Human Body customization values
 	clone.LastSeen = os.time()
 	clone.LastUpdate = os.time()
