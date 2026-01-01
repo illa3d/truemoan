@@ -43,6 +43,12 @@ label TMMenuOptions(human)
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
+		+ "Tween sex	| " .. AccBool(TM_TweenSex) .. " (".. FDec(SexTweenTime(), tmOdec) .."s)"
+			TM_TweenSex = not TM_TweenSex
+			Return()
+		+ "Wet sex	| " .. AccBool(TM_WetSex)
+			TM_WetSex = not TM_WetSex
+			Return()
 		+ if TM_AllowVoice
 			+ "Moan sex	| " .. AccBool(TM_MoanSex)
 				TM_MoanSex = not TM_MoanSex
@@ -54,14 +60,8 @@ label TMMenuOptions(human)
 			+ "Moaning	| Disabled (VoiceMod)"
 				-- human "I know, right? Don't <b>MOAN</b> about it!\n(VoiceMod active, TrueMoaning disabled)"
 				Return(2)
-		+ "Wet sex	| " .. AccBool(TM_WetSex)
-			TM_WetSex = not TM_WetSex
-			Return()
-		+ "Tween sex	| " .. AccBool(TM_TweenSex)
-			TM_TweenSex = not TM_TweenSex
-			Return()
-		+ "Tween time	| " .. FDec(SexTweenTime(), tmOdec) .. "s"
-			-- human "To change this setting edit tm-config"
+		+ "Cumflation	| " .. AccBool(TM_Cumflate)
+			TM_Cumflate = not TM_Cumflate
 			Return()
 		+ TM_MenuBack
 			Return(2)
