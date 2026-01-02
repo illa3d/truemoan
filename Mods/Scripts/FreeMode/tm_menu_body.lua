@@ -7,10 +7,10 @@ label TMMenuBody(human)
 	+ "Edit safe | " .. AccBool(TM_BodyEditSafe) .. (TM_BodyEditSafe and "" or "(can crash app)") [if TM_BodyEditSafe]
 		TM_BodyEditSafe = not TM_BodyEditSafe
 		Return()
-	+ "Clear "  .. AccStr(TMBodyValueCopyName) [if TMBodyHasCopy()]
+	+ "Clear | "  .. AccStr(TMBodyValueCopyName) [if TMBodyHasCopy()]
 		TMBodyCopyClear()
 		Return()
-	+ "Copy "  .. AccStr(human.Name)
+	+ "Copy | "  .. AccStr(human.Name)
 		TMBodyCopy(human)
 		Return()
 	+ "| Neck »	| " .. AccTextNum1("N", TMBodyUI(TMBody.Neck), tmBdec) [gold]
@@ -203,7 +203,7 @@ label TMMenuBody(human)
 		TMMenuBodySize(human)
 	+ "Body types »" [gold]
 		TMMenuBodyType(human)
-	+ "Paste " .. AccStr(TMBodyValueCopyName) [if TMBodyHasCopy()]
+	+ "Paste | " .. AccStr(TMBodyValueCopyName) [if TMBodyHasCopy()]
 		TMBodyPaste(human)
 		Return()
 	+ "RESET " .. AccStr(human.Name)

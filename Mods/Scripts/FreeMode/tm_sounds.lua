@@ -21,7 +21,7 @@ TMMoanTier = {
 -- MOANS
 function TMPlayGirlMoan(girl, tmMoanTier)
 	-- don't moan with other voice mods
-	if not TM_AllowVoice or not girl or girl.m_isMale then return end
+	if not TM_AllowVoice() or not girl or girl.m_isMale then return end
 	girl.SayCustom("tm_" .. tmMoanTier)
 end
 

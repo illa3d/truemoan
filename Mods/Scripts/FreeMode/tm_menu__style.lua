@@ -22,6 +22,9 @@ TM_DN = "|<| "
 function AccBool (bol)
 	 return FCol(bol and "ON" or "OFF", TM_MenuAccent)
 end
+function AccBoolDE (bol)
+	 return FCol(bol and "Enabled" or "Disabled", TM_MenuAccent)
+end
 function AccStr (str)
 	return  FCol(str, TM_MenuAccent)
 end

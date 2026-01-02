@@ -39,7 +39,7 @@ label TMMenuOptions(human)
 		+ TM_MenuClose
 
 	-- MOANING/SEX
-	+ "Sex/moan »" [gold]
+	+ "Sex / Moan »" [gold]
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
@@ -49,7 +49,10 @@ label TMMenuOptions(human)
 		+ "Wet sex	| " .. AccBool(TM_WetSex)
 			TM_WetSex = not TM_WetSex
 			Return()
-		+ if TM_AllowVoice
+		+ "Cumflation	| " .. AccBool(TM_Cumflate)
+			TM_Cumflate = not TM_Cumflate
+			Return()
+		+ if TM_AllowVoice()
 			+ "Moan sex	| " .. AccBool(TM_MoanSex)
 				TM_MoanSex = not TM_MoanSex
 				Return()
@@ -57,12 +60,15 @@ label TMMenuOptions(human)
 				game.FluidReaction = not game.FluidReaction
 				Return()
 		+ else
-			+ "Moaning	| Disabled (VoiceMod)"
-				-- human "I know, right? Don't <b>MOAN</b> about it!\n(VoiceMod active, TrueMoaning disabled)"
-				Return(2)
-		+ "Cumflation	| " .. AccBool(TM_Cumflate)
-			TM_Cumflate = not TM_Cumflate
-			Return()
+			+ "True Moan	| Disabled (VoiceMod)"
+				Return()
+		+ if TMMOD_VoiceMod
+			+ "VoiceMod	| " .. AccBoolDE(VM_VoiceMod_Enabled)
+				if VM_VoiceMod_Enabled
+					VM_VoiceMod_Disable()
+				else
+					VM_VoiceMod_Enable()
+				Return()
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose

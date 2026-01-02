@@ -5,7 +5,7 @@
 -------------------------------------------------------------------------------------------------
 -- TrueMoan module global switches
 TM_UIVisible = true -- TrueFacials UI
-TM_AllowVoice = true
+function TM_AllowVoice() return VM_VoiceMod_Enabled ~= true end
 TM_AllowGenericChat = false
 TM_DeltaTime = 0
 -- Cum reactions
@@ -17,7 +17,6 @@ TMH_CumPauseTime = 1
 -------------------------------------------------------------------------------------------------
 function TMOnStart_Init()
 	Play_FreeMode() -- this makes 3d interactable when TalkMenu visible
-	if TMMOD_VoiceMod then TM_AllowVoice = false end
 end
 
 function TMOnStart_Ambience()
@@ -25,7 +24,7 @@ function TMOnStart_Ambience()
 end
 
 function TMOnStart_GenericChat()
-	if not TM_AllowVoice then return end
+	if not TM_AllowVoice() then return end
 	local timerKey = "TMGenericChat"
 	ResetTimer(timerKey, math.random(-10, 0))
 	local speaker = game.GetRandomHuman(|h| h.CanSpeak)
@@ -58,7 +57,7 @@ end
 function TMOnUpdate_GenericChat()
 	local timerKey = "TMGenericChat"
 	-- don't talk with other voice mods
-	if not TM_AllowVoice or not TM_AllowGenericChat then return end
+	if not TM_AllowVoice() or not TM_AllowGenericChat then return end
 	local lastChatTime = Timer(timerKey)
 	if lastChatTime > game.ChatIntervals then
 		ResetTimer(timerKey, math.random(-7, 0))
@@ -129,7 +128,7 @@ end
 -- Updated on penetration (holeName: "Vagina" "Anus" Mouth")
 function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	TMOnPenetration_Cum(girl, holeName)
-	if not TM_AllowVoice or not TM_MoanSex or inVelocity < outVelocity then return end
+	if not TM_AllowVoice() or not TM_MoanSex or inVelocity < outVelocity then return end
 
 	-- Variables
 	local keyMoan = "TMSexMoan_" .. girl.Name .. holeName
