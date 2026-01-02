@@ -43,8 +43,8 @@ label TMMenuOptions(human)
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
-		+ "Tween sex	| " .. AccBool(TM_TweenSex) .. " (".. FDec(SexTweenTime(), tmOdec) .."s)"
-			TM_TweenSex = not TM_TweenSex
+		+ "Auto sex	| " .. AccStr(TM_AutoSexTurbo and "Turbo!" or "Regular")
+			TM_AutoSexTurbo = not TM_AutoSexTurbo
 			Return()
 		+ "Wet sex	| " .. AccBool(TM_WetSex)
 			TM_WetSex = not TM_WetSex
@@ -69,6 +69,9 @@ label TMMenuOptions(human)
 				else
 					VM_VoiceMod_Enable()
 				Return()
+		+ "Tween sex	| " .. AccBool(TM_TweenSex) .. " (".. FDec(SexTweenTime(), tmOdec) .."s)"
+			TM_TweenSex = not TM_TweenSex
+			Return()
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose

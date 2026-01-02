@@ -4,6 +4,9 @@ tmCumevery = 0
 -- Sex speed decimals
 tmSdec = 3
 
+function TMIsAutoSexTurboNeeded(interaction, isHand) return not TM_AutoSexTurbo and ActSpeedGet(interaction, isHand) > ActAutoSexNormalMinMax.Speed.Max end
+function TMIsAutoSexNormalNeeded(interaction, isHand) return TM_AutoSexTurbo and ActSpeedGet(interaction, isHand) < ActAutoSexNormalMinMax.Speed.Max end
+
 -- SEX CONTROL (in many menus)
 label TMSexControl(human, interaction, isHand)
 	+ "• Max"
@@ -23,13 +26,29 @@ label TMSexControl(human, interaction, isHand)
 		Return()
 	+ TM_UP.."Speed"
 		ActSpeedSet_Step(interaction, TM_SexSpeedStep, true, isHand)
+		if TMIsAutoSexTurboNeeded(interaction, isHand)
+			TM_AutoSexTurbo = true
 		Return()
 	+ TM_DN.."Speed"
 		ActSpeedSet_Step(interaction, TM_SexSpeedStep, false, isHand)
+		-- automatically switch on turbo mode
+		if TMIsAutoSexNormalNeeded(interaction, isHand)
+			TM_AutoSexTurbo = false
 		Return()
-	+ "RESET Speed	| " .. AccNum(ActSpeedGet(interaction, isHand), tmSdec)
+	-- + if TMIsAutoSexTurboNeeded(interaction, isHand)
+	-- 	+ AccStr("Switch to Turbo!")
+	-- 		TM_AutoSexTurbo = true
+	-- 		Return()	
+	-- + elseif TMIsAutoSexNormalNeeded(interaction, isHand)
+	-- 	+ AccStr("Switch to Regular!")
+	-- 		TM_AutoSexTurbo = false
+	-- 		Return()	
+	-- + else
+	+ "RESET Speed	| " .. AccNum(ActSpeedGet(interaction, isHand), tmSdec) .. (TM_AutoSexTurbo and " (turbo)" or "")
 		ActSpeedSet(interaction, 0, isHand)
+		TM_AutoSexTurbo = false
 		Return()
+
 	+ "Random Speed" [gold]
 		ActSpeedSet_MenuRandom(interaction, isHand)
 		Return()
@@ -309,8 +328,9 @@ label TMMenuSex(human)
 			Return(2)
 		+ TM_MenuClose
 
-	+ "Auto sex	| " .. AccBool(IsAutoSex(human))
+	+ "Auto sex	| " .. AccBool(IsAutoSex(human)) .. (IsAutoSex(human) and (TM_AutoSexTurbo and " (turbo)" or "") or "")
 		AutoSexToggle(human)
+		TM_AutoSexTurbo = false
 		Return()
 	+ TM_MenuBack
 		Return(2)

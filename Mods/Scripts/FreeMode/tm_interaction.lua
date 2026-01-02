@@ -81,8 +81,18 @@ ActMenuMinMax = {
 
 -- AUTOSEX PARAMETER VALUE LIMITS (values with thrust normalized. bias is minimum move)
 -- limiting this to lower than almost maximum values "overrides" user control. Ie user sets 2, this lowers to 0.5 max
-ActAutoSexMinMax = {
-	Speed = { Min = 0.1, Max = 1.2, Delta = 0.1 },
+-- Values used when not in TM_AutoSexTurbo
+ActAutoSexNormalMinMax = {
+	Speed = { Min = 0.1, Max = 0.6, Delta = 0.1 },
+	Weight = { Min = 0.1, Max = 0.9, Delta = 0.03 },
+	Thrust = { Min = 0.1, Max = 0.6, Delta = 0.05 }, -- normalized thrust values
+	DepthStart = { Min = 0.1, Max = 0.5, Delta = 0.1 },
+	DepthEnd = { Min = 0.6, Max = 1.2, Delta = 0.1 },
+}
+
+-- Values used when in TM_AutoSexTurbo
+ActAutoSexTurboMinMax = {
+	Speed = { Min = 0.4, Max = 1.9, Delta = 0.1 },
 	Weight = { Min = 0.1, Max = 0.9, Delta = 0.03 },
 	Thrust = { Min = 0.1, Max = 0.6, Delta = 0.05 }, -- normalized thrust values
 	DepthStart = { Min = 0.1, Max = 0.5, Delta = 0.1 },
@@ -289,7 +299,8 @@ end
 
 -- RANDOM SLOW PARAMETER VALUE (new generated value, used in AutoSex, slowly drifts around so user can define new starting point)
 function ActValueGet_AutoSexMinMax(interaction, actValue, isHand)
-	local rn = ActAutoSexMinMax[actValue] if not rn then return 0 end
+	local rn = TM_AutoSexTurbo and ActAutoSexTurboMinMax[actValue] or ActAutoSexNormalMinMax[actValue]
+	if not rn then return 0 end
 	-- 1. Fixed delta + truncated range - Uniform, unbiased, no edge sticking, no loop (best overall)
 	return GetRandomFloatNear_FixedDeltaTruncated(ActValueGet_Current(interaction, actValue, isHand), AutoSexDrift(actValue), rn.Min, rn.Max, rn.Delta )
 	-- -- 2. Value-dependent delta + truncated range - No boundary bias, safe, but movement slows near zero
