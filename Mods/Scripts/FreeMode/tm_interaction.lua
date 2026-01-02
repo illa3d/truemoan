@@ -108,7 +108,7 @@ ActAutoSexParams = {
 function SexTweenAllow() return TM_TweenSex and SexTweenTime() > 0 end
 function SexTweenTime() return ClampValue(TM_TweenTime, ActTweenTimeMinMax.Min , ActTweenTimeMinMax.Max) end
 function AutoSexMinTime() return ClampValue(TM_AutoSexTimeMin, ActAutoSexTimerClamp.Min , ActAutoSexTimerClamp.Max) end
-function AutoSexMaxTime() return ClampValue(TM_AutoSexTimeMax, ActAutoSexTimerClamp.Max , ActAutoSexTimerClamp.Max) end
+function AutoSexMaxTime() return ClampValue(TM_AutoSexTimeMax, ActAutoSexTimerClamp.Min , ActAutoSexTimerClamp.Max) end
 function AutoSexDrift(actValue)
 	if actValue == ActValue.Speed then return Clamp01(TM_AutoSexSpeedDrift)
 	elseif actValue == ActValue.Thrust then return Clamp01(TM_AutoSexThrustDrift)
