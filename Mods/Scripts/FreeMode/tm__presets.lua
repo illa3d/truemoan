@@ -36,7 +36,7 @@ label TMMenuBodySize(human)
 		Return()
 	-- # DONT MODIFY BELOW #
 
-	+ "Random | " .. AccNum(TMBodyUI(TMBody.Body), 2) [gold]
+	+ "Generate | " .. AccNum(TMBodyUI(TMBody.Body), 2) [gold]
 		TMBodyEdit(human, TMBody.Body, GetRandomFloat(-0.5,0.5))
 		Return()
 	+ TM_MenuBack
@@ -67,7 +67,7 @@ label TMMenuBodyType(human)
 		Return()
 	-- # DONT MODIFY BELOW #
 
-	+ "Random" [gold]
+	+ "Random •" [gold]
 		TMBEPreset_MenuRandom(human)
 		Return()
 	+ "Generate" [gold]

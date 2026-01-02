@@ -2,7 +2,7 @@
 --                                               TRUE MOAN                                             --
 ---------------------------------------------------------------------------------------------------------
 
-**Supports: VoiceMod/TalkMenuMM/FaunaLABS | Auto Sex Control | BodyEdit | Realistic Moans | Wet Sex | Animation | Poses | Ambient Audio | Skyboxes | Improved Menu |**
+**Supports: VoiceMod/TalkMenuMM/FaunaLABS | Auto Sex Control | BodyEdit | Realistic Moans | Sex/Cum reactions | Animation | Poses | Ambient Audio | Skyboxes | Improved Menu |**
 
 **MOD FEATURES**
 - **Auto Sex Control**
@@ -13,15 +13,16 @@
   - Procedural face animation system + presets
 - **Body Edit**
   - Reduce/enlarge body beyond slider limits
-  - Presets/Apply to/reset multiple actors quickly
+  - Copy/Paste, Presets
 - **Realistic Moans**
   - **Generic Voice** for all characters
   - 950+ moans (Slow,Normal,Fast,Faster,Orgasm,Climax)
-  - Fluid reaction moans
-- **Wet Sex**
+- **Sex/Cum reactions**
+  - Cum in/out reactions (+ cumflation)
+  - Wet Sex
 - **Poses/Animation** (requires FaunaLABS)
 - **6x audio ambiences**
-- **29 Scenes**
+- **32 Scenes**
 - **Improved Menu UX**
 - **Highly Configurable**
 
@@ -29,8 +30,8 @@
 - **7x skyboxes** (8/4/2k)
 
 **LATEST DOWNLOADS**
-**TrueMoan_v1.8.zip** [2025-12-27] - Just TrueMoan
-**TrueMoan_v1.8_FLABS_v1.02.zip** [2025-12-27] - TrueMoan + Fauna LABS **(recommended)**
+**TrueMoan_v1.9.zip** [2025-12-27] - Just TrueMoan
+**TrueMoan_v1.9_FLABS_v1.02.zip** [2025-12-27] - TrueMoan + Fauna LABS **(recommended)**
 **TrueMoan_Addon_Skyboxes_4k_v1.0.zip** [2025-12-22]
 https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
 
@@ -68,6 +69,13 @@ GitHub Repository - https://github.com/illa3d/truemoan
 
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
+
+[ v1.9 ]
+- Added Cum reaction/effects (moaning, wetness, cumflation)
+- BodyEdit now shows values of selected characters
+- Added BodyEdit Generate (randomly picks body values)
+- Added BodyEdit Copy/Paste functionality
+- Added option to toggle VoiceMod/TrueMoan moaning
 
 [ v1.8 ]
 - Added TrueFace procedural facial animation system
