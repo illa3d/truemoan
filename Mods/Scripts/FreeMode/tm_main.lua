@@ -226,7 +226,7 @@ function TMOnPenetration_Cum(girl, holeName)
 	stats.CumLastUpdate = now
 	-- Cum & Cumflation effects (same)
 	if TMHCanPlayCumEffect(stats) then
-		TMPlayGirlMoan(girl, TMMoanTier.Orgasm)
+		TMPlayGirlMoan(girl, TM_Cumflate and TMMoanTier.Orgasm or TMMoanTier.Slow)
 		stats.CumEffectLastTime = now
 	end
 	-- Cumflation
@@ -306,18 +306,24 @@ function TMOnCumPulloutEffects(girl)
 	Delayed(1.5, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end)
 	Delayed(3, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end)
 	Delayed(5, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
-	Delayed(10, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
-	Delayed(15, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
+	Delayed(8, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
+	Delayed(12, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
 end
 
 function TMOnCumflatePulloutEffects(girl)
 	if not girl then return end
 	WetSet(girl, 1000, ActBody.Vagina)
-	Delayed(0.5, function() TMPlayGirlMoan(girl, TMMoanTier.Fast) end)
-	Delayed(1, function() TMPlayGirlMoan(girl, TMMoanTier.Fast) end)
-	Delayed(1.5, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end)
-	Delayed(3, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end)
-	Delayed(5, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
-	Delayed(10, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
-	Delayed(15, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
+	Delayed(0.4, function() TMPlayGirlMoan(girl, TMMoanTier.Faster) end)
+	Delayed(0.8, function() TMPlayGirlMoan(girl, TMMoanTier.Faster) end)
+	Delayed(1.2, function() TMPlayGirlMoan(girl, TMMoanTier.Faster) end)
+	Delayed(1.6, function() TMPlayGirlMoan(girl, TMMoanTier.Fast) end)
+	Delayed(2.1, function() TMPlayGirlMoan(girl, TMMoanTier.Fast) end)
+	Delayed(2.6, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end)
+	Delayed(3.3, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end)
+	Delayed(4, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end)
+	Delayed(5, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end)
+	Delayed(6.5, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
+	Delayed(8, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
+	Delayed(12, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
+	Delayed(20, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
 end
