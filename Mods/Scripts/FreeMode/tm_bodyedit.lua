@@ -35,8 +35,21 @@ TMBody = {
 	PenisRagdoll = "PenisRagdoll" -- this is separate function TMBodyEditPenisSkin
 }
 
+-------------------------------------------------------------------------------------------------
+
 TMBodyValueUI = {} -- AUTHORITATIVE UI use only
 function TMBodyUI(tmBody) return TMBodyValueUI[tmBody] end
+
+-- COPY PASTE functionality
+TMBodyValueCopy = nil
+TMBodyValueCopyName = ""
+function TMBodyHasCopy() return TMBodyValueCopy ~= nil end
+function TMBodyCopy(human) TMBodyValueCopy = TMBodyValueClone(TMBodyValueUI) TMBodyValueCopyName = human.Name end
+function TMBodyPaste(human) TMBodyEdit_Preset(human, TMBodyValueCopy) end
+function TMBodyCopyClear() TMBodyValueCopy = nil TMBodyValueCopyName = "" end
+
+-------------------------------------------------------------------------------------------------
+
 --- DEFINITION (never update this)
 TMBodyValueDefault = {
 	[TMBody.Neck] = 0,
