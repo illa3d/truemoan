@@ -2,73 +2,8 @@
 -------------------------------------------------------------------------------------------------
 -- AUTOSEX DEFINITIONS (Act = Interaction)
 -------------------------------------------------------------------------------------------------
--- Sex Tweens
--- Active tweens list (for update loop)
-local actActiveTweens = {}
--- Fast lookup map: act -> param -> tween
-local actActiveTweenMap = {}
-
--- Body enums
-ActBody = {
-	Hand = "Hand",
-	Penis = "Penis",
-	Mouth = "Mouth",
-	Anus = "Anus",
-	Vagina = "Vagina",
-}
-
-ActValue = {
-	Active = "Active",
-	Speed = "Speed",
-	Weight = "Weight", -- no hand weight
-	Thrust = "Thrust",
-	DepthStart = "DepthStart",
-	DepthEnd = "DepthEnd",
-}
-
--- values as they are in TrueFacials
-ActRawMinMax = {
-	Speed = { Min = 0.001, Max = 2 },
-	Weight = { Min = 0, Max = 1 },
-	Thrust = { Min = 1, Max = 3 }, -- raw thrust values
-	DepthStart = { Min = 0, Max = 1.2 },
-	DepthEnd = { Min = 0.1, Max = 1.3 }
-}
-
--- values with thrust normalized
-ActMenuMinMax = {
-	Speed = { Min = 0.1, Max = 1 },
-	Weight = { Min = 0, Max = 1 },
-	Thrust = { Min = 0, Max = 0.6 },
-	DepthStart = { Min = 0.2, Max = 0.6 },
-	DepthEnd = { Min = 0.5, Max = 1.1 },
-}
-
--- values with thrust normalized. bias is minimum move
-ActAutosexMinMax = {
-	Speed = { Min = 0.1, Max = 1.9, Bias = 0.1 },
-	Weight = { Min = 0.1, Max = 0.9, Bias = 0.03 },
-	Thrust = { Min = 0.1, Max = 0.9, Bias = 0.05 }, -- normalized thrust values
-	DepthStart = { Min = 0, Max = 0.5, Bias = 0.1 },
-	DepthEnd = { Min = 0.6, Max = 1.2, Bias = 0.1 },
-}
-
--- Act (interaction) Parameters (actual names of values in interaction)
-ActParam = {
-	ActivePenis = "AutoActive",
-	ActiveHand = "m_autoHandActive",
-	SpeedPenis = "m_autoSpeed",
-	SpeedHand = "m_autoHandSpeed",
-	ThrustPenis = "m_autoThrustWeight",
-	ThrustHand = "m_autoHandThrustWeight",
-	WeightPenis = "AutoPenisWeight", -- no hand weight
-	DepthStartPenis = "m_autoStartDepth",
-	DepthStartHand = "m_autoHandStartDepth",
-	DepthEndPenis = "m_autoEndDepth",
-	DepthEndHand = "m_autoHandEndDepth",
-}
--- Act Parameters descriptions
--- ENABLE (penis, hand)
+-- ACUTUAL GAME FUNCTIONS AND LIMITS
+-- ACTIVE (penis, hand)
 --  interaction.AutoActive = true
 --  interaction.m_autoHandActive = true
 -- SPEED (penis, hand)
@@ -82,12 +17,83 @@ ActParam = {
 --  interaction.m_autoEndDepth = depth (0.05-1.3)
 --  interaction.m_autoHandStartDepth = depth (0-1.25)
 --  interaction.m_autoHandEndDepth = depth (0.05-1.3)
--- GIVER VS GETTER (penis)
+-- WEIGHT, MALE VS FEMALE/GIVER VS GETTER (penis)
 --  interaction.AutoPenisWeight = weight (0-1)
+
+-- Sex Tweens
+-- Active tweens list (for update loop)
+local actActiveTweens = {}
+-- Fast lookup map: act -> param -> tween
+local actActiveTweenMap = {}
 
 -- AutoSexParams
 ActAutoSexTimers = ActAutoSexTimers or {}
-ActAutoSexTickTime = 0.5
+ActAutoSexTickTime = 0.5 -- seconds (game timer frequency)
+ActAutoSexTimerClamp = { Min = 1, Max = 20 } -- seconds (timer to allow new random sex parameter)
+-- TweenParams
+ActTweenTimeMinMax = { Min = 0.1, Max = 3 } -- seconds (time for parameter tween duration)
+
+-- BODY HOLE ENUM
+ActBody = {
+	Hand = "Hand",
+	Penis = "Penis",
+	Mouth = "Mouth",
+	Anus = "Anus",
+	Vagina = "Vagina",
+}
+
+-- INTERACTION PARAMETER ENUM
+ActValue = {
+	Active = "Active",
+	Speed = "Speed",
+	Weight = "Weight", -- no hand weight
+	Thrust = "Thrust",
+	DepthStart = "DepthStart",
+	DepthEnd = "DepthEnd",
+}
+
+-- GAME PARAMETER VALUE LIMITS (values as they are in TrueFacials)
+ActRawMinMax = {
+	Speed = { Min = 0.001, Max = 2 },
+	Weight = { Min = 0, Max = 1 },
+	Thrust = { Min = 1, Max = 3 }, -- raw thrust values
+	DepthStart = { Min = 0, Max = 1.2 },
+	DepthEnd = { Min = 0.1, Max = 1.3 }
+}
+
+-- TRUEMOAN LIPARAMETER VALUE LIMITS (values with thrust normalized)
+ActMenuMinMax = {
+	Speed = { Min = 0.1, Max = 1 },
+	Weight = { Min = 0, Max = 1 },
+	Thrust = { Min = 0, Max = 0.6 },
+	DepthStart = { Min = 0.2, Max = 0.6 },
+	DepthEnd = { Min = 0.5, Max = 1.1 },
+}
+
+-- AUTOSEX PARAMETER VALUE LIMITS (values with thrust normalized. bias is minimum move)
+ActAutoSexMinMax = {
+	Speed = { Min = 0.1, Max = 1.9, Bias = 0.1 },
+	Weight = { Min = 0.1, Max = 0.9, Bias = 0.03 },
+	Thrust = { Min = 0.1, Max = 0.9, Bias = 0.05 }, -- normalized thrust values
+	DepthStart = { Min = 0, Max = 0.5, Bias = 0.1 },
+	DepthEnd = { Min = 0.6, Max = 1.2, Bias = 0.1 },
+}
+
+-- GAME PARAMETER NAME ENUM - Act (interaction) Parameters (actual names of values in interaction)
+ActParam = {
+	ActivePenis = "AutoActive",
+	ActiveHand = "m_autoHandActive",
+	SpeedPenis = "m_autoSpeed",
+	SpeedHand = "m_autoHandSpeed",
+	ThrustPenis = "m_autoThrustWeight",
+	ThrustHand = "m_autoHandThrustWeight",
+	WeightPenis = "AutoPenisWeight", -- no hand weight
+	DepthStartPenis = "m_autoStartDepth",
+	DepthStartHand = "m_autoHandStartDepth",
+	DepthEndPenis = "m_autoEndDepth",
+	DepthEndHand = "m_autoHandEndDepth",
+}
+
 ActAutoSexParams = {
 	Speed = { ActValue.Speed, "ActSpeedSet_AutoSexRandom", true },
 	Thrust = { ActValue.Thrust, "ActThrustSet_AutoSexRandom", true },
@@ -100,9 +106,9 @@ ActAutoSexParams = {
 -- CONFIG VALUES CLAMPING
 -------------------------------------------------------------------------------------------------
 function SexTweenAllow() return TM_TweenSex and SexTweenTime() > 0 end
-function SexTweenTime() return ClampValue(TM_TweenTime, 0.1, 3) end
-function AutoSexMinTime() return ClampValue(TM_AutoSexTimeMin,1,20) end
-function AutoSexMaxTime() return ClampValue(TM_AutoSexTimeMax,1,20) end
+function SexTweenTime() return ClampValue(TM_TweenTime, ActTweenTimeMinMax.Min , ActTweenTimeMinMax.Max) end
+function AutoSexMinTime() return ClampValue(TM_AutoSexTimeMin, ActAutoSexTimerClamp.Min , ActAutoSexTimerClamp.Max) end
+function AutoSexMaxTime() return ClampValue(TM_AutoSexTimeMax, ActAutoSexTimerClamp.Max , ActAutoSexTimerClamp.Max) end
 function AutoSexDrift(actValue)
 	if actValue == ActValue.Speed then return Clamp01(TM_AutoSexSpeedDrift)
 	elseif actValue == ActValue.Thrust then return Clamp01(TM_AutoSexThrustDrift)
@@ -113,10 +119,14 @@ function AutoSexDrift(actValue)
 end
 
 -------------------------------------------------------------------------------------------------
+--===============================================================================================
 -- BODY / SEX / INTERACTION
+--===============================================================================================
 -------------------------------------------------------------------------------------------------
 
--- SEX
+-------------------------------------------------------------------------------------------------
+-- SEX / BODY HOLES / SEXPARTNER(fucker)
+-------------------------------------------------------------------------------------------------
 function HasSexPartnerHoles(human) return HasSexPartner(human, ActBody.Mouth) or HasSexPartner(human, ActBody.Anus) or HasSexPartner(human, ActBody.Vagina) end
 function HasSexPartnerHand(human) return HasSexPartner(human, ActBody.Hand) end
 function HasSexPartnerPenis(human) return HasSexPartner(human, ActBody.Penis) end
@@ -168,7 +178,9 @@ function IsAutoSexPartner(human, body)
 	else return false end
 end
 
+-------------------------------------------------------------------------------------------------
 -- WETNESS
+-------------------------------------------------------------------------------------------------
 function IsWet(human) return IsWetBody(human, ActBody.Mouth) or IsWetBody(human, ActBody.Anus) or IsWetBody(human, ActBody.Vagina) end
 
 function IsWetBody(human, body)
@@ -199,7 +211,9 @@ function WetSet(girl, value, actBody)
 end
 
 -------------------------------------------------------------------------------------------------
+--===============================================================================================
 -- INTERACTION CONVERSIONS
+--===============================================================================================
 -------------------------------------------------------------------------------------------------
 -- Get Interaction parameter
 function ActValueParamNameGet(actValue, isHand)
@@ -239,9 +253,11 @@ function ActGet(human, body)
 end
 
 -------------------------------------------------------------------------------------------------
--- VALUE (Tweened or Raw) - CLAMPED / RANDOM / RANDOMNEAR INTERACTION GETTERS
+--===============================================================================================
+-- INTERACTION PARAMETER VALUE (Speed, Thrust, DepthStart, DepthEnd, Weight)
+--===============================================================================================
 -------------------------------------------------------------------------------------------------
-
+-- ACTUAL PARAMETER VALUE (actual game value, If tween exists, target is the next destination of the value. If not, just take raw value from the game)
 function ActValueGet_Current(interaction, actValue, isHand)
 	if not interaction then return 0 end
 	if actValue == ActValue.Active then return ActTweenOrValueGet(interaction, ActValueParamNameGet(actValue, isHand)) and 1 or 0 end
@@ -250,45 +266,51 @@ function ActValueGet_Current(interaction, actValue, isHand)
 	return ActTweenOrValueGet(interaction, ActValueParamNameGet(actValue, isHand))
 end
 
+-- RAW PARAMETER VALUE (actual game value, might be tweened, tween target is "new value" tween is going to)
 function ActValueGet_RawMinMax(value, actValue)
 	local mm = ActRawMinMax[actValue]
 	return mm and ClampValue(value, mm.Min, mm.Max) or value
 end
 
+-- RANDOM QUICK PARAMETER VALUE (new generated value, used in menu, "quick wide random" for responsive "FeelingLucky")
 function ActValueGet_MenuMinMax(actValue)
 	local r = ActMenuMinMax[actValue] return r and GetRandomFloat(r.Min, r.Max) or 0
 end
 
+-- RANDOM SLOW PARAMETER VALUE (new generated value, used in AutoSex, slowly drifts around so user can define new starting point)
 function ActValueGet_AutoSexMinMax(interaction, actValue, isHand)
-	local rn = ActAutosexMinMax[actValue] if not rn then return 0 end
+	local rn = ActAutoSexMinMax[actValue] if not rn then return 0 end
 	return GetRandomFloatNear(ActValueGet_Current(interaction, actValue, isHand), AutoSexDrift(actValue), rn.Min, rn.Max, rn.Bias )
 end
 
 -------------------------------------------------------------------------------------------------
+--===============================================================================================
 -- AUTO SEX
+--===============================================================================================
 -------------------------------------------------------------------------------------------------
 function AutoSexToggle(human) AutoSex(human, not IsAutoSex(human)) end
 function AutoSexStart(human) AutoSex(human, true) end
 function AutoSexStop(human) AutoSex(human, false) end
 function AutoSex(human, active)
-	if active then game.AddRepeatAnim(ActAutoSexTickTime, || AutoSexTick(human), human.calfNames)
+	if active then game.AddRepeatAnim(ActAutoSexTickTime, || AutoSexOnTick(human), human.calfNames)
 	else game.RemoveAnim(human.calfNames) end 
 end
 function IsAutoSex(human) return human and game.HasAnim(human.calfNames) end -- faunalabs took most of the assignments, this is one that exists lol
 
+-- CALLED FROM GAME REPEATING ANIMATION SYSTEM (game.AddRepeatAnim)
 -- Randomize all active interactions
-function AutoSexTick(human)
+function AutoSexOnTick(human)
 	if human == nil then return end
-	if IsSexActive(human, ActBody.Hand) then AutoSexAct(ActGet(human, ActBody.Hand), true) end
-	if IsSexActive(human, ActBody.Penis) then AutoSexAct(ActGet(human, ActBody.Penis), false) end
+	if IsSexActive(human, ActBody.Hand) then AutoSexBodyParamSet(ActGet(human, ActBody.Hand), true) end
+	if IsSexActive(human, ActBody.Penis) then AutoSexBodyParamSet(ActGet(human, ActBody.Penis), false) end
 	-- prevent multiple actors setting autosex on same interactions
-	if IsSexActive(human, ActBody.Mouth) and not IsAutoSexPartner(human, ActBody.Mouth) then AutoSexAct(ActGet(human, ActBody.Mouth), false) end
-	if IsSexActive(human, ActBody.Anus) and not IsAutoSexPartner(human, ActBody.Anus) then AutoSexAct(ActGet(human, ActBody.Anus), false) end
-	if IsSexActive(human, ActBody.Vagina) and not IsAutoSexPartner(human, ActBody.Vagina) then AutoSexAct(ActGet(human, ActBody.Vagina), false) end
+	if IsSexActive(human, ActBody.Mouth) and not IsAutoSexPartner(human, ActBody.Mouth) then AutoSexBodyParamSet(ActGet(human, ActBody.Mouth), false) end
+	if IsSexActive(human, ActBody.Anus) and not IsAutoSexPartner(human, ActBody.Anus) then AutoSexBodyParamSet(ActGet(human, ActBody.Anus), false) end
+	if IsSexActive(human, ActBody.Vagina) and not IsAutoSexPartner(human, ActBody.Vagina) then AutoSexBodyParamSet(ActGet(human, ActBody.Vagina), false) end
 end
 
--- Calculate timer against ticker and fire events for each active interaction
-function AutoSexAct(interaction, isHand)
+-- START INTERACTION PARAMETER SET (Calculate timer against ticker and fire events for each active interaction)
+function AutoSexBodyParamSet(interaction, isHand)
 	if not interaction then return end
 	-- Pre-init timers once per interaction
 	local timers = ActAutoSexTimers[interaction]
@@ -299,11 +321,16 @@ function AutoSexAct(interaction, isHand)
 	local timer = timers[isHand]
 	for key, p in pairs(ActAutoSexParams) do
 		local actValue, funcName, allowHand = p[1], p[2], p[3]
+		-- If AutoSex drift is 0, don't animate parameters
 		if AutoSexDrift(actValue) > 0 and (not isHand or allowHand) then
+			-- Subtract small value
 			timer[key] = (timer[key] or 0) - ActAutoSexTickTime
 			if timer[key] <= 0 then
 				local f = _G[funcName]
+				-- START RANDOM TWEEN/RAW INTERACTION PARAMETER VALUE (ActAutoSexParams: Speed, Thrust, DepthStart, DepthEnd, Weight)
+				-- If SexTweenAllow() is allowed, this is where the tween starts. If not, raw value is changed directly
 				if f then f(interaction, isHand) end
+				-- Next execution time: Add a timer for how long this parameter will not be fired again
 				timer[key] = GetRandom(AutoSexMinTime(), AutoSexMaxTime())
 			end
 		end
@@ -311,7 +338,9 @@ function AutoSexAct(interaction, isHand)
 end
 
 -------------------------------------------------------------------------------------------------
+--===============================================================================================
 -- INTERACTION
+--===============================================================================================
 -------------------------------------------------------------------------------------------------
 function ActActiveSet(interaction, isHand, isActive) ActValueSet_Raw(interaction, ActValue.Active, isHand, isActive) end
 function ActActiveSet_Human(human, actBody, isActive) ActActiveSet(ActGet(human, actBody), actBody == ActBody.Hand, isActive) end
