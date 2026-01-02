@@ -1,17 +1,17 @@
 -- TrueMoan v1.8 by illa3d
--------------------------------------------------------------------------------------------------
--- BODYEDIT PRESETS (TMBE - TrueMoanBodyEdit)
--------------------------------------------------------------------------------------------------
+-- BODYEDIT PRESETS - WARNING, Breasts < -0.8, Body < -0.9 crash the game on some characters
 
--- WARNING:
--- Breasts values below -0.8 can crash the game on some characters
--- Body values below -0.9 crash the game
-
--- MENU: BODY.. / Size..
+------------------------------------------------------------------------------------------------
+-- PRESETS DISPLAYED IN TALK MENU/BODY/SIZE
+------------------------------------------------------------------------------------------------
 label TMMenuBodySize(human)
--- MENU PRESETS START ===========================================================================================================================
+
+	-- # PRESETS START #
 	+ "• Fairy Dildo" [if human.Penis.IsActive] [gold]
-		TMBEPreset_Dildo(human)	
+		HumanClothes(human, false)
+		TMBodyEdit_Preset(human, TMBEPreset_Normal)
+		TMBodyEdit_Preset(human, TMBEPreset_Dildo)
+		HumanReset(human)
 		Return()
 	+ "• Giant"
 		TMBodyEdit(human, TMBody.Body, 0.7)
@@ -34,8 +34,9 @@ label TMMenuBodySize(human)
 	+ "• Tiny"
 		TMBodyEdit(human, TMBody.Body, -0.7)
 		Return()
--- MENU PRESETS END ===========================================================================================================================
-	+ "Random | " .. AccNum(TMBodyValueUI.Body, 2) [gold]
+	-- # DONT MODIFY BELOW #
+
+	+ "Random | " .. AccNum(TMBodyUI(TMBody.Body), 2) [gold]
 		TMBodyEdit(human, TMBody.Body, GetRandomFloat(-0.5,0.5))
 		Return()
 	+ TM_MenuBack
@@ -43,26 +44,31 @@ label TMMenuBodySize(human)
 	+ TM_MenuClose
 stop
 
--- MENU: BODY.. / Type..
+------------------------------------------------------------------------------------------------
+-- PRESETS DISPLAYED IN TALK MENU/BODY/TYPE
+------------------------------------------------------------------------------------------------
 label TMMenuBodyType(human)
-	-- MENU PRESETS - !!ADD MENU PRESETS HERE!!
+
+	-- # PRESETS START #
 	+ "• Obese"
-		TMBEPreset_Obese(human)
+		TMBodyEdit_Preset(human, TMBEPreset_Obese)
 		Return()
 	+ "• Curvy"
-		TMBEPreset_Curvy(human)
+		TMBodyEdit_Preset(human, TMBEPreset_Curvy)
 		Return()
 	+ "• Normal" [gold]
-		TMBEPreset_Normal(human)
+		TMBodyEdit_Preset(human, TMBEPreset_Normal)
 		Return()
 	+ "• Slim"
-		TMBEPreset_Slim(human)
+		TMBodyEdit_Preset(human, TMBEPreset_Slim)
 		Return()
 	+ "• Skinny"
-		TMBEPreset_Skinny(human)
+		TMBodyEdit_Preset(human, TMBEPreset_Skinny)
 		Return()
+	-- # DONT MODIFY BELOW #
+
 	+ "Random" [gold]
-		TMBEPreset_RandomPreset(human)
+		TMBEPreset_MenuRandom(human)
 		Return()
 	+ "Generate" [gold]
 		TMBodyEditAllRandom(human)
@@ -73,131 +79,133 @@ label TMMenuBodyType(human)
 stop
 
 ------------------------------------------------------------------------------------------------
------ PRESETS
+-- RANDOM PRESETS ON SPAWN
+------------------------------------------------------------------------------------------------
+function TMBEPreset_StartRandom(human)
+	local StartRandom = {
+		-- # PRESETS START #
+		TMBEPreset_Obese,
+		TMBEPreset_Curvy,
+		TMBEPreset_Normal,
+		TMBEPreset_Slim,
+		TMBEPreset_Skinny,
+		-- # DONT MODIFY BELOW #
+	} TMBodyEdit_Preset(human, GetRandomItem(StartRandom))
+end
+
+------------------------------------------------------------------------------------------------
+-- RANDOM PRESETS MENU/BODY/RANDOM
+------------------------------------------------------------------------------------------------
+function TMBEPreset_MenuRandom(human)
+	local MenuRandom = {
+		-- # PRESETS START #
+		TMBEPreset_Obese,
+		TMBEPreset_Curvy,
+		TMBEPreset_Normal,
+		TMBEPreset_Slim,
+		TMBEPreset_Skinny,
+		-- # DONT MODIFY BELOW #
+	} TMBodyEdit_Preset(human, GetRandomItem(MenuRandom))
+end
+
+------------------------------------------------------------------------------------------------
+-- PRESET IN MENU/BODY/RESET
 ------------------------------------------------------------------------------------------------
 
--- Called from tm_main on character creation
-function TMBEPreset_RandomStart(human)
-	local randomPresets = {
--- SPAWN RANDOM PRESETS ========================================================================
-		TMBEPreset_Skinny,
-		TMBEPreset_Slim,
-		TMBEPreset_Normal,
-		TMBEPreset_Curvy,
-		TMBEPreset_Obese,
--- SPAWN RANDOM PRESETS END ===========================================================================================================================
-	} (randomPresets[math.random(#randomPresets)] or TMBEPreset_Normal)(human)
-end
+TMBEPreset_Reset = {
+	[TMBody.Neck]			= TMBD_BodyDefault,
+	[TMBody.Forearms]		= TMBD_BodyDefault,
+	[TMBody.UpperArms]		= TMBD_BodyDefault,
+	[TMBody.Calf]			= TMBD_BodyDefault,
+	[TMBody.Thigh]			= TMBD_BodyDefault,
+	[TMBody.Hips]			= TMBD_BodyDefault,
+	[TMBody.Waist]			= TMBD_BodyDefault,
+	[TMBody.Ass]			= TMBD_BodyDefault,
+	[TMBody.Nipples]		= TMBD_BodyDefault,
+	[TMBody.Breasts]		= TMBD_BodyDefault,
+	[TMBody.PenisLength]	= TMBD_BodyDefault,
+	[TMBody.PenisSize]		= TMBD_BodyDefault,
+	[TMBody.Muscle]			= TMBD_BodyDefault,
+	[TMBody.Body]			= TMBD_BodyDefault,
+	[TMBody.PenisSkin]		= TMBD_BodyDefault,
+	[TMBody.PenisRagdoll]	= TMBD_RagdollSizeDefault,
+}
 
--- Called from BodyEdit menu
-function TMBEPreset_RandomPreset(human)
-	local randomPresets = {
--- MENU RANDOM PRESETS MENU ====================================================================
-		TMBEPreset_Slim,
-		TMBEPreset_Normal,
-		TMBEPreset_Curvy,
-		TMBEPreset_Obese,
--- RANDOM PRESETS END ==========================================================================
-	}
-	(randomPresets[math.random(#randomPresets)] or TMBEPreset_Normal)(human)
-end
+------------------------------------------------------------------------------------------------
+-- PRESETS
+------------------------------------------------------------------------------------------------
 
--- PRESETS START  ==============================================================================
-function TMBEPreset_Dildo(human)
-	HumanClothes(human, false)
-	TMBEPreset_Normal(human)
-	TMBodyEdit(human, TMBody.PenisSize, 8)
-	TMBodyEdit(human, TMBody.Body, -0.9)
-	HumanReset(human)
-end
+TMBEPreset_Dildo = {
+	[TMBody.PenisSize]	= 8,
+	[TMBody.Body]		= -0.9,
+}
 
-function TMBEPreset_Obese(human)
-	TMBodyEdit(human, TMBody.Neck, 0.2)
-	TMBodyEdit(human, TMBody.Forearms, 0.2)
-	TMBodyEdit(human, TMBody.UpperArms, 0.4)
-	TMBodyEdit(human, TMBody.Calf, 0.2)
-	TMBodyEdit(human, TMBody.Thigh, 0.2)
-	TMBodyEdit(human, TMBody.Hips, 0.8)
-	TMBodyEdit(human, TMBody.Waist, 0.8)
-	TMBodyEdit(human, TMBody.Ass, 2)
-	TMBodyEdit(human, TMBody.Nipples, 0)
-	TMBodyEdit(human, TMBody.Breasts, 0.7)
-	TMBodyEdit(human, TMBody.Muscle, -0.3)
-end
+TMBEPreset_Obese = {
+	[TMBody.Neck]		= 0.2,
+	[TMBody.Forearms]	= 0.2,
+	[TMBody.UpperArms]	= 0.4,
+	[TMBody.Calf]		= 0.2,
+	[TMBody.Thigh]		= 0.2,
+	[TMBody.Hips]		= 0.8,
+	[TMBody.Waist]		= 0.8,
+	[TMBody.Ass]		= 2,
+	[TMBody.Nipples]	= 0,
+	[TMBody.Breasts]	= 0.7,
+	[TMBody.Muscle]		= -0.3,
+}
 
-function TMBEPreset_Curvy(human)
-	TMBodyEdit(human, TMBody.Neck, 0.1)
-	TMBodyEdit(human, TMBody.Forearms, 0.1)
-	TMBodyEdit(human, TMBody.UpperArms, 0.2)
-	TMBodyEdit(human, TMBody.Calf, 0.1)
-	TMBodyEdit(human, TMBody.Thigh, 0.1)
-	TMBodyEdit(human, TMBody.Hips, 0.4)
-	TMBodyEdit(human, TMBody.Waist, 0.4)
-	TMBodyEdit(human, TMBody.Ass, 1)
-	TMBodyEdit(human, TMBody.Nipples, 0)
-	TMBodyEdit(human, TMBody.Breasts, 0.3)
-	TMBodyEdit(human,TMBody.Muscle, -0.2)
-end
+TMBEPreset_Curvy = {
+	[TMBody.Neck]		= 0.1,
+	[TMBody.Forearms]	= 0.1,
+	[TMBody.UpperArms]	= 0.2,
+	[TMBody.Calf]		= 0.1,
+	[TMBody.Thigh]		= 0.1,
+	[TMBody.Hips]		= 0.4,
+	[TMBody.Waist]		= 0.4,
+	[TMBody.Ass]		= 1,
+	[TMBody.Nipples]	= 0,
+	[TMBody.Breasts]	= 0.3,
+	[TMBody.Muscle]		= -0.2,
+}
 
-function TMBEPreset_Normal(human)
-	TMBodyEdit(human, TMBody.Neck, 0)
-	TMBodyEdit(human, TMBody.Forearms, 0)
-	TMBodyEdit(human, TMBody.UpperArms, 0)
-	TMBodyEdit(human, TMBody.Calf, 0)
-	TMBodyEdit(human, TMBody.Thigh, 0)
-	TMBodyEdit(human, TMBody.Hips, 0)
-	TMBodyEdit(human, TMBody.Waist, 0)
-	TMBodyEdit(human, TMBody.Ass, 0)
-	TMBodyEdit(human, TMBody.Nipples, 0)
-	TMBodyEdit(human, TMBody.Breasts, 0)
-	TMBodyEdit(human, TMBody.Muscle, 0)
-end
+TMBEPreset_Normal = {
+	[TMBody.Neck]	= 0,
+	[TMBody.Forearms]	= 0,
+	[TMBody.UpperArms]	= 0,
+	[TMBody.Calf]		= 0,
+	[TMBody.Thigh]		= 0,
+	[TMBody.Hips]		= 0,
+	[TMBody.Waist]		= 0,
+	[TMBody.Ass]		= 0,
+	[TMBody.Nipples]	= 0,
+	[TMBody.Breasts]	= 0,
+	[TMBody.Muscle]		= 0,
+}
 
-function TMBEPreset_Slim(human)
-	TMBodyEdit(human, TMBody.Neck, 0)
-	TMBodyEdit(human, TMBody.Forearms, -0.05)
-	TMBodyEdit(human, TMBody.UpperArms, -0.05)
-	TMBodyEdit(human, TMBody.Calf, -0.05)
-	TMBodyEdit(human, TMBody.Thigh, -0.1)
-	TMBodyEdit(human, TMBody.Hips, -0.1)
-	TMBodyEdit(human, TMBody.Waist, 0)
-	TMBodyEdit(human, TMBody.Ass, -0.5)
-	TMBodyEdit(human, TMBody.Nipples, 0)
-	TMBodyEdit(human, TMBody.Breasts, -0.5)
-	TMBodyEdit(human, TMBody.Muscle, 0.2)
-end
+TMBEPreset_Slim = {
+	[TMBody.Neck]		= 0,
+	[TMBody.Forearms]	= -0.05,
+	[TMBody.UpperArms]	= -0.05,
+	[TMBody.Calf]		= -0.05,
+	[TMBody.Thigh]		= -0.1,
+	[TMBody.Hips]		= -0.1,
+	[TMBody.Waist]		= 0,
+	[TMBody.Ass]		= -0.5,
+	[TMBody.Nipples]	= 0,
+	[TMBody.Breasts]	= -0.5,
+	[TMBody.Muscle]		= 0.2,
+}
 
-function TMBEPreset_Skinny(human)
-	TMBodyEdit(human, TMBody.Neck, 0)
-	TMBodyEdit(human, TMBody.Forearms, -0.1)
-	TMBodyEdit(human, TMBody.UpperArms, -0.1)
-	TMBodyEdit(human, TMBody.Calf, -0.1)
-	TMBodyEdit(human, TMBody.Thigh, -0.2)
-	TMBodyEdit(human, TMBody.Hips, -0.2)
-	TMBodyEdit(human, TMBody.Waist, 0)
-	TMBodyEdit(human, TMBody.Ass, -1)
-	TMBodyEdit(human, TMBody.Nipples, 0)
-	TMBodyEdit(human, TMBody.Breasts, -0.8)
-	TMBodyEdit(human, TMBody.Muscle, 0.3)
-end
--- PRESETS END  ==============================================================================
-
-function TMBEPreset_Reset(human)
-	TMBodyEdit(human, TMBody.Neck, TMBD_BodyDefault)
-	TMBodyEdit(human, TMBody.Forearms, TMBD_BodyDefault)
-	TMBodyEdit(human, TMBody.UpperArms, TMBD_BodyDefault)
-	TMBodyEdit(human, TMBody.Calf, TMBD_BodyDefault)
-	TMBodyEdit(human, TMBody.Thigh, TMBD_BodyDefault)
-	TMBodyEdit(human, TMBody.Hips, TMBD_BodyDefault)
-	TMBodyEdit(human, TMBody.Waist, TMBD_BodyDefault)
-	TMBodyEdit(human, TMBody.Ass, TMBD_BodyDefault)
-	TMBodyEdit(human, TMBody.Nipples, TMBD_BodyDefault)
-	TMBodyEdit(human, TMBody.Breasts, TMBD_BodyDefault)
-	TMBodyEdit(human, TMBody.PenisLength, TMBD_BodyDefault)
-	TMBodyEdit(human, TMBody.PenisSize, TMBD_BodyDefault)
-	TMBodyEdit(human, TMBody.Muscle, TMBD_BodyDefault)
-	TMBodyEdit(human, TMBody.Body, TMBD_BodyDefault)
-	TMBodyEdit(human, TMBody.PenisLength, TMBD_BodyDefault)
-	TMBodyEdit(human, TMBody.PenisSkin, TMBD_BodyDefault)
-	TMBodyEdit(human, TMBody.PenisRagdoll, TMBD_RagdollSizeDefault)
-end
+TMBEPreset_Skinny = {
+	[TMBody.Neck]		= 0,
+	[TMBody.Forearms]	= -0.1,
+	[TMBody.UpperArms]	= -0.1,
+	[TMBody.Calf]		= -0.1,
+	[TMBody.Thigh]		= -0.2,
+	[TMBody.Hips]		= -0.2,
+	[TMBody.Waist]		= 0,
+	[TMBody.Ass]		= -1,
+	[TMBody.Nipples]	= 0,
+	[TMBody.Breasts]	= -0.8,
+	[TMBody.Muscle]		= 0.3,
+}

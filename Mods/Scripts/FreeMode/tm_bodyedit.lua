@@ -15,36 +15,6 @@ TMBD_BodyDefault = 0
 -- This is a AUTHORITATIVE UI stats
 -- Each human has TM_HumanStats[human].TMBValue
 
-TMBodyValueUI = {} -- AUTHORITATIVE UI use only
---- DEFINITION (never update this)
-TMBodyValueDefault = {
-	Neck = 0,
-	Forearms = 0,
-	UpperArms = 0,
-	Calf = 0,
-	Thigh = 0,
-	Hips = 0,
-	Waist = 0,
-	Ass = 0,
-	Nipples = 0,
-	Breasts = 0,
-	PenisLength = 0,
-	PenisSize = 0,
-	Muscle = 0,
-	Body = 0,
-	PenisSkin = 0,
-	PenisRagdoll = TMBD_RagdollSizeDefault,
-}
-function TMBodyValueCloneDefault() return GetTableClone(TMBodyValueDefault) end
-function TMBodyValueClone(tmBodyValue) return GetTableClone(tmBodyValue) end
-function TMBodyEdit_ResetUIValues()
-	TMBodyValueUI = TMBodyValueCloneDefault()
-end
-function TMBodyEdit_ApplyUIValues(human)
-	local snapshot = TMBodyValueClone(TMBodyValueUI)
-	for part, value in pairs(snapshot) do TMBodyEdit(human, part, value) end
-end
-
 -- Body Edit "Enum"
 TMBody = {
 	Neck = "Neck",
@@ -64,6 +34,37 @@ TMBody = {
 	PenisSkin = "PenisSkin", -- this is separate function TMBodyEditPenisRagdoll
 	PenisRagdoll = "PenisRagdoll" -- this is separate function TMBodyEditPenisSkin
 }
+
+TMBodyValueUI = {} -- AUTHORITATIVE UI use only
+function TMBodyUI(tmBody) return TMBodyValueUI[tmBody] end
+--- DEFINITION (never update this)
+TMBodyValueDefault = {
+	[TMBody.Neck] = 0,
+	[TMBody.Forearms] = 0,
+	[TMBody.UpperArms] = 0,
+	[TMBody.Calf] = 0,
+	[TMBody.Thigh] = 0,
+	[TMBody.Hips] = 0,
+	[TMBody.Waist] = 0,
+	[TMBody.Ass] = 0,
+	[TMBody.Nipples] = 0,
+	[TMBody.Breasts] = 0,
+	[TMBody.PenisLength] = 0,
+	[TMBody.PenisSize] = 0,
+	[TMBody.Muscle] = 0,
+	[TMBody.Body] = 0,
+	[TMBody.PenisSkin] = 0,
+	[TMBody.PenisRagdoll] = TMBD_RagdollSizeDefault,
+}
+function TMBodyValueCloneDefault() return GetTableClone(TMBodyValueDefault) end
+function TMBodyValueClone(tmBodyValue) return GetTableClone(tmBodyValue) end
+function TMBodyEdit_ResetUIValues()
+	TMBodyValueUI = TMBodyValueCloneDefault()
+end
+function TMBodyEdit_ApplyUIValues(human)
+	local snapshot = TMBodyValueClone(TMBodyValueUI)
+	for part, value in pairs(snapshot) do TMBodyEdit(human, part, value) end
+end
 
 -- TrueFacials Body parameter "Enum"
 TMBodyParamName = {
@@ -85,42 +86,42 @@ TMBodyParamName = {
 
 -- Body Edit Limits (game min max)
 local TMBLimits = {
-	Neck = 			{ safemin = 0,		min = -1,	max = 2 },
-	Forearms =		{ safemin = 0,		min = -0.5,	max = 2 },
-	UpperArms =		{ safemin = 0,		min = -0.5,	max = 2 },
-	Calf =			{ safemin = 0,		min = -0.5,	max = 2 },
-	Thigh =			{ safemin = 0,		min = -0.5,	max = 2 },
-	Hips =			{ safemin = 0,		min = -1.5,	max = 5 },
-	Waist =			{ safemin = 0,		min = -1,	max = 5 },
-	Ass =			{ safemin = 0,		min = -1,	max = 10 },
-	Nipples =		{ safemin = 0,		min = -5,	max = 5 },
-	Breasts =		{ safemin = -0.8,	min = -2,	max = 10 },
-	PenisLength =	{ safemin = 0,		min = -0.7,	max = 5 },
-	PenisSize =		{ safemin = 0,		min = -0.7,	max = 20 },
-	Muscle =		{ safemin = 0,		min = -0.3,	max = 1 },
-	Body =			{ safemin = 0,		min = -0.9,	max = 10 },
-	PenisSkin =		{ safemin = 0,		min = 0,	max = 1 },
-	PenisRagdoll =	{ safemin = 0,		min = 0,	max = 2 },
+	[TMBody.Neck] = 		{ safemin = 0,		min = -1,	max = 2 },
+	[TMBody.Forearms] =		{ safemin = 0,		min = -0.5,	max = 2 },
+	[TMBody.UpperArms] =	{ safemin = 0,		min = -0.5,	max = 2 },
+	[TMBody.Calf] =			{ safemin = 0,		min = -0.5,	max = 2 },
+	[TMBody.Thigh] =		{ safemin = 0,		min = -0.5,	max = 2 },
+	[TMBody.Hips] =			{ safemin = 0,		min = -1.5,	max = 5 },
+	[TMBody.Waist] =		{ safemin = 0,		min = -1,	max = 5 },
+	[TMBody.Ass] =			{ safemin = 0,		min = -1,	max = 10 },
+	[TMBody.Nipples] =		{ safemin = 0,		min = -5,	max = 5 },
+	[TMBody.Breasts] =		{ safemin = -0.8,	min = -2,	max = 10 },
+	[TMBody.PenisLength] =	{ safemin = 0,		min = -0.7,	max = 5 },
+	[TMBody.PenisSize] =	{ safemin = 0,		min = -0.7,	max = 20 },
+	[TMBody.Muscle] =		{ safemin = 0,		min = -0.3,	max = 1 },
+	[TMBody.Body] =			{ safemin = 0,		min = -0.9,	max = 10 },
+	[TMBody.PenisSkin] =	{ safemin = 0,		min = 0,	max = 1 },
+	[TMBody.PenisRagdoll] =	{ safemin = 0,		min = 0,	max = 2 },
 }
 
 -- Body Edit Random Limits (random min max)
 local TMBRandomLimits = {
-	Neck = 			{ min = -0.2,	max = 0.2 },
-	Forearms =		{ min = -0.1,	max = 0.2 },
-	UpperArms =		{ min = -0.1,	max = 0.2 },
-	Calf =			{ min = -0.1,	max = 0.2 },
-	Thigh =			{ min = -0.2,	max = 0.2 },
-	Hips =			{ min = -0.2,	max = 0.5 },
-	Waist =			{ min = -0.2,	max = 0.5 },
-	Ass =			{ min = -1,	max = 1.5 },
-	Nipples =		{ min = -1,	max = 1 },
-	Breasts =		{ min = -0.8,	max = 1 },
-	Muscle =		{ min = -0.3,	max = 0.3 },
-	-- PenisLength =	{ min = 0,	max = 0 }, -- ignored for random
-	-- PenisSize =		{ min = 0,	max = 0 },
-	-- Body =			{ min = 0,	max = 0 },
-	-- PenisSkin =		{ min = 0,	max = 0 },
-	-- PenisRagdoll =	{ min = 0,	max = 0 },
+	[TMBody.Neck] = 		{ min = -0.2,	max = 0.2 },
+	[TMBody.Forearms] =		{ min = -0.1,	max = 0.2 },
+	[TMBody.UpperArms] =	{ min = -0.1,	max = 0.2 },
+	[TMBody.Calf] =			{ min = -0.1,	max = 0.2 },
+	[TMBody.Thigh] =		{ min = -0.2,	max = 0.2 },
+	[TMBody.Hips] =			{ min = -0.2,	max = 0.5 },
+	[TMBody.Waist] =		{ min = -0.2,	max = 0.5 },
+	[TMBody.Ass] =			{ min = -1,	max = 1.5 },
+	[TMBody.Nipples] =		{ min = -1,	max = 1 },
+	[TMBody.Breasts] =		{ min = -0.8,	max = 1 },
+	[TMBody.Muscle] =		{ min = -0.3,	max = 0.3 },
+	-- [TMBody.PenisLength] =	{ min = 0,	max = 0 }, -- ignored for random
+	-- [TMBody.PenisSize] =	{ min = 0,	max = 0 },
+	-- [TMBody.Body] =			{ min = 0,	max = 0 },
+	-- [TMBody.PenisSkin] =	{ min = 0,	max = 0 },
+	-- [TMBody.PenisRagdoll] =	{ min = 0,	max = 0 },
 }
 
 local TMBodyRandomBlocked = {
@@ -187,6 +188,16 @@ function TMBodyEdit(human, tmBody, value)
 	TMBodyValueUI[tmBody] = TMBodyEdit_ClampMinMax(tmBody, value) -- update UI COPY TMBValue
 	TMHStatsSet_BodyEdit(human, tmBody, TMBodyValueUI[tmBody], false) -- update AUTHORITATIVE TMBValue, don't APPLY (feedback loop)
 	TMBodyEdit_Apply(human, tmBody, TMBodyValueUI[tmBody])
+end
+
+-------------------------------------------------------------------------------------------------
+
+-- PRESETS
+function TMBodyEdit_Preset(human, tmbPreset)
+	if not human or not tmbPreset then return end
+	for tmBody, value in pairs(tmbPreset) do
+		TMBodyEdit(human, tmBody, value)
+	end
 end
 
 -------------------------------------------------------------------------------------------------
