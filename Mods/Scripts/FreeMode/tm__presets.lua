@@ -11,7 +11,6 @@
 label TMMenuBodySize(human)
 -- MENU PRESETS START ===========================================================================================================================
 	+ "• Fairy Dildo" [if human.Penis.IsActive] [gold]
-		-- human "Wtf is this, I feel funny... Weeeeee!\n(Sweet idea @void.branding)"
 		TMBEPreset_Dildo(human)	
 		Return()
 	+ "• Giant"
@@ -27,13 +26,13 @@ label TMMenuBodySize(human)
 		TMBodyEdit(human, TMBody.Body, 0)
 		Return()
 	+ "• Medium"
-		TMBodyEdit(human, TMBody.Body, 0.075)
+		TMBodyEdit(human, TMBody.Body, -0.075)
 		Return()
 	+ "• Small"
-		TMBodyEdit(human, TMBody.Body, 0.15)
+		TMBodyEdit(human, TMBody.Body, -0.15)
 		Return()
 	+ "• Tiny"
-		TMBodyEdit(human, TMBody.Body, 0.7)
+		TMBodyEdit(human, TMBody.Body, -0.7)
 		Return()
 -- MENU PRESETS END ===========================================================================================================================
 	+ "Random | " .. AccNum(TMBodyValueUI.Body, 2) [gold]
