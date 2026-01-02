@@ -16,7 +16,7 @@ TM_ShowSexStyleControl = true		-- 4. Show Thrust and Depth controls
 
 -- Double click
 TM_DoubleClickInOtherMods = false	-- 5. Allows double clicking in other mods (works only with TMMM stickied option)
-TM_DoubleClickReset = true			-- 6. Reset character pose/activity/face/animations on double click
+TM_DoubleClickReset = false			-- 6. Reset character pose/activity/face/animations on double click
 TM_DoubleClickUndress = true		-- 7. Take clothes off on double click
 TM_DoubleClickMoan = true			-- 8. Moan on dobuleclick (doesn't work with VoiceMod)
 TM_DoubleClickTime = 0.25			-- 9. [sec, 0.2-0.4] Time to register double click (0.25 = 250ms, 200-400ms is fine)
@@ -29,7 +29,7 @@ TM_SpawnRandomBody = false			-- 13. Randomizes body types on start (overwrites b
 TM_SpawnAutoSexOn = true			-- 14. AutoSex on for everyone at spawn
 TM_MoanSex = true					-- 15. Moaning during sex
 TM_WetSex = true					-- 16. Moisting holes (vag, anus, mouth)
-TM_Cumflate = true					-- 17. Allow belly inflation by cumming inside
+TM_Cumflate = false					-- 17. Allow belly inflation by cumming inside
 TM_TweenSex = true					-- 18. Soft transitions on changing sex values (speed, thrust, depth)
 TM_TweenTime = 1					-- 19. [0 = off, max 3] Time in seconds to transition between sex values (speed, thrust, depth)
 

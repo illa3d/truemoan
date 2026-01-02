@@ -226,7 +226,7 @@ function TMOnPenetration_Cum(girl, holeName)
 	stats.CumLastUpdate = now
 	-- Cum & Cumflation effects (same)
 	if TMHCanPlayCumEffect(stats) then
-		TMPlayGirlMoan(girl, TM_Cumflate and TMMoanTier.Orgasm or TMMoanTier.Slow)
+		TMPlayGirlMoan(girl, TM_Cumflate and TMMoanTier.Orgasm or TMMoanTier.Normal)
 		stats.CumEffectLastTime = now
 	end
 	-- Cumflation

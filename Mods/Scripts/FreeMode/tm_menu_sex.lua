@@ -309,7 +309,7 @@ label TMMenuSex(human)
 			Return(2)
 		+ TM_MenuClose
 
-	+ "| Auto sex	| " .. AccBool(IsAutoSex(human))
+	+ "Auto sex	| " .. AccBool(IsAutoSex(human))
 		AutoSexToggle(human)
 		Return()
 	+ TM_MenuBack

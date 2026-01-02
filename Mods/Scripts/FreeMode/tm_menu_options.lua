@@ -39,7 +39,7 @@ label TMMenuOptions(human)
 		+ TM_MenuClose
 
 	-- MOANING/SEX
-	+ "Moan/sex »" [gold]
+	+ "Sex/moan »" [gold]
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
