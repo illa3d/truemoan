@@ -4,7 +4,7 @@
 tmBdec = 3
 
 label TMMenuBody(human)
-	+ "Edit safe | " .. AccBool(TM_BodyEditSafe) .. (TM_BodyEditSafe and "" or "(can crash app)") [if TM_BodyEditSafe]
+	+ "Edit safe | " .. AccBool(TM_BodyEditSafe) .. (TM_BodyEditSafe and "" or "(can crash app)")
 		TM_BodyEditSafe = not TM_BodyEditSafe
 		Return()
 	+ "Clear | "  .. AccStr(TMBodyValueCopyName) [if TMBodyHasCopy()]
