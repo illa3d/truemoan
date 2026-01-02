@@ -1,8 +1,16 @@
 -- TrueMoan v1.8 by illa3d
 -------------------------------------------------------------------------------------------------
+-- INTERACTION BETWEEN HUMANS, HOLES AND PENISES, INTERACTION PARAMETERS AND THEIR TWEENS
+-------------------------------------------------------------------------------------------------
 -- AUTOSEX DEFINITIONS (Act = Interaction)
 -------------------------------------------------------------------------------------------------
+-- AUTOSEX: Game Timer (ActAutoSexTickTime) -> AutoSexTick -> AutoSexBodyParamSet (each full hole interaction, 5 params)
+-- 		Get Random time between TM_AutoSexTimeMin and TM_AutoSexTimeMax (config)
+-- 		ActAutoSexTickTime = 0.5 (subtract each tick from random time passed game time in seconds)
+-- 			Start parameter change (TWEEN or raw set)
+-------------------------------------------------------------------------------------------------
 -- ACUTUAL GAME FUNCTIONS AND LIMITS
+-------------------------------------------------------------------------------------------------
 -- ACTIVE (penis, hand)
 --  interaction.AutoActive = true
 --  interaction.m_autoHandActive = true
@@ -19,6 +27,7 @@
 --  interaction.m_autoHandEndDepth = depth (0.05-1.3)
 -- WEIGHT, MALE VS FEMALE/GIVER VS GETTER (penis)
 --  interaction.AutoPenisWeight = weight (0-1)
+-------------------------------------------------------------------------------------------------
 
 -- Sex Tweens
 -- Active tweens list (for update loop)
