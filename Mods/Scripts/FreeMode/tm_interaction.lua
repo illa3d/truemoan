@@ -80,12 +80,13 @@ ActMenuMinMax = {
 }
 
 -- AUTOSEX PARAMETER VALUE LIMITS (values with thrust normalized. bias is minimum move)
+-- limiting this to lower than almost maximum values "overrides" user control. Ie user sets 2, this lowers to 0.5 max
 ActAutoSexMinMax = {
-	Speed = { Min = 0.1, Max = 1.9, Bias = 0.1 },
-	Weight = { Min = 0.1, Max = 0.9, Bias = 0.03 },
-	Thrust = { Min = 0.1, Max = 0.9, Bias = 0.05 }, -- normalized thrust values
-	DepthStart = { Min = 0, Max = 0.5, Bias = 0.1 },
-	DepthEnd = { Min = 0.6, Max = 1.2, Bias = 0.1 },
+	Speed = { Min = 0.1, Max = 1.2, Delta = 0.1 },
+	Weight = { Min = 0.1, Max = 0.9, Delta = 0.03 },
+	Thrust = { Min = 0.1, Max = 0.6, Delta = 0.05 }, -- normalized thrust values
+	DepthStart = { Min = 0.1, Max = 0.5, Delta = 0.1 },
+	DepthEnd = { Min = 0.6, Max = 1.2, Delta = 0.1 },
 }
 
 -- GAME PARAMETER NAME ENUM - Act (interaction) Parameters (actual names of values in interaction)
@@ -289,7 +290,14 @@ end
 -- RANDOM SLOW PARAMETER VALUE (new generated value, used in AutoSex, slowly drifts around so user can define new starting point)
 function ActValueGet_AutoSexMinMax(interaction, actValue, isHand)
 	local rn = ActAutoSexMinMax[actValue] if not rn then return 0 end
-	return GetRandomFloatNear(ActValueGet_Current(interaction, actValue, isHand), AutoSexDrift(actValue), rn.Min, rn.Max, rn.Bias )
+	-- 1. Fixed delta + truncated range - Uniform, unbiased, no edge sticking, no loop (best overall)
+	return GetRandomFloatNear_FixedDeltaTruncated(ActValueGet_Current(interaction, actValue, isHand), AutoSexDrift(actValue), rn.Min, rn.Max, rn.Delta )
+	-- -- 2. Value-dependent delta + truncated range - No boundary bias, safe, but movement slows near zero
+	-- return GetRandomFloatNear_ValueDeltaTruncated(ActValueGet_Current(interaction, actValue, isHand), AutoSexDrift(actValue), rn.Min, rn.Max, rn.Delta )
+	-- -- 3. Value-dependent delta + reflect - Fast, but biased and lingers near bounds
+	-- return GetRandomFloatNear_ReflectValueDelta(ActValueGet_Current(interaction, actValue, isHand), AutoSexDrift(actValue), rn.Min, rn.Max, rn.Delta )
+	-- -- 4. Value-dependent delta + clamp - Very fast, but strong boundary bias and hard sticking
+	-- return GetRandomFloatAroundClamped(ActValueGet_Current(interaction, actValue, isHand), AutoSexDrift(actValue), rn.Min, rn.Max, rn.Delta )
 end
 
 -------------------------------------------------------------------------------------------------
