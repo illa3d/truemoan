@@ -259,7 +259,7 @@ function TMOnUpdate_CumFinish(girl)
 	-- wait after last cum
 	if now - stats.CumLastTime < TMH_CumPauseTime then return end
 	-- still having sex
-	if HasSexPartnerHoles(girl) then return end
+	if HasSexPartnerHoleAny(girl) then return end
 	stats.CumLastUpdate = now
 
 	-- CUMFLATION DEFLATE

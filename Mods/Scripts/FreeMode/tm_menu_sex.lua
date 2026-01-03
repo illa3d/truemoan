@@ -177,18 +177,18 @@ label TMMenuSex(human)
 		Return()
 	-- START / STOP
 	-- GETTER HANDJOB
-	+ "Handjob start" [if HasSexPartner(human,ActBody.Hand) and not IsSexActive(human,ActBody.Hand)]
+	+ "Handjob start" [if HasSexPartner(human,ActBody.PenisHand) and not IsSexActive(human,ActBody.PenisHand)]
 		human.Penis.Interaction.m_autoHandActive = true
 		Return()
-	+ "Handjob " ..AccStr("stop") [if HasSexPartner(human,ActBody.Hand) and IsSexActive(human,ActBody.Hand)]
+	+ "Handjob " ..AccStr("stop") [if HasSexPartner(human,ActBody.PenisHand) and IsSexActive(human,ActBody.PenisHand)]
 		human.Penis.Interaction.m_autoHandActive = false
 		Return()
 	-- GIVER (MOUTH, VAGINA, ANUS)
-	+ "Penis start" [if HasSexPartner(human,ActBody.Penis) and not IsSexActive(human,ActBody.Penis)]
+	+ "Penis start" [if HasSexPartner(human,ActBody.PenisHole) and not IsSexActive(human,ActBody.PenisHole)]
 		human.Penis.Interaction.AutoActive = true
 		human.Penis.Interaction.AutoPenisWeight = 0.8
 		Return()
-	+ "Penis " ..AccStr("stop") [if HasSexPartner(human,ActBody.Penis) and IsSexActive(human,ActBody.Penis)]
+	+ "Penis " ..AccStr("stop") [if HasSexPartner(human,ActBody.PenisHole) and IsSexActive(human,ActBody.PenisHole)]
 		human.Penis.Interaction.AutoActive = false
 		Return()
 	-- GETTER MOUTH
@@ -237,12 +237,12 @@ label TMMenuSex(human)
 				WetSet(human, 10000, ActBody.Vagina)
 				Return()
 		
-	-- GETTER HANDJOB
-	+ "| Handjob »	| " .. AccNum(ActValueGet_ByBody(human,ActBody.Hand, ActValue.Speed), tmSdec) [if HasSexPartner(human,ActBody.Hand)] [gold]
-		TMSexControl(human, ActGet(human,ActBody.Hand), true)
+	-- GIVER (HAND)
+	+ "| Handjob »	| " .. AccNum(ActValueGet_ByBody(human,ActBody.PenisHand, ActValue.Speed), tmSdec) [if HasSexPartner(human,ActBody.PenisHand)] [gold]
+		TMSexControl(human, ActGet(human,ActBody.PenisHand), true)
 	-- GIVER (MOUTH, VAGINA, ANUS)
-	+ "| Penis »	| " .. AccNum(ActValueGet_ByBody(human,ActBody.Penis, ActValue.Speed), tmSdec) [if HasSexPartner(human,ActBody.Penis)] [gold]
-		TMSexControl(human, ActGet(human,ActBody.Penis), false)
+	+ "| Penis »	| " .. AccNum(ActValueGet_ByBody(human,ActBody.PenisHole, ActValue.Speed), tmSdec) [if HasSexPartner(human,ActBody.PenisHole)] [gold]
+		TMSexControl(human, ActGet(human,ActBody.PenisHole), false)
 	-- GETTER MOUTH
 	+ "| Oral »	| " .. AccNum(ActValueGet_ByBody(human,ActBody.Mouth, ActValue.Speed), tmSdec) [if HasSexPartner(human,ActBody.Mouth)] [gold]
 		TMSexControl(human, ActGet(human,ActBody.Mouth), false)
