@@ -8,7 +8,7 @@ TMH_DefaultArousalIncrease = 0.10
 TMH_DefaultArousalDecay = 0.05
 
 -- DEFINITION (never update this, USE TMHStatsSet_BodyEdit or BodyEdit functions)
-TMHumanStatsDefault = {
+TMHumanStats = {
 	-- Time
 	LastSeen = 0,
 	LastUpdate = 0,
@@ -16,8 +16,9 @@ TMHumanStatsDefault = {
 	TMBValue = nil,
 	NeedsBodyApply = false,
 	-- Sex
-	IsHavingSex = false,
+	AutoSex = false,
 	AutoSexTier = nil,
+	IsHavingSex = false,
 	Arousal = 0,
 	-- Cum reactions
 	CumLastTime = nil,
@@ -26,7 +27,7 @@ TMHumanStatsDefault = {
 	CumflateHipsSize = nil,
 	CumflateHipsSizeOrig = nil,
 }
-function TMHumanStatsCloneDefault() return GetTableClone(TMHumanStatsDefault) end
+function TMHumanStatsCloneDefault() return GetTableClone(TMHumanStats) end
 
 -------------------------------------------------------------------------------------------------
 -- HUMAN STATS
@@ -69,7 +70,7 @@ function TMOnUpdate_HumanStats()
 		stats.LastSeen = os.time()
 		if stats.NeedsBodyApply == true then TMHStats_TMBApply(human) end
 		-- Sexy features
-		TMStatArousalUpdate(stats, deltaTime)
+		stats:ArousalUpdate(deltaTime)
 		-- Last update time
 		stats.LastUpdate = os.time()
 		
@@ -87,17 +88,28 @@ end
 -- HUMAN SEX STATS
 -------------------------------------------------------------------------------------------------
 -- AROUSAL
-function TMStatArousalUpdate(stats, deltaTime)
-	if not stats then return end
-	if stats.IsHavingSex == true then stats.Arousal = math.min(stats.Arousal + deltaTime * TMH_DefaultArousalIncrease,1.0)
-	else stats.Arousal = math.max(stats.Arousal - deltaTime * TMH_DefaultArousalDecay,0) end
+function TMHumanStats:ArousalUpdate(deltaTime)
+	if self.IsHavingSex == true then self.Arousal = math.min(self.Arousal + deltaTime * TMH_DefaultArousalIncrease,1.0)
+	else self.Arousal = math.max(self.Arousal - deltaTime * TMH_DefaultArousalDecay,0) end
 end
 
-function TMHStatSetAutoSex(human, autoSexTier)
-	if not human or not autoSexTier then return end
-	local stats = TMHStatsGet(human)
-	if not stats then return end
-	stats.AutoSexTier = autoSexTier
+function TMHumanStats:AutoSexSet(active)
+	self.AutoSex = active
+	if self.AutoSexTier == nil then self.AutoSexTier = AutoSexTier.Normal end
+end
+
+
+function TMHumanStats:AutoSexTierSet(autoSexTier)
+	if not autoSexTier then return end
+	self.AutoSexTier = autoSexTier
+end
+
+function TMHumanStats:CumReset()
+	stats.CumLastTime = nil
+	stats.CumEffectLastTime = nil
+	stats.CumLastUpdate = nil
+	stats.CumflateHipsSize = nil
+	stats.CumflateHipsSizeOrig = nil
 end
 
 -------------------------------------------------------------------------------------------------

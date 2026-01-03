@@ -98,7 +98,7 @@ ActMenuMinMax = {
 
 -- AutoSex Tier "Enum"
 AutoSexTier = {
-	Off = "Off",
+	Idle = "Idle",
 	Slow = "Slow",
 	Normal = "Normal",
 	Fast = "Fast",
@@ -127,13 +127,6 @@ AutoSexFastMinMax = {
 	[ActValue.DepthEnd] = { Min = 0.6, Max = 1.2, Delta = 0.1 },
 }
 
-ActAutoSexParams = {
-	[ActValue.Speed] = ActSpeedSet,
-	[ActValue.Weight] = ActWeightSet,
-	[ActValue.Thrust] = ActThrustSet,
-	[ActValue.DepthStart] = ActDepthSet_Start,
-	[ActValue.DepthEnd] = ActDepthSet_End,
-}
 
 -------------------------------------------------------------------------------------------------
 -- CONFIG VALUES CLAMPING
@@ -205,9 +198,9 @@ end
 
 function IsAutoSexPartner(human, body)
 	if human == nil or not HasSexPartner(human, body) then return false end
-	if body == ActBody.Mouth and IsAutoSex(human.Mouth.Fucker) then return true
-	elseif body == ActBody.Anus and IsAutoSex(human.Anus.Fucker) then return true
-	elseif body == ActBody.Vagina and IsAutoSex(human.Vagina.Fucker) then return true
+	if body == ActBody.Mouth and HasAutoSexAnim(human.Mouth.Fucker) then return true
+	elseif body == ActBody.Anus and HasAutoSexAnim(human.Anus.Fucker) then return true
+	elseif body == ActBody.Vagina and HasAutoSexAnim(human.Vagina.Fucker) then return true
 	else return false end
 end
 
@@ -247,24 +240,40 @@ end
 --===============================================================================================
 -- AUTO SEX
 --===============================================================================================
--------------------------------------------------------------------------------------------------
 
-function IsAutoSex(human) return human and game.HasAnim(human.calfNames) end -- faunalabs took most of the assignments, this is one that exists lol
+
+function IsAutoSex(human)
+	local stats = TMHStatsGet(human)
+	return stats and stats.AutoSex
+end
+
 function AutoSexToggle(human)
 	local stats = TMHStatsGet(human)
-	if stats.AutoSexMode == AutoSexTier.Off then AutoSex(human, AutoSexTier.Normal)
-	else AutoSex(human, AutoSexTier.Off) end
+	stats:AutoSexSet(not stats.AutoSex)
+	AutoSexAnimHandle(human)
 end
-function AutoSexStart(human) AutoSex(human, true) end
-function AutoSexStop(human) AutoSex(human, false) end
-function AutoSex(human, autoSexMode)
+
+function AutoSex(human, active)
 	if not TM_AutoSex or not human then return end
-	if autoSexMode and autoSexMode ~= AutoSexTier.Off then
-		TMHStatSetAutoSex(human, autoSexMode)
-		game.AddRepeatAnim(ActAutoSexTickTime, || AutoSexOnTick(human), human.calfNames)
+	local stats = TMHStatsGet(human)
+	stats:AutoSexSet(active)
+	AutoSexAnimHandle(human)
+end
+
+function AutoSexTierBySpeed(human, speed)
+end
+
+-------------------------------------------------------------------------------------------------
+function HasAutoSexAnim(human) return human and game.HasAnim(human.calfNames) end
+function AutoSexAnimAdd(human) game.AddRepeatAnim(ActAutoSexTickTime, || AutoSexOnTick(human), human.calfNames) end
+function AutoSexAnimRemove(human) game.RemoveAnim(human.calfNames) end
+function AutoSexAnimHandle(human)
+	local stats = TMHStatsGet(human)
+	if not stats then return end
+	if stats.AutoSex then
+		if not HasAutoSexAnim(human) then AutoSexAnimAdd(human) end
 	else
-		TMHStatSetAutoSex(human, AutoSexTier.Off)
-		game.RemoveAnim(human.calfNames)
+		if HasAutoSexAnim(human) then AutoSexAnimRemove(human) end
 	end
 end
 
@@ -275,7 +284,7 @@ end
 function AutoSexOnTick(human)
 	if not TM_AutoSex or human == nil then return end
 	local stats = TMHStatsGet(human)
-	if not stats or stats.AutoSexMode == AutoSexTier.Off then return end
+	if not stats or not stats.AutoSex then return end
 	-- Start setting all parameters that are in use
 	if IsSexActive(human, ActBody.Hand) then AutoSexBodyParamSet(human, ActBody.Hand) end
 	if IsSexActive(human, ActBody.Penis) then AutoSexBodyParamSet(human, ActBody.Penis) end
@@ -293,25 +302,23 @@ function AutoSexBodyParamSet(human, body)
 	if not interaction then return end
 	-- Interaction
 	local stats = TMHStatsGet(human)
-	if not stats or stats.AutoSexMode == AutoSexTier.Off then return end
-	-- Get required params
-	local isHand = body == ActBody.Hand
-	local rn = AutoSexMinMaxGet(stats.AutoSexMode)
+	if not stats or not stats.AutoSex or not stats.AutoSexTier then return end
 	-- Init timers per interaction + hand/penis
 	local timers = ActAutoSexTimers[interaction]
 	if not timers then
 		timers = { [true] = {}, [false] = {} }
 		ActAutoSexTimers[interaction] = timers
 	end
+	local isHand = body == ActBody.Hand
 	local timer = timers[isHand]
 	-- Iterate through all timers, execute ones that have timeouted
-	for actValue, paramSetFunc in pairs(ActAutoSexParams) do
+	for actValue, paramSetFunc in pairs(ActParamFunctionsSet) do
 		if AutoSexDrift(actValue) > 0 then
 			timer[actValue] = (timer[actValue] or 0) - ActAutoSexTickTime
 			if timer[actValue] <= 0 then
-				local r = rn[actValue]
-				if r then
-					local value = AutoSexRandomValueGet(interaction, actValue, isHand, r)
+				local minMaxDelta = AutoSexMinMaxGet(stats.AutoSexTier)[actValue]
+				if minMaxDelta then
+					local value = AutoSexRandomValueGet(interaction, actValue, isHand, minMaxDelta)
 					if value ~= nil then paramSetFunc(interaction, value, isHand) end
 				end
 				timer[actValue] = GetRandom(AutoSexMinTime(), AutoSexMaxTime())
@@ -329,13 +336,13 @@ function AutoSexMinMaxGet(autoSexTier)
 	return nil
 end
 
-function AutoSexRandomValueGet(interaction, actValue, isHand, rn)
-	if not interaction or not rn then return nil end
+function AutoSexRandomValueGet(interaction, actValue, isHand, minMaxDelta)
+	if not interaction or not minMaxDelta then return nil end
 	local drift = AutoSexDrift(actValue)
 	if drift <= 0 then return nil end
 	-- GET A RANDOM VALUE, SPECIFIC FUNCTION TYPES
 	-- 1. Fixed delta + truncated range - Uniform, unbiased, no edge sticking, no loop (best overall)
-	return GetRandomFloatNear_FixedDeltaTruncated(ActValueGet_Current(interaction, actValue, isHand), drift, rn.Min, rn.Max, rn.Delta)
+	return GetRandomFloatNear_FixedDeltaTruncated(ActValueGet_Current(interaction, actValue, isHand), drift, minMaxDelta.Min, minMaxDelta.Max, minMaxDelta.Delta)
 	-- -- 2. Value-dependent delta + truncated range - No boundary bias, safe, but movement slows near zero
 	-- return value = GetRandomFloatNear_ValueDeltaTruncated(ActValueGet_Current(interaction, actValue, isHand), drift, rn.Min, rn.Max, rn.Delta)
 	-- -- 3. Value-dependent delta + reflect - Fast, but biased and lingers near bounds
@@ -594,6 +601,16 @@ function ActDepthSet(interaction, depth, isHand, isStartDepth)
 	return depth
 end
 
+-------------------------------------------------------------------------------------------------
+-- Function definitions after they've been defined up there
+
+ActParamFunctionsSet = {
+	[ActValue.Speed] = ActSpeedSet,
+	[ActValue.Weight] = ActWeightSet,
+	[ActValue.Thrust] = ActThrustSet,
+	[ActValue.DepthStart] = ActDepthSet_Start,
+	[ActValue.DepthEnd] = ActDepthSet_End,
+}
 
 -------------------------------------------------------------------------------------------------
 --===============================================================================================

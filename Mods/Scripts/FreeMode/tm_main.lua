@@ -262,14 +262,6 @@ function TMOnUpdate_CumFinish(girl)
 	if HasSexPartnerHoles(girl) then return end
 	stats.CumLastUpdate = now
 
-	local function ResetCumStats(stats)
-		stats.CumLastTime = nil
-		stats.CumEffectLastTime = nil
-		stats.CumLastUpdate = nil
-		stats.CumflateHipsSize = nil
-		stats.CumflateHipsSizeOrig = nil
-	end
-
 	-- CUMFLATION DEFLATE
 	if TM_Cumflate and stats.CumflateHipsSizeOrig and stats.CumflateHipsSize then
 		if stats.CumflateHipsSize > stats.CumflateHipsSizeOrig then
@@ -283,12 +275,12 @@ function TMOnUpdate_CumFinish(girl)
 		else
 			-- Deflate done
 			TMBodyEdit(girl, TMBody.Hips, stats.CumflateHipsSizeOrig)
-			ResetCumStats(stats)
+			stats:CumReset()
 			TMOnCumflatePulloutEffects(girl)
 		end
 	else
 		-- NORMAL CUM (no cumflation)
-		ResetCumStats(stats)
+		stats:CumReset()
 		TMOnCumPulloutEffects(girl)
 	end
 end
