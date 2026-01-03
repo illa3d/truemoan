@@ -17,7 +17,7 @@ TMHumanStatsDefault = {
 	NeedsBodyApply = false,
 	-- Sex
 	IsHavingSex = false,
-	AutoSexMode = nil,
+	AutoSexTier = nil,
 	Arousal = 0,
 	-- Cum reactions
 	CumLastTime = nil,
@@ -93,11 +93,11 @@ function TMStatArousalUpdate(stats, deltaTime)
 	else stats.Arousal = math.max(stats.Arousal - deltaTime * TMH_DefaultArousalDecay,0) end
 end
 
-function TMHStatSetAutoSex(human, autoSexMode)
-	if not human or not autoSexMode then return end
+function TMHStatSetAutoSex(human, autoSexTier)
+	if not human or not autoSexTier then return end
 	local stats = TMHStatsGet(human)
 	if not stats then return end
-	stats.AutoSexMode = autoSexMode
+	stats.AutoSexTier = autoSexTier
 end
 
 -------------------------------------------------------------------------------------------------
