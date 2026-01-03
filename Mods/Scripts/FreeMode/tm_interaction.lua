@@ -61,17 +61,6 @@ ActValue = {
 	DepthEnd = "DepthEnd",
 }
 
--- AutoSex Tier "Enum"
-AutoSexTier = {
-	Off = "Off",
-	Slow = "Slow",
-	Normal = "Normal",
-	Fast = "Fast",
-	Faster = "Faster",
-	Climax = "Climax",
-	Orgasm = "Orgasm",
-}
-
 -- GAME PARAMETER NAME ENUM - Act (interaction) Parameters (actual names of values in interaction)
 ActParam = {
 	ActivePenis = "AutoActive",
@@ -89,50 +78,61 @@ ActParam = {
 
 -- GAME PARAMETER VALUE LIMITS (values as they are in TrueFacials)
 ActRawMinMax = {
-	Speed = { Min = 0.001, Max = 2 },
-	Weight = { Min = 0, Max = 1 },
-	Thrust = { Min = 1, Max = 3 }, -- raw thrust values
-	DepthStart = { Min = 0, Max = 1.2 },
-	DepthEnd = { Min = 0.1, Max = 1.3 }
+	[ActValue.Speed] = { Min = 0.001, Max = 2 },
+	[ActValue.Weight] = { Min = 0, Max = 1 },
+	[ActValue.Thrust] = { Min = 1, Max = 3 }, -- raw thrust values
+	[ActValue.DepthStart] = { Min = 0, Max = 1.2 },
+	[ActValue.DepthEnd] = { Min = 0.1, Max = 1.3 }
 }
 
 -- TRUEMOAN LIPARAMETER VALUE LIMITS (values with thrust normalized)
 ActMenuMinMax = {
-	Speed = { Min = 0.1, Max = 1 },
-	Weight = { Min = 0, Max = 1 },
-	Thrust = { Min = 0, Max = 0.6 },
-	DepthStart = { Min = 0.2, Max = 0.6 },
-	DepthEnd = { Min = 0.5, Max = 1.1 },
+	[ActValue.Speed] = { Min = 0.1, Max = 1 },
+	[ActValue.Weight] = { Min = 0, Max = 1 },
+	[ActValue.Thrust] = { Min = 0, Max = 0.6 },
+	[ActValue.DepthStart] = { Min = 0.2, Max = 0.6 },
+	[ActValue.DepthEnd] = { Min = 0.5, Max = 1.1 },
 }
 
 -------------------------------------------------------------------------------------------------
+
+-- AutoSex Tier "Enum"
+AutoSexTier = {
+	Off = "Off",
+	Slow = "Slow",
+	Normal = "Normal",
+	Fast = "Fast",
+	Faster = "Faster",
+	Climax = "Climax",
+	Orgasm = "Orgasm",
+}
 
 -- AUTOSEX PARAMETER VALUE LIMITS (values with thrust normalized. bias is minimum move)
 -- limiting this to lower than almost maximum values "overrides" user control. Ie user sets 2, this lowers to 0.5 max
 -- Values used when not in TM_AutoSexTurbo
 AutoSexNormalMinMax = {
-	Speed = { Min = 0.1, Max = 0.7, Delta = 0.1 },
-	Weight = { Min = 0.05, Max = 0.95, Delta = 0.04 },
-	Thrust = { Min = 0.1, Max = 0.8, Delta = 0.06 }, -- normalized thrust values
-	DepthStart = { Min = 0.1, Max = 0.5, Delta = 0.1 },
-	DepthEnd = { Min = 0.6, Max = 1.2, Delta = 0.1 },
+	[ActValue.Speed] = { Min = 0.1, Max = 0.7, Delta = 0.1 },
+	[ActValue.Weight] = { Min = 0.05, Max = 0.95, Delta = 0.04 },
+	[ActValue.Thrust] = { Min = 0.1, Max = 0.8, Delta = 0.06 }, -- normalized thrust values
+	[ActValue.DepthStart] = { Min = 0.1, Max = 0.5, Delta = 0.1 },
+	[ActValue.DepthEnd] = { Min = 0.6, Max = 1.2, Delta = 0.1 },
 }
 
 -- Values used when in TM_AutoSexTurbo
 AutoSexFastMinMax = {
-	Speed = { Min = 0.4, Max = 1.7, Delta = 0.1 },
-	Weight = { Min = 0.05, Max = 0.95, Delta = 0.05 },
-	Thrust = { Min = 0.01, Max = 0.4, Delta = 0.1 }, -- normalized thrust values
-	DepthStart = { Min = 0.1, Max = 0.5, Delta = 0.1 },
-	DepthEnd = { Min = 0.6, Max = 1.2, Delta = 0.1 },
+	[ActValue.Speed] = { Min = 0.4, Max = 1.7, Delta = 0.1 },
+	[ActValue.Weight] = { Min = 0.05, Max = 0.95, Delta = 0.05 },
+	[ActValue.Thrust] = { Min = 0.01, Max = 0.4, Delta = 0.1 }, -- normalized thrust values
+	[ActValue.DepthStart] = { Min = 0.1, Max = 0.5, Delta = 0.1 },
+	[ActValue.DepthEnd] = { Min = 0.6, Max = 1.2, Delta = 0.1 },
 }
 
 ActAutoSexParams = {
 	[ActValue.Speed] = ActSpeedSet,
+	[ActValue.Weight] = ActWeightSet,
 	[ActValue.Thrust] = ActThrustSet,
 	[ActValue.DepthStart] = ActDepthSet_Start,
 	[ActValue.DepthEnd] = ActDepthSet_End,
-	[ActValue.Weight] = ActWeightSet,
 }
 
 -------------------------------------------------------------------------------------------------
