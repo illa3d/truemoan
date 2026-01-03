@@ -295,17 +295,17 @@ function AutoSexOnTick(human)
 	if not stats or not stats.AutoSex then return end
 	-- Start setting all parameters that are in use
 	-- Penis sets params only if hole owners don't (prevents setting params from both sides)
-	if IsSexActive(human, ActBody.PenisHole) and not IsAutoSexPartner(human, ActBody.PenisHole) then AutoSexBodyParamSet(human, ActBody.PenisHole) end
+	if IsSexActive(human, ActBody.PenisHole) and not IsAutoSexPartner(human, ActBody.PenisHole) then AutoSexOnTickParamsSet(human, ActBody.PenisHole) end
 	-- Penis owner
-	if IsSexActive(human, ActBody.PenisHand) then AutoSexBodyParamSet(human, ActBody.PenisHand) end
+	if IsSexActive(human, ActBody.PenisHand) then AutoSexOnTickParamsSet(human, ActBody.PenisHand) end
 	-- Holes
-	if IsSexActive(human, ActBody.Mouth) then AutoSexBodyParamSet(human, ActBody.Mouth) end
-	if IsSexActive(human, ActBody.Anus) then AutoSexBodyParamSet(human, ActBody.Anus) end
-	if IsSexActive(human, ActBody.Vagina) then AutoSexBodyParamSet(human, ActBody.Vagina) end
+	if IsSexActive(human, ActBody.Mouth) then AutoSexOnTickParamsSet(human, ActBody.Mouth) end
+	if IsSexActive(human, ActBody.Anus) then AutoSexOnTickParamsSet(human, ActBody.Anus) end
+	if IsSexActive(human, ActBody.Vagina) then AutoSexOnTickParamsSet(human, ActBody.Vagina) end
 end
 
 -- START INTERACTION PARAMETER SET (Calculate timer against ticker and fire events for each active interaction)
-function AutoSexBodyParamSet(human, body)
+function AutoSexOnTickParamsSet(human, body)
 	if not TM_AutoSex or not human then return end
 	-- Status
 	local interaction = ActGet(human, body)
@@ -313,30 +313,37 @@ function AutoSexBodyParamSet(human, body)
 	-- Interaction
 	local stats = TMHStatsGet(human)
 	if not stats or not stats.AutoSex or not stats.AutoSexTier then return end
-	-- Init timers per interaction + hand/penis
+	-- Init interaction timers holder (for all parameters)
 	local timers = ActAutoSexTimers[interaction]
 	if not timers then
+		-- group timers by isHand = true or false
 		timers = { [true] = {}, [false] = {} }
 		ActAutoSexTimers[interaction] = timers
 	end
 	local isHand = body == ActBody.PenisHand
-	local timer = timers[isHand]
 	-- Iterate through all timers, execute ones that have timeouted
 	for actValue, paramSetFunc in pairs(ActParamFunctionsSet) do
+		-- If AutoSex drift is 0, don't animate parameters
 		if AutoSexDrift(actValue) > 0 then
-			timer[actValue] = (timer[actValue] or 0) - ActAutoSexTickTime
-			if timer[actValue] <= 0 then
+			-- Init or subtract interaction timer (for all parameters)
+			timers[isHand][actValue] = (timers[isHand][actValue] or 0) - ActAutoSexTickTime
+			if timers[isHand][actValue] <= 0 then
 				local minMaxDelta = AutoSexMinMaxGet(stats.AutoSexTier)[actValue]
 				if minMaxDelta then
 					local value = AutoSexRandomValueGet(interaction, actValue, isHand, minMaxDelta)
+					-- START RANDOM TWEEN/RAW INTERACTION PARAMETER VALUE (ActAutoSexParams: Speed, Thrust, DepthStart, DepthEnd, Weight)
+					-- If SexTweenAllow() is allowed, this is where the tween starts. If not, raw value is changed directly in the game body property
 					if value ~= nil then paramSetFunc(interaction, value, isHand) end
 				end
-				timer[actValue] = GetRandom(AutoSexMinTime(), AutoSexMaxTime())
+				-- Next execution time: Add a timer for how long this parameter will not be fired again
+				timers[isHand][actValue] = GetRandom(AutoSexMinTime(), AutoSexMaxTime())
 			end
 		end
 	end
 end
 
+-------------------------------------------------------------------------------------------------
+-- AUTOSEX RANDOM VALUES (MIN MAX DELTA)
 -------------------------------------------------------------------------------------------------
 
 function AutoSexMinMaxGet(autoSexTier)
@@ -354,11 +361,11 @@ function AutoSexRandomValueGet(interaction, actValue, isHand, minMaxDelta)
 	-- 1. Fixed delta + truncated range - Uniform, unbiased, no edge sticking, no loop (best overall)
 	return GetRandomFloatNear_FixedDeltaTruncated(ActValueGet_Current(interaction, actValue, isHand), drift, minMaxDelta.Min, minMaxDelta.Max, minMaxDelta.Delta)
 	-- -- 2. Value-dependent delta + truncated range - No boundary bias, safe, but movement slows near zero
-	-- return value = GetRandomFloatNear_ValueDeltaTruncated(ActValueGet_Current(interaction, actValue, isHand), drift, rn.Min, rn.Max, rn.Delta)
+	-- return value = GetRandomFloatNear_ValueDeltaTruncated(ActValueGet_Current(interaction, actValue, isHand), drift, minMaxDelta.Min, minMaxDelta.Max, minMaxDelta.Delta)
 	-- -- 3. Value-dependent delta + reflect - Fast, but biased and lingers near bounds
-	-- return value = GetRandomFloatNear_ReflectValueDelta(ActValueGet_Current(interaction, actValue, isHand),drift, rn.Min, rn.Max, rn.Delta)
+	-- return value = GetRandomFloatNear_ReflectValueDelta(ActValueGet_Current(interaction, actValue, isHand), drift, minMaxDelta.Min, minMaxDelta.Max, minMaxDelta.Delta)
 	-- -- 4. Value-dependent delta + clamp - Very fast, but strong boundary bias and hard sticking
-	-- return value = GetRandomFloatAroundClamped(ActValueGet_Current(interaction, actValue, isHand), drift, rn.Min, rn.Max, rn.Delta)
+	-- return value = GetRandomFloatAroundClamped(ActValueGet_Current(interaction, actValue, isHand), drift, minMaxDelta.Min, minMaxDelta.Max, minMaxDelta.Delta)
 end
 
 -------------------------------------------------------------------------------------------------
