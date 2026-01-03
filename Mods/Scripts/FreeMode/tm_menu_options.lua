@@ -43,6 +43,9 @@ label TMMenuOptions(human)
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
+		-- + "Auto sex	| " .. AccBool(TM_AutoSex)
+		-- 	TM_AutoSex = not TM_AutoSex
+		-- 	Return()
 		+ "Wet sex	| " .. AccBool(TM_WetSex)
 			TM_WetSex = not TM_WetSex
 			Return()

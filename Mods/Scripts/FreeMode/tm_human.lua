@@ -9,12 +9,15 @@ TMH_DefaultArousalDecay = 0.05
 
 -- DEFINITION (never update this, USE TMHStatsSet_BodyEdit or BodyEdit functions)
 TMHumanStatsDefault = {
-	TMBValue = nil,
-	IsHavingSex = false,
+	-- Time
 	LastSeen = 0,
 	LastUpdate = 0,
+	-- Customization
+	TMBValue = nil,
 	NeedsBodyApply = false,
-	-- Arousal
+	-- Sex
+	IsHavingSex = false,
+	AutoSexMode = nil,
 	Arousal = 0,
 	-- Cum reactions
 	CumLastTime = nil,
@@ -88,6 +91,13 @@ function TMStatArousalUpdate(stats, deltaTime)
 	if not stats then return end
 	if stats.IsHavingSex == true then stats.Arousal = math.min(stats.Arousal + deltaTime * TMH_DefaultArousalIncrease,1.0)
 	else stats.Arousal = math.max(stats.Arousal - deltaTime * TMH_DefaultArousalDecay,0) end
+end
+
+function TMHStatSetAutoSex(human, autoSexMode)
+	if not human or not autoSexMode then return end
+	local stats = TMHStatsGet(human)
+	if not stats then return end
+	stats.AutoSexMode = autoSexMode
 end
 
 -------------------------------------------------------------------------------------------------
