@@ -83,18 +83,18 @@ ActMenuMinMax = {
 -- limiting this to lower than almost maximum values "overrides" user control. Ie user sets 2, this lowers to 0.5 max
 -- Values used when not in TM_AutoSexTurbo
 ActAutoSexNormalMinMax = {
-	Speed = { Min = 0.1, Max = 0.6, Delta = 0.1 },
-	Weight = { Min = 0.1, Max = 0.9, Delta = 0.03 },
-	Thrust = { Min = 0.1, Max = 0.6, Delta = 0.05 }, -- normalized thrust values
+	Speed = { Min = 0.1, Max = 0.7, Delta = 0.1 },
+	Weight = { Min = 0.05, Max = 0.95, Delta = 0.04 },
+	Thrust = { Min = 0.1, Max = 0.8, Delta = 0.06 }, -- normalized thrust values
 	DepthStart = { Min = 0.1, Max = 0.5, Delta = 0.1 },
 	DepthEnd = { Min = 0.6, Max = 1.2, Delta = 0.1 },
 }
 
 -- Values used when in TM_AutoSexTurbo
 ActAutoSexTurboMinMax = {
-	Speed = { Min = 0.4, Max = 1.9, Delta = 0.1 },
-	Weight = { Min = 0.1, Max = 0.9, Delta = 0.03 },
-	Thrust = { Min = 0.1, Max = 0.6, Delta = 0.05 }, -- normalized thrust values
+	Speed = { Min = 0.4, Max = 1.7, Delta = 0.1 },
+	Weight = { Min = 0.05, Max = 0.95, Delta = 0.05 },
+	Thrust = { Min = 0.01, Max = 0.4, Delta = 0.1 }, -- normalized thrust values
 	DepthStart = { Min = 0.1, Max = 0.5, Delta = 0.1 },
 	DepthEnd = { Min = 0.6, Max = 1.2, Delta = 0.1 },
 }
@@ -316,6 +316,8 @@ end
 -- AUTO SEX
 --===============================================================================================
 -------------------------------------------------------------------------------------------------
+TM_AutoSexTurbo = false -- TEMPORARY HERE, MOVE TO HUMAN STATS
+
 function AutoSexToggle(human) AutoSex(human, not IsAutoSex(human)) end
 function AutoSexStart(human) AutoSex(human, true) end
 function AutoSexStop(human) AutoSex(human, false) end

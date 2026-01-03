@@ -328,9 +328,11 @@ label TMMenuSex(human)
 			Return(2)
 		+ TM_MenuClose
 
-	+ "Auto sex	| " .. AccBool(IsAutoSex(human)) .. (IsAutoSex(human) and (TM_AutoSexTurbo and " (turbo)" or "") or "")
-		AutoSexToggle(human)
+	+ "Auto sex	| " .. AccStr("Turbo") [if TM_AutoSexTurbo]
 		TM_AutoSexTurbo = false
+		Return()
+	+ "Auto sex	| " .. AccBool(IsAutoSex(human)) [if not TM_AutoSexTurbo]
+		AutoSexToggle(human)
 		Return()
 	+ TM_MenuBack
 		Return(2)
