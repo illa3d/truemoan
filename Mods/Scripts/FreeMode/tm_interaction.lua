@@ -151,12 +151,17 @@ end
 -------------------------------------------------------------------------------------------------
 
 -------------------------------------------------------------------------------------------------
--- SEX / BODY HOLES / SEXPARTNER(fucker)
+-- SEX / BODY HOLES / SEXPARTNER (fucker)
 -------------------------------------------------------------------------------------------------
-function HasSexPartnerHoleAny(human) return HasSexPartner(human, ActBody.Mouth) or HasSexPartner(human, ActBody.Anus) or HasSexPartner(human, ActBody.Vagina) end
-function HasSexPartnerPenisHand(human) return HasSexPartner(human, ActBody.PenisHand) end
-function HasSexPartnerPenisHole(human) return HasSexPartner(human, ActBody.PenisHole) end
-
+function HasSexPartnerAny(human) return
+	HasSexPartner(human, ActBody.PenisHand) or HasSexPartner(human, ActBody.PenisHole) or 
+	HasSexPartner(human, ActBody.Mouth) or HasSexPartner(human, ActBody.Anus) or HasSexPartner(human, ActBody.Vagina) end
+function HasSexPartnerHoleAny(human) return
+	HasSexPartner(human, ActBody.Mouth) or HasSexPartner(human, ActBody.Anus) or HasSexPartner(human, ActBody.Vagina) end
+function HasSexPartnerPenisHand(human) return
+	HasSexPartner(human, ActBody.PenisHand) end
+function HasSexPartnerPenisHole(human) return
+	HasSexPartner(human, ActBody.PenisHole) end
 function HasSexPartner(human, body)
 	if human == nil then return false end
 	if body == ActBody.PenisHand and human.Penis.m_holdDepth ~= 0 then return true
@@ -223,17 +228,17 @@ function WetGet(human, body)
 	else return 0 end
 end
 
-function WetReset(girl)
-	WetSet(girl, 0, ActBody.Vagina)
-	WetSet(girl, 0, ActBody.Anus)
-	WetSet(girl, 0, ActBody.Mouth)
-end
-
 function WetSet(girl, value, actBody)
 	if girl == nil or value == nil  or actBody == nil or girl.m_isMale == true then return end
 	if actBody == ActBody.Mouth then girl.m_mouth.m_wetness = value
 	elseif actBody == ActBody.Anus then girl.m_anus.m_wetness = value
 	elseif actBody == ActBody.Vagina then girl.m_vagina.m_wetness = value end
+end
+
+function WetAllReset(girl)
+	WetSet(girl, 0, ActBody.Vagina)
+	WetSet(girl, 0, ActBody.Anus)
+	WetSet(girl, 0, ActBody.Mouth)
 end
 
 -------------------------------------------------------------------------------------------------
@@ -242,7 +247,7 @@ end
 --===============================================================================================
 -------------------------------------------------------------------------------------------------
 
-function IsAutoSex(human)
+function HasAutoSex(human)
 	local stats = TMHStatsGet(human)
 	return stats and stats.AutoSex
 end
@@ -253,7 +258,7 @@ function AutoSexToggle(human)
 	AutoSexAnimHandle(human)
 end
 
-function AutoSex(human, active)
+function AutoSexActive(human, active)
 	if not TM_AutoSex or not human then return end
 	local stats = TMHStatsGet(human)
 	stats:AutoSexSet(active)
@@ -268,7 +273,10 @@ end
 -- Animation
 function GetAutoSexAnimName(human) return human.calfNames end
 function HasAutoSexAnim(human) return human and game.HasAnim(GetAutoSexAnimName(human)) end
-function AutoSexAnimAdd(human) game.AddRepeatAnim(ActAutoSexTickTime, || AutoSexOnTick(human), GetAutoSexAnimName(human)) end
+function AutoSexAnimAdd(human)
+	if HasAutoSexAnim(human) then return end
+	game.AddRepeatAnim(ActAutoSexTickTime, || AutoSexOnTick(human), GetAutoSexAnimName(human))
+end
 function AutoSexAnimRemove(human) game.RemoveAnim(GetAutoSexAnimName(human)) end
 function AutoSexAnimHandle(human)
 	local stats = TMHStatsGet(human)

@@ -230,7 +230,7 @@ label TMMenuSex(human)
 	+ else 
 		+ if IsWet(human)
 			+ "Wet " ..AccStr("stop")
-				WetReset(human)	
+				WetAllReset(human)	
 				Return()
 		+ else
 			+ "Wet start"
@@ -306,7 +306,7 @@ label TMMenuSex(human)
 			WetSet(human, wett, ActBody.Vagina)
 			Return()
 		+ "RESET | " .. AccTextNum3("V", WetGet(human,ActBody.Vagina), "A", WetGet(human,ActBody.Anus), "M", WetGet(human,ActBody.Mouth))
-			WetReset(human)	
+			WetAllReset(human)	
 			Return()
 		+ TM_MenuBack
 			Return(2)
