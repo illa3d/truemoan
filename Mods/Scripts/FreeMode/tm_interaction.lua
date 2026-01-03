@@ -313,30 +313,29 @@ function AutoSexOnTickParamsSet(human, body)
 	-- Interaction
 	local stats = TMHStatsGet(human)
 	if not stats or not stats.AutoSex or not stats.AutoSexTier then return end
-	-- Init interaction timers holder (for all parameters)
+	-- Timers structure timers[interaction][actbody][param]
+	-- Init interaction timers holder
 	local timers = ActAutoSexTimers[interaction]
-	if not timers then
-		-- group timers by isHand = true or false
-		timers = { [true] = {}, [false] = {} }
-		ActAutoSexTimers[interaction] = timers
-	end
-	local isHand = body == ActBody.PenisHand
+	if not timers then timers = {} ActAutoSexTimers[interaction] = timers end
+	-- Init body-specific timers
+	local bodyTimers = timers[body]
+	if not bodyTimers then bodyTimers = {} timers[body] = bodyTimers end
 	-- Iterate through all timers, execute ones that have timeouted
 	for actValue, paramSetFunc in pairs(ActParamFunctionsSet) do
 		-- If AutoSex drift is 0, don't animate parameters
 		if AutoSexDrift(actValue) > 0 then
 			-- Init or subtract interaction timer (for all parameters)
-			timers[isHand][actValue] = (timers[isHand][actValue] or 0) - ActAutoSexTickTime
-			if timers[isHand][actValue] <= 0 then
+			bodyTimers[actValue] = (bodyTimers[actValue] or 0) - ActAutoSexTickTime
+			if bodyTimers[actValue] <= 0 then
 				local minMaxDelta = AutoSexMinMaxGet(stats.AutoSexTier)[actValue]
 				if minMaxDelta then
-					local value = AutoSexRandomValueGet(interaction, actValue, isHand, minMaxDelta)
+					local isHand = body == ActBody.PenisHand
+					local value = AutoSexRandomValueGet(interaction, actValue, isHand, minMaxDelta )
 					-- START RANDOM TWEEN/RAW INTERACTION PARAMETER VALUE (ActAutoSexParams: Speed, Thrust, DepthStart, DepthEnd, Weight)
 					-- If SexTweenAllow() is allowed, this is where the tween starts. If not, raw value is changed directly in the game body property
 					if value ~= nil then paramSetFunc(interaction, value, isHand) end
 				end
-				-- Next execution time: Add a timer for how long this parameter will not be fired again
-				timers[isHand][actValue] = GetRandom(AutoSexMinTime(), AutoSexMaxTime())
+				bodyTimers[actValue] = GetRandom(AutoSexMinTime(), AutoSexMaxTime())
 			end
 		end
 	end
@@ -349,8 +348,7 @@ end
 function AutoSexMinMaxGet(autoSexTier)
 	if autoSexTier == AutoSexTier.Normal then return AutoSexNormalMinMax
 	elseif autoSexTier == AutoSexTier.Fast then return AutoSexFastMinMax
-	else end
-	return nil
+	else return AutoSexNormalMinMax end
 end
 
 function AutoSexRandomValueGet(interaction, actValue, isHand, minMaxDelta)
