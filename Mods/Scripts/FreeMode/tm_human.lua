@@ -4,8 +4,8 @@ TM_HumanStatsList = {}
 local TMH_LastUpdateClock = os.clock()
 
 -- CONFIG
-TMH_DefaultArousalIncrease = 0.005
-TMH_DefaultArousalDecay = 0.007
+TMH_DefaultArousalIncrease = 0.001
+TMH_DefaultArousalDecay = 0.002
 
 -- DEFINITION (never update this, USE TMHStatsSet_BodyEdit or BodyEdit functions)
 TMHumanStats = {
