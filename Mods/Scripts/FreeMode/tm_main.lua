@@ -219,7 +219,7 @@ function TMOnPenetration_Cum(girl, holeName)
 	-- throttle only if we have a previous update time
 	local now = os.time()
 	if stats.CumLastUpdate and now - stats.CumLastUpdate < TMH_CumStepTime then return end
-	local partner = GetSexPartner(girl, holeName)
+	local partner = SexPartner_Get(girl, holeName)
 	if partner and not HumanIsCumming(partner) then return end
 	stats.CumLastTime = now
 	stats.CumLastUpdate = now
@@ -259,7 +259,7 @@ function TMOnUpdate_CumFinish(girl)
 	-- wait after last cum
 	if now - stats.CumLastTime < TMH_CumPauseTime then return end
 	-- still having sex
-	if HasSexPartnerHoleAny(girl) then return end
+	if HasSexPartner_HoleAny(girl) then return end
 	stats.CumLastUpdate = now
 
 	-- CUMFLATION DEFLATE

@@ -97,7 +97,7 @@ end
 
 function TMHumanStats:AutoSexSet(active)
 	self.AutoSex = active
-	if self.AutoSexTier == nil then self.AutoSexTier = AutoSexTierDefault end
+	if self.AutoSexTier == nil then self.AutoSexTier = AutoSexTier_Default end
 end
 
 function TMHumanStats:AutoSexTierSet(autoSexTier)

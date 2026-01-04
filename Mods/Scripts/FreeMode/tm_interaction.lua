@@ -42,6 +42,8 @@ ActAutoSexTimerClamp = { Min = 1, Max = 20 } -- seconds (timer to allow new rand
 -- TweenParams
 ActTweenTimeMinMax = { Min = 0.1, Max = 3 } -- seconds (time for parameter tween duration)
 
+-------------------------------------------------------------------------------------------------
+
 -- BODY HOLE ENUM
 ActBody = {
 	PenisHand = "PenisHand",
@@ -60,6 +62,8 @@ ActValue = {
 	DepthStart = "DepthStart",
 	DepthEnd = "DepthEnd",
 }
+
+-------------------------------------------------------------------------------------------------
 
 -- GAME PARAMETER NAME ENUM - Act (interaction) Parameters (actual names of values in interaction)
 ActParam = {
@@ -85,7 +89,7 @@ ActRawMinMax = {
 	[ActValue.DepthEnd] = { Min = 0.1, Max = 1.3 }
 }
 
--- TRUEMOAN LIPARAMETER VALUE LIMITS (values with thrust normalized)
+-- TRUEMOAN PARAMETER VALUE LIMITS (values with thrust normalized)
 ActMenuMinMax = {
 	[ActValue.Speed] = { Min = 0.1, Max = 1 },
 	[ActValue.Weight] = { Min = 0, Max = 1 },
@@ -108,9 +112,9 @@ AutoSexTier = {
 }
 
 -- Default tier set for new humans
-AutoSexTierDefault = AutoSexTier.Normal
-AutoSexTierMin = AutoSexTier.Idle
-AutoSexTierToggle = {
+AutoSexTier_Default = AutoSexTier.Normal
+AutoSexTier_Min = AutoSexTier.Idle
+AutoSexTier_Toggle = {
 	AutoSexTier.Idle,
 	AutoSexTier.Slow,
 	AutoSexTier.Normal,
@@ -125,7 +129,7 @@ AutoSexTierToggle = {
 -- AUTOSEX PARAMETER VALUE LIMITS (values with thrust normalized, delta = movement range)
 -- limiting this to lower than almost maximum values "overrides" user control. Ie user sets 2, this lowers to 0.5 max
 -- These values are taken from the sex speed user has chosen in the UI or arousal character stats value
-AutoSexTierRandom_Idle = {
+AutoSexTierConfig_Idle = {
 	[ActValue.Speed] =			{ Min = 0.001,	Max = 0.2,	Delta = 0.03 },
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.04 },
 	[ActValue.Thrust] =			{ Min = 0.1,	Max = 0.8,	Delta = 0.06 }, -- normalized thrust values
@@ -133,7 +137,7 @@ AutoSexTierRandom_Idle = {
 	[ActValue.DepthEnd] = { Min = 0.6, Max = 1.2, Delta = 0.1 },
 }
 
-AutoSexTierRandom_Slow = {
+AutoSexTierConfig_Slow = {
 	[ActValue.Speed] =			{ Min = 0.05,	Max = 0.35,	Delta = 0.05 },
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.04 },
 	[ActValue.Thrust] =			{ Min = 0.1,	Max = 0.8,	Delta = 0.06 }, -- normalized thrust values
@@ -141,7 +145,7 @@ AutoSexTierRandom_Slow = {
 	[ActValue.DepthEnd] = { Min = 0.6, Max = 1.2, Delta = 0.1 },
 }
 
-AutoSexTierRandom_Normal = {
+AutoSexTierConfig_Normal = {
 	[ActValue.Speed] =			{ Min = 0.2,	Max = 0.6,	Delta = 0.07 },
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.04 },
 	[ActValue.Thrust] =			{ Min = 0.1,	Max = 0.8,	Delta = 0.06 }, -- normalized thrust values
@@ -149,7 +153,7 @@ AutoSexTierRandom_Normal = {
 	[ActValue.DepthEnd] = { Min = 0.6, Max = 1.2, Delta = 0.1 },
 }
 
-AutoSexTierRandom_Fast = {
+AutoSexTierConfig_Fast = {
 	[ActValue.Speed] =			{ Min = 0.4,	Max = 0.9,	Delta = 0.08 },
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },
 	[ActValue.Thrust] =			{ Min = 0.01,	Max = 0.4,	Delta = 0.1 }, -- normalized thrust values
@@ -157,7 +161,7 @@ AutoSexTierRandom_Fast = {
 	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },
 }
 
-AutoSexTierRandom_Faster = {
+AutoSexTierConfig_Faster = {
 	[ActValue.Speed] =			{ Min = 0.5,	Max = 1.5,	Delta = 0.12 },
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },
 	[ActValue.Thrust] =			{ Min = 0.01,	Max = 0.4,	Delta = 0.1 }, -- normalized thrust values
@@ -165,7 +169,7 @@ AutoSexTierRandom_Faster = {
 	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },
 }
 
-AutoSexTierRandom_Climax = {
+AutoSexTierConfig_Climax = {
 	[ActValue.Speed] =			{ Min = 0.7,	Max = 1.7,	Delta = 0.15 },
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },
 	[ActValue.Thrust] =			{ Min = 0.01,	Max = 0.4,	Delta = 0.1 }, -- normalized thrust values
@@ -173,7 +177,7 @@ AutoSexTierRandom_Climax = {
 	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },
 }
 
-AutoSexTierRandom_Orgasm = {
+AutoSexTierConfig_Orgasm = {
 	[ActValue.Speed] =			{ Min = 1,		Max = 2,	Delta = 0.2 },
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },
 	[ActValue.Thrust] =			{ Min = 0.01,	Max = 0.4,	Delta = 0.1 }, -- normalized thrust values
@@ -182,16 +186,16 @@ AutoSexTierRandom_Orgasm = {
 }
 
 -- Tier switch speed limits and random definitions
-AutoSexTierRandom_Default = AutoSexTierRandom_Normal
+AutoSexTierRandom_Default = AutoSexTierConfig_Normal
 
-AutoSexTierLimits = {
-	[AutoSexTier.Idle] =	{ Min = 0,		Max = 0.1,	Random = AutoSexTierRandom_Idle },
-	[AutoSexTier.Slow] =	{ Min = 0.1,	Max = 0.25,	Random = AutoSexTierRandom_Slow },
-	[AutoSexTier.Normal] =	{ Min = 0.25,	Max = 0.5,	Random = AutoSexTierRandom_Normal },
-	[AutoSexTier.Fast] =	{ Min = 0.5,	Max = 0.75,	Random = AutoSexTierRandom_Fast },
-	[AutoSexTier.Faster] =	{ Min = 0.75,	Max = 1,	Random = AutoSexTierRandom_Faster },
-	[AutoSexTier.Climax] =	{ Min = 1,		Max = 1.5,	Random = AutoSexTierRandom_Climax },
-	[AutoSexTier.Orgasm] =	{ Min = 1.5,	Max = 2,	Random = AutoSexTierRandom_Orgasm },
+AutoSexTierConfig = {
+	[AutoSexTier.Idle] =	{ Min = 0,		Max = 0.1,	Random = AutoSexTierConfig_Idle },
+	[AutoSexTier.Slow] =	{ Min = 0.1,	Max = 0.25,	Random = AutoSexTierConfig_Slow },
+	[AutoSexTier.Normal] =	{ Min = 0.25,	Max = 0.5,	Random = AutoSexTierConfig_Normal },
+	[AutoSexTier.Fast] =	{ Min = 0.5,	Max = 0.75,	Random = AutoSexTierConfig_Fast },
+	[AutoSexTier.Faster] =	{ Min = 0.75,	Max = 1,	Random = AutoSexTierConfig_Faster },
+	[AutoSexTier.Climax] =	{ Min = 1,		Max = 1.5,	Random = AutoSexTierConfig_Climax },
+	[AutoSexTier.Orgasm] =	{ Min = 1.5,	Max = 2,	Random = AutoSexTierConfig_Orgasm },
 }
 
 -------------------------------------------------------------------------------------------------
@@ -219,14 +223,14 @@ end
 -------------------------------------------------------------------------------------------------
 -- SEX / BODY HOLES / SEXPARTNER (fucker)
 -------------------------------------------------------------------------------------------------
-function HasSexPartnerAny(human) return
+function HasSexPartner_Any(human) return
 	HasSexPartner(human, ActBody.PenisHand) or HasSexPartner(human, ActBody.PenisHole) or 
 	HasSexPartner(human, ActBody.Mouth) or HasSexPartner(human, ActBody.Anus) or HasSexPartner(human, ActBody.Vagina) end
-function HasSexPartnerHoleAny(human) return
+function HasSexPartner_HoleAny(human) return
 	HasSexPartner(human, ActBody.Mouth) or HasSexPartner(human, ActBody.Anus) or HasSexPartner(human, ActBody.Vagina) end
-function HasSexPartnerPenisHand(human) return
+function HasSexPartner_PenisHand(human) return
 	HasSexPartner(human, ActBody.PenisHand) end
-function HasSexPartnerPenisHole(human) return
+function HasSexPartner_PenisHole(human) return
 	HasSexPartner(human, ActBody.PenisHole) end
 function HasSexPartner(human, body)
 	if human == nil then return false end
@@ -238,7 +242,7 @@ function HasSexPartner(human, body)
 	else return false end
 end
 
-function GetSexPartner(human, body)
+function SexPartner_Get(human, body)
 	if human == nil then return nil end
 	if body == ActBody.Mouth and human.Mouth.Fucker ~= nil then return human.Mouth.Fucker
 	elseif body == ActBody.Anus and human.Anus.Fucker ~= nil then return human.Anus.Fucker
@@ -246,16 +250,18 @@ function GetSexPartner(human, body)
 	else return nil end
 end
 
-function GetSexPartners(human)
+function SexPartners_Get(human)
 	local partners = {}
 	if human == nil then return partners end
 	for _, body in pairs(ActBody) do
 		if HasSexPartner(human, body) then
-			local partner = GetSexPartner(human, body)
+			local partner = SexPartner_Get(human, body)
 			if partner ~= nil then table.insert(partners, partner) end
 		end
 	end return partners
 end
+
+-------------------------------------------------------------------------------------------------
 
 function IsSexActive(human, body)
 	if human == nil or not HasSexPartner(human, body) or ActGet(human, body) == nil then return false end
@@ -322,7 +328,7 @@ function AutoSexActive(human, active)
 	if not TM_AutoSex or not human then return end
 	local stats = TMHStatsGet(human)
 	stats:AutoSexSet(active)
-	AutoSexAnimHandle(human)
+	AutoSexAnim_Handle(human)
 end
 
 -- just one direction
@@ -332,14 +338,14 @@ function AutoSexToggle(human)
 	-- If AutoSex is OFF, turn it ON
 	if not stats.AutoSex then
 		stats:AutoSexSet(true)
-		stats:AutoSexTierSet(AutoSexTierDefault)
-		AutoSexAnimHandle(human)
+		stats:AutoSexTierSet(AutoSexTier_Default)
+		AutoSexAnim_Handle(human)
 		return
 	end
 	-- AutoSex is ON, step down tiers
-	if stats.AutoSexTier ~= AutoSexTierMin  then stats.AutoSexTier = StepInOrderedList(AutoSexTierToggle, stats.AutoSexTier, -1)
+	if stats.AutoSexTier ~= AutoSexTier_Min  then stats.AutoSexTier = StepInOrderedList(AutoSexTier_Toggle, stats.AutoSexTier, -1)
 	else stats:AutoSexSet(false) end
-	AutoSexAnimHandle(human)
+	AutoSexAnim_Handle(human)
 end
 
 -- -- pint pong (off missing)
@@ -378,11 +384,11 @@ end
 -- 	AutoSexAnimHandle(human)
 -- end
 
-function AutoSexTierBySpeed(human, speed)
+function AutoSexTierSet_BySpeed(human, speed)
 	if not human or type(speed) ~= "number" then return end
 	local stats = TMHStatsGet(human)
 	if not stats then return end
-	for tier, mm in pairs(AutoSexTierLimits) do
+	for tier, mm in pairs(AutoSexTierConfig) do
 		if speed >= mm.Min and speed < mm.Max then
 			stats:AutoSexTierSet(tier)
 			return
@@ -393,25 +399,25 @@ end
 -------------------------------------------------------------------------------------------------
 
 -- Animation
-function GetAutoSexAnimName(human) return human.calfNames end
-function HasAutoSexAnim(human) return human and game.HasAnim(GetAutoSexAnimName(human)) end
-function AutoSexAnimAdd(human)
+function AutoSexAnim_NameGet(human) return human.calfNames end
+function HasAutoSexAnim(human) return human and game.HasAnim(AutoSexAnim_NameGet(human)) end
+function AutoSexAnim_Add(human)
 	if HasAutoSexAnim(human) then return end
-	game.AddRepeatAnim(ActAutoSexTickTime, || AutoSexOnTick(human), GetAutoSexAnimName(human))
+	game.AddRepeatAnim(ActAutoSexTickTime, || AutoSex_OnTick(human), AutoSexAnim_NameGet(human))
 end
-function AutoSexAnimRemove(human) game.RemoveAnim(GetAutoSexAnimName(human)) end
-function AutoSexAnimHandle(human)
+function AutoSexAnim_Remove(human) game.RemoveAnim(AutoSexAnim_NameGet(human)) end
+function AutoSexAnim_Handle(human)
 	local stats = TMHStatsGet(human)
 	if not stats then return end
-	if stats.AutoSex then if not HasAutoSexAnim(human) then AutoSexAnimAdd(human) end
-	else if HasAutoSexAnim(human) then AutoSexAnimRemove(human) end end
+	if stats.AutoSex then if not HasAutoSexAnim(human) then AutoSexAnim_Add(human) end
+	else if HasAutoSexAnim(human) then AutoSexAnim_Remove(human) end end
 end
 
 -------------------------------------------------------------------------------------------------
 
 -- CALLED FROM GAME REPEATING ANIMATION SYSTEM (game.AddRepeatAnim)
 -- Randomize all active interactions
-function AutoSexOnTick(human)
+function AutoSex_OnTick(human)
 	if not TM_AutoSex or human == nil then return end
 	local stats = TMHStatsGet(human)
 	if not stats or not stats.AutoSex then return end
@@ -424,17 +430,17 @@ function AutoSexOnTick(human)
 
 	-- Start setting all parameters that are in use
 	-- Penis sets params only if hole owners don't (prevents setting params from both sides)
-	if isPenisHole and not IsAutoSexPartner(human, ActBody.PenisHole) then AutoSexOnTickParamsSet(human, ActBody.PenisHole) end
+	if isPenisHole and not IsAutoSexPartner(human, ActBody.PenisHole) then AutoSex_OnTickParamsSet(human, ActBody.PenisHole) end
 	-- Penis owner
-	if isPenisHand then AutoSexOnTickParamsSet(human, ActBody.PenisHand) end
+	if isPenisHand then AutoSex_OnTickParamsSet(human, ActBody.PenisHand) end
 	-- Holes
-	if isMouth then AutoSexOnTickParamsSet(human, ActBody.Mouth) end
-	if isAnus then AutoSexOnTickParamsSet(human, ActBody.Anus) end
-	if isVagina then AutoSexOnTickParamsSet(human, ActBody.Vagina) end
+	if isMouth then AutoSex_OnTickParamsSet(human, ActBody.Mouth) end
+	if isAnus then AutoSex_OnTickParamsSet(human, ActBody.Anus) end
+	if isVagina then AutoSex_OnTickParamsSet(human, ActBody.Vagina) end
 end
 
 -- START INTERACTION PARAMETER SET (Calculate timer against ticker and fire events for each active interaction)
-function AutoSexOnTickParamsSet(human, body)
+function AutoSex_OnTickParamsSet(human, body)
 	if not TM_AutoSex or not human then return end
 	-- Status
 	local interaction = ActGet(human, body)
@@ -456,10 +462,10 @@ function AutoSexOnTickParamsSet(human, body)
 			-- Init or subtract interaction timer (for all parameters)
 			bodyTimers[actValue] = (bodyTimers[actValue] or 0) - ActAutoSexTickTime
 			if bodyTimers[actValue] <= 0 then
-				local minMaxDelta = AutoSexRandomConfigGet(stats.AutoSexTier)[actValue]
-				if minMaxDelta then
+				local tierConfig = AutoSexTier_ConfigGet(stats.AutoSexTier)[actValue]
+				if tierConfig then
 					local isHand = body == ActBody.PenisHand
-					local value = AutoSexRandomValueGet(interaction, actValue, isHand, minMaxDelta )
+					local value = AutoSexValueRandomGet(interaction, actValue, isHand, tierConfig )
 					-- START RANDOM TWEEN/RAW INTERACTION PARAMETER VALUE (ActAutoSexParams: Speed, Thrust, DepthStart, DepthEnd, Weight)
 					-- If SexTweenAllow() is allowed, this is where the tween starts. If not, raw value is changed directly in the game body property
 					if value ~= nil then paramSetFunc(interaction, value, isHand) end
@@ -473,26 +479,25 @@ end
 -------------------------------------------------------------------------------------------------
 -- AUTOSEX RANDOM VALUES (MIN MAX DELTA)
 -------------------------------------------------------------------------------------------------
-
-function AutoSexRandomConfigGet(autoSexTier)
-	local tier = AutoSexTierLimits[autoSexTier]
+function AutoSexTier_ConfigGet(autoSexTier)
+	local tier = AutoSexTierConfig[autoSexTier]
 	local values = tier and tier.Random
 	return values or AutoSexTierRandom_Default
 end
 
-function AutoSexRandomValueGet(interaction, actValue, isHand, minMaxDelta)
-	if not interaction or not minMaxDelta then return nil end
+function AutoSexValueRandomGet(interaction, actValue, isHand, tierconfig)
+	if not interaction or not tierconfig then return nil end
 	local drift = AutoSexDrift(actValue)
 	if drift <= 0 then return nil end
 	-- GET A RANDOM VALUE, SPECIFIC FUNCTION TYPES
 	-- 1. Fixed delta + truncated range - Uniform, unbiased, no edge sticking, no loop (best overall)
-	return GetRandomFloatNear_FixedDeltaTruncated(ActValueGet_Current(interaction, actValue, isHand), drift, minMaxDelta.Min, minMaxDelta.Max, minMaxDelta.Delta)
+	return GetRandomFloatNear_FixedDeltaTruncated(ActValueGet(interaction, actValue, isHand), drift, tierconfig.Min, tierconfig.Max, tierconfig.Delta)
 	-- -- 2. Value-dependent delta + truncated range - No boundary bias, safe, but movement slows near zero
-	-- return value = GetRandomFloatNear_ValueDeltaTruncated(ActValueGet_Current(interaction, actValue, isHand), drift, minMaxDelta.Min, minMaxDelta.Max, minMaxDelta.Delta)
+	-- return value = GetRandomFloatNear_ValueDeltaTruncated(ActValueGet_Current(interaction, actValue, isHand), drift, tierconfig.Min, tierconfig.Max, tierconfig.Delta)
 	-- -- 3. Value-dependent delta + reflect - Fast, but biased and lingers near bounds
-	-- return value = GetRandomFloatNear_ReflectValueDelta(ActValueGet_Current(interaction, actValue, isHand), drift, minMaxDelta.Min, minMaxDelta.Max, minMaxDelta.Delta)
+	-- return value = GetRandomFloatNear_ReflectValueDelta(ActValueGet_Current(interaction, actValue, isHand), drift, tierconfig.Min, tierconfig.Max, tierconfig.Delta)
 	-- -- 4. Value-dependent delta + clamp - Very fast, but strong boundary bias and hard sticking
-	-- return value = GetRandomFloatAroundClamped(ActValueGet_Current(interaction, actValue, isHand), drift, minMaxDelta.Min, minMaxDelta.Max, minMaxDelta.Delta)
+	-- return value = GetRandomFloatAroundClamped(ActValueGet_Current(interaction, actValue, isHand), drift, tierconfig.Min, tierconfig.Max, tierconfig.Delta)
 end
 
 -------------------------------------------------------------------------------------------------
@@ -517,7 +522,7 @@ end
 -------------------------------------------------------------------------------------------------
 
 -- ACTUAL PARAMETER VALUE (actual game value, If tween exists, target is the next destination of the value. If not, just take raw value from the game)
-function ActValueGet_Current(interaction, actValue, isHand)
+function ActValueGet(interaction, actValue, isHand)
 	if not interaction then return 0 end
 	if actValue == ActValue.Active then return ActTweenOrValueGet(interaction, ActValueParamNameGet(actValue, isHand)) and 1 or 0 end
 	if actValue == ActValue.Weight and isHand then return 0 end
@@ -526,7 +531,7 @@ function ActValueGet_Current(interaction, actValue, isHand)
 end
 
 -- RANDOM QUICK PARAMETER VALUE (new generated value, used in menu, "quick wide random" for responsive "FeelingLucky")
-function ActValueGet_MenuMinMax(actValue)
+function ActValueGet_Random(actValue)
 	local r = ActMenuMinMax[actValue] return r and GetRandomFloat(r.Min, r.Max) or 0
 end
 
@@ -623,7 +628,7 @@ function ActSpeedGet_Raw(interaction, isHand) return ActValueGet_Raw(interaction
 function ActSpeedGet(interaction, isHand) return ActTweenOrValueGet(interaction, ActValueParamNameGet(ActValue.Speed, isHand)) end
 
 -- RANDOM
-function ActSpeedSet_MenuRandom(interaction, isHand) return ActSpeedSet(interaction, ActValueGet_MenuMinMax(ActValue.Speed), isHand) end
+function ActSpeedSet_MenuRandom(interaction, isHand) return ActSpeedSet(interaction, ActValueGet_Random(ActValue.Speed), isHand) end
 
 -- SET
 function ActSpeedSet_Step(interaction, speedStep, increase, isHand)
@@ -651,7 +656,7 @@ function ActWeightGet_Raw(interaction, isHand) return ActValueGet_Raw(interactio
 function ActWeightGet(interaction, isHand) return isHand and 0 or ActTweenOrValueGet(interaction, ActParam.WeightPenis) end
 
 -- RANDOM
-function ActWeightSet_MenuRandom(interaction, isHand) return ActWeightSet(interaction, ActValueGet_MenuMinMax(ActValue.Weight), isHand) end
+function ActWeightSet_MenuRandom(interaction, isHand) return ActWeightSet(interaction, ActValueGet_Random(ActValue.Weight), isHand) end
 
 -- SET
 function ActWeightSet_Step(interaction, weightStep, increase, isHand)
@@ -677,7 +682,7 @@ function ActThrustGet_Raw(interaction, isHand) return NormalizeValue(ActValueGet
 function ActThrustGet(interaction, isHand) return NormalizeValue(ActTweenOrValueGet(interaction, ActValueParamNameGet(ActValue.Thrust, isHand)), 1, 3) end
 
 -- RANDOM
-function ActThrustSet_MenuRandom(interaction, isHand) return ActThrustSet(interaction, ActValueGet_MenuMinMax(ActValue.Thrust), isHand) end
+function ActThrustSet_MenuRandom(interaction, isHand) return ActThrustSet(interaction, ActValueGet_Random(ActValue.Thrust), isHand) end
 
 -- SET
 function ActThrustSet_Step(interaction, weightStep, increase, isHand)
@@ -707,13 +712,13 @@ function ActDepthGet(interaction, isHand, isStartDepth)
 end
 
 -- RANDOM SPLIT
-function ActDepthStartSet_MenuRandom(interaction, isHand) return ActDepthSet(interaction, ActValueGet_MenuMinMax(ActValue.DepthStart), isHand, true) end
-function ActDepthEndSet_MenuRandom(interaction, isHand) return ActDepthSet(interaction, ActValueGet_MenuMinMax(ActValue.DepthEnd), isHand, false) end
+function ActDepthStartSet_MenuRandom(interaction, isHand) return ActDepthSet(interaction, ActValueGet_Random(ActValue.DepthStart), isHand, true) end
+function ActDepthEndSet_MenuRandom(interaction, isHand) return ActDepthSet(interaction, ActValueGet_Random(ActValue.DepthEnd), isHand, false) end
 
 -- RANDOM TOGETHER
 function ActDepthSet_MenuRandom(interaction, isHand)
-	local startValue = ActDepthSet(interaction, ActValueGet_MenuMinMax(ActValue.DepthStart), isHand, true)
-	local endValue = ActDepthSet(interaction, ActValueGet_MenuMinMax(ActValue.DepthEnd), isHand, false)
+	local startValue = ActDepthSet(interaction, ActValueGet_Random(ActValue.DepthStart), isHand, true)
+	local endValue = ActDepthSet(interaction, ActValueGet_Random(ActValue.DepthEnd), isHand, false)
 	return startValue, endValue
 end
 

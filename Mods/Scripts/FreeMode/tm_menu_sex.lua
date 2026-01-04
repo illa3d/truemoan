@@ -11,39 +11,39 @@ tmSdec = 3
 label TMSexControl(human, interaction, isHand)
 	+ "• Max"
 		ActSpeedSet(interaction, TM_SexSpeedMax, isHand)
-		AutoSexTierBySpeed(human, ActSpeedGet(interaction, isHand))
+		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
 	+ "• Fast"
 		ActSpeedSet(interaction, TM_SexSpeedFast, isHand)
-		AutoSexTierBySpeed(human, ActSpeedGet(interaction, isHand))
+		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
 	+ "• Normal"
 		ActSpeedSet(interaction, TM_SexSpeedNormal, isHand)
-		AutoSexTierBySpeed(human, ActSpeedGet(interaction, isHand))
+		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
 	+ "• Medium"
 		ActSpeedSet(interaction, TM_SexSpeedMedium, isHand)
-		AutoSexTierBySpeed(human, ActSpeedGet(interaction, isHand))
+		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
 	+ "• Slow"
 		ActSpeedSet(interaction, TM_SexSpeedSlow, isHand)
-		AutoSexTierBySpeed(human, ActSpeedGet(interaction, isHand))
+		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
 	+ TM_UP.."Speed"
 		ActSpeedSet_Step(interaction, TM_SexSpeedStep, true, isHand)
-		AutoSexTierBySpeed(human, ActSpeedGet(interaction, isHand))
+		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
 	+ TM_DN.."Speed"
 		ActSpeedSet_Step(interaction, TM_SexSpeedStep, false, isHand)
-		AutoSexTierBySpeed(human, ActSpeedGet(interaction, isHand))
+		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
 	+ "RESET Speed	| " .. AccNum(ActSpeedGet(interaction, isHand), tmSdec) .. " | " .. TMMenuSexAutoSexLabel(human)
 		ActSpeedSet(interaction, 0, isHand)
-		AutoSexTierBySpeed(human, ActSpeedGet(interaction, isHand))
+		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
 	+ "Random Speed" [gold]
 		ActSpeedSet_MenuRandom(interaction, isHand)
-		AutoSexTierBySpeed(human, ActSpeedGet(interaction, isHand))
+		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
 	+ "Feeling Lucky" [gold]
 		--SetInteractionSpeedRandom(interaction, isHand) -- random speed control is above
