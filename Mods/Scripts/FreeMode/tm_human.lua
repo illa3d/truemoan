@@ -105,21 +105,21 @@ function TMHumanStats:AutoSexTierSet(autoSexTier)
 	self.AutoSexTier = autoSexTier
 end
 
+-- CUM
 function TMHumanStats:IsFeelingCum()
 	return self.CumLastTime ~= nil
 end
+
 function TMHumanStats:IsCumflating()
 	return self.CumflateHipsSize ~= nil
 end
 
-
--- CUM
 function TMHumanStats:CumReset()
-	stats.CumLastTime = nil
-	stats.CumEffectLastTime = nil
-	stats.CumLastUpdate = nil
-	stats.CumflateHipsSize = nil
-	stats.CumflateHipsSizeOrig = nil
+	self.CumLastTime = nil
+	self.CumEffectLastTime = nil
+	self.CumLastUpdate = nil
+	self.CumflateHipsSize = nil
+	self.CumflateHipsSizeOrig = nil
 end
 
 -------------------------------------------------------------------------------------------------
