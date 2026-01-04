@@ -1,23 +1,27 @@
 -- TrueMoan v1.9 by illa3d
 TMEyesOpen = true
+label TMMenuHumanStats(human)
+	+ "Auto sex	| " .. AccBool(TMHStatsGet(human).AutoSex)
+		Return()
+	+ "Sex tier	| " .. AccStr(TMHStatsGet(human).AutoSexTier)
+		Return()
+	+ "Is in sex	| " .. AccBoolYN(TMHStatsGet(human).IsHavingSex)
+		Return()
+	+ "Feeling cum	| " .. AccBoolYN(TMHStatsGet(human):IsFeelingCum())
+		Return()
+	+ "Cumflating	| " .. AccBoolYN(TMHStatsGet(human):IsCumflating())
+		Return()
+	+ "Arousal	| " .. AccNumPC(TMHStatsGet(human).Arousal, 2)
+		Return()
+	+ TM_MenuBack
+		Return(2)
+	+ TM_MenuClose
+stop
 
 label TMMenuHeyHuman(human)
-	+ "Stats »"
-		+ "Auto sex	| " .. AccBool(TMHStatsGet(human).AutoSex)
-			Return()
-		+ "Sex tier	| " .. AccStr(TMHStatsGet(human).AutoSexTier)
-			Return()
-		+ "Is in sex	| " .. AccBoolYN(TMHStatsGet(human).IsHavingSex)
-			Return()
-		+ "Feels cum	| " .. AccBoolYN(TMHStatsGet(human):IsFeelingCum())
-			Return()
-		+ "Cumflating	| " .. AccBoolYN(TMHStatsGet(human):IsCumflating())
-			Return()
-		+ "Arousal	| " .. AccNumPC(TMHStatsGet(human).Arousal, 2)
-			Return()
-		+ TM_MenuBack
-			Return(2)
-		+ TM_MenuClose
+	+ "Stats " .. AccStr(human.Name) .. " »		" .. AccNumPC(TMHStatsGet(human).Arousal)
+		TMMenuHumanStats(human)
+
 	+ "DELETE ".. AccStr(human.Name)
 		+ AccStr("may crash the game If")
 			Return()
@@ -35,16 +39,16 @@ label TMMenuHeyHuman(human)
 		HumanReset(human)
 		Return()
 	+ if not human.m_isMale
-		+ "Penis | " .. AccStr("OFF") [if not human.Penis.IsActive]
+		+ "Penis		| " .. AccStr("OFF") [if not human.Penis.IsActive]
 			HumanPenisSet(human, true)
 			Return(2)
-		+ "Penis | " .. AccStr("ON") [if human.Penis.IsActive]
+		+ "Penis		| " .. AccStr("ON") [if human.Penis.IsActive]
 			HumanPenisSet(human, false)
 			Return(2)
-	+ "Penetration | " .. AccStr("ON") [if not human.m_isMale]
+	+ "Penetration	| " .. AccStr("ON") [if not human.m_isMale]
 		HumanMaleSet(human, true)
 		Return()
-	+ "Penetration | " .. AccStr("OFF") [if human.m_isMale]
+	+ "Penetration	| " .. AccStr("OFF") [if human.m_isMale]
 		HumanMaleSet(human, false)
 		Return()
 	+ "Look at »" [gold]

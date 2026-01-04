@@ -183,7 +183,7 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	t = math.max(0, math.min(t, 1))
 	local cooldown = pauseMax * (1 - t)
 	-- Small randomness to avoid mechanical timing
-	if tier == "climax" or tier == "orgasm" then 
+	if tier == TMMoanTier.Climax or tier == TMMoanTier.Orgasm then
 		cooldown = 0.02
 	else
 		cooldown = cooldown + math.random() * 0.05

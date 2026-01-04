@@ -123,6 +123,7 @@ label TMSexControl(human, interaction, isHand)
 				+ "RESET Male | " .. AccNumPC(ActWeightGet(interaction, isHand), tmSdec)
 					ActWeightSet(interaction, 0)
 					Return()
+					Return()
 				+ "Random" [gold]
 					ActThrustSet_MenuRandom(interaction, isHand)
 					ActWeightSet_MenuRandom(interaction, isHand)
@@ -183,9 +184,21 @@ stop
 
 -- SEX MENU
 label TMMenuSex(human)
+	+ "Stats " .. AccStr(human.Name) .. " »		" .. AccNumPC(TMHStatsGet(human).Arousal)
+		TMMenuHumanStats(human)
+
 	+ "Refresh"
 		Return()
-	-- START / STOP
+
+	+ if HasSexPartner_Any(human) and IsSexActive_Any(human)
+		-- Quick commands
+		+ "• Switch!"
+			ActAll_WeightSwitch(human)
+			Return()
+		+ "• Deeper!"
+			ActDeeper(human)
+			Return()
+
 	-- GETTER HANDJOB
 	+ "Handjob start" [if HasSexPartner(human,ActBody.PenisHand) and not IsSexActive(human,ActBody.PenisHand)]
 		human.Penis.Interaction.m_autoHandActive = true
@@ -225,7 +238,6 @@ label TMMenuSex(human)
 	+ "Pussy " ..AccStr("stop") [if HasSexPartner(human,ActBody.Vagina) and IsSexActive(human,ActBody.Vagina)]
 		human.Vagina.Fucker.Penis.Interaction.AutoActive = false
 		Return()
-
 	-- PENIS
 	+ if human.Penis.IsActive == true
 		+ if game.HasAnim(human.Penis)
@@ -246,7 +258,7 @@ label TMMenuSex(human)
 			+ "Wet start"
 				WetSet(human, 10000, ActBody.Vagina)
 				Return()
-		
+
 	-- GIVER (HAND)
 	+ "| Handjob »	| " .. AccNumPC(ActValueGet_ByBody(human, ActBody.PenisHand, ActValue.Speed), tmSdecSpd) [if HasSexPartner(human,ActBody.PenisHand)] [gold]
 		TMSexControl(human, ActGet(human,ActBody.PenisHand), true)

@@ -28,6 +28,9 @@ TM_SexMaleStep = 0.05	-- giver/getter, linear percent (of UI slider)
 TM_SexThrustStep = 0.05	-- easier/harder, linear percent (of UI slider)
 TM_SexDepthStep = 0.05	-- shallow/deep, linear percent (of UI slider)
 
+-- Sex controls quick command increments
+TM_SexDeeperStep = 0.1	-- Deeper command
+
 -- Sex speed presets (Min: 0.001, Max: 2)
 TM_SexSpeedMax = 2
 TM_SexSpeedFast = 0.9
