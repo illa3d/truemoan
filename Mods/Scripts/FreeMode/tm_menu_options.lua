@@ -1,4 +1,4 @@
--- TrueMoan v1.8 by illa3d
+-- TrueMoan v1.9 by illa3d
 TM_UITips_Options = true
 TM_UITip_Options = "Tip: edit defaults in tm-config"
 tmOdec = 2
@@ -43,9 +43,9 @@ label TMMenuOptions(human)
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
-		-- + "Auto sex	| " .. AccBool(TM_AutoSex)
-		-- 	TM_AutoSex = not TM_AutoSex
-		-- 	Return()
+		+ "Auto sex	| " .. AccBool(TM_AutoSex)
+			TM_AutoSex = not TM_AutoSex
+			Return()
 		+ "Wet sex	| " .. AccBool(TM_WetSex)
 			TM_WetSex = not TM_WetSex
 			Return()

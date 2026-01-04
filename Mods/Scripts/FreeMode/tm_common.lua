@@ -1,4 +1,4 @@
--- TrueMoan v1.8 by illa3d
+-- TrueMoan v1.9 by illa3d
 -------------------------------------------------------------------------------------------------
 -- SYSTEM
 -------------------------------------------------------------------------------------------------
@@ -35,6 +35,17 @@ function GetRandomFloat01() return math.random() end
 function GetRandomFloatAround(value, percent)
 	percent = Clamp01(percent)
 	return GetRandomFloat(value * (1 - percent), value * (1 + percent))
+end
+
+-------------------------------------------------------------------------------------------------
+-- LISTS
+-------------------------------------------------------------------------------------------------
+
+-- Steps forward/backward in an ordered list. dir=1 next, dir = -1 previous
+function StepInOrderedList(list, current, dir)
+	if type(list) ~= "table" or current == nil or (dir ~= 1 and dir ~= -1) then return current end
+	for i = 1, #list do if list[i] == current then return list[i + dir] or current end end
+	return current
 end
 
 -- Returns a random element from a list

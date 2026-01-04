@@ -1,4 +1,4 @@
--- TrueMoan v1.8 by illa3d
+-- TrueMoan v1.9 by illa3d
 -- Per-human AUTHORITATIVE stat storage (including EditBody data)
 TM_HumanStatsList = {}
 local TMH_LastUpdateClock = os.clock()
@@ -93,17 +93,18 @@ function TMHumanStats:ArousalUpdate(deltaTime)
 	else self.Arousal = math.max(self.Arousal - deltaTime * TMH_DefaultArousalDecay,0) end
 end
 
+-- AUTOSEX
 function TMHumanStats:AutoSexSet(active)
 	self.AutoSex = active
-	if self.AutoSexTier == nil then self.AutoSexTier = AutoSexTier.Normal end
+	if self.AutoSexTier == nil then self.AutoSexTier = AutoSexTierDefault end
 end
-
 
 function TMHumanStats:AutoSexTierSet(autoSexTier)
 	if not autoSexTier then return end
 	self.AutoSexTier = autoSexTier
 end
 
+-- CUM
 function TMHumanStats:CumReset()
 	stats.CumLastTime = nil
 	stats.CumEffectLastTime = nil

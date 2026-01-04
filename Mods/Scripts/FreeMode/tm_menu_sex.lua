@@ -1,4 +1,4 @@
--- TrueMoan v1.8 by illa3d
+-- TrueMoan v1.9 by illa3d
 -- Variables
 tmCumevery = 0
 -- Sex speed decimals
@@ -11,30 +11,39 @@ tmSdec = 3
 label TMSexControl(human, interaction, isHand)
 	+ "• Max"
 		ActSpeedSet(interaction, TM_SexSpeedMax, isHand)
+		AutoSexTierBySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
 	+ "• Fast"
 		ActSpeedSet(interaction, TM_SexSpeedFast, isHand)
+		AutoSexTierBySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
 	+ "• Normal"
 		ActSpeedSet(interaction, TM_SexSpeedNormal, isHand)
+		AutoSexTierBySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
 	+ "• Medium"
 		ActSpeedSet(interaction, TM_SexSpeedMedium, isHand)
+		AutoSexTierBySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
 	+ "• Slow"
 		ActSpeedSet(interaction, TM_SexSpeedSlow, isHand)
+		AutoSexTierBySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
 	+ TM_UP.."Speed"
 		ActSpeedSet_Step(interaction, TM_SexSpeedStep, true, isHand)
+		AutoSexTierBySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
 	+ TM_DN.."Speed"
 		ActSpeedSet_Step(interaction, TM_SexSpeedStep, false, isHand)
+		AutoSexTierBySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
-	+ "RESET Speed	| " .. AccNum(ActSpeedGet(interaction, isHand), tmSdec)
+	+ "RESET Speed	| " .. AccNum(ActSpeedGet(interaction, isHand), tmSdec) .. " | " .. TMMenuSexAutoSexLabel(human)
 		ActSpeedSet(interaction, 0, isHand)
+		AutoSexTierBySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
 	+ "Random Speed" [gold]
 		ActSpeedSet_MenuRandom(interaction, isHand)
+		AutoSexTierBySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
 	+ "Feeling Lucky" [gold]
 		--SetInteractionSpeedRandom(interaction, isHand) -- random speed control is above
@@ -311,14 +320,19 @@ label TMMenuSex(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-
-	-- + "Auto sex	| " .. AccStr("Turbo")-- [if TM_AutoSexTurbo]
-	-- 	TM_AutoSexTurbo = false
-	-- 	Return()
-	-- + "Auto sex	| " .. AccBool(IsAutoSex(human))-- [if not TM_AutoSexTurbo]
-	-- 	AutoSexToggle(human)
-	-- 	Return()
+	+ "Auto sex	| " .. AccStr(TMMenuSexAutoSexLabel(human))
+		if TM_AutoSex
+			AutoSexToggle(human)
+		Return()
 	+ TM_MenuBack
 		Return(2)
 	+ TM_MenuClose
 stop
+
+function TMMenuSexAutoSexLabel(human)
+	local stats = TMHStatsGet(human)
+	if not stats then return "" end
+	if not TM_AutoSex then return "OFF (global)"
+	elseif not stats.AutoSex then return "OFF"
+	else return stats.AutoSexTier end
+end

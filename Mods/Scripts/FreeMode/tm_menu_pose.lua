@@ -1,4 +1,4 @@
--- TrueMoan v1.8 by illa3d
+-- TrueMoan v1.9 by illa3d
 label TMMenuPose(human)
 	-- FAUNA
 	+ if TMMOD_FaunaLabs

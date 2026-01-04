@@ -1,4 +1,4 @@
--- TrueMoan v1.8 by illa3d
+-- TrueMoan v1.9 by illa3d
 -------------------------------------------------------------------------------------------------
 -- INTERACTION BETWEEN HUMANS, HOLES AND PENISES, INTERACTION PARAMETERS AND THEIR TWEENS
 -------------------------------------------------------------------------------------------------
@@ -107,26 +107,55 @@ AutoSexTier = {
 	Orgasm = "Orgasm",
 }
 
--- AUTOSEX PARAMETER VALUE LIMITS (values with thrust normalized. bias is minimum move)
+-- Default tier set for new humans
+AutoSexTierDefault = AutoSexTier.Normal -- TODO ALL TIERS
+-- List of enabled tiers to toggle through
+AutoSexTierEnabledMin = AutoSexTier.Normal -- TODO ALL TIERS
+AutoSexTierEnabled = { -- TODO ALL TIERS
+	-- AutoSexTier.Idle,
+	-- AutoSexTier.Slow,
+	AutoSexTier.Normal,
+	AutoSexTier.Fast,
+	-- AutoSexTier.Faster,
+	-- AutoSexTier.Climax,
+	-- AutoSexTier.Orgasm,
+}
+
+-- When user modifies the speed, value it will jump up or down the tier
+
+-- AUTOSEX PARAMETER VALUE LIMITS (values with thrust normalized, delta = movement range)
 -- limiting this to lower than almost maximum values "overrides" user control. Ie user sets 2, this lowers to 0.5 max
--- Values used when not in TM_AutoSexTurbo
-AutoSexNormalMinMax = {
-	[ActValue.Speed] = { Min = 0.1, Max = 0.7, Delta = 0.1 },
-	[ActValue.Weight] = { Min = 0.05, Max = 0.95, Delta = 0.04 },
-	[ActValue.Thrust] = { Min = 0.1, Max = 0.8, Delta = 0.06 }, -- normalized thrust values
-	[ActValue.DepthStart] = { Min = 0.1, Max = 0.5, Delta = 0.1 },
+-- These values are taken from the sex speed user has chosen in the UI or arousal character stats value
+AutoSexTierRandom_Normal = {
+	[ActValue.Speed] =			{ Min = 0.1,	Max = 0.6,	Delta = 0.07 },
+	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.04 },
+	[ActValue.Thrust] =			{ Min = 0.1,	Max = 0.8,	Delta = 0.06 }, -- normalized thrust values
+	[ActValue.DepthStart] = 	{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },
 	[ActValue.DepthEnd] = { Min = 0.6, Max = 1.2, Delta = 0.1 },
 }
 
--- Values used when in TM_AutoSexTurbo
-AutoSexFastMinMax = {
-	[ActValue.Speed] = { Min = 0.4, Max = 1.7, Delta = 0.1 },
-	[ActValue.Weight] = { Min = 0.05, Max = 0.95, Delta = 0.05 },
-	[ActValue.Thrust] = { Min = 0.01, Max = 0.4, Delta = 0.1 }, -- normalized thrust values
-	[ActValue.DepthStart] = { Min = 0.1, Max = 0.5, Delta = 0.1 },
-	[ActValue.DepthEnd] = { Min = 0.6, Max = 1.2, Delta = 0.1 },
+AutoSexTierRandom_Fast = {
+	[ActValue.Speed] =			{ Min = 0.4,	Max = 1.7,	Delta = 0.1 },
+	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },
+	[ActValue.Thrust] =			{ Min = 0.01,	Max = 0.4,	Delta = 0.1 }, -- normalized thrust values
+	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },
+	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },
 }
 
+-- Tier switch speed limits and random definitions
+AutoSexTierRandom_Default = AutoSexTierRandom_Normal  -- TODO ALL TIERS
+
+AutoSexTierLimits = {
+	[AutoSexTier.Idle] =	{ Min = 0,		Max = 0.1,	Random = nil },
+	[AutoSexTier.Slow] =	{ Min = 0.1,	Max = 0.3,	Random = nil  },
+	[AutoSexTier.Normal] =	{ Min = 0.3,	Max = 0.5,	Random = AutoSexTierRandom_Normal },
+	[AutoSexTier.Fast] =	{ Min = 0.5,	Max = 0.75,	Random = AutoSexTierRandom_Fast },
+	[AutoSexTier.Faster] =	{ Min = 0.75,	Max = 1,	Random = nil  },
+	[AutoSexTier.Climax] =	{ Min = 1,		Max = 1.5,	Random = nil  },
+	[AutoSexTier.Orgasm] =	{ Min = 1.5,	Max = 2,	Random = nil  },
+}
+
+-- TODO ALL TIERS
 
 -------------------------------------------------------------------------------------------------
 -- CONFIG VALUES CLAMPING
@@ -254,7 +283,17 @@ end
 
 function AutoSexToggle(human)
 	local stats = TMHStatsGet(human)
-	stats:AutoSexSet(not stats.AutoSex)
+	if not stats then return end
+	-- If AutoSex is OFF, turn it ON
+	if not stats.AutoSex then
+		stats:AutoSexSet(true)
+		stats:AutoSexTierSet(AutoSexTierDefault)
+		AutoSexAnimHandle(human)
+		return
+	end
+	-- AutoSex is ON, step down tiers
+	if stats.AutoSexTier ~= AutoSexTierEnabledMin  then stats.AutoSexTier = StepInOrderedList(AutoSexTierEnabled, stats.AutoSexTier, -1)
+	else stats:AutoSexSet(false) end
 	AutoSexAnimHandle(human)
 end
 
@@ -265,8 +304,31 @@ function AutoSexActive(human, active)
 	AutoSexAnimHandle(human)
 end
 
+-- TODO ALL TIERS - remove (specialized for normal <-> fast)
 function AutoSexTierBySpeed(human, speed)
+	if not human or type(speed) ~= "number" then return end
+	local stats = TMHStatsGet(human)
+	if not stats then return end
+	local newTier = stats.AutoSexTier
+	local mm = AutoSexTierLimits[AutoSexTier.Normal]
+	if speed < mm.Max then newTier = AutoSexTier.Normal
+	elseif speed > mm.Max then newTier = AutoSexTier.Fast end
+	stats:AutoSexTierSet(newTier)
 end
+
+-- TODO ALL TIERS - enable
+-- When all tiers are working
+-- function AutoSexTierBySpeed(human, speed)
+-- 	if not human or type(speed) ~= "number" then return end
+-- 	local stats = TMHStatsGet(human)
+-- 	if not stats then return end
+-- 	for tier, mm in pairs(AutoSexTierSpeedLimit) do
+-- 		if speed >= mm.Min and speed < mm.Max then
+-- 			stats:AutoSexTierSet(tier)
+-- 			return
+-- 		end
+-- 	end
+-- end
 
 -------------------------------------------------------------------------------------------------
 
@@ -327,7 +389,7 @@ function AutoSexOnTickParamsSet(human, body)
 			-- Init or subtract interaction timer (for all parameters)
 			bodyTimers[actValue] = (bodyTimers[actValue] or 0) - ActAutoSexTickTime
 			if bodyTimers[actValue] <= 0 then
-				local minMaxDelta = AutoSexMinMaxGet(stats.AutoSexTier)[actValue]
+				local minMaxDelta = AutoSexRandomConfigGet(stats.AutoSexTier)[actValue]
 				if minMaxDelta then
 					local isHand = body == ActBody.PenisHand
 					local value = AutoSexRandomValueGet(interaction, actValue, isHand, minMaxDelta )
@@ -345,10 +407,10 @@ end
 -- AUTOSEX RANDOM VALUES (MIN MAX DELTA)
 -------------------------------------------------------------------------------------------------
 
-function AutoSexMinMaxGet(autoSexTier)
-	if autoSexTier == AutoSexTier.Normal then return AutoSexNormalMinMax
-	elseif autoSexTier == AutoSexTier.Fast then return AutoSexFastMinMax
-	else return AutoSexNormalMinMax end
+function AutoSexRandomConfigGet(autoSexTier)
+	local tier = AutoSexTierLimits[autoSexTier]
+	local values = tier and tier.Random
+	return values or AutoSexTierRandom_Default
 end
 
 function AutoSexRandomValueGet(interaction, actValue, isHand, minMaxDelta)
