@@ -36,11 +36,11 @@ local actActiveTweens = {}
 local actActiveTweenMap = {}
 
 -- AutoSexParams
-ActAutoSexTimers = ActAutoSexTimers or {}
-ActAutoSexTickTime = 0.25 -- seconds (game timer frequency)
-ActAutoSexTimerClamp = { Min = 1, Max = 20 } -- seconds (timer to allow new random sex parameter)
+local ActAutoSexTimers = ActAutoSexTimers or {}
+local ActAutoSexTickTime = 0.25 -- seconds (game timer frequency)
+local ActAutoSexTimerClamp = { Min = 1, Max = 20 } -- seconds (timer to allow new random sex parameter)
 -- TweenParams
-ActTweenTimeMinMax = { Min = 0.1, Max = 3 } -- seconds (time for parameter tween duration)
+local ActTweenTimeMinMax = { Min = 0.1, Max = 3 } -- seconds (time for parameter tween duration)
 
 -------------------------------------------------------------------------------------------------
 
@@ -124,11 +124,10 @@ AutoSexTier_Toggle = {
 	-- AutoSexTier.Orgasm,
 }
 
--- When user modifies the speed, value it will jump up or down the tier
 
--- AUTOSEX PARAMETER VALUE LIMITS (values with thrust normalized, delta = movement range)
--- limiting this to lower than almost maximum values "overrides" user control. Ie user sets 2, this lowers to 0.5 max
--- These values are taken from the sex speed user has chosen in the UI or arousal character stats value
+-- AUTOSEX PARAMETER VALUE LIMITS (values with thrust normalized (0-1), delta = movement range)
+-- When user modifies the speed, value it will jump up or down the tier
+-- These values are used in AutoSex Tiers when user changes the sex speed
 AutoSexTierConfig_Idle = {
 	[ActValue.Speed] =			{ Min = 0.001,	Max = 0.2,	Delta = 0.03 },
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.04 },
@@ -188,6 +187,7 @@ AutoSexTierConfig_Orgasm = {
 -- Tier switch speed limits and random definitions
 AutoSexTierRandom_Default = AutoSexTierConfig_Normal
 
+-- Collection of all the tier parameters, their tier speed and parameter value limits
 AutoSexTierConfig = {
 	[AutoSexTier.Idle] =	{ Min = 0,		Max = 0.1,	Random = AutoSexTierConfig_Idle },
 	[AutoSexTier.Slow] =	{ Min = 0.1,	Max = 0.25,	Random = AutoSexTierConfig_Slow },
@@ -673,12 +673,12 @@ end
 -------------------------------------------------------------------------------------------------
 -- INTERACTION THRUST (PENIS/HAND) (normalized 0-1 to actual 1-3)
 -------------------------------------------------------------------------------------------------
-function ActThrustNormalize(weight) return NormalizeValue(weight, 1, 3) end
-function ActThrustDenormalize(weight) return DenormalizeValue(Clamp01(weight), 1, 3) end
+function ActThrust_Norm(weight) return NormalizeValue(weight, 1, 3) end
+function ActThrust_Denorm(weight) return ActValueClamp_Raw(DenormalizeValue(Clamp01(weight), 1, 3), ActValue.Thrust) end
 
 -- GET
-function ActThrustGet_Raw(interaction, isHand) return ActThrustNormalize(ActValueGet_Raw(interaction, ActValue.Thrust, isHand)) end
-function ActThrustGet(interaction, isHand) return ActThrustNormalize(ActValueGet_RawOrTween(interaction, ActValueParamNameGet(ActValue.Thrust, isHand))) end
+function ActThrustGet_Raw(interaction, isHand) return ActThrust_Norm(ActValueGet_Raw(interaction, ActValue.Thrust, isHand)) end
+function ActThrustGet(interaction, isHand) return ActThrust_Norm(ActValueGet_RawOrTween(interaction, ActValueParamNameGet(ActValue.Thrust, isHand))) end
 
 -- RANDOM
 function ActThrustSet_MenuRandom(interaction, isHand) return ActThrustSet(interaction, ActValueGen_Random(ActValue.Thrust), isHand) end
@@ -691,7 +691,7 @@ function ActThrustSet_Step(interaction, weightStep, increase, isHand)
 	return ActThrustSet(interaction, weight, isHand)
 end
 function ActThrustSet(interaction, weight, isHand)
-	local weight = ActThrustDenormalize(weight)
+	local weight = ActThrust_Denorm(weight)
 	ActActiveSet(interaction, isHand, true)
 	if SexTweenAllow() then ActTweenTo(interaction, ActValueParamNameGet(ActValue.Thrust, isHand), weight, SexTweenTime())
 	else ActValueSet_Raw(interaction, ActValue.Thrust, isHand, weight) end
