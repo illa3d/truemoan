@@ -25,18 +25,27 @@ end
 function AccBoolDE (bol)
 	 return FCol(bol and "Enabled" or "Disabled", TM_MenuAccent)
 end
+function AccBoolYN (bol)
+	 return FCol(bol and "Yes" or "No", TM_MenuAccent)
+end
 function AccStr (str)
-	return  FCol(str, TM_MenuAccent)
+	return FCol(str, TM_MenuAccent)
 end
 function AccNum (value, decimals)
-	return  FCol(FDec(value, decimals), TM_MenuAccent)
+	return FCol(FDec(value, decimals), TM_MenuAccent)
+end
+function AccTime (timestamp, decimals)
+	return AccNum((os.time() - timestamp), decimals) .. "s ago"
+end
+function AccNumPC (value, decimals)
+	return FCol((FDec(value * 100, decimals) .. "%"), TM_MenuAccent)
 end
 function AccTextNum1 (text, value, decimals)
-	return  text .. FCol(FDec(value, decimals), TM_MenuAccent)
+	return text .. FCol(FDec(value, decimals), TM_MenuAccent)
 end
 function AccTextNum2 (text1, value1, text2, value2, decimals)
-	return  text1 .. FCol(FDec(value1, decimals), TM_MenuAccent) .. " | " .. text2 .. FCol(FDec(value2, decimals), TM_MenuAccent)
+	return text1 .. FCol(FDec(value1, decimals), TM_MenuAccent) .. " | " .. text2 .. FCol(FDec(value2, decimals), TM_MenuAccent)
 end
 function AccTextNum3 (text1, value1, text2, value2, text3, value3, decimals)
-	return  text1 .. FCol(FDec(value1, decimals), TM_MenuAccent) .. " | " .. text2 .. FCol(FDec(value2, decimals), TM_MenuAccent) .. " | " .. text3 .. FCol(FDec(value3, decimals), TM_MenuAccent)
+	return text1 .. FCol(FDec(value1, decimals), TM_MenuAccent) .. " | " .. text2 .. FCol(FDec(value2, decimals), TM_MenuAccent) .. " | " .. text3 .. FCol(FDec(value3, decimals), TM_MenuAccent)
 end

@@ -2,6 +2,22 @@
 TMEyesOpen = true
 
 label TMMenuHeyHuman(human)
+	+ "Stats »"
+		+ "Auto sex	| " .. AccBool(TMHStatsGet(human).AutoSex)
+			Return()
+		+ "Sex tier	| " .. AccStr(TMHStatsGet(human).AutoSexTier)
+			Return()
+		+ "Is in sex	| " .. AccBoolYN(TMHStatsGet(human).IsHavingSex)
+			Return()
+		+ "Feels cum	| " .. AccBoolYN(TMHStatsGet(human):IsFeelingCum())
+			Return()
+		+ "Cumflating	| " .. AccBoolYN(TMHStatsGet(human):IsCumflating())
+			Return()
+		+ "Arousal	| " .. AccNumPC(TMHStatsGet(human).Arousal, 2)
+			Return()
+		+ TM_MenuBack
+			Return(2)
+		+ TM_MenuClose
 	+ "DELETE ".. AccStr(human.Name)
 		+ AccStr("may crash the game If")
 			Return()

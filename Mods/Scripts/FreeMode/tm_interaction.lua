@@ -355,15 +355,22 @@ function AutoSexOnTick(human)
 	if not TM_AutoSex or human == nil then return end
 	local stats = TMHStatsGet(human)
 	if not stats or not stats.AutoSex then return end
+	local isPenisHole = IsSexActive(human, ActBody.PenisHole)
+	local isPenisHand = IsSexActive(human, ActBody.PenisHand)
+	local isMouth = IsSexActive(human, ActBody.Mouth)
+	local isAnus = IsSexActive(human, ActBody.Anus) 
+	local isVagina = IsSexActive(human, ActBody.Vagina) 
+	stats:IsHavingSexSet(isPenisHole or isPenisHand or isMouth or isAnus or isVagina)
+
 	-- Start setting all parameters that are in use
 	-- Penis sets params only if hole owners don't (prevents setting params from both sides)
-	if IsSexActive(human, ActBody.PenisHole) and not IsAutoSexPartner(human, ActBody.PenisHole) then AutoSexOnTickParamsSet(human, ActBody.PenisHole) end
+	if isPenisHole and not IsAutoSexPartner(human, ActBody.PenisHole) then AutoSexOnTickParamsSet(human, ActBody.PenisHole) end
 	-- Penis owner
-	if IsSexActive(human, ActBody.PenisHand) then AutoSexOnTickParamsSet(human, ActBody.PenisHand) end
+	if isPenisHand then AutoSexOnTickParamsSet(human, ActBody.PenisHand) end
 	-- Holes
-	if IsSexActive(human, ActBody.Mouth) then AutoSexOnTickParamsSet(human, ActBody.Mouth) end
-	if IsSexActive(human, ActBody.Anus) then AutoSexOnTickParamsSet(human, ActBody.Anus) end
-	if IsSexActive(human, ActBody.Vagina) then AutoSexOnTickParamsSet(human, ActBody.Vagina) end
+	if isMouth then AutoSexOnTickParamsSet(human, ActBody.Mouth) end
+	if isAnus then AutoSexOnTickParamsSet(human, ActBody.Anus) end
+	if isVagina then AutoSexOnTickParamsSet(human, ActBody.Vagina) end
 end
 
 -- START INTERACTION PARAMETER SET (Calculate timer against ticker and fire events for each active interaction)
