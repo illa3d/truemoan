@@ -1,7 +1,7 @@
 -- TrueMoan v1.9 by illa3d
 -- Code in: tm_bodyedit.lua
 -- Body edit decimals
-tmBdec = 3
+tmBdec = 2
 
 label TMMenuBody(human)
 	+ "Edit safe | " .. AccBool(TM_BodyEditSafe) .. (TM_BodyEditSafe and "" or "(can crash app)")
@@ -13,7 +13,7 @@ label TMMenuBody(human)
 	+ "Copy | "  .. AccStr(human.Name)
 		TMBodyCopy(human)
 		Return()
-	+ "| Neck »	| " .. AccTextNum1("N", TMBodyUI(TMBody.Neck), tmBdec) [gold]
+	+ "| Neck »	|" .. AccTextNum1("N", TMBodyUI(TMBody.Neck), tmBdec) [gold]
 		+ TM_UP.."Neck"
 			TMBodyEdit_Up(human, TMBody.Neck, TM_BodyStepB)
 			Return()
@@ -26,7 +26,7 @@ label TMMenuBody(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "| Arms »	| " .. AccTextNum2("U", TMBodyUI(TMBody.UpperArms), "F", TMBodyUI(TMBody.Forearms), tmBdec) [gold]
+	+ "| Arms »	|" .. AccTextNum2("U", TMBodyUI(TMBody.UpperArms), "F", TMBodyUI(TMBody.Forearms), tmBdec) [gold]
 		+ TM_UP.."Upper arms"
 			TMBodyEdit_Up(human, TMBody.UpperArms, TM_BodyStepB)
 			Return()
@@ -48,7 +48,7 @@ label TMMenuBody(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "| Legs »	| " .. AccTextNum2("T", TMBodyUI(TMBody.Thigh), "C", TMBodyUI(TMBody.Calf), tmBdec) [gold]
+	+ "| Legs »	|" .. AccTextNum2("T", TMBodyUI(TMBody.Thigh), "C", TMBodyUI(TMBody.Calf), tmBdec) [gold]
 		+ TM_UP.."Thigh"
 			TMBodyEdit_Up(human, TMBody.Thigh, TM_BodyStepB)
 			Return()
@@ -70,7 +70,7 @@ label TMMenuBody(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "| Waist »	| " .. AccTextNum2("W", TMBodyUI(TMBody.Waist), "H", TMBodyUI(TMBody.Hips), tmBdec) [gold]
+	+ "| Waist »	|" .. AccTextNum2("W", TMBodyUI(TMBody.Waist), "H", TMBodyUI(TMBody.Hips), tmBdec) [gold]
 		+ TM_UP.."Waist"
 			TMBodyEdit_Up(human, TMBody.Waist, TM_BodyStepA)
 			Return()
@@ -92,7 +92,7 @@ label TMMenuBody(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "| Ass »	| " .. AccTextNum1("A", TMBodyUI(TMBody.Ass), tmBdec) [gold]
+	+ "| Ass »	|" .. AccTextNum1("A", TMBodyUI(TMBody.Ass), tmBdec) [gold]
 		+ TM_UP.."Ass"
 			TMBodyEdit_Up(human, TMBody.Ass, TM_BodyStepB)
 			Return()
@@ -106,7 +106,7 @@ label TMMenuBody(human)
 			Return(2)
 		+ TM_MenuClose
 	+ if not human.m_isMale
-		+ "| Breasts »	| " .. AccTextNum2("B", TMBodyUI(TMBody.Breasts), "N", TMBodyUI(TMBody.Nipples), tmBdec) [gold]
+		+ "| Breasts »	|" .. AccTextNum2("B", TMBodyUI(TMBody.Breasts), "N", TMBodyUI(TMBody.Nipples), tmBdec) [gold]
 			+ TM_UP.."Breasts"
 				TMBodyEdit_Up(human, TMBody.Breasts, TM_BodyStepC)
 				Return()
@@ -129,7 +129,7 @@ label TMMenuBody(human)
 				Return(2)
 			+ TM_MenuClose
 	+ if human.Penis.IsActive
-		+ "| Penis »	| " .. AccTextNum2("S", TMBodyUI(TMBody.PenisSize), "L", TMBodyUI(TMBody.PenisLength), tmBdec) [gold]
+		+ "| Penis »	|" .. AccTextNum2("S", TMBodyUI(TMBody.PenisSize), "L", TMBodyUI(TMBody.PenisLength), tmBdec) [gold]
 			+ "| Ragdoll »	| " .. AccNum(TMBodyUI(TMBody.PenisRagdoll), tmBdec) [gold]
 				+ TM_UP.."Ragdoll"
 					TMBodyEdit_Up(human, TMBody.PenisRagdoll, TM_BodyStepB)
@@ -177,7 +177,7 @@ label TMMenuBody(human)
 			+ TM_MenuBack
 				Return(2)
 			+ TM_MenuClose
-	+ "| Body »	| " .. AccTextNum2("B", TMBodyUI(TMBody.Body), "M", TMBodyUI(TMBody.Muscle), tmBdec) [gold]
+	+ "| Body »	|" .. AccTextNum2("B", TMBodyUI(TMBody.Body), "M", TMBodyUI(TMBody.Muscle), tmBdec) [gold]
 		+ TM_UP.."Body"
 			TMBodyEdit_Up(human, TMBody.Body, TM_BodyStepC)
 			Return()
