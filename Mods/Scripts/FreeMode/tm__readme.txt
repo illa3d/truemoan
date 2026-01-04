@@ -70,6 +70,12 @@ GitHub Repository - https://github.com/illa3d/truemoan
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
 
+[ v1.9a ]
+- AutoSex flag and  Tier (Normal, Fast)  per character
+- Tier speed/random values polish
+- AutoSex control improvements
+- Character status display (autosex, tier, arousal, feels sex, feels cum, is cumflating)
+
 [ v1.9 ]
 - Added Cum reaction/effects (moaning, wetness, cumflation)
 - BodyEdit now shows values of selected characters
