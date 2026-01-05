@@ -83,6 +83,7 @@ label TMSexControl(human, interaction, isHand)
 					Return()
 				+ "Random" [gold]
 					ActThrustSet_MenuRandom(interaction, isHand)
+					Return()
 				+ TM_MenuBack
 					Return(2)
 				+ TM_MenuClose
@@ -122,7 +123,6 @@ label TMSexControl(human, interaction, isHand)
 					Return()
 				+ "RESET Male | " .. AccNumPC(ActWeightGet(interaction, isHand), tmSdec)
 					ActWeightSet(interaction, 0)
-					Return()
 					Return()
 				+ "Random" [gold]
 					ActThrustSet_MenuRandom(interaction, isHand)
@@ -192,7 +192,7 @@ label TMMenuSex(human)
 
 	+ if HasSexPartner_Any(human) and IsSexActive_Any(human)
 		-- Quick commands
-		+ "• Switch!"
+		+ "• Switch!" [if not HasSexPartner_PenisHand(human)]
 			ActAll_WeightSwitch(human)
 			Return()
 		+ "• Deeper!"
