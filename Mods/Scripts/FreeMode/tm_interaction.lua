@@ -218,15 +218,15 @@ end
 -------------------------------------------------------------------------------------------------
 -- SEX / BODY HOLES / SEXPARTNER (fucker)
 -------------------------------------------------------------------------------------------------
-function HasSexPartner_Any(human) return
-	HasSexPartner(human, ActBody.PenisHand) or HasSexPartner(human, ActBody.PenisHole) or 
+function HasSexPartner_Any(human)
+	return HasSexPartner(human, ActBody.PenisHand) or HasSexPartner(human, ActBody.PenisHole) or 
 	HasSexPartner(human, ActBody.Mouth) or HasSexPartner(human, ActBody.Anus) or HasSexPartner(human, ActBody.Vagina) end
-function HasSexPartner_HoleAny(human) return
-	HasSexPartner(human, ActBody.Mouth) or HasSexPartner(human, ActBody.Anus) or HasSexPartner(human, ActBody.Vagina) end
-function HasSexPartner_PenisHand(human) return
-	HasSexPartner(human, ActBody.PenisHand) end
-function HasSexPartner_PenisHole(human) return
-	HasSexPartner(human, ActBody.PenisHole) end
+function HasSexPartner_HoleAny(human)
+	return HasSexPartner(human, ActBody.Mouth) or HasSexPartner(human, ActBody.Anus) or HasSexPartner(human, ActBody.Vagina) end
+function HasSexPartner_PenisHand(human)
+	return HasSexPartner(human, ActBody.PenisHand) end
+function HasSexPartner_PenisHole(human)
+	return HasSexPartner(human, ActBody.PenisHole) end
 function HasSexPartner(human, body)
 	if human == nil then return false end
 	if body == ActBody.PenisHand and human.Penis.m_holdDepth ~= 0 then return true
@@ -257,15 +257,15 @@ function SexPartners_Get(human)
 end
 
 -------------------------------------------------------------------------------------------------
-function IsSexActive_Any(human) return
-	IsSexActive(human, ActBody.PenisHand) or IsSexActive(human, ActBody.PenisHole) or 
+function IsSexActive_Any(human)
+	return IsSexActive(human, ActBody.PenisHand) or IsSexActive(human, ActBody.PenisHole) or 
 	IsSexActive(human, ActBody.Mouth) or IsSexActive(human, ActBody.Anus) or IsSexActive(human, ActBody.Vagina) end
-function IsSexActive_HoleAny(human) return
-	IsSexActive(human, ActBody.Mouth) or IsSexActive(human, ActBody.Anus) or IsSexActive(human, ActBody.Vagina) end
-function IsSexActive_PenisHand(human) return
-	IsSexActive(human, ActBody.PenisHand) end
-function IsSexActive_PenisHole(human) return
-	IsSexActive(human, ActBody.PenisHole) end
+function IsSexActive_HoleAny(human)
+	return IsSexActive(human, ActBody.Mouth) or IsSexActive(human, ActBody.Anus) or IsSexActive(human, ActBody.Vagina) end
+function IsSexActive_PenisHand(human)
+	return IsSexActive(human, ActBody.PenisHand) end
+function IsSexActive_PenisHole(human)
+	return IsSexActive(human, ActBody.PenisHole) end
 
 function IsSexActive(human, body)
 	if human == nil or not HasSexPartner(human, body) then return false end
@@ -547,7 +547,8 @@ end
 
 -- RANDOM QUICK PARAMETER VALUE (new generated value, used in menu, "quick wide random" for responsive "FeelingLucky")
 function ActValueGen_Random(actValue)
-	local r = ActValueMinMax[actValue] return r and GetRandomFloat(r.Min, r.Max) or 0
+	local r = ActValueMinMax[actValue]
+	return r and GetRandomFloat(r.Min, r.Max) or 0
 end
 
 -------------------------------------------------------------------------------------------------
@@ -564,6 +565,11 @@ function ActValueGet_RawOrTween(act, actValue, isHand)
 	if t then return t.targetVal end
 	-- B) No tween found, return the interaction value
 	return act[param]
+end
+
+function ActValueSet_RawOrTween(act, actValue, isHand, value)
+	if SexTweenAllow() then ActTweenTo(act, ActValueParamNameGet(actValue, isHand), value, SexTweenTime() )
+	else ActValueSet_Raw(act, actValue, isHand, value) end
 end
 
 -- RAW PARAMETER VALUE CLAMP (Clamp to actual game value, might be tweened, tween target is "new value" tween is going to)
@@ -619,24 +625,20 @@ end
 function ActSpeedGet_Raw(interaction, isHand) return ActValueGet_Raw(interaction, ActValue.Speed, isHand) end
 function ActSpeedGet(interaction, isHand) return ActValueGet_RawOrTween(interaction, ActValue.Speed, isHand) end
 
--- RANDOM
-function ActSpeedSet_MenuRandom(interaction, isHand) return ActSpeedSet(interaction, ActValueGen_Random(ActValue.Speed), isHand) end
-
 -- SET
+function ActSpeedSet_MenuRandom(interaction, isHand) ActSpeedSet(interaction, ActValueGen_Random(ActValue.Speed), isHand) end
 function ActSpeedSet_Step(interaction, speedStep, increase, isHand)
 	local speed = ActSpeedGet(interaction, isHand) -- Use Target Value to prevent dampening
 	local increment = 1 + (speedStep / (speed ^ 0.6)) -- 1 + (speed multiplier / (speed / curve))
 	if increase then speed = speed * increment
 	else speed = speed / increment end
-	return ActSpeedSet(interaction, speed, isHand)
+	ActSpeedSet(interaction, speed, isHand)
 end
 
 function ActSpeedSet(interaction, speed, isHand)
-	local speed = ActValueClamp_Raw(speed, ActValue.Speed)
 	ActActiveSet(interaction, isHand, true)
-	if SexTweenAllow() then ActTweenTo(interaction, ActValueParamNameGet(ActValue.Speed, isHand), speed, SexTweenTime())
-	else ActValueSet_Raw(interaction, ActValue.Speed, isHand, speed) end
-	return speed
+	local speed = ActValueClamp_Raw(speed, ActValue.Speed)
+	ActValueSet_RawOrTween(interaction, ActValue.Speed, isHand, speed)
 end
 
 -------------------------------------------------------------------------------------------------
@@ -647,23 +649,19 @@ end
 function ActWeightGet_Raw(interaction, isHand) return ActValueGet_Raw(interaction, ActValue.Weight, isHand) end
 function ActWeightGet(interaction, isHand) return isHand and 0 or ActValueGet_RawOrTween(interaction, ActValue.Weight, false) end
 
--- RANDOM
-function ActWeightSet_MenuRandom(interaction, isHand) return ActWeightSet(interaction, ActValueGen_Random(ActValue.Weight), isHand) end
-
 -- SET
+function ActWeightSet_MenuRandom(interaction, isHand) ActWeightSet(interaction, ActValueGen_Random(ActValue.Weight), isHand) end
 function ActWeightSet_Step(interaction, weightStep, increase, isHand)
 	local weight = ActWeightGet(interaction, isHand) -- Use Target Value to prevent dampening
 	if increase then weight = weight + weightStep
 	else weight = weight - weightStep end
-	return ActWeightSet(interaction, weight, isHand)
+	ActWeightSet(interaction, weight, isHand)
 end
 function ActWeightSet(interaction, weight, isHand)
 	if isHand then return end -- no interaction weight in handjobs
-	local weight = ActValueClamp_Raw(weight, ActValue.Weight)
 	ActActiveSet(interaction, false, true)
-	if SexTweenAllow() then ActTweenTo(interaction, ActValueParamNameGet(ActValue.Weight, false), weight, SexTweenTime())
-	else ActValueSet_Raw(interaction, ActValue.Weight, false, weight) end
-	return weight
+	local weight = ActValueClamp_Raw(weight, ActValue.Weight)
+	ActValueSet_RawOrTween(interaction, ActValue.Weight, false, weight)
 end
 
 -------------------------------------------------------------------------------------------------
@@ -676,22 +674,18 @@ function ActThrust_Denorm(weight) return ActValueClamp_Raw(DenormalizeValue(Clam
 function ActThrustGet_Raw(interaction, isHand) return ActThrust_Norm(ActValueGet_Raw(interaction, ActValue.Thrust, isHand)) end
 function ActThrustGet(interaction, isHand) return ActThrust_Norm(ActValueGet_RawOrTween(interaction, ActValue.Thrust, isHand)) end
 
--- RANDOM
-function ActThrustSet_MenuRandom(interaction, isHand) return ActThrustSet(interaction, ActValueGen_Random(ActValue.Thrust), isHand) end
-
 -- SET
+function ActThrustSet_MenuRandom(interaction, isHand) ActThrustSet(interaction, ActValueGen_Random(ActValue.Thrust), isHand) end
 function ActThrustSet_Step(interaction, weightStep, increase, isHand)
 	local weight = ActThrustGet(interaction, isHand) -- Use Target Value to prevent dampening
 	if increase then weight = weight + weightStep
 	else weight = weight - weightStep end
-	return ActThrustSet(interaction, weight, isHand)
+	ActThrustSet(interaction, weight, isHand)
 end
 function ActThrustSet(interaction, weight, isHand)
-	local weight = ActThrust_Denorm(weight)
 	ActActiveSet(interaction, isHand, true)
-	if SexTweenAllow() then ActTweenTo(interaction, ActValueParamNameGet(ActValue.Thrust, isHand), weight, SexTweenTime())
-	else ActValueSet_Raw(interaction, ActValue.Thrust, isHand, weight) end
-	return weight
+	local weight = ActThrust_Denorm(weight)
+	ActValueSet_RawOrTween(interaction, ActValue.Thrust, isHand, weight)
 end
 
 -------------------------------------------------------------------------------------------------
@@ -705,15 +699,12 @@ function ActDepthGet(interaction, isHand, isStartDepth)
 	return ActValueGet_RawOrTween(interaction, isStartDepth and ActValue.DepthStart or ActValue.DepthEnd, isHand)
 end
 
--- RANDOM SPLIT
-function ActDepthStartSet_MenuRandom(interaction, isHand) return ActDepthSet(interaction, ActValueGen_Random(ActValue.DepthStart), isHand, true) end
-function ActDepthEndSet_MenuRandom(interaction, isHand) return ActDepthSet(interaction, ActValueGen_Random(ActValue.DepthEnd), isHand, false) end
-
--- RANDOM TOGETHER
+-- SET RANDOM
+function ActDepthStartSet_MenuRandom(interaction, isHand) ActDepthSet_Start(interaction, ActValueGen_Random(ActValue.DepthStart), isHand) end
+function ActDepthEndSet_MenuRandom(interaction, isHand) ActDepthSet_End(interaction, ActValueGen_Random(ActValue.DepthEnd), isHand) end
 function ActDepthSet_MenuRandom(interaction, isHand)
-	local startValue = ActDepthSet(interaction, ActValueGen_Random(ActValue.DepthStart), isHand, true)
-	local endValue = ActDepthSet(interaction, ActValueGen_Random(ActValue.DepthEnd), isHand, false)
-	return startValue, endValue
+	ActDepthSet_Start(interaction, ActValueGen_Random(ActValue.DepthStart), isHand)
+	ActDepthSet_End(interaction, ActValueGen_Random(ActValue.DepthEnd), isHand)
 end
 
 -- SET STEP
@@ -721,27 +712,24 @@ function ActDepthSet_Step(interaction, depthStep, increase, isHand, isStartDepth
 	local depth = ActDepthGet(interaction, isHand, isStartDepth) -- Use Target Value to prevent dampening
 	if increase then depth = depth + depthStep
 	else depth = depth - depthStep end
-	return ActDepthSet(interaction, depth, isHand, isStartDepth)
+	if isStartDepth then ActDepthSet_Start(interaction, depth, isHand)
+	else ActDepthSet_End(interaction, depth, isHand) end
 end
 
--- SET TOGETHER
+-- SET
 function ActDepthSet_StartEnd(interaction, depthStart, depthEnd, isHand)
-	ActDepthSet(interaction, depthStart, isHand, true)
-	ActDepthSet(interaction, depthEnd, isHand, false)
+	ActDepthSet_Start(interaction, depthStart, isHand)
+	ActDepthSet_End(interaction, depthEnd, isHand)
 end
-
--- SET SPLIT
-function ActDepthSet_Start(interaction, depth, isHand) ActDepthSet(interaction, depth, isHand, true) end
-function ActDepthSet_End(interaction, depth, isHand) ActDepthSet(interaction, depth, isHand, false) end
-function ActDepthSet(interaction, depth, isHand, isStartDepth)
-	depth = ActValueClamp_Raw(depth, isStartDepth and ActValue.DepthStart or ActValue.DepthEnd )
+function ActDepthSet_Start(interaction, depth, isHand)
 	ActActiveSet(interaction, isHand, true)
-	if SexTweenAllow() then
-		local paramName = ActValueParamNameGet(isStartDepth and ActValue.DepthStart or ActValue.DepthEnd, isHand)
-		ActTweenTo(interaction, paramName, depth, SexTweenTime())
-	elseif isStartDepth then ActValueSet_Raw(interaction, ActValue.DepthStart, isHand, depth)
-	else ActValueSet_Raw(interaction, ActValue.DepthEnd, isHand, depth) end
-	return depth
+	depth = ActValueClamp_Raw(depth, ActValue.DepthStart)
+	ActValueSet_RawOrTween(interaction, ActValue.DepthStart, isHand, depth)
+end
+function ActDepthSet_End(interaction, depth, isHand)
+	ActActiveSet(interaction, isHand, true)
+	depth = ActValueClamp_Raw(depth, ActValue.DepthEnd)
+	ActValueSet_RawOrTween(interaction, ActValue.DepthEnd, isHand, depth)
 end
 
 -------------------------------------------------------------------------------------------------
