@@ -141,8 +141,9 @@ function HasAutoSex(human)
 	return stats and stats.AutoSex
 end
 
-function AutoSexActive(human, active)
+function AutoSexActive(human, active, excludeMales)
 	if not TM_AutoSex or not human then return end
+	if human.m_isMale == true and excludeMales == true then return end
 	local stats = TMHStatsGet(human)
 	stats:AutoSexSet(active)
 	AutoSexAnim_Handle(human)
@@ -230,9 +231,11 @@ function AutoSexAnim_Handle(human)
 	else if HasAutoSexAnim(human) then AutoSexAnim_Remove(human) end end
 end
 
-function IsAutoSexPartner(human, body)
+function HasAutoSexMaleOverride(human, body)
 	if human == nil or not HasSexPartner(human, body) then return false end
-	if body == ActBody.Mouth and HasAutoSexAnim(human.Mouth.Fucker) then return true
+	if body == ActBody.PenisHand then return false -- don't know path: penis -> hand? -> human?
+	elseif body == ActBody.PenisHole then return false -- ton't know path: penis -> hole -> human?
+	elseif body == ActBody.Mouth and HasAutoSexAnim(human.Mouth.Fucker) then return true
 	elseif body == ActBody.Anus and HasAutoSexAnim(human.Anus.Fucker) then return true
 	elseif body == ActBody.Vagina and HasAutoSexAnim(human.Vagina.Fucker) then return true
 	else return false end
@@ -240,21 +243,18 @@ end
 
 -------------------------------------------------------------------------------------------------
 
--- CALLED FROM GAME REPEATING ANIMATION SYSTEM (game.AddRepeatAnim)
--- Randomize all active interactions
+-- RANDOMIZE ALL INTERACTION PARAMETERS (Called from game repeating animation system - game.AddRepeatAnim)
 function AutoSex_OnTick(human)
 	if not TM_AutoSex or human == nil then return end
 	local stats = TMHStatsGet(human)
 	if not stats or not stats.AutoSex then return end
 	-- Start setting all parameters that are in use
-	-- Penis sets params only if hole owners don't (prevents setting params from both sides)
-	if stats.PenisHole and not IsAutoSexPartner(human, ActBody.PenisHole) then AutoSex_OnTickParamsSet(human, ActBody.PenisHole) end
-	-- Penis owner
+	if stats.PenisHole then AutoSex_OnTickParamsSet(human, ActBody.PenisHole) end
 	if stats.PenisHand then AutoSex_OnTickParamsSet(human, ActBody.PenisHand) end
-	-- Holes
-	if stats.Mouth then AutoSex_OnTickParamsSet(human, ActBody.Mouth) end
-	if stats.Anus then AutoSex_OnTickParamsSet(human, ActBody.Anus) end
-	if stats.Vagina then AutoSex_OnTickParamsSet(human, ActBody.Vagina) end
+	-- Holes (set params only if male doesn't override)
+	if stats.Mouth and not HasAutoSexMaleOverride(human, ActBody.Mouth) then AutoSex_OnTickParamsSet(human, ActBody.Mouth) end
+	if stats.Anus and not HasAutoSexMaleOverride(human, ActBody.Anus) then AutoSex_OnTickParamsSet(human, ActBody.Anus) end
+	if stats.Vagina and not HasAutoSexMaleOverride(human, ActBody.Vagina) then AutoSex_OnTickParamsSet(human, ActBody.Vagina) end
 end
 
 -- START INTERACTION PARAMETER SET (Calculate timer against ticker and fire events for each active interaction)
