@@ -15,10 +15,18 @@ TMHumanStats = {
 	TMBValue = nil,
 	NeedsBodyApply = false,
 	-- Sex
+	IsSexActive = false,
+	PenisHole = false,
+	PenisHand = false,
+	Mouth = false,
+	Anus = false,
+	Vagina = false,
+	SexBody = nil,
+	SexBodyCount = 0,
+	Arousal = 0,
+	-- AutoSex
 	AutoSex = false,
 	AutoSexTier = nil,
-	IsHavingSex = false,
-	Arousal = 0,
 	-- Cum reactions
 	CumLastTime = nil,
 	CumLastUpdate = nil,
@@ -34,8 +42,9 @@ function TMHumanStatsCloneDefault() return GetTableClone(TMHumanStats) end
 
 local function TMHStatsNew(human)
 	local clone = TMHumanStatsCloneDefault() -- TMHUmanStatus is authoritative source of Status for each human
-	clone.TMBValue = TMBodyValueCloneDefault() --TMBValue is AUTHORITATIVE source of Human Body customization values
 	clone.LastUpdate = os.time()
+	clone.TMBValue = TMBodyValueCloneDefault() --TMBValue is AUTHORITATIVE source of Human Body customization values
+	clone.SexBody = {}
 	TM_HumanStatsList[human] = clone
 end
 
@@ -67,7 +76,8 @@ function TMOnUpdate_HumanStats()
 		local stats = TMHStatsGet(human)
 		if stats.NeedsBodyApply == true then TMHStats_TMBApply(human) end
 		-- Sexy features
-		stats:ArousalUpdate(deltaTime)
+		stats:UpdateSex(human)
+		stats:UpdateArousal(deltaTime)
 		-- Last update time
 		stats.LastUpdate = os.time()
 	end
@@ -83,18 +93,30 @@ end
 -------------------------------------------------------------------------------------------------
 -- HUMAN SEX STATS
 -------------------------------------------------------------------------------------------------
+-- SEX
+function TMHumanStats:UpdateSex(human)
+	for _, body in pairs(ActBody) do
+		self:SetSexActive(IsSexActive(human, body), body)
+	end
+end
+
+function TMHumanStats:SetSexActive(active, actBody)
+	self[actBody] = active
+	self.IsSexActive = self.PenisHand or self.PenisHole or self.Mouth or self.Anus or self.Vagina
+	if active then
+		if not TableHasValue(self.SexBody, actBody) then table.insert(self.SexBody, actBody) end
+	else TableRemoveValue(self.SexBody, actBody) end
+	self.SexBodyCount = TableCount(self.SexBody)
+end
+
 -- AROUSAL
-function TMHumanStats:ArousalUpdate(deltaTime)
-	if self.IsHavingSex == true or self:IsFeelingCum() then
+function TMHumanStats:UpdateArousal(deltaTime)
+	if self.IsSexActive == true or self:IsFeelingCum() then
 		self.Arousal = Clamp01(self.Arousal + deltaTime * TMH_DefaultArousalIncrease)
 	else self.Arousal = Clamp01(self.Arousal - deltaTime * TMH_DefaultArousalDecay) end
 end
 
 -- AUTOSEX
-function TMHumanStats:IsHavingSexSet(active)
-	self.IsHavingSex = active
-end
-
 function TMHumanStats:AutoSexSet(active)
 	self.AutoSex = active
 	if self.AutoSexTier == nil then self.AutoSexTier = AutoSexTier_Default end

@@ -2,6 +2,7 @@
 -------------------------------------------------------------------------------------------------
 -- AUTO SEX - AUTOMATICALLY ADJUST INTERACTION PARAMETERS DYNAMICALLY (speed, weight, thrust, depth)
 -------------------------------------------------------------------------------------------------
+-- Requires tm_human.lua TMHumanStats to work
 
 function HasAutoSex(human)
 	local stats = TMHStatsGet(human)
@@ -105,22 +106,15 @@ function AutoSex_OnTick(human)
 	if not TM_AutoSex or human == nil then return end
 	local stats = TMHStatsGet(human)
 	if not stats or not stats.AutoSex then return end
-	local isPenisHole = IsSexActive(human, ActBody.PenisHole)
-	local isPenisHand = IsSexActive(human, ActBody.PenisHand)
-	local isMouth = IsSexActive(human, ActBody.Mouth)
-	local isAnus = IsSexActive(human, ActBody.Anus) 
-	local isVagina = IsSexActive(human, ActBody.Vagina) 
-	stats:IsHavingSexSet(isPenisHole or isPenisHand or isMouth or isAnus or isVagina)
-
 	-- Start setting all parameters that are in use
 	-- Penis sets params only if hole owners don't (prevents setting params from both sides)
-	if isPenisHole and not IsAutoSexPartner(human, ActBody.PenisHole) then AutoSex_OnTickParamsSet(human, ActBody.PenisHole) end
+	if stats.PenisHole and not IsAutoSexPartner(human, ActBody.PenisHole) then AutoSex_OnTickParamsSet(human, ActBody.PenisHole) end
 	-- Penis owner
-	if isPenisHand then AutoSex_OnTickParamsSet(human, ActBody.PenisHand) end
+	if stats.PenisHand then AutoSex_OnTickParamsSet(human, ActBody.PenisHand) end
 	-- Holes
-	if isMouth then AutoSex_OnTickParamsSet(human, ActBody.Mouth) end
-	if isAnus then AutoSex_OnTickParamsSet(human, ActBody.Anus) end
-	if isVagina then AutoSex_OnTickParamsSet(human, ActBody.Vagina) end
+	if stats.Mouth then AutoSex_OnTickParamsSet(human, ActBody.Mouth) end
+	if stats.Anus then AutoSex_OnTickParamsSet(human, ActBody.Anus) end
+	if stats.Vagina then AutoSex_OnTickParamsSet(human, ActBody.Vagina) end
 end
 
 -- START INTERACTION PARAMETER SET (Calculate timer against ticker and fire events for each active interaction)
