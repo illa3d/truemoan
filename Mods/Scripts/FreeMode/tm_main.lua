@@ -92,17 +92,22 @@ function TMOnFluidHit(hitActor, bodyArea, shootActor)
 
 	local timerKey = "TMFluidHit_" .. hitActor.Name .. bodyArea
 	local lastHitTime = Timer(timerKey)
+	local stats = TMHStatsGet(hitActor)
+	local function PlayHitMoan(stats, tmMoanTier)
+		if stats and stats.Climax then return end
+		TMPlayGirlMoan(hitActor, TMMoanTier.Faster)
+	end
 
 	if bodyArea == "L_Eye" and lastHitTime > TM_MoanCumEyeTime then 
-		TMPlayGirlMoan(hitActor, TMMoanTier.Faster)
+		PlayHitMoan(stats, TMMoanTier.Faster)
 		hitActor.AddInvoluntaryAnim("L_Eye_HitClose", 1, 0.7, 0.7, EyelidL(1))
 		ResetTimer(timerKey)
 	elseif bodyArea == "R_Eye" and lastHitTime > TM_MoanCumEyeTime then 
-		TMPlayGirlMoan(hitActor, TMMoanTier.Faster)
+		PlayHitMoan(stats, TMMoanTier.Faster)
 		hitActor.AddInvoluntaryAnim("R_Eye_HitClose", 1, 0.7, 0.7, EyelidR(1))
 		ResetTimer(timerKey)
 	elseif bodyArea == "Lips" and lastHitTime > TM_MoanCumLipsTime then 
-		TMPlayGirlMoan(hitActor, TMMoanTier.Fast)
+		PlayHitMoan(stats, TMMoanTier.Fast)
 		hitActor.AddInvoluntaryAnim("OpenMouth", 5, 0.4, 0.4, Mouth(-0.83, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.73, 0, 0.39))
 		Delayed(1, function()
 			hitActor.Swallow()
@@ -116,7 +121,7 @@ function TMOnFluidHit(hitActor, bodyArea, shootActor)
 			hitActor.Say(hitActor.FaceMood >= 0 and "Like" or "Dislike")
 			ResetTimer(genericVoiceKey)
 		elseif lastHitTime > TM_MoanCumBodyTime then
-			TMPlayGirlMoan(hitActor, TMMoanTier.Slow)
+			if not stats.IsSexActive then PlayHitMoan(stats, TMMoanTier.Slow) end
 			ResetTimer(timerKey)
 		end
 	end
@@ -128,9 +133,12 @@ end
 -- Updated on penetration (holeName: "Vagina" "Anus" Mouth")
 function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	TMOnPenetration_Cum(girl, holeName)
+	TMOnClimaxEffects(girl)
+
 	if not TM_AllowVoice() or not TM_MoanSex or inVelocity < outVelocity then return end
 
 	-- Variables
+	local stats = TMHStatsGet(girl)
 	local keyMoan = "TMSexMoan_" .. girl.Name .. holeName
 	local lastMoanTime = Timer(keyMoan)
 	local tier = ""
@@ -140,40 +148,40 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	local wetness = 0
 
 	-- Tier selection + boundary detection
-	if inVelocity > TM_ClimaxTreshold then
+	if inVelocity > TM_MoanTreshold_Climax then
 		tier = TMMoanTier.Climax
 		pauseMax = 0.1 -- Audio files: ~0.3s + pause
-		tierMax = TM_ClimaxTreshold + 1
-		tierMin = TM_ClimaxTreshold
+		tierMax = TM_MoanTreshold_Climax + 1
+		tierMin = TM_MoanTreshold_Climax
 		wetness = 10000
-	elseif inVelocity > TM_OrgasmTreshold then
-		tier = TMMoanTier.Orgasm
+	elseif inVelocity > TM_MoanTreshold_Wild then
+		tier = TMMoanTier.Wild
 		pauseMax = 0.4 -- Audio files: ~0.4s + pause
-		tierMax = TM_ClimaxTreshold
-		tierMin = TM_OrgasmTreshold
+		tierMax = TM_MoanTreshold_Climax
+		tierMin = TM_MoanTreshold_Wild
 		wetness = 1000
-	elseif inVelocity > TM_FasterTreshold then
+	elseif inVelocity > TM_MoanTreshold_Faster then
 		tier = TMMoanTier.Faster
 		pauseMax = 0.5 -- Audio files: ~0.5s + pause
-		tierMax = TM_OrgasmTreshold
-		tierMin = TM_FasterTreshold
+		tierMax = TM_MoanTreshold_Wild
+		tierMin = TM_MoanTreshold_Faster
 		wetness = 100
-	elseif inVelocity > TM_FastTreshold then
+	elseif inVelocity > TM_MoanTreshold_Fast then
 		tier = TMMoanTier.Fast
 		pauseMax = 0.6 -- Audio files: ~0.5s + pause
-		tierMax = TM_FasterTreshold
-		tierMin = TM_FastTreshold
+		tierMax = TM_MoanTreshold_Faster
+		tierMin = TM_MoanTreshold_Fast
 		wetness = 10
-	elseif inVelocity > TM_NormalTreshold then
+	elseif inVelocity > TM_MoanTreshold_Normal then
 		tier = TMMoanTier.Normal
 		pauseMax = 1.3 -- Audio files: ~0.8s + pause
-		tierMax = TM_FastTreshold
-		tierMin = TM_NormalTreshold
+		tierMax = TM_MoanTreshold_Fast
+		tierMin = TM_MoanTreshold_Normal
 		wetness = 5
 	else
 		tier = TMMoanTier.Slow
 		pauseMax = 10.0 -- VERY long pauses when not moving
-		tierMax = TM_NormalTreshold
+		tierMax = TM_MoanTreshold_Normal
 		tierMin = 0.0
 		wetness = 1
 	end
@@ -183,7 +191,9 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	t = math.max(0, math.min(t, 1))
 	local cooldown = pauseMax * (1 - t)
 	-- Small randomness to avoid mechanical timing
-	if tier == TMMoanTier.Climax or tier == TMMoanTier.Orgasm then
+	if stats and stats.Climax then
+		cooldown = 0.01
+	elseif tier == TMMoanTier.Climax or tier == TMMoanTier.Wild then
 		cooldown = 0.02
 	else
 		cooldown = cooldown + math.random() * 0.05
@@ -191,7 +201,10 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 
 	-- Play
 	if lastMoanTime > cooldown then
-		TMPlayGirlMoan(girl, tier)
+		if stats and stats.Climax then
+			TMPlayGirlMoan(girl, TMMoanTier[stats.AutoSexTier])
+		else
+			TMPlayGirlMoan(girl, tier) end
 		-- Auto Wetness
 		if TM_WetSex then
 			WetSet(girl, wetness, holeName)
@@ -200,6 +213,30 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 		end
 		ResetTimer(keyMoan)
 	end
+end
+
+-------------------------------------------------------------------------------------------------
+-- CLIMAX
+-------------------------------------------------------------------------------------------------
+function TMOnClimaxEffects(girl)
+	local function AutoSexTierSet(girl, autoSexTier)
+		TMHStatsGet(girl):AutoSexTierSet(autoSexTier)
+		ActAll_SpeedSet(girl, AutoSexClimaxSpeed[autoSexTier])
+		ActAll_DepthSet(girl, 0.9)
+		-- AutoSex_ResetTimers(human, ActValue.Speed)
+	end
+	if not girl then return end
+	local stats = TMHStatsGet(girl)
+	if not stats.IsSexActive or stats.Arousal < 1 or stats.Climax or not stats:IsFeelingCum() then return end
+	stats.Climax = true
+	WetSet(girl, 100000, ActBody.Vagina)	
+	AutoSexTierSet(girl, AutoSexTier.Climax)
+	Delayed(AutoSexClimaxTimeStep, function() AutoSexTierSet(girl, AutoSexTier.Wild) end)
+	Delayed(AutoSexClimaxTimeStep * 2, function() AutoSexTierSet(girl, AutoSexTier.Faster) end)
+	Delayed(AutoSexClimaxTimeStep * 3, function() AutoSexTierSet(girl, AutoSexTier.Fast) end)
+	Delayed(AutoSexClimaxTimeStep * 4, function() AutoSexTierSet(girl, AutoSexTier.Normal) end)
+	Delayed(AutoSexClimaxTimeStep * 5, function() AutoSexTierSet(girl, AutoSexTier.Slow) end)
+	Delayed(AutoSexClimaxTimeStep * 6, function() AutoSexTierSet(girl, AutoSexTier.Idle) stats.Climax = false end)
 end
 
 -------------------------------------------------------------------------------------------------
@@ -225,7 +262,7 @@ function TMOnPenetration_Cum(girl, holeName)
 	stats.CumLastUpdate = now
 	-- Cum & Cumflation effects (same)
 	if TMHCanPlayCumEffect(stats) then
-		TMPlayGirlMoan(girl, TM_Cumflate and TMMoanTier.Orgasm or TMMoanTier.Normal)
+		TMPlayGirlMoan(girl, TM_Cumflate and TMMoanTier.Wild or TMMoanTier.Normal)
 		stats.CumEffectLastTime = now
 	end
 	-- Cumflation

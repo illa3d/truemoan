@@ -16,7 +16,7 @@
   - Copy/Paste, Presets
 - **Realistic Moans**
   - **Generic Voice** for all characters
-  - 950+ moans (Slow,Normal,Fast,Faster,Orgasm,Climax)
+  - 950+ moans (Slow,Normal,Fast,Faster,Wild,Climax)
 - **Sex/Cum reactions**
   - Cum in/out reactions (+ cumflation)
   - Wet Sex

@@ -39,11 +39,14 @@ TM_SexSpeedMedium = 0.25
 TM_SexSpeedSlow = 0.1
 
 -- Moan Sex treshold by sex speeed (Min: 0.001, Max: 2)
-TM_ClimaxTreshold = 1.3
-TM_OrgasmTreshold = 0.9
-TM_FasterTreshold = 0.6
-TM_FastTreshold = 0.3
-TM_NormalTreshold = 0.1
+TM_MoanTreshold_Climax = 1.3
+TM_MoanTreshold_Wild = 0.9
+TM_MoanTreshold_Faster = 0.6
+TM_MoanTreshold_Fast = 0.3
+TM_MoanTreshold_Normal = 0.1
+
+-- Climax tier ladder-down time for each step
+AutoSexClimaxTimeStep = 4
 
 -- Moan Cum frequency (sec)
 TM_MoanCumEyeTime = 1	-- Cum in eye

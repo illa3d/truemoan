@@ -25,6 +25,8 @@ label TMMenuHumanStats(human)
 		Return()
 	+ "Arousal	| " .. AccNumPC(TMHStatsGet(human).Arousal, 2)
 		Return()
+	+ "Climax	| " .. AccBoolYN(TMHStatsGet(human).Climax)
+		Return()
 	+ TM_MenuBack
 		Return(2)
 	+ TM_MenuClose

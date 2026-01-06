@@ -428,29 +428,53 @@ ActParamFunctionsSet = {
 }
 
 -------------------------------------------------------------------------------------------------
--- QUICK COMMANDS
+-- MASS COMMANDS
 -------------------------------------------------------------------------------------------------
 
-function ActAll_WeightSwitch(human, isHand)
-	local function DoWeightSwitch(interaction)
+function ActAll_Active(human, isActive)
+	for _, actBody in pairs(ActBody) do
+		local act = ActGet(human, actBody)
+		if act then ActActiveSet(act, actBody == ActBody.PenisHand, isActive) end
+	end
+end
+
+function ActAll_SpeedSet(human, speed)
+	for _, actBody in pairs(ActBody) do
+		local act = ActGet(human, actBody)
+		if act then ActSpeedSet(act, speed, actBody == ActBody.PenisHand) end
+	end
+end
+
+function ActAll_DepthSet(human, depth, isStartDepth)
+	for _, actBody in pairs(ActBody) do
+		local act = ActGet(human, actBody)
+		local isHand = actBody == ActBody.PenisHand
+		if act then
+			if isStartDepth then ActDepthSet_Start(act, depth, isHand)
+			else ActDepthSet_End(act, depth, isHand) end
+		end
+	end
+end
+
+-- SPECIALIZED
+
+function ActAll_Deeper(human)
+	for _, actBody in pairs(ActBody) do
+		local act = ActGet(human, actBody)
+		if act then ActDepthSet_Step(act, TM_SexDeeperStep, true, actBody == ActBody.PenisHand, false) end
+	end
+end
+
+function ActAll_WeightSwitch(human)
+	local function DoWeightSwitch(interaction, isHand)
 		if ActWeightGet(interaction, isHand) < 0.5 then ActWeightSet(interaction, 0.9, isHand)
 		else ActWeightSet(interaction, 0.1, isHand) end
 	end
-	local act = ActGet(human, ActBody.PenisHand) if act then DoWeightSwitch(act, true) end
-	act = ActGet(human, ActBody.PenisHole) if act then DoWeightSwitch(act, false) end
-	act = ActGet(human, ActBody.Mouth) if act then DoWeightSwitch(act, false) end
-	act = ActGet(human, ActBody.Anus) if act then DoWeightSwitch(act, false) end
-	act = ActGet(human, ActBody.Vagina) if act then DoWeightSwitch(act, false) end
+	for _, actBody in pairs(ActBody) do
+		local interaction = ActGet(human, actBody)
+		if interaction then DoWeightSwitch(interaction, actBody == ActBody.PenisHand) end
+	end
 end
-
-function ActDeeper(human)
-	local act = ActGet(human, ActBody.PenisHand) if act then ActDepthSet_Step(act, TM_SexDeeperStep, true, false, false) end
-	act = ActGet(human, ActBody.PenisHole) if act then ActDepthSet_Step(act, TM_SexDeeperStep, true, false, false) end
-	act = ActGet(human, ActBody.Mouth) if act then ActDepthSet_Step(act, TM_SexDeeperStep, true, false, false) end
-	act = ActGet(human, ActBody.Anus) if act then ActDepthSet_Step(act, TM_SexDeeperStep, true, false, false) end
-	act = ActGet(human, ActBody.Vagina) if act then ActDepthSet_Step(act, TM_SexDeeperStep, true, false, false) end
-end
-
 
 -------------------------------------------------------------------------------------------------
 --===============================================================================================

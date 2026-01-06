@@ -14,15 +14,15 @@ label TMSexControl(human, interaction, isHand)
 		ActSpeedSet(interaction, TM_SexSpeedMax, isHand)
 		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
-	+ "• Fast"
+	+ "• Faster"
 		ActSpeedSet(interaction, TM_SexSpeedFast, isHand)
 		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
-	+ "• Normal"
+	+ "• Fast"
 		ActSpeedSet(interaction, TM_SexSpeedNormal, isHand)
 		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
-	+ "• Medium"
+	+ "• Normal"
 		ActSpeedSet(interaction, TM_SexSpeedMedium, isHand)
 		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
 		Return()
@@ -196,7 +196,7 @@ label TMMenuSex(human)
 			ActAll_WeightSwitch(human)
 			Return()
 		+ "• Deeper!"
-			ActDeeper(human)
+			ActAll_ActDeeper(human)
 			Return()
 
 	-- GETTER HANDJOB

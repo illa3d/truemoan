@@ -9,13 +9,15 @@ tmAmbienceTrack = 0
 tmAmbienceTimer = "AmbienceTimer"
 
 -- Moan Tier "Enum" (actual filenames)
+-- VAR NAMES MUST BE SAME AS AutoSexTier
 TMMoanTier = {
-	Climax = "climax",
-	Orgasm = "orgasm",
-	Faster = "faster",
-	Fast = "fast",
-	Normal = "normal",
+	Idle = "slow",
 	Slow = "slow",
+	Normal = "normal",
+	Fast = "fast",
+	Faster = "faster",
+	Wild = "orgasm", -- leftover from old system
+	Climax = "climax",
 }
 
 -- MOANS

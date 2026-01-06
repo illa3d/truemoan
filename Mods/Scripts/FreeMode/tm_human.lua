@@ -24,6 +24,7 @@ TMHumanStats = {
 	SexBody = nil,
 	SexBodyCount = 0,
 	Arousal = 0,
+	Climax = false,
 	-- AutoSex
 	AutoSex = false,
 	AutoSexTier = nil,
@@ -34,6 +35,7 @@ TMHumanStats = {
 	CumflateHipsSize = nil,
 	CumflateHipsSizeOrig = nil,
 }
+
 function TMHumanStatsCloneDefault() return GetTableClone(TMHumanStats) end
 
 -------------------------------------------------------------------------------------------------
@@ -110,10 +112,21 @@ function TMHumanStats:SetSexActive(active, actBody)
 end
 
 -- AROUSAL
+local function HoleMultiplier(holeCount)
+	-- diminishing returns: 1 hole = 1.0, 2 = 1.35, 3 = 1.6
+	if holeCount <= 0 then return 0 end
+	return 1 + math.log(holeCount + 1) * 0.6
+end
+
 function TMHumanStats:UpdateArousal(deltaTime)
-	if self.IsSexActive == true or self:IsFeelingCum() then
-		self.Arousal = Clamp01(self.Arousal + deltaTime * TMH_DefaultArousalIncrease)
-	else self.Arousal = Clamp01(self.Arousal - deltaTime * TMH_DefaultArousalDecay) end
+	if self.IsSexActive and not self.Climax then
+		local tierMul = AutoSexClimaxArousalWeight[self.AutoSexTier] or 0.5
+		local gain = deltaTime * TMH_DefaultArousalIncrease * HoleMultiplier(self.SexBodyCount) * tierMul
+		self.Arousal = Clamp01(self.Arousal + gain)
+		if self.Arousal >= 0.99 then self.Arousal = 1 end
+	else
+		self.Arousal = Clamp01(self.Arousal - deltaTime * TMH_DefaultArousalDecay)
+	end
 end
 
 -- AUTOSEX
