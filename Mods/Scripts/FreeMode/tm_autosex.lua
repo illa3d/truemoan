@@ -1,8 +1,140 @@
 -- TrueMoan v1.9 by illa3d
 -------------------------------------------------------------------------------------------------
 -- AUTO SEX - AUTOMATICALLY ADJUST INTERACTION PARAMETERS DYNAMICALLY (speed, weight, thrust, depth)
+-- Requires tm_act.lua, tm_human.lua
 -------------------------------------------------------------------------------------------------
--- Requires tm_human.lua TMHumanStats to work
+-- AUTOSEX: Game Timer (ActAutoSexTickTime) -> AutoSexTick -> AutoSexBodyParamSet (each full hole interaction, 5 params)
+-- 		Get Random time between TM_AutoSexTimeMin and TM_AutoSexTimeMax (config)
+-- 		ActAutoSexTickTime = 0.5 (subtract each tick from random time passed game time in seconds)
+-- 			Start parameter change (TWEEN or raw set)
+-------------------------------------------------------------------------------------------------
+
+-- AutoSex Variabless
+local ActAutoSexTimers = ActAutoSexTimers or {}
+local ActAutoSexTickTime = 0.25 -- seconds (game timer frequency)
+
+-------------------------------------------------------------------------------------------------
+
+-- AUTOSEX TIER ENUM
+AutoSexTier = {
+	Idle = "Idle",
+	Slow = "Slow",
+	Normal = "Normal",
+	Fast = "Fast",
+	Faster = "Faster",
+	Climax = "Climax",
+	Orgasm = "Orgasm",
+}
+
+-- Default tier set for new humans
+AutoSexTier_Default = AutoSexTier.Normal
+-- Minimum tier when toggling (jumps to off from it)
+AutoSexTier_Min = AutoSexTier.Idle
+AutoSexTier_Toggle = {
+	AutoSexTier.Idle,
+	AutoSexTier.Slow,
+	AutoSexTier.Normal,
+	AutoSexTier.Fast,
+	AutoSexTier.Faster,
+	AutoSexTier.Climax,
+	AutoSexTier.Orgasm,
+}
+
+local ActAutoSexTimerRange = { Min = 1, Max = 20 } -- seconds (timer to allow new random sex parameter)
+
+-------------------------------------------------------------------------------------------------
+-- AUTOSEX PARAMETER VALUE LIMITS (values with thrust normalized (0-1), delta = movement range)
+-------------------------------------------------------------------------------------------------
+-- When user modifies the speed, value it will jump up or down the tier
+-- These values are used in AutoSex Tiers when user changes the sex speed
+AutoSexTierConfig_Idle = {
+	[ActValue.Speed] =			{ Min = 0.001,	Max = 0.2,	Delta = 0.03 },	-- 0.001 - 2
+	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.04 },	-- 0 - 1
+	[ActValue.Thrust] =			{ Min = 0.1,	Max = 0.8,	Delta = 0.06 },	-- 0 - 1 (normalized)
+	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
+	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
+}
+
+AutoSexTierConfig_Slow = {
+	[ActValue.Speed] =			{ Min = 0.05,	Max = 0.35,	Delta = 0.05 },	-- 0.001 - 2
+	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.04 },	-- 0 - 1
+	[ActValue.Thrust] =			{ Min = 0.1,	Max = 0.8,	Delta = 0.06 },	-- 0 - 1 (normalized)
+	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
+	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2, Delta = 0.1 },	-- (0.05 - 1.3)
+}
+
+AutoSexTierConfig_Normal = {
+	[ActValue.Speed] =			{ Min = 0.2,	Max = 0.6,	Delta = 0.07 },	-- 0.001 - 2
+	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.04 },	-- 0 - 1
+	[ActValue.Thrust] =			{ Min = 0.1,	Max = 0.8,	Delta = 0.06 },	-- 0 - 1 (normalized)
+	[ActValue.DepthStart] = 	{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
+	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
+}
+
+AutoSexTierConfig_Fast = {
+	[ActValue.Speed] =			{ Min = 0.4,	Max = 0.9,	Delta = 0.08 },	-- 0.001 - 2
+	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
+	[ActValue.Thrust] =			{ Min = 0.01,	Max = 0.4,	Delta = 0.1 },	-- 0 - 1 (normalized)
+	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
+	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
+}
+
+AutoSexTierConfig_Faster = {
+	[ActValue.Speed] =			{ Min = 0.5,	Max = 1.5,	Delta = 0.12 },	-- 0.001 - 2
+	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
+	[ActValue.Thrust] =			{ Min = 0.01,	Max = 0.4,	Delta = 0.1 },	-- normalized
+	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
+	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
+}
+
+AutoSexTierConfig_Climax = {
+	[ActValue.Speed] =			{ Min = 0.7,	Max = 1.7,	Delta = 0.15 },	-- 0.001 - 2
+	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
+	[ActValue.Thrust] =			{ Min = 0.01,	Max = 0.4,	Delta = 0.1 },	-- 0 - 1 (normalized)
+	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
+	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
+}
+
+AutoSexTierConfig_Orgasm = {
+	[ActValue.Speed] =			{ Min = 1,		Max = 2,	Delta = 0.2 },	-- 0.001 - 2
+	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
+	[ActValue.Thrust] =			{ Min = 0.01,	Max = 0.4,	Delta = 0.1 },	-- 0 - 1 (normalized)
+	[ActValue.DepthStart] =		{ Min = 0.6,	Max = 0.8,	Delta = 0.1 },	-- (0 - 1.25)
+	[ActValue.DepthEnd] =		{ Min = 0.9,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
+}
+
+-- Tier switch speed limits and random definitions
+AutoSexTierRandom_Default = AutoSexTierConfig_Normal
+
+-- Collection of all the tier parameters, their tier speed and parameter value limits
+AutoSexTierConfig = {
+	[AutoSexTier.Idle] =	{ Min = 0,		Max = 0.1,	Random = AutoSexTierConfig_Idle },
+	[AutoSexTier.Slow] =	{ Min = 0.1,	Max = 0.25,	Random = AutoSexTierConfig_Slow },
+	[AutoSexTier.Normal] =	{ Min = 0.25,	Max = 0.5,	Random = AutoSexTierConfig_Normal },
+	[AutoSexTier.Fast] =	{ Min = 0.5,	Max = 0.75,	Random = AutoSexTierConfig_Fast },
+	[AutoSexTier.Faster] =	{ Min = 0.75,	Max = 1,	Random = AutoSexTierConfig_Faster },
+	[AutoSexTier.Climax] =	{ Min = 1,		Max = 1.5,	Random = AutoSexTierConfig_Climax },
+	[AutoSexTier.Orgasm] =	{ Min = 1.5,	Max = 2,	Random = AutoSexTierConfig_Orgasm },
+}
+
+-------------------------------------------------------------------------------------------------
+-- CONFIG VALUES CLAMPING
+-------------------------------------------------------------------------------------------------
+
+function AutoSexMinTime() return ClampValue(TM_AutoSexTimeMin, ActAutoSexTimerRange.Min , ActAutoSexTimerRange.Max) end
+function AutoSexMaxTime() return ClampValue(TM_AutoSexTimeMax, ActAutoSexTimerRange.Min , ActAutoSexTimerRange.Max) end
+function AutoSexDrift(actValue)
+	if actValue == ActValue.Speed then return Clamp01(TM_AutoSexSpeedDrift)
+	elseif actValue == ActValue.Thrust then return Clamp01(TM_AutoSexThrustDrift)
+	elseif actValue == ActValue.Weight then return Clamp01(TM_AutoSexWeightDrift)
+	elseif actValue == ActValue.DepthStart then return Clamp01(TM_AutoSexDepthStartDrift)
+	elseif actValue == ActValue.DepthEnd then return Clamp01(TM_AutoSexDepthEndDrift)
+	else return 0 end
+end
+
+-------------------------------------------------------------------------------------------------
+-- AUTOSEX
+-------------------------------------------------------------------------------------------------
 
 function HasAutoSex(human)
 	local stats = TMHStatsGet(human)
@@ -96,6 +228,14 @@ function AutoSexAnim_Handle(human)
 	if not stats then return end
 	if stats.AutoSex then if not HasAutoSexAnim(human) then AutoSexAnim_Add(human) end
 	else if HasAutoSexAnim(human) then AutoSexAnim_Remove(human) end end
+end
+
+function IsAutoSexPartner(human, body)
+	if human == nil or not HasSexPartner(human, body) then return false end
+	if body == ActBody.Mouth and HasAutoSexAnim(human.Mouth.Fucker) then return true
+	elseif body == ActBody.Anus and HasAutoSexAnim(human.Anus.Fucker) then return true
+	elseif body == ActBody.Vagina and HasAutoSexAnim(human.Vagina.Fucker) then return true
+	else return false end
 end
 
 -------------------------------------------------------------------------------------------------
