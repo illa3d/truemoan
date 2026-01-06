@@ -90,7 +90,7 @@ function TMBEPreset_StartRandom(human)
 		TMBEPreset_Slim,
 		TMBEPreset_Skinny,
 		-- # DONT MODIFY BELOW #
-	} TMBodyEdit_Preset(human, GetRandomItem(StartRandom))
+	} TMBodyEdit_Preset(human, ListItemRandom(StartRandom))
 end
 
 ------------------------------------------------------------------------------------------------
@@ -105,7 +105,7 @@ function TMBEPreset_MenuRandom(human)
 		TMBEPreset_Slim,
 		TMBEPreset_Skinny,
 		-- # DONT MODIFY BELOW #
-	} TMBodyEdit_Preset(human, GetRandomItem(MenuRandom))
+	} TMBodyEdit_Preset(human, ListItemRandom(MenuRandom))
 end
 
 ------------------------------------------------------------------------------------------------

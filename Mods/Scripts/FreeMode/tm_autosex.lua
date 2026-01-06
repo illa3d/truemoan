@@ -27,7 +27,7 @@ function AutoSexToggle(human)
 		return
 	end
 	-- AutoSex is ON, step down tiers
-	if stats.AutoSexTier ~= AutoSexTier_Min  then stats.AutoSexTier = StepInOrderedList(AutoSexTier_Toggle, stats.AutoSexTier, -1)
+	if stats.AutoSexTier ~= AutoSexTier_Min  then stats.AutoSexTier = ListItemStep(AutoSexTier_Toggle, stats.AutoSexTier, -1)
 	else stats:AutoSexSet(false) end
 	AutoSexAnim_Handle(human)
 end

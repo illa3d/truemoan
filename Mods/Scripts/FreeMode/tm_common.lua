@@ -42,16 +42,51 @@ end
 -------------------------------------------------------------------------------------------------
 
 -- Steps forward/backward in an ordered list. dir=1 next, dir = -1 previous
-function StepInOrderedList(list, current, dir)
+function ListItemStep(list, current, dir)
 	if type(list) ~= "table" or current == nil or (dir ~= 1 and dir ~= -1) then return current end
 	for i = 1, #list do if list[i] == current then return list[i + dir] or current end end
 	return current
 end
 
 -- Returns a random element from a list
-function GetRandomItem(list)
+function ListItemRandom(list)
 	if list == nil or #list == 0 then return end
 	return list[math.random(1, #list)]
+end
+
+-------------------------------------------------------------------------------------------------
+-- TABLES
+-------------------------------------------------------------------------------------------------
+
+function IsTableEmpty(t)
+	return t == nil or next(t) == nil
+end
+
+function TableCount(t)
+	if t == nil then return 0 end
+	local count = 0
+	for _ in pairs(t) do
+		count = count + 1
+	end
+	return count
+end
+
+function TableHasValue(t, value)
+	if t == nil then return false end
+	for _, v in pairs(t) do
+		if v == value then return true end
+	end
+	return false
+end
+
+function TableRemoveValue(t, value)
+	if t == nil then return end
+	for k, v in pairs(t) do
+		if v == value then
+			t[k] = nil
+			return
+		end
+	end
 end
 
 -------------------------------------------------------------------------------------------------
@@ -140,7 +175,7 @@ end
 -- CLOTHES STUFF
 function HumanClothesRandom(human)
 	if TM_Clothes_Custom == nil or #TM_Clothes_Custom == 0 then return end
-	HumanClothesReplace(human, GetRandomItem(TM_Clothes_Custom))
+	HumanClothesReplace(human, ListItemRandom(TM_Clothes_Custom))
 end
 
 function HumanClothesReplace(human, targetCharacterName)
