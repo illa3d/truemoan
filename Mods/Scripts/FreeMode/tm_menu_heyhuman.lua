@@ -1,11 +1,23 @@
 -- TrueMoan v1.9 by illa3d
 TMEyesOpen = true
+
+function TMMenuHumanStatsBodyLabel(stats)
+	if not stats or not stats.SexBody then return "-" end
+	local bodyStr = ""
+	for _, actBody in pairs(stats.SexBody) do
+		bodyStr = bodyStr .. (bodyStr ~= "" and ", " or "") .. actBody
+	end
+	return bodyStr ~= "" and bodyStr or "-"
+end
+
 label TMMenuHumanStats(human)
 	+ "Auto sex	| " .. AccBool(TMHStatsGet(human).AutoSex)
 		Return()
 	+ "Sex tier	| " .. AccStr(TMHStatsGet(human).AutoSexTier)
 		Return()
-	+ "Is in sex	| " .. AccBoolYN(TMHStatsGet(human).IsHavingSex)
+	+ "Is in sex	| " .. AccBoolYN(TMHStatsGet(human).IsSexActive)
+		Return()
+	+ TMMenuHumanStatsBodyLabel(TMHStatsGet(human)) [if TMHStatsGet(human).IsSexActive]
 		Return()
 	+ "Feeling cum	| " .. AccBoolYN(TMHStatsGet(human):IsFeelingCum())
 		Return()
