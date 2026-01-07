@@ -133,7 +133,7 @@ function TMOnUpdate_Futa(girl)
 	local function OnPenetration(actBody)
 		act = ActGet(girl, actBody)
 		if not act or not ActActiveGet(act, actBody == ActBody.PenisHand) then return end
-		TMOnPenetration(girl, actBody, ActSpeedGet(act, false)/1.5, 0, SexPartner_Get(girl, actBody))
+		TMOnPenetration(girl, actBody, ActSpeedGet(act, false)/3, 0, SexPartner_Get(girl, actBody))
 	end
 
 	if HasSexPartner(girl, ActBody.PenisHole) then OnPenetration(ActBody.PenisHole)
