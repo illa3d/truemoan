@@ -8,7 +8,7 @@
 
 -- AutoSex Time
 TM_AutoSexTimeMin = 3			-- [1-20] Auto Interaction minimum time to change parameter (speed, thrust, depth) 
-TM_AutoSexTimeMax = 10			-- [1-20] Auto Interaction maximum time to change parameter (speed, thrust, depth) 
+TM_AutoSexTimeMax = 6			-- [1-20] Auto Interaction maximum time to change parameter (speed, thrust, depth) 
 
 -- AutoSex Drift (bigger values more variety)
 TM_AutoSexSpeedDrift = 0.4		-- [0-1] How close in percent will be next step for sex speed

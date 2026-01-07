@@ -4,8 +4,8 @@ TM_HumanStatsList = {}
 local TMH_LastUpdateClock = os.clock()
 
 -- CONFIG
-TMH_DefaultArousalIncrease = 0.001
-TMH_DefaultArousalDecay = 0.002
+TMH_DefaultArousalIncrease = 0.003
+TMH_DefaultArousalDecay = 0.01
 
 -- DEFINITION (never update this, USE TMHStatsSet_BodyEdit or BodyEdit functions)
 TMHumanStats = {
@@ -121,7 +121,10 @@ end
 function TMHumanStats:UpdateArousal(deltaTime)
 	if self.IsSexActive and not self.Climax then
 		local tierMul = AutoSexClimaxArousalWeight[self.AutoSexTier] or 0.5
-		local gain = deltaTime * TMH_DefaultArousalIncrease * HoleMultiplier(self.SexBodyCount) * tierMul
+		local gain = deltaTime * TMH_DefaultArousalIncrease * tierMul
+		* HoleMultiplier(self.SexBodyCount)
+		* (self:IsCumflating() and 1.5 or 1)
+		* (self:IsFeelingCum() and 2 or 1)
 		self.Arousal = Clamp01(self.Arousal + gain)
 		if self.Arousal >= 0.99 then self.Arousal = 1 end
 	else

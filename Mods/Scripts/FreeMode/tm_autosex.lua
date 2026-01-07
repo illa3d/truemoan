@@ -23,7 +23,7 @@ AutoSexTier = {
 	Fast = "Fast",
 	Faster = "Faster",
 	Wild = "Wild",
-	Climax = "Climax",
+	Max = "Max",
 }
 
 -- AUTOSEX TIER WHEN TOGGLING BY SPEED
@@ -34,7 +34,7 @@ AutoSexTier_Toggle = {
 	AutoSexTier.Fast,
 	AutoSexTier.Faster,
 	AutoSexTier.Wild,
-	-- AutoSexTier.Climax, -- this can't be selected, called from climax mechanic
+	AutoSexTier.Max,
 }
 -- Minimum tier when toggling (jumps to off from it)
 AutoSexTier_ToggleMin = AutoSexTier.Idle
@@ -51,7 +51,7 @@ local ActAutoSexTimerRange = { Min = 1, Max = 20 } -- seconds (timer to allow ne
 AutoSexTierConfig_Idle = {
 	[ActValue.Speed] =			{ Min = 0.001,	Max = 0.1,	Delta = 0.03 },	-- 0.001 - 2
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.04 },	-- 0 - 1
-	[ActValue.Thrust] =			{ Min = 0.1,	Max = 0.8,	Delta = 0.06 },	-- 0 - 1 (normalized)
+	[ActValue.Thrust] =			{ Min = 0,		Max = 0.9,	Delta = 0.06 },	-- 0 - 1 (normalized)
 	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
 	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
 }
@@ -59,15 +59,15 @@ AutoSexTierConfig_Idle = {
 AutoSexTierConfig_Slow = {
 	[ActValue.Speed] =			{ Min = 0.05,	Max = 0.35,	Delta = 0.05 },	-- 0.001 - 2
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.04 },	-- 0 - 1
-	[ActValue.Thrust] =			{ Min = 0.1,	Max = 0.8,	Delta = 0.06 },	-- 0 - 1 (normalized)
+	[ActValue.Thrust] =			{ Min = 0,		Max = 0.7,	Delta = 0.06 },	-- 0 - 1 (normalized)
 	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
 	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2, Delta = 0.1 },	-- (0.05 - 1.3)
 }
 
 AutoSexTierConfig_Normal = {
-	[ActValue.Speed] =			{ Min = 0.2,	Max = 0.6,	Delta = 0.07 },	-- 0.001 - 2
+	[ActValue.Speed] =			{ Min = 0.2,	Max = 0.5,	Delta = 0.07 },	-- 0.001 - 2
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.04 },	-- 0 - 1
-	[ActValue.Thrust] =			{ Min = 0.1,	Max = 0.8,	Delta = 0.06 },	-- 0 - 1 (normalized)
+	[ActValue.Thrust] =			{ Min = 0,		Max = 0.5,	Delta = 0.06 },	-- 0 - 1 (normalized)
 	[ActValue.DepthStart] = 	{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
 	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
 }
@@ -75,7 +75,7 @@ AutoSexTierConfig_Normal = {
 AutoSexTierConfig_Fast = {
 	[ActValue.Speed] =			{ Min = 0.4,	Max = 0.9,	Delta = 0.08 },	-- 0.001 - 2
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
-	[ActValue.Thrust] =			{ Min = 0.01,	Max = 0.4,	Delta = 0.1 },	-- 0 - 1 (normalized)
+	[ActValue.Thrust] =			{ Min = 0,		Max = 0.3,	Delta = 0.1 },	-- 0 - 1 (normalized)
 	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
 	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
 }
@@ -83,7 +83,7 @@ AutoSexTierConfig_Fast = {
 AutoSexTierConfig_Faster = {
 	[ActValue.Speed] =			{ Min = 0.5,	Max = 1.5,	Delta = 0.12 },	-- 0.001 - 2
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
-	[ActValue.Thrust] =			{ Min = 0.01,	Max = 0.4,	Delta = 0.1 },	-- normalized
+	[ActValue.Thrust] =			{ Min = 0,		Max = 0.2,	Delta = 0.1 },	-- normalized
 	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
 	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
 }
@@ -91,17 +91,17 @@ AutoSexTierConfig_Faster = {
 AutoSexTierConfig_Wild = {
 	[ActValue.Speed] =			{ Min = 0.7,	Max = 1.7,	Delta = 0.15 },	-- 0.001 - 2
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
-	[ActValue.Thrust] =			{ Min = 0.01,	Max = 0.4,	Delta = 0.1 },	-- 0 - 1 (normalized)
-	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
+	[ActValue.Thrust] =			{ Min = 0,		Max = 0.3,	Delta = 0.1 },	-- 0 - 1 (normalized)
+	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.4,	Delta = 0.1 },	-- (0 - 1.25)
 	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
 }
 
 AutoSexTierConfig_Climax = {
 	[ActValue.Speed] =			{ Min = 1,		Max = 2,	Delta = 0.2 },	-- 0.001 - 2
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
-	[ActValue.Thrust] =			{ Min = 0.01,	Max = 0.4,	Delta = 0.1 },	-- 0 - 1 (normalized)
-	[ActValue.DepthStart] =		{ Min = 0.6,	Max = 0.8,	Delta = 0.1 },	-- (0 - 1.25)
-	[ActValue.DepthEnd] =		{ Min = 0.9,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
+	[ActValue.Thrust] =			{ Min = 0,		Max = 0.2,	Delta = 0.1 },	-- 0 - 1 (normalized)
+	[ActValue.DepthStart] =		{ Min = 0.3,	Max = 0.6,	Delta = 0.1 },	-- (0 - 1.25)
+	[ActValue.DepthEnd] =		{ Min = 0.7,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
 }
 
 -- Tier switch speed limits and random definitions
@@ -115,29 +115,29 @@ AutoSexTierConfig = {
 	[AutoSexTier.Fast] =	{ Min = 0.5,	Max = 0.75,	Random = AutoSexTierConfig_Fast },
 	[AutoSexTier.Faster] =	{ Min = 0.75,	Max = 1,	Random = AutoSexTierConfig_Faster },
 	[AutoSexTier.Wild] =	{ Min = 1,		Max = 1.5,	Random = AutoSexTierConfig_Wild },
-	[AutoSexTier.Climax] =	{ Min = 1.5,	Max = 2,	Random = AutoSexTierConfig_Climax },
+	[AutoSexTier.Max] =		{ Min = 1.5,	Max = 2,	Random = AutoSexTierConfig_Climax },
 }
 
 -- CLIMAX AROUSAL WEIGHT
 AutoSexClimaxArousalWeight = {
-	[AutoSexTier.Idle]		= 0.0,
-	[AutoSexTier.Slow]		= 0.4,
-	[AutoSexTier.Normal]	= 0.7,
-	[AutoSexTier.Fast]		= 1.0,
-	[AutoSexTier.Faster]	= 1.2,
-	[AutoSexTier.Wild]		= 1.5,
-	[AutoSexTier.Climax]	= 2.0,
+	[AutoSexTier.Idle]		= 0.1,
+	[AutoSexTier.Slow]		= 0.5,
+	[AutoSexTier.Normal]	= 1,
+	[AutoSexTier.Fast]		= 1.5,
+	[AutoSexTier.Faster]	= 2,
+	[AutoSexTier.Wild]		= 2.5,
+	[AutoSexTier.Max]		= 3.0,
 }
 
 -- CLIMAX SPEED (to force while climaxing down the AutoSexTier ladder)
 AutoSexClimaxSpeed = {
 	[AutoSexTier.Idle]		= 0.1,
-	[AutoSexTier.Slow]		= 0.2,
-	[AutoSexTier.Normal]	= 0.4,
-	[AutoSexTier.Fast]		= 0.6,
-	[AutoSexTier.Faster]	= 0.8,
-	[AutoSexTier.Wild]		= 1,
-	[AutoSexTier.Climax]	= 2,
+	[AutoSexTier.Slow]		= 0.5,
+	[AutoSexTier.Normal]	= 0.7,
+	[AutoSexTier.Fast]		= 0.9,
+	[AutoSexTier.Faster]	= 1.1,
+	[AutoSexTier.Wild]		= 1.3,
+	[AutoSexTier.Max]		= 2,
 }
 
 -------------------------------------------------------------------------------------------------

@@ -17,7 +17,7 @@ TMMoanTier = {
 	Fast = "fast",
 	Faster = "faster",
 	Wild = "orgasm", -- leftover from old system
-	Climax = "climax",
+	Max = "climax",
 }
 
 -- MOANS

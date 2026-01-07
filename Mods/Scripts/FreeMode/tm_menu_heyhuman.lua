@@ -1,15 +1,6 @@
 -- TrueMoan v1.9 by illa3d
 TMEyesOpen = true
 
-function TMMenuHumanStatsBodyLabel(stats)
-	if not stats or not stats.SexBody then return "-" end
-	local bodyStr = ""
-	for _, actBody in pairs(stats.SexBody) do
-		bodyStr = bodyStr .. (bodyStr ~= "" and ", " or "") .. actBody
-	end
-	return bodyStr ~= "" and bodyStr or "-"
-end
-
 label TMMenuHumanStats(human)
 	+ "Auto sex	| " .. AccBool(TMHStatsGet(human).AutoSex)
 		Return()
@@ -17,7 +8,7 @@ label TMMenuHumanStats(human)
 		Return()
 	+ "Is in sex	| " .. AccBoolYN(TMHStatsGet(human).IsSexActive)
 		Return()
-	+ TMMenuHumanStatsBodyLabel(TMHStatsGet(human)) [if TMHStatsGet(human).IsSexActive]
+	+ TMMLabel_Holes(human) [if TMHStatsGet(human).IsSexActive]
 		Return()
 	+ "Feeling cum	| " .. AccBoolYN(TMHStatsGet(human):IsFeelingCum())
 		Return()
@@ -25,15 +16,15 @@ label TMMenuHumanStats(human)
 		Return()
 	+ "Arousal	| " .. AccNumPC(TMHStatsGet(human).Arousal, 2)
 		Return()
-	+ "Climax	| " .. AccBoolYN(TMHStatsGet(human).Climax)
+	+ "Climax		| " .. AccBoolYN(TMHStatsGet(human).Climax)
 		Return()
 	+ TM_MenuBack
 		Return(2)
-	+ TM_MenuClose
+	+ TM_MenuCloseArousal(human)
 stop
 
 label TMMenuHeyHuman(human)
-	+ "Stats " .. AccStr(human.Name) .. " »		" .. AccNumPC(TMHStatsGet(human).Arousal)
+	+ "Stats " .. AccStr(human.Name) .. " »" [gold]
 		TMMenuHumanStats(human)
 
 	+ "DELETE ".. AccStr(human.Name)
@@ -92,5 +83,5 @@ label TMMenuHeyHuman(human)
 		Return()
 	+ TM_MenuBack
 		Return(2)
-	+ TM_MenuClose
+	+ TM_MenuCloseArousal(human)
 stop

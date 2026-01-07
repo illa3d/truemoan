@@ -27,7 +27,7 @@ label TMTalkMenu(human, hitTri)
 	+ "BODY »" [gold]
 		TMBodyEditHuman(human)
 		TMMenuBody(human)
-	+ "HEY, " .. AccStr(human.Name) .. " »" [gold]
+	+ "HEY, " .. AccStr(human.Name) [gold]
 		TMMenuHeyHuman(human)
 	+ if game.PovHuman ~= human
 		+ "POV"
@@ -37,7 +37,7 @@ label TMTalkMenu(human, hitTri)
 		+ "Exit POV"
 			game.PovHuman = nil
 			Return()
-	+ TM_MenuClose
+	+ TM_MenuCloseArousal(human)
 stop
 
 -------------------------------------------------------------------------------------------------

@@ -431,7 +431,7 @@ ActParamFunctionsSet = {
 -- MASS COMMANDS
 -------------------------------------------------------------------------------------------------
 
-function ActAll_Active(human, isActive)
+function ActAll_ActiveSet(human, isActive)
 	for _, actBody in pairs(ActBody) do
 		local act = ActGet(human, actBody)
 		if act then ActActiveSet(act, actBody == ActBody.PenisHand, isActive) end

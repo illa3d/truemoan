@@ -49,3 +49,34 @@ end
 function AccTextNum3 (text1, value1, text2, value2, text3, value3, decimals)
 	return text1 .. " " .. FCol(FDec(value1, decimals), TM_MenuAccent) .. " |" .. text2 .. " " .. FCol(FDec(value2, decimals), TM_MenuAccent) .. " |" .. text3 .. " " .. FCol(FDec(value3, decimals), TM_MenuAccent)
 end
+
+-------------------------------------------------------------------------------------------------
+-- CUSTOM LABELS
+-------------------------------------------------------------------------------------------------
+function TM_MenuCloseArousal(human)
+	return TM_MenuClose .. "		Arousal " .. TMMLabel_Arousal(human, true)
+end
+
+function TMMLabel_AutoSex(human)
+	local stats = TMHStatsGet(human)
+	if not stats then return "" end
+	if not TM_AutoSex then return "OFF (global)"
+	elseif not stats.AutoSex then return "OFF"
+	else return AccStr(stats.AutoSexTier) end
+end
+
+function TMMLabel_Arousal(human, skipLetter)
+	stats = TMHStatsGet(human)
+	if not stats then return "" end
+	return (skipLetter and "" or "A ") .. (stats.Climax and AccStr("Climax!") or AccNumPC(stats.Arousal))
+end
+
+function TMMLabel_Holes(human)
+	stas = TMHStatsGet(human)
+	if not stats or not stats.SexBody then return "" end
+	local bodyStr = ""
+	for _, actBody in pairs(stats.SexBody) do
+		bodyStr = bodyStr .. (bodyStr ~= "" and ", " or "") .. actBody
+	end
+	return bodyStr ~= "" and bodyStr or "-"
+end

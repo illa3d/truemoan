@@ -149,7 +149,7 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 
 	-- Tier selection + boundary detection
 	if inVelocity > TM_MoanTreshold_Climax then
-		tier = TMMoanTier.Climax
+		tier = TMMoanTier.Max
 		pauseMax = 0.1 -- Audio files: ~0.3s + pause
 		tierMax = TM_MoanTreshold_Climax + 1
 		tierMin = TM_MoanTreshold_Climax
@@ -193,7 +193,7 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	-- Small randomness to avoid mechanical timing
 	if stats and stats.Climax then
 		cooldown = 0.01
-	elseif tier == TMMoanTier.Climax or tier == TMMoanTier.Wild then
+	elseif tier == TMMoanTier.Max or tier == TMMoanTier.Wild then
 		cooldown = 0.02
 	else
 		cooldown = cooldown + math.random() * 0.05
@@ -220,23 +220,25 @@ end
 -------------------------------------------------------------------------------------------------
 function TMOnClimaxEffects(girl)
 	local function AutoSexTierSet(girl, autoSexTier)
-		TMHStatsGet(girl):AutoSexTierSet(autoSexTier)
-		ActAll_SpeedSet(girl, AutoSexClimaxSpeed[autoSexTier])
-		ActAll_DepthSet(girl, 0.9)
-		-- AutoSex_ResetTimers(human, ActValue.Speed)
+		stats = TMHStatsGet(girl)
+		stats:AutoSexTierSet(autoSexTier)
+		ActAll_ActiveSet(girl, true) -- turn on all interactions
+		ActAll_SpeedSet(girl, AutoSexClimaxSpeed[autoSexTier]) -- force specific start speed
+		ActAll_DepthSet(girl, 0.9, false) -- increase depth
+		if autoSexTier == AutoSexTier.Idle then stats.Climax = false end
 	end
 	if not girl then return end
 	local stats = TMHStatsGet(girl)
 	if not stats.IsSexActive or stats.Arousal < 1 or stats.Climax or not stats:IsFeelingCum() then return end
 	stats.Climax = true
 	WetSet(girl, 100000, ActBody.Vagina)	
-	AutoSexTierSet(girl, AutoSexTier.Climax)
-	Delayed(AutoSexClimaxTimeStep, function() AutoSexTierSet(girl, AutoSexTier.Wild) end)
-	Delayed(AutoSexClimaxTimeStep * 2, function() AutoSexTierSet(girl, AutoSexTier.Faster) end)
-	Delayed(AutoSexClimaxTimeStep * 3, function() AutoSexTierSet(girl, AutoSexTier.Fast) end)
-	Delayed(AutoSexClimaxTimeStep * 4, function() AutoSexTierSet(girl, AutoSexTier.Normal) end)
-	Delayed(AutoSexClimaxTimeStep * 5, function() AutoSexTierSet(girl, AutoSexTier.Slow) end)
-	Delayed(AutoSexClimaxTimeStep * 6, function() AutoSexTierSet(girl, AutoSexTier.Idle) stats.Climax = false end)
+	AutoSexTierSet(girl, AutoSexTier.Max)
+	Delayed(AutoSexClimaxTimeStep * 2, function() AutoSexTierSet(girl, AutoSexTier.Wild) end)
+	Delayed(AutoSexClimaxTimeStep * 3, function() AutoSexTierSet(girl, AutoSexTier.Faster) end)
+	Delayed(AutoSexClimaxTimeStep * 4, function() AutoSexTierSet(girl, AutoSexTier.Fast) end)
+	Delayed(AutoSexClimaxTimeStep * 5, function() AutoSexTierSet(girl, AutoSexTier.Normal) end)
+	Delayed(AutoSexClimaxTimeStep * 6, function() AutoSexTierSet(girl, AutoSexTier.Slow) end)
+	Delayed(AutoSexClimaxTimeStep * 7, function() AutoSexTierSet(girl, AutoSexTier.Idle) end)
 end
 
 -------------------------------------------------------------------------------------------------
