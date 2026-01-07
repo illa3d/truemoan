@@ -229,18 +229,28 @@ function TMOnClimaxEffects(girl)
 		ActAll_DepthSet(girl, AutoSexTierConfig_Climax[ActValue.DepthEnd].Max, false) -- increase depth
 		if autoSexTier == AutoSexTier.Idle then stats.Climax = false end
 	end
+	local function NewDelayStep(oldValue)
+		return oldValue + (AutoSexClimaxTimeStep * GetRandomFloat(0.8, 1.5))
+	end
+
 	if not girl then return end
 	local stats = TMHStatsGet(girl)
 	if not stats.IsSexActive or stats.Arousal < 1 or stats.Climax or not stats:IsFeelingCum() then return end
 	stats.Climax = true
 	if TM_WetSex then WetSet(girl, 100000, ActBody.Vagina) end
 	AutoSexTierSet(girl, AutoSexTier.Max)
-	Delayed(AutoSexClimaxTimeStep * 2, function() AutoSexTierSet(girl, AutoSexTier.Wild) end)
-	Delayed(AutoSexClimaxTimeStep * 3, function() AutoSexTierSet(girl, AutoSexTier.Faster) end)
-	Delayed(AutoSexClimaxTimeStep * 4, function() AutoSexTierSet(girl, AutoSexTier.Fast) end)
-	Delayed(AutoSexClimaxTimeStep * 5, function() AutoSexTierSet(girl, AutoSexTier.Normal) end)
-	Delayed(AutoSexClimaxTimeStep * 6, function() AutoSexTierSet(girl, AutoSexTier.Slow) end)
-	Delayed(AutoSexClimaxTimeStep * 7, function() AutoSexTierSet(girl, AutoSexTier.Idle) end)
+	local delay = NewDelayStep(6)
+	Delayed(delay, function() AutoSexTierSet(girl, AutoSexTier.Wild) end)
+	delay = NewDelayStep(delay)
+	Delayed(delay, function() AutoSexTierSet(girl, AutoSexTier.Faster) end)
+	delay = NewDelayStep(delay)
+	Delayed(delay, function() AutoSexTierSet(girl, AutoSexTier.Fast) end)
+	delay = NewDelayStep(delay)
+	Delayed(delay, function() AutoSexTierSet(girl, AutoSexTier.Normal) end)
+	delay = NewDelayStep(delay)
+	Delayed(delay, function() AutoSexTierSet(girl, AutoSexTier.Slow) end)
+	delay = NewDelayStep(delay)
+	Delayed(delay, function() AutoSexTierSet(girl, AutoSexTier.Idle) end)
 end
 
 -------------------------------------------------------------------------------------------------
