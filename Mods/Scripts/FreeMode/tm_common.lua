@@ -75,6 +75,13 @@ function TableRemoveValue(t, value)
 	end
 end
 
+function TableItemRandom(t)
+	local keys = {}
+	for k in pairs(t) do keys[#keys + 1] = k end
+	local randomKey = keys[math.random(#keys)]
+	return t[randomKey]
+end
+
 -------------------------------------------------------------------------------------------------
 -- RANDOM
 -------------------------------------------------------------------------------------------------

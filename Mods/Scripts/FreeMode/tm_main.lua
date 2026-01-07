@@ -39,7 +39,7 @@ end
 function TMOnHumanDoubleClick(human, hittri)
 	if (TM_DoubleClickReset) then HumanReset(human) end
 	if (TM_DoubleClickUndress) then HumanClothes(human, false) end
-	if (TM_DoubleClickMoan) then TMPlayGirlMoan(human, "slow") end
+	if (TM_DoubleClickMoan) then TMPlayMoan(human, TMMoan.DoubleClick) end
 end 
 
 function TMOnUpdate()
@@ -94,21 +94,17 @@ function TMOnFluidHit(hitActor, bodyArea, shootActor)
 	local timerKey = "TMFluidHit_" .. hitActor.Name .. bodyArea
 	local lastHitTime = Timer(timerKey)
 	local stats = TMHStatsGet(hitActor)
-	local function PlayHitMoan(stats, tmMoanTier)
-		if stats and stats.Climax then return end
-		TMPlayGirlMoan(hitActor, TMMoanTier.Faster)
-	end
 
 	if bodyArea == "L_Eye" and lastHitTime > TM_MoanCumEyeTime then 
-		PlayHitMoan(stats, TMMoanTier.Faster)
+		TMPlayMoan(hitActor, TMMoan.CumEye)
 		hitActor.AddInvoluntaryAnim("L_Eye_HitClose", 1, 0.7, 0.7, EyelidL(1))
 		ResetTimer(timerKey)
 	elseif bodyArea == "R_Eye" and lastHitTime > TM_MoanCumEyeTime then 
-		PlayHitMoan(stats, TMMoanTier.Faster)
+		TMPlayMoan(hitActor, TMMoan.CumEye)
 		hitActor.AddInvoluntaryAnim("R_Eye_HitClose", 1, 0.7, 0.7, EyelidR(1))
 		ResetTimer(timerKey)
 	elseif bodyArea == "Lips" and lastHitTime > TM_MoanCumLipsTime then 
-		PlayHitMoan(stats, TMMoanTier.Fast)
+		TMPlayMoan(hitActor, TMMoan.CumMouth)
 		hitActor.AddInvoluntaryAnim("OpenMouth", 5, 0.4, 0.4, Mouth(-0.83, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.73, 0, 0.39))
 		Delayed(1, function()
 			hitActor.Swallow()
@@ -122,7 +118,7 @@ function TMOnFluidHit(hitActor, bodyArea, shootActor)
 			hitActor.Say(hitActor.FaceMood >= 0 and "Like" or "Dislike")
 			ResetTimer(genericVoiceKey)
 		elseif lastHitTime > TM_MoanCumBodyTime then
-			if not stats.IsSexActive then PlayHitMoan(stats, TMMoanTier.Slow) end
+			TMPlayMoan(hitActor, TMMoan.CumBody)
 			ResetTimer(timerKey)
 		end
 	end
@@ -219,9 +215,9 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	-- Play
 	if lastMoanTime > cooldown then
 		if stats and stats.Climax then
-			TMPlayGirlMoan(girl, TMMoanTier[stats.AutoSexTier])
+			TMPlayMoanTier(girl, TMMoanTier[stats.AutoSexTier]) -- follow stats.AutoSexTier with sounds
 		else
-			TMPlayGirlMoan(girl, tier) end
+			TMPlayMoanTier(girl, tier) end -- follow penetration speed values set above
 		-- Auto Wetness
 		if TM_WetSex then
 			WetSet(girl, wetness, holeName)
@@ -285,7 +281,7 @@ function TMOnPenetration_Cum(girl, holeName)
 	stats.CumLastUpdate = now
 	-- Cum & Cumflation effects (same)
 	if TMHCanPlayCumEffect(stats) then
-		TMPlayGirlMoan(girl, TM_Cumflate and TMMoanTier.Wild or TMMoanTier.Normal)
+		TMPlayMoan(girl, TM_Cumflate and TMMoan.Cumflating or TMMoan.CumInside)
 		stats.CumEffectLastTime = now
 	end
 	-- Cumflation
@@ -326,7 +322,7 @@ function TMOnUpdate_CumFinish(girl)
 	if TM_Cumflate and stats.CumflateHipsSizeOrig and stats.CumflateHipsSize then
 		if stats.CumflateHipsSize > stats.CumflateHipsSizeOrig then
 			if TMHCanPlayCumEffect(stats) then
-				TMPlayGirlMoan(girl, TMMoanTier.Faster)
+				TMPlayMoan(girl, TMMoan.Cumflating)
 				if TM_WetSex then WetSet(girl, 50000, ActBody.Vagina) end
 				stats.CumEffectLastTime = now
 			end
@@ -355,13 +351,13 @@ function TMOnCumPulloutEffects(girl)
 	local function Increment(oldValue, newValue) return IncrementMultiplierRandom(oldValue, AutoSexClimaxTimeStep, 0.8, 1.5) end 
 	local delay = 0.5
 	local function Increment(value) delay = IncrementMultiplierRandom(delay, value, 0.8, 1.1) end
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Fast) end) Increment(0.5)
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Fast) end) Increment(0.5)
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end) Increment(1.5)
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end) Increment(2)
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end) Increment(3)
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end) Increment(4)
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Fast) end) Increment(0.5)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Fast) end) Increment(0.5)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Normal) end) Increment(1.5)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Normal) end) Increment(2)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Slow) end) Increment(3)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Slow) end) Increment(4)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Slow) end)
 end
 
 function TMOnCumflatePulloutEffects(girl)
@@ -369,17 +365,17 @@ function TMOnCumflatePulloutEffects(girl)
 	if TM_WetSex then WetSet(girl, 10000, ActBody.Vagina) end
 	local delay = 0.4
 	local function Increment(value) delay = IncrementMultiplierRandom(delay, value, 0.8, 1.1) end
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Faster) end) Increment(0.4)
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Faster) end) Increment(0.4)
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Faster) end) Increment(0.4)
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Fast) end) Increment(0.5)
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Fast) end) Increment(0.5)
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end) Increment(0.7)
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end) Increment(0.7)
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end) Increment(1)
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end) Increment(1.5)
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end) Increment(1.5)
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end) Increment(4)
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end) Increment(6)
-	Delayed(delay, function() TMPlayGirlMoan(girl, TMMoanTier.Slow) end)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Faster) end) Increment(0.4)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Faster) end) Increment(0.4)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Faster) end) Increment(0.4)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Fast) end) Increment(0.5)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Fast) end) Increment(0.5)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Normal) end) Increment(0.7)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Normal) end) Increment(0.7)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Normal) end) Increment(1)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Normal) end) Increment(1.5)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Slow) end) Increment(1.5)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Slow) end) Increment(4)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Slow) end) Increment(6)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Slow) end)
 end

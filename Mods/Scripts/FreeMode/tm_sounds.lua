@@ -10,21 +10,57 @@ tmAmbienceTimer = "AmbienceTimer"
 
 -- Moan Tier "Enum" (actual filenames)
 -- VAR NAMES MUST BE SAME AS AutoSexTier
+-- String values are part-filenames: tm_climax (3).mp3
 TMMoanTier = {
 	Idle = "slow",
 	Slow = "slow",
 	Normal = "normal",
 	Fast = "fast",
 	Faster = "faster",
-	Wild = "orgasm", -- leftover from old system
-	Max = "climax",
+	Wild = "orgasm", -- can't rename string, filenames
+	Max = "climax", -- can't rename string, filenames
 }
 
--- Cum Moan types (random)
-TM_CumMoans = { TMMoanTier.Fast, TMMoanTier.Faster, TMMoanTier.Wild }
+TMMoan = {
+	Sex = "Sex", -- dynamic
+	Climax = "Climax", -- dynamic
+	Cumming = "Cumming",
+	CumEye = "CumEye",
+	CumMouth = "CumMouth",
+	CumBody = "CumBody",
+	CumInside = "CumInside",
+	Cumflating = "Cumflating",
+	Cumdeflating = "Cumdeflating",
+	DoubleClick = "DoubleClick",
+}
+
+-- Cum Moan Sources (random)
+TM_Moans_Cumming = { TMMoanTier.Fast, TMMoanTier.Faster, TMMoanTier.Wild }
+TM_Moans_CumEye = { TMMoanTier.Faster, TMMoanTier.Wild, TMMoanTier.Max }
+TM_Moans_CumMouth = { TMMoanTier.Fast, TMMoanTier.Faster }
+TM_Moans_CumBody = { TMMoanTier.Slow, TMMoanTier.Normal }
+TM_Moans_CumInside = { TMMoanTier.Slow, TMMoanTier.Normal, TMMoanTier.Fast }
+TM_Moans_Cumflating = { TMMoanTier.Fast, TMMoanTier.Faster, TMMoanTier.Wild }
+TM_Moans_Cumdeflating = { TMMoanTier.Slow, TMMoanTier.Fast, TMMoanTier.Faster }
 
 -- MOANS
-function TMPlayGirlMoan(girl, tmMoanTier)
+function TMPlayMoan(girl, tmMoan)
+	local stats = TMHStatsGet(girl)
+	if not stats or stats.Climax then return end
+	-- if tmMoanSource == TMMoanSource.Sex then -- dynamic
+	-- elseif tmMoanSource == TMMoanSource.Climax then -- dynamic
+	if tmMoan == TMMoan.Cumming then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_Cumming))
+	elseif tmMoan == TMMoan.CumEye then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumEye))
+	elseif tmMoan == TMMoan.CumMouth then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumMouth))
+	elseif tmMoan == TMMoan.CumBody and not stats.IsSexActive then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumBody))
+	elseif tmMoan == TMMoan.CumInside and not stats.IsSexActive then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumInside))
+	elseif tmMoan == TMMoan.Cumflating then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_Cumflating))
+	elseif tmMoan == TMMoan.Cumdeflating then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_Cumdeflating))
+	elseif tmMoan == TMMoan.DoubleClick then TMPlayMoanTier(girl, TableItemRandom(TMMoanTier))
+	end
+end
+
+function TMPlayMoanTier(girl, tmMoanTier)
 	-- don't moan with other voice mods
 	if not TM_AllowVoice() or not girl or girl.m_isMale then return end
 	girl.SayCustom("tm_" .. tmMoanTier)

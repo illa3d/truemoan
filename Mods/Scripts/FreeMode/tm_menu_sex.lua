@@ -245,7 +245,7 @@ label TMMenuSex(human)
 				Return()
 		+ else
 			+ "Cum start"
-				TMHumanCumEvery(human, GetRandom(4,8))
+				TMHumanCumEvery(human, GetRandom(2,5))
 				Return()
 	-- VAGINA
 	+ else 

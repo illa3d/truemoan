@@ -175,7 +175,7 @@ function TMHumanCumEvery(human, sec)
 	stats.IsCumming = true
 	stats.CumFrequency = sec
 	game.AddRepeatAnim(sec, function ()
-		TMPlayGirlMoan(human, ListItemRandom(TM_CumMoans))
+		TMPlayMoan(human, TMMoan.Cumming)
 		human.Shoot()
 	end, human.Penis)
 end
