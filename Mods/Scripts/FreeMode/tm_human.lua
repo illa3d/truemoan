@@ -36,7 +36,7 @@ TMHumanStats = {
 	CumflateHipsSizeOrig = nil,
 }
 
-function TMHumanStatsCloneDefault() return GetTableClone(TMHumanStats) end
+function TMHumanStatsCloneDefault() return TableClone(TMHumanStats) end
 
 -------------------------------------------------------------------------------------------------
 -- HUMAN STATS

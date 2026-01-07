@@ -69,8 +69,8 @@ TMBodyValueDefault = {
 	[TMBody.PenisSkin] = 0,
 	[TMBody.PenisRagdoll] = TMBD_RagdollSizeDefault,
 }
-function TMBodyValueCloneDefault() return GetTableClone(TMBodyValueDefault) end
-function TMBodyValueClone(tmBodyValue) return GetTableClone(tmBodyValue) end
+function TMBodyValueCloneDefault() return TableClone(TMBodyValueDefault) end
+function TMBodyValueClone(tmBodyValue) return TableClone(tmBodyValue) end
 function TMBodyEdit_ResetUIValues()
 	TMBodyValueUI = TMBodyValueCloneDefault()
 end

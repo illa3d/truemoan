@@ -11,31 +11,11 @@ function ClampValue(value, min, max) return math.max(min, math.min(value, max)) 
 function NormalizeValue(value, min, max) return (value - min) / (max - min) end
 function DenormalizeValue(t, min, max) return min + t * (max - min) end
 
--- TABLES
-function GetTableClone(source)
-	if not source then return nil end
-	local clone = {} for k, v in pairs(source) do clone[k] = v end
-	return clone
-end
-
--------------------------------------------------------------------------------------------------
--- RANDOM
--------------------------------------------------------------------------------------------------
-
--- Returns a random integer between min and max (inclusive).
-function GetRandom(min, max) return (math.random(min ,max)) end
-
--- Returns a random float between min and max.
-function GetRandomFloat(min, max) return min + (max - min) * math.random() end
-
--- Returns a random float between 0 and 1.
-function GetRandomFloat01() return math.random() end
-
--- Returns a random float within ±percent of value, clamped to [0,1].
-function GetRandomFloatAround(value, percent)
-	percent = Clamp01(percent)
-	return GetRandomFloat(value * (1 - percent), value * (1 + percent))
-end
+-- INCREMENTS
+function IncrementStep(value, step) return value + step end
+function IncrementRandom(value, min, max) return value + GetRandomFloat(min, max) end
+function IncrementMultiplier(oldValue, value, mult) return oldValue + (value * mult) end
+function IncrementMultiplierRandom(oldValue, value, multMin, multMax) return oldValue + (value * GetRandomFloat(multMin, multMax)) end
 
 -------------------------------------------------------------------------------------------------
 -- LISTS
@@ -57,6 +37,12 @@ end
 -------------------------------------------------------------------------------------------------
 -- TABLES
 -------------------------------------------------------------------------------------------------
+
+function TableClone(source)
+	if not source then return nil end
+	local clone = {} for k, v in pairs(source) do clone[k] = v end
+	return clone
+end
 
 function IsTableEmpty(t)
 	return t == nil or next(t) == nil
@@ -87,6 +73,25 @@ function TableRemoveValue(t, value)
 			return
 		end
 	end
+end
+
+-------------------------------------------------------------------------------------------------
+-- RANDOM
+-------------------------------------------------------------------------------------------------
+
+-- Returns a random integer between min and max (inclusive).
+function GetRandom(min, max) return (math.random(min ,max)) end
+
+-- Returns a random float between min and max.
+function GetRandomFloat(min, max) return min + (max - min) * math.random() end
+
+-- Returns a random float between 0 and 1.
+function GetRandomFloat01() return math.random() end
+
+-- Returns a random float within ±percent of value, clamped to [0,1].
+function GetRandomFloatAround(value, percent)
+	percent = Clamp01(percent)
+	return GetRandomFloat(value * (1 - percent), value * (1 + percent))
 end
 
 -------------------------------------------------------------------------------------------------
