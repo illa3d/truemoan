@@ -57,6 +57,12 @@ function TM_MenuCloseArousal(human)
 	return TM_MenuClose .. "		Arousal " .. TMMLabel_Arousal(human, true)
 end
 
+function TMMLabel_Cum(human)
+	local stats = TMHStatsGet(human)
+	if not stats then return "" end
+	return AccStr(stats.IsCumming and (stats.CumFrequency .. "s") or "No")
+end
+
 function TMMLabel_AutoSex(human)
 	local stats = TMHStatsGet(human)
 	if not stats then return "" end

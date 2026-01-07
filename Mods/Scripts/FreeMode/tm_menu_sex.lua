@@ -1,6 +1,4 @@
 -- TrueMoan v2.0 by illa3d
--- Variables
-tmCumevery = 0
 -- Sex speed decimals
 tmSdecSpd = 1
 tmSdec = 0
@@ -243,11 +241,11 @@ label TMMenuSex(human)
 	+ if human.Penis.IsActive == true
 		+ if game.HasAnim(human.Penis)
 			+ "Cum " ..AccStr("stop")
-				tmCumevery = HumanCumStop(human)
+				TMHumanCumStop(human)
 				Return()
 		+ else
 			+ "Cum start"
-				tmCumevery = HumanCumEvery(human, GetRandom(4,8))
+				TMHumanCumEvery(human, GetRandom(4,8))
 				Return()
 	-- VAGINA
 	+ else 
@@ -281,30 +279,30 @@ label TMMenuSex(human)
 	-- AUTOSEX
 
 	-- PENIS
-	+ "| Cum »	| " .. AccStr(tmCumevery .. "s") [if HumanHasPenis(human)] [gold]
+	+ "| Cum »	| " .. TMMLabel_Cum(human) [if HumanHasPenis(human)] [gold]
 		+ "• Cum every 60 sec"
-			tmCumevery = HumanCumEvery(human, 60)
+			TMHumanCumEvery(human, 60)
 			Return()
 		+ "• Cum every 30 sec"
-			tmCumevery = HumanCumEvery(human, 30)
+			TMHumanCumEvery(human, 30)
 			Return()
 		+ "• Cum every 10 sec"
-			tmCumevery = HumanCumEvery(human, 10)
+			TMHumanCumEvery(human, 10)
 			Return()
 		+ "• Cum every 5 sec"
-			tmCumevery = HumanCumEvery(human, 5)
+			TMHumanCumEvery(human, 5)
 			Return()
 		+ "• Cum every 2 sec"
-			tmCumevery = HumanCumEvery(human, 2)
+			TMHumanCumEvery(human, 2)
 			Return()
 		+ "• Cum every 1 sec"
-			tmCumevery = HumanCumEvery(human, 1)
+			TMHumanCumEvery(human, 1)
 			Return()
-		+ "RESET | " .. AccStr(tmCumevery .. "s")
-			tmCumevery = HumanCumStop(human)
+		+ "RESET | " .. TMMLabel_Cum(human)
+			TMHumanCumStop(human)
 			Return()
 		+ "Random" [gold]
-			tmCumevery = HumanCumEvery(human, GetRandom(1,120))
+			TMHumanCumEvery(human, GetRandom(1,120))
 			Return()
 		+ TM_MenuBack
 			Return(2)

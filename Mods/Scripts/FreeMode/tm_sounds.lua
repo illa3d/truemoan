@@ -20,6 +20,9 @@ TMMoanTier = {
 	Max = "climax",
 }
 
+-- Cum Moan types (random)
+TM_CumMoans = { TMMoanTier.Fast, TMMoanTier.Faster, TMMoanTier.Wild }
+
 -- MOANS
 function TMPlayGirlMoan(girl, tmMoanTier)
 	-- don't moan with other voice mods

@@ -262,9 +262,6 @@ function TMOnClimaxEffects(girl)
 	Delayed(delay, function() AutoSexTierSet(girl, AutoSexTier.Idle) end)
 end
 
-
-
-
 -------------------------------------------------------------------------------------------------
 -- CUM REACTIONS
 -------------------------------------------------------------------------------------------------

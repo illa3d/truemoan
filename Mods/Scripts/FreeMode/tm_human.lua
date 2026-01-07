@@ -29,6 +29,8 @@ TMHumanStats = {
 	AutoSex = false,
 	AutoSexTier = nil,
 	-- Cum reactions
+	IsCumming = false,
+	CumFrequency = 0,
 	CumLastTime = nil,
 	CumLastUpdate = nil,
 	CumEffectLastTime = nil,
@@ -158,6 +160,26 @@ function TMHumanStats:CumReset()
 	self.CumLastUpdate = nil
 	self.CumflateHipsSize = nil
 	self.CumflateHipsSizeOrig = nil
+end
+
+function TMHumanCumEvery(human, sec)
+	if not human or not human.Penis then return end
+	stats = TMHStatsGet(human)
+	if not stats then return end
+	stats.IsCumming = true
+	stats.CumFrequency = sec
+	game.AddRepeatAnim(sec, function ()
+		TMPlayGirlMoan(human, ListItemRandom(TM_CumMoans))
+		human.Shoot()
+	end, human.Penis)
+end
+
+function TMHumanCumStop(human)
+	stats = TMHStatsGet(human)
+	if not stats then return end
+	stats.IsCumming = false
+	stats.CumFrequency = 0
+	game.RemoveAnim(human.Penis)
 end
 
 -------------------------------------------------------------------------------------------------

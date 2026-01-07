@@ -10,6 +10,8 @@ label TMMenuHumanStats(human)
 		Return()
 	+ TMMLabel_Holes(human) [if TMHStatsGet(human).IsSexActive]
 		Return()
+	+ "Cumming	| " .. TMMLabel_Cum(human)
+		Return()
 	+ "Feeling cum	| " .. AccBoolYN(TMHStatsGet(human):IsFeelingCum())
 		Return()
 	+ "Cumflating	| " .. AccBoolYN(TMHStatsGet(human):IsCumflating())
