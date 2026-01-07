@@ -233,7 +233,7 @@ function TMOnClimaxEffects(girl)
 	local stats = TMHStatsGet(girl)
 	if not stats.IsSexActive or stats.Arousal < 1 or stats.Climax or not stats:IsFeelingCum() then return end
 	stats.Climax = true
-	WetSet(girl, 100000, ActBody.Vagina)	
+	if TM_WetSex then WetSet(girl, 100000, ActBody.Vagina) end
 	AutoSexTierSet(girl, AutoSexTier.Max)
 	Delayed(AutoSexClimaxTimeStep * 2, function() AutoSexTierSet(girl, AutoSexTier.Wild) end)
 	Delayed(AutoSexClimaxTimeStep * 3, function() AutoSexTierSet(girl, AutoSexTier.Faster) end)
@@ -308,7 +308,7 @@ function TMOnUpdate_CumFinish(girl)
 		if stats.CumflateHipsSize > stats.CumflateHipsSizeOrig then
 			if TMHCanPlayCumEffect(stats) then
 				TMPlayGirlMoan(girl, TMMoanTier.Faster)
-				WetSet(girl, 50000, ActBody.Vagina)
+				if TM_WetSex then WetSet(girl, 50000, ActBody.Vagina) end
 				stats.CumEffectLastTime = now
 			end
 			stats.CumflateHipsSize = math.max(stats.CumflateHipsSize - TM_CumflateStepDown, stats.CumflateHipsSizeOrig)
@@ -332,7 +332,7 @@ end
 
 function TMOnCumPulloutEffects(girl)
 	if not girl then return end
-	WetSet(girl, 1000, ActBody.Vagina)
+	if TM_WetSex then WetSet(girl, 1000, ActBody.Vagina) end
 	Delayed(0.5, function() TMPlayGirlMoan(girl, TMMoanTier.Fast) end)
 	Delayed(1, function() TMPlayGirlMoan(girl, TMMoanTier.Fast) end)
 	Delayed(1.5, function() TMPlayGirlMoan(girl, TMMoanTier.Normal) end)
@@ -344,7 +344,7 @@ end
 
 function TMOnCumflatePulloutEffects(girl)
 	if not girl then return end
-	WetSet(girl, 1000, ActBody.Vagina)
+	if TM_WetSex then WetSet(girl, 10000, ActBody.Vagina) end
 	Delayed(0.4, function() TMPlayGirlMoan(girl, TMMoanTier.Faster) end)
 	Delayed(0.8, function() TMPlayGirlMoan(girl, TMMoanTier.Faster) end)
 	Delayed(1.2, function() TMPlayGirlMoan(girl, TMMoanTier.Faster) end)
