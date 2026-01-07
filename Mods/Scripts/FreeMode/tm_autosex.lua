@@ -1,4 +1,4 @@
--- TrueMoan v1.9 by illa3d
+-- TrueMoan v2.0 by illa3d
 -------------------------------------------------------------------------------------------------
 -- AUTO SEX - AUTOMATICALLY ADJUST INTERACTION PARAMETERS DYNAMICALLY (speed, weight, thrust, depth)
 -- Requires tm_act.lua, tm_human.lua

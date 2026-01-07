@@ -1,4 +1,4 @@
--- TrueMoan v1.9 by illa3d
+-- TrueMoan v2.0 by illa3d
 -- Per-human AUTHORITATIVE stat storage (including EditBody data)
 TM_HumanStatsList = {}
 local TMH_LastUpdateClock = os.clock()

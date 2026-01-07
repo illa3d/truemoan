@@ -1,4 +1,4 @@
--- TrueMoan v1.9 by illa3d
+-- TrueMoan v2.0 by illa3d
 -------------------------------------------------------------------------------------------------
 -- INTERACTION BETWEEN HUMANS, HOLES AND PENISES, INTERACTION PARAMETERS AND THEIR TWEENS
 -------------------------------------------------------------------------------------------------
