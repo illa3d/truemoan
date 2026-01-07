@@ -112,24 +112,13 @@ AutoSexTierRandom_Default = AutoSexTierConfig_Normal
 
 -- Collection of all the tier parameters, their tier speed and parameter value limits
 AutoSexTierConfig = {
-	[AutoSexTier.Idle] =	{ Min = 0,		Mid = 0.1,	Max = 0.2,	Random = AutoSexTierConfig_Idle },
-	[AutoSexTier.Slow] =	{ Min = 0.3,	Mid = 0.5,	Max = 0.7,	Random = AutoSexTierConfig_Slow },
-	[AutoSexTier.Normal] =	{ Min = 0.6,	Mid = 0.7,	Max = 0.8,	Random = AutoSexTierConfig_Normal },
-	[AutoSexTier.Fast] =	{ Min = 0.7,	Mid = 0.9,	Max = 1,	Random = AutoSexTierConfig_Fast },
-	[AutoSexTier.Faster] =	{ Min = 0.9,	Mid = 1.1,	Max = 1.2,	Random = AutoSexTierConfig_Faster },
-	[AutoSexTier.Wild] =	{ Min = 1,		Mid = 1.3,	Max = 1.5,	Random = AutoSexTierConfig_Wild },
-	[AutoSexTier.Max] =		{ Min = 1.4,	Mid = 1.9,	Max = 2,	Random = AutoSexTierConfig_Climax },
-}
-
--- CLIMAX AROUSAL WEIGHT
-AutoSexClimaxArousalWeight = {
-	[AutoSexTier.Idle]		= 0.1,
-	[AutoSexTier.Slow]		= 0.5,
-	[AutoSexTier.Normal]	= 1,
-	[AutoSexTier.Fast]		= 1.5,
-	[AutoSexTier.Faster]	= 2,
-	[AutoSexTier.Wild]		= 2.5,
-	[AutoSexTier.Max]		= 3.0,
+	[AutoSexTier.Idle] =	{ Min = 0,		Mid = 0.1,	Max = 0.2,	Arousal = 0.1,	Random = AutoSexTierConfig_Idle },
+	[AutoSexTier.Slow] =	{ Min = 0.3,	Mid = 0.5,	Max = 0.7,	Arousal = 0.5,	Random = AutoSexTierConfig_Slow },
+	[AutoSexTier.Normal] =	{ Min = 0.6,	Mid = 0.7,	Max = 0.8,	Arousal = 1,	Random = AutoSexTierConfig_Normal },
+	[AutoSexTier.Fast] =	{ Min = 0.7,	Mid = 0.9,	Max = 1,	Arousal = 1.5,	Random = AutoSexTierConfig_Fast },
+	[AutoSexTier.Faster] =	{ Min = 0.9,	Mid = 1.1,	Max = 1.2,	Arousal = 2,	Random = AutoSexTierConfig_Faster },
+	[AutoSexTier.Wild] =	{ Min = 1,		Mid = 1.3,	Max = 1.5,	Arousal = 2.5,	Random = AutoSexTierConfig_Wild },
+	[AutoSexTier.Max] =		{ Min = 1.4,	Mid = 1.9,	Max = 2,	Arousal = 3.0,	Random = AutoSexTierConfig_Climax },
 }
 
 -------------------------------------------------------------------------------------------------

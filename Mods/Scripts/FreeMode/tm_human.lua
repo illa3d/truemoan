@@ -119,8 +119,8 @@ local function HoleMultiplier(holeCount)
 end
 
 function TMHumanStats:UpdateArousal(deltaTime)
-	if self.IsSexActive and not self.Climax then
-		local tierMul = AutoSexClimaxArousalWeight[self.AutoSexTier] or 0.5
+	if self.IsSexActive and self.AutoSexTier and not self.Climax then
+		local tierMul = AutoSexTierConfig[self.AutoSexTier].Arousal
 		local gain = deltaTime * TMH_DefaultArousalIncrease * tierMul
 		* HoleMultiplier(self.SexBodyCount)
 		* (self:IsCumflating() and 1.5 or 1)
