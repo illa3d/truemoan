@@ -50,6 +50,7 @@ function TMOnUpdate()
 	-- Iterate and call for every human in the scene
 	for _, human in ipairs(game.GetHumans()) do
 		TMOnUpdate_CumFinish(human)
+		TMOnUpdate_Futa(human)
 	end
 end
 
@@ -130,6 +131,20 @@ end
 -------------------------------------------------------------------------------------------------
 -- SEX REACTIONS
 -------------------------------------------------------------------------------------------------
+function TMOnUpdate_Futa(girl)
+	if not TM_MoanFuta or not girl or girl.m_isMale then return end
+
+	local function OnPenetration(actBody)
+		act = ActGet(girl, actBody)
+		if not act or not ActActiveGet(act, actBody == ActBody.PenisHand) then return end
+		TMOnPenetration(girl, actBody, ActSpeedGet(act, false)/1.5, 0, SexPartner_Get(girl, actBody))
+	end
+
+	if HasSexPartner(girl, ActBody.PenisHole) then OnPenetration(ActBody.PenisHole)
+	elseif HasSexPartner(girl, ActBody.PenisHand) then OnPenetration(ActBody.PenisHand) end
+end
+
+
 -- Updated on penetration (holeName: "Vagina" "Anus" Mouth")
 function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	TMOnPenetration_Cum(girl, holeName)

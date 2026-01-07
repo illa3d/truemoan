@@ -31,6 +31,7 @@ TM_SpawnAutoSexOn = true			-- AutoSex on for everyone at spawn
 -- People in Sex
 TM_AutoSex = true					-- Autosex feature on/off for all
 TM_MoanSex = true					-- Moaning during sex
+TM_MoanFuta = true					-- Moaning chicks with dicks
 TM_WetSex = true					-- Moisting holes (vag, anus, mouth) during sex and cumming
 TM_Cumflate = false					-- Allow belly inflation by cumming inside
 TM_TweenSex = true					-- Soft transitions on changing sex values (speed, thrust, depth)

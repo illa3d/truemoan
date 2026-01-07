@@ -59,6 +59,9 @@ label TMMenuOptions(human)
 			+ "Moan cum	| " .. AccBool(game.FluidReaction)
 				game.FluidReaction = not game.FluidReaction
 				Return()
+			+ "Moan futa	| " .. AccBool(TM_MoanFuta)
+				TM_MoanFuta = not TM_MoanFuta
+				Return()
 		+ else
 			+ "True Moan	| Disabled (VoiceMod)"
 				Return()
