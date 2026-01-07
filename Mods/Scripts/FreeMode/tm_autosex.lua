@@ -64,7 +64,7 @@ AutoSexTierConfig_Slow = {
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.04 },	-- 0 - 1
 	[ActValue.Thrust] =			{ Min = 0,		Max = 0.7,	Delta = 0.06 },	-- 0 - 1 (normalized)
 	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
-	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2, Delta = 0.1 },	-- (0.05 - 1.3)
+	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.1, Delta = 0.1 },	-- (0.05 - 1.3)
 }
 
 AutoSexTierConfig_Normal = {
@@ -72,39 +72,39 @@ AutoSexTierConfig_Normal = {
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.04 },	-- 0 - 1
 	[ActValue.Thrust] =			{ Min = 0,		Max = 0.5,	Delta = 0.06 },	-- 0 - 1 (normalized)
 	[ActValue.DepthStart] = 	{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
-	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
+	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.1,	Delta = 0.1 },	-- (0.05 - 1.3)
 }
 
 AutoSexTierConfig_Fast = {
 	[ActValue.Speed] =			{ Min = 0.4,	Max = 0.9,	Delta = 0.08 },	-- 0.001 - 2
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
-	[ActValue.Thrust] =			{ Min = 0,		Max = 0.3,	Delta = 0.1 },	-- 0 - 1 (normalized)
+	[ActValue.Thrust] =			{ Min = 0,		Max = 0.5,	Delta = 0.1 },	-- 0 - 1 (normalized)
 	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
-	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
+	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.1,	Delta = 0.1 },	-- (0.05 - 1.3)
 }
 
 AutoSexTierConfig_Faster = {
 	[ActValue.Speed] =			{ Min = 0.5,	Max = 1.5,	Delta = 0.12 },	-- 0.001 - 2
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
-	[ActValue.Thrust] =			{ Min = 0,		Max = 0.2,	Delta = 0.1 },	-- normalized
-	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
-	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
+	[ActValue.Thrust] =			{ Min = 0,		Max = 0.3,	Delta = 0.1 },	-- normalized
+	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.7,	Delta = 0.1 },	-- (0 - 1.25)
+	[ActValue.DepthEnd] =		{ Min = 0.7,	Max = 1.1,	Delta = 0.1 },	-- (0.05 - 1.3)
 }
 
 AutoSexTierConfig_Wild = {
 	[ActValue.Speed] =			{ Min = 0.7,	Max = 1.7,	Delta = 0.15 },	-- 0.001 - 2
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
-	[ActValue.Thrust] =			{ Min = 0,		Max = 0.3,	Delta = 0.1 },	-- 0 - 1 (normalized)
-	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.4,	Delta = 0.1 },	-- (0 - 1.25)
-	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
+	[ActValue.Thrust] =			{ Min = 0,		Max = 0.2,	Delta = 0.1 },	-- 0 - 1 (normalized)
+	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.6,	Delta = 0.1 },	-- (0 - 1.25)
+	[ActValue.DepthEnd] =		{ Min = 0.8,	Max = 1.1,	Delta = 0.1 },	-- (0.05 - 1.3)
 }
 
 AutoSexTierConfig_Climax = {
 	[ActValue.Speed] =			{ Min = 1,		Max = 2,	Delta = 0.2 },	-- 0.001 - 2
 	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
 	[ActValue.Thrust] =			{ Min = 0,		Max = 0.2,	Delta = 0.1 },	-- 0 - 1 (normalized)
-	[ActValue.DepthStart] =		{ Min = 0.3,	Max = 0.6,	Delta = 0.1 },	-- (0 - 1.25)
-	[ActValue.DepthEnd] =		{ Min = 0.7,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
+	[ActValue.DepthStart] =		{ Min = 0.3,	Max = 0.7,	Delta = 0.1 },	-- (0 - 1.25)
+	[ActValue.DepthEnd] =		{ Min = 0.9,	Max = 1.1,	Delta = 0.1 },	-- (0.05 - 1.3)
 }
 
 -- Tier switch speed limits and random definitions
