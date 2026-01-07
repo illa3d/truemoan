@@ -16,21 +16,25 @@ TMHumanStats = {
 	NeedsBodyApply = false,
 	-- Sex
 	IsSexActive = false,
+	-- Where
 	PenisHole = false,
 	PenisHand = false,
 	Mouth = false,
 	Anus = false,
 	Vagina = false,
+	-- Where list
 	SexBody = nil,
 	SexBodyCount = 0,
+	-- Arousal
 	Arousal = 0,
 	Climax = false,
 	-- AutoSex
 	AutoSex = false,
 	AutoSexTier = nil,
-	-- Cum reactions
+	-- Cum
 	IsCumming = false,
 	CumFrequency = 0,
+	-- Cum reactions
 	CumLastTime = nil,
 	CumLastUpdate = nil,
 	CumEffectLastTime = nil,
@@ -49,6 +53,7 @@ local function TMHStatsNew(human)
 	clone.LastUpdate = os.time()
 	clone.TMBValue = TMBodyValueCloneDefault() --TMBValue is AUTHORITATIVE source of Human Body customization values
 	clone.SexBody = {}
+	clone.AutoSexTier = AutoSexTier_Default
 	TM_HumanStatsList[human] = clone
 end
 
@@ -125,8 +130,9 @@ function TMHumanStats:UpdateArousal(deltaTime)
 		local tierMul = AutoSexTierConfig[self.AutoSexTier].Arousal
 		local gain = deltaTime * TMH_DefaultArousalIncrease * tierMul
 		* HoleMultiplier(self.SexBodyCount)
-		* (self:IsCumflating() and 1.5 or 1)
-		* (self:IsFeelingCum() and 2 or 1)
+		* (self.IsCumming and 2 or 1)
+		* (self:IsCumflating() and 2 or 1)
+		* (self:IsFeelingCum() and 1.3 or 1)
 		self.Arousal = Clamp01(self.Arousal + gain)
 		if self.Arousal >= 0.99 then self.Arousal = 1 end
 	else

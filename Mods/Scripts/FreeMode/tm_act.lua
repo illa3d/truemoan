@@ -104,7 +104,7 @@ function HasSexPartner_PenisHole(human)
 	return HasSexPartner(human, ActBody.PenisHole) end
 function HasSexPartner(human, body)
 	if human == nil then return false end
-	if body == ActBody.PenisHand and human.Penis.m_holdDepth ~= 0 then return true
+	if body == ActBody.PenisHand and human.Penis and human.Penis.m_holdDepth ~= 0 then return true
 	elseif body == ActBody.PenisHole and human.Penis.Hole ~= nil then return true
 	elseif body == ActBody.Mouth and human.Mouth.Fucker ~= nil then return true
 	elseif body == ActBody.Anus and human.Anus.Fucker ~= nil then return true
@@ -114,7 +114,11 @@ end
 
 function SexPartner_Get(human, body)
 	if human == nil then return nil end
-	if body == ActBody.Mouth and human.Mouth.Fucker ~= nil then return human.Mouth.Fucker
+	-- if body == ActBody.PenisHand and human.Penis and human.Penis.handActor ~= nil then return human.Penis.handActor --INACESSIBLE
+	-- if body == ActBody.PenisHole and human.Penis ~= nil and human.PenisHole ~= nil and human.Penis.Hole.m_girl ~= nil then return human.Penis.Hole.m_girl -- WORKING, lower variant is better
+	-- no solution for hand
+	if body == ActBody.PenisHole and human.Penis ~= nil and human.Penis.ConnectedGirl ~= nil then return human.Penis.ConnectedGirl
+	elseif body == ActBody.Mouth and human.Mouth.Fucker ~= nil then return human.Mouth.Fucker
 	elseif body == ActBody.Anus and human.Anus.Fucker ~= nil then return human.Anus.Fucker
 	elseif body == ActBody.Vagina and human.Vagina.Fucker ~= nil then return human.Vagina.Fucker
 	else return nil end

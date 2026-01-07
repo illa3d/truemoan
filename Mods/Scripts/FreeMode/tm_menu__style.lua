@@ -60,7 +60,7 @@ end
 function TMMLabel_Cum(human)
 	local stats = TMHStatsGet(human)
 	if not stats then return "" end
-	return AccStr(stats.IsCumming and (stats.CumFrequency .. "s") or "No")
+	return AccBoolYN(stats.IsCumming) .. (stats.IsCumming and " | " .. AccNum(stats.CumFrequency) .. "s" or "")
 end
 
 function TMMLabel_AutoSex(human)
@@ -78,8 +78,8 @@ function TMMLabel_Arousal(human, skipLetter)
 end
 
 function TMMLabel_Holes(human)
-	stas = TMHStatsGet(human)
-	if not stats or not stats.SexBody then return "" end
+	local stats = TMHStatsGet(human)
+	if not stats or not stats.SexBody or IsTableEmpty(stats.SexBody) then return "" end
 	local bodyStr = ""
 	for _, actBody in pairs(stats.SexBody) do
 		bodyStr = bodyStr .. (bodyStr ~= "" and ", " or "") .. actBody
