@@ -11,24 +11,28 @@ tmSdec = 0
 -- SEX CONTROL (in many menus)
 label TMSexControl(human, interaction, isHand)
 	+ "• Max"
-		ActSpeedSet(interaction, TM_SexSpeedMax, isHand)
-		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
+		ActSpeedSet(interaction, AutoSexTierConfig[AutoSexTier.Max].Mid, isHand)
+		AutoSexTierSet_BySpeed(human, AutoSexTierConfig[AutoSexTier.Max].Mid)
+		Return()
+	+ "• Wild"
+		ActSpeedSet(interaction, AutoSexTierConfig[AutoSexTier.Wild].Mid, isHand)
+		AutoSexTierSet_BySpeed(human, AutoSexTierConfig[AutoSexTier.Wild].Mid)
 		Return()
 	+ "• Faster"
-		ActSpeedSet(interaction, TM_SexSpeedFast, isHand)
-		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
+		ActSpeedSet(interaction, AutoSexTierConfig[AutoSexTier.Faster].Mid, isHand)
+		AutoSexTierSet_BySpeed(human, AutoSexTierConfig[AutoSexTier.Faster].Mid)
 		Return()
 	+ "• Fast"
-		ActSpeedSet(interaction, TM_SexSpeedNormal, isHand)
-		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
+		ActSpeedSet(interaction, AutoSexTierConfig[AutoSexTier.Fast].Mid, isHand)
+		AutoSexTierSet_BySpeed(human, AutoSexTierConfig[AutoSexTier.Fast].Mid)
 		Return()
 	+ "• Normal"
-		ActSpeedSet(interaction, TM_SexSpeedMedium, isHand)
-		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
+		ActSpeedSet(interaction, AutoSexTierConfig[AutoSexTier.Normal].Mid, isHand)
+		AutoSexTierSet_BySpeed(human, AutoSexTierConfig[AutoSexTier.Normal].Mid)
 		Return()
 	+ "• Slow"
-		ActSpeedSet(interaction, TM_SexSpeedSlow, isHand)
-		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
+		ActSpeedSet(interaction, AutoSexTierConfig[AutoSexTier.Slow].Mid, isHand)
+		AutoSexTierSet_BySpeed(human, AutoSexTierConfig[AutoSexTier.Slow].Mid)
 		Return()
 	+ TM_UP.."Speed"
 		ActSpeedSet_Step(interaction, TM_SexSpeedStep, true, isHand)

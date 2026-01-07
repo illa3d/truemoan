@@ -7,8 +7,8 @@
 ------------------------------------------------------------------------------------------------------------------
 
 -- AutoSex Time
-TM_AutoSexTimeMin = 3			-- [1-20] Auto Interaction minimum time to change parameter (speed, thrust, depth) 
-TM_AutoSexTimeMax = 6			-- [1-20] Auto Interaction maximum time to change parameter (speed, thrust, depth) 
+TM_AutoSexTimeMin = 2			-- [1-20] Auto Interaction minimum time to change parameter (speed, thrust, depth) 
+TM_AutoSexTimeMax = 5			-- [1-20] Auto Interaction maximum time to change parameter (speed, thrust, depth) 
 
 -- AutoSex Drift (bigger values more variety)
 TM_AutoSexSpeedDrift = 0.4		-- [0-1] How close in percent will be next step for sex speed
@@ -30,13 +30,6 @@ TM_SexDepthStep = 0.05	-- shallow/deep, linear percent (of UI slider)
 
 -- Sex controls quick command increments
 TM_SexDeeperStep = 0.1	-- Deeper command
-
--- Sex speed presets (Min: 0.001, Max: 2)
-TM_SexSpeedMax = 2
-TM_SexSpeedFast = 0.9
-TM_SexSpeedNormal = 0.5
-TM_SexSpeedMedium = 0.25
-TM_SexSpeedSlow = 0.1
 
 -- Moan Sex treshold by sex speeed (Min: 0.001, Max: 2)
 TM_MoanTreshold_Climax = 1.3

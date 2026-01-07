@@ -36,10 +36,13 @@ AutoSexTier_Toggle = {
 	AutoSexTier.Wild,
 	AutoSexTier.Max,
 }
--- Minimum tier when toggling (jumps to off from it)
-AutoSexTier_ToggleMin = AutoSexTier.Idle
+
 -- Default tier set for new humans
 AutoSexTier_Default = AutoSexTier.Normal
+
+-- Minimum tier when toggling (jumps to off from it)
+AutoSexTier_ToggleMin = AutoSexTier.Idle
+AutoSexTier_ToggleDefault = AutoSexTier.Faster
 
 local ActAutoSexTimerRange = { Min = 1, Max = 20 } -- seconds (timer to allow new random sex parameter)
 
@@ -109,13 +112,13 @@ AutoSexTierRandom_Default = AutoSexTierConfig_Normal
 
 -- Collection of all the tier parameters, their tier speed and parameter value limits
 AutoSexTierConfig = {
-	[AutoSexTier.Idle] =	{ Min = 0,		Max = 0.1,	Random = AutoSexTierConfig_Idle },
-	[AutoSexTier.Slow] =	{ Min = 0.1,	Max = 0.25,	Random = AutoSexTierConfig_Slow },
-	[AutoSexTier.Normal] =	{ Min = 0.25,	Max = 0.5,	Random = AutoSexTierConfig_Normal },
-	[AutoSexTier.Fast] =	{ Min = 0.5,	Max = 0.75,	Random = AutoSexTierConfig_Fast },
-	[AutoSexTier.Faster] =	{ Min = 0.75,	Max = 1,	Random = AutoSexTierConfig_Faster },
-	[AutoSexTier.Wild] =	{ Min = 1,		Max = 1.5,	Random = AutoSexTierConfig_Wild },
-	[AutoSexTier.Max] =		{ Min = 1.5,	Max = 2,	Random = AutoSexTierConfig_Climax },
+	[AutoSexTier.Idle] =	{ Min = 0,		Mid = 0.1,	Max = 0.2,	Random = AutoSexTierConfig_Idle },
+	[AutoSexTier.Slow] =	{ Min = 0.3,	Mid = 0.5,	Max = 0.7,	Random = AutoSexTierConfig_Slow },
+	[AutoSexTier.Normal] =	{ Min = 0.6,	Mid = 0.7,	Max = 0.8,	Random = AutoSexTierConfig_Normal },
+	[AutoSexTier.Fast] =	{ Min = 0.7,	Mid = 0.9,	Max = 1,	Random = AutoSexTierConfig_Fast },
+	[AutoSexTier.Faster] =	{ Min = 0.9,	Mid = 1.1,	Max = 1.2,	Random = AutoSexTierConfig_Faster },
+	[AutoSexTier.Wild] =	{ Min = 1,		Mid = 1.3,	Max = 1.5,	Random = AutoSexTierConfig_Wild },
+	[AutoSexTier.Max] =		{ Min = 1.4,	Mid = 1.9,	Max = 2,	Random = AutoSexTierConfig_Climax },
 }
 
 -- CLIMAX AROUSAL WEIGHT
@@ -127,17 +130,6 @@ AutoSexClimaxArousalWeight = {
 	[AutoSexTier.Faster]	= 2,
 	[AutoSexTier.Wild]		= 2.5,
 	[AutoSexTier.Max]		= 3.0,
-}
-
--- CLIMAX SPEED (to force while climaxing down the AutoSexTier ladder)
-AutoSexClimaxSpeed = {
-	[AutoSexTier.Idle]		= 0.1,
-	[AutoSexTier.Slow]		= 0.5,
-	[AutoSexTier.Normal]	= 0.7,
-	[AutoSexTier.Fast]		= 0.9,
-	[AutoSexTier.Faster]	= 1.1,
-	[AutoSexTier.Wild]		= 1.3,
-	[AutoSexTier.Max]		= 2,
 }
 
 -------------------------------------------------------------------------------------------------
@@ -179,7 +171,7 @@ function AutoSexToggle(human)
 	-- If AutoSex is OFF, turn it ON
 	if not stats.AutoSex then
 		stats:AutoSexSet(true)
-		stats:AutoSexTierSet(AutoSexTier_Default)
+		stats:AutoSexTierSet(AutoSexTier_ToggleDefault)
 		AutoSexAnim_Handle(human)
 		return
 	end
