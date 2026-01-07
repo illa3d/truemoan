@@ -34,6 +34,7 @@
 **TrueMoan_v2.0.zip** [2025-12-27] - Just TrueMoan
 **TrueMoan_v2.0_FLABS_v1.02.zip** [2025-12-27] - TrueMoan + Fauna LABS **(recommended)**
 **TrueMoan_Addon_Skyboxes_4k_v1.0.zip** [2025-12-22]
+:warning:**TrueFacials v0.59_ORIGINAL_SCRIPTS_FIX.zip** [2025-12-29] - Required original files, install if they're missing or modified
 https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
 
 **REQUIREMENTS**
@@ -44,16 +45,10 @@ https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
 - Nf123 Voice Mod, Talk Menu Mod Manager, FaunaLabs
 
 **HOW TO INSTALL**
+- :warning: Mod doesn't work without original `common.lua` and `freemode_main.lua` scripts
 - Backup your config files prior to install
 - Extract archives to game folder (overwrite all files)
 - If config files have new settings, **don't overwrite with your configs**, re-set your values in the new config
-
-**CONFIG FILES** `Mods/Scripts/FreeMod`
-- Config & defaults: `tm__config.lua`
-- Body presets: `tm__presets.lua`
-- Custom poses: `tm__poses.lua`
-- Character clothes: `tm__clothes.lua`
-- Music: `tm__music.lua`
 
 **HOW TO UNINSTALL**
 - Delete TrueMoan files in `Mods/Scripts/FreeMode`: `tm_*.*, Voice/tm_*.mp3, Sounds/tm_*.mp3`
@@ -64,6 +59,13 @@ https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
 
 **INTEGRATED MODS**
 - `faunaLABS_v1.02 - TMMM Ready.zip` @faunap https://discord.com/channels/620113492208517120/1358287146791866446/1454138284841369701
+
+**CONFIG FILES** `Mods/Scripts/FreeMod`
+- Config & defaults: `tm__config.lua`
+- Body presets: `tm__presets.lua`
+- Custom poses: `tm__poses.lua`
+- Character clothes: `tm__clothes.lua`
+- Music: `tm__music.lua`
 
 **SOURCE**
 GitHub Repository - https://github.com/illa3d/truemoan
