@@ -193,7 +193,9 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	-- Small randomness to avoid mechanical timing
 	if stats and stats.Climax then
 		cooldown = 0.01
-	elseif tier == TMMoanTier.Max or tier == TMMoanTier.Wild then
+	elseif tier == TMMoanTier.Max then
+		cooldown = 0.03
+	elseif tier == TMMoanTier.Wild then
 		cooldown = 0.05
 	else
 		cooldown = cooldown + math.random() * 0.05
