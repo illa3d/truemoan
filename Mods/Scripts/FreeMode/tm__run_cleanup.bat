@@ -11,6 +11,7 @@ set FILES_LIST="tm_a_presets.lua"^
  "tm_a_presets_illa3d.lua"^
  "tm_common_faunap.lua"^
  "tm_CONFIG.lua"^
+ "tm_interaction.lua"
  "tm_main README.txt"^
  "tm_main_freemodehg_faunap.lua"^
  "tm_main_freemodehg_faunap_readme.txt"^
