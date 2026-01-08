@@ -1,11 +1,6 @@
 -- TrueMoan v2.0 by illa3d
 -- Per-human AUTHORITATIVE stat storage (including EditBody data)
-TM_HumanStatsList = {}
-local TMH_LastUpdateClock = os.clock()
-
--- CONFIG
-TMH_DefaultArousalIncrease = 0.003
-TMH_DefaultArousalDecay = 0.01
+local TM_HumanStatsList = {}
 
 -- DEFINITION (never update this, USE TMHStatsSet_BodyEdit or BodyEdit functions)
 TMHumanStats = {
@@ -73,29 +68,26 @@ function TMHStatsReset(human)
 end
 
 -- HUMAN STATS UPDATE
-function TMOnUpdate_HumanStats()
-	local now = os.clock()
-	local deltaTime = now - TMH_LastUpdateClock
-	TMH_LastUpdateClock = now
+function TMOnUpdate_HumanStats(deltaTime)
 	local Humans = game.GetHumans()
 	local Seen = {}
 
 	for _, human in ipairs(Humans) do
 		Seen[human] = true
 		local stats = TMHStatsGet(human)
-		if stats.NeedsBodyApply == true then TMHStats_TMBApply(human) end
+		-- Last update / Throttle
+		stats.LastUpdate = os.time()
+		-- TOOD Throttle
 		-- Sexy features
 		stats:UpdateSex(human)
 		stats:UpdateArousal(deltaTime)
-		-- Last update time
-		stats.LastUpdate = os.time()
+		-- BodyEdit
+		if stats.NeedsBodyApply == true then TMHStats_TMBApply(human) end
 	end
 
 	-- Cleanup non existing humans
 	for human, _ in pairs(TM_HumanStatsList) do
-		if Seen[human] ~= true then
-			TMHStatsRemove(human)
-		end
+		if Seen[human] ~= true then TMHStatsRemove(human) end
 	end
 end
 
@@ -128,14 +120,14 @@ end
 function TMHumanStats:UpdateArousal(deltaTime)
 	if self.IsSexActive and self.AutoSexTier and self.Climax ~= true and self.IsCumming ~= true then
 		local tierMul = AutoSexTierConfig[self.AutoSexTier].Arousal
-		local gain = deltaTime * TMH_DefaultArousalIncrease * tierMul
+		local gain = deltaTime * TM_HumanArousalIncrease * tierMul
 		* HoleMultiplier(self.SexBodyCount)
 		* (self:IsCumflating() and 2 or 1)
 		* (self:IsFeelingCum() and 1.3 or 1)
 		self.Arousal = Clamp01(self.Arousal + gain)
 		if self.Arousal >= 0.99 then self.Arousal = 1 end
 	else
-		self.Arousal = Clamp01(self.Arousal - deltaTime * TMH_DefaultArousalDecay * (self.IsCumming and 4 or 1))
+		self.Arousal = Clamp01(self.Arousal - deltaTime * TM_HumanArousalDecay * (self.IsCumming and 4 or 1))
 	end
 end
 

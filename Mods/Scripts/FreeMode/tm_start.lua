@@ -88,7 +88,7 @@ end
 
 -- ON GAME UPDATE
 function _TMOnGameUpdate()
-	-- TrueMoan: Unused
+	-- TrueMoan: Stats, Tweens, Moaning
 	TMOnUpdate()
 	-- TrueMoan: TrueFacials GenericChat
 	TMOnUpdate_GenericChat()

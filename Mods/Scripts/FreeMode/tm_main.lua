@@ -45,13 +45,9 @@ end
 function TMOnUpdate()
 	TM_DeltaTime = Timer("TMDeltaTime")
 	ResetTimer("TMDeltaTime")
+	TMOnUpdate_HumanStats(TM_DeltaTime)
+	TMOnUpdate_Humans()
 	OnUpdate_ActTweens(TM_DeltaTime)
-	TMOnUpdate_HumanStats()
-	-- Iterate and call for every human in the scene
-	for _, human in ipairs(game.GetHumans()) do
-		TMOnUpdate_CumFinish(human)
-		TMOnUpdate_Futa(human)
-	end
 end
 
 -- Updated every frame
@@ -82,6 +78,17 @@ end
 
 function TMOnRemoveHuman(human)
 	game.PlayRandomCharacterMusic()
+end
+
+-------------------------------------------------------------------------------------------------
+-- HUMANS EVERY FRAME
+-------------------------------------------------------------------------------------------------
+function TMOnUpdate_Humans()
+	-- Iterate and call for every human in the scene
+	for _, human in ipairs(game.GetHumans()) do
+		TMOnUpdate_CumFinish(human)
+		TMOnUpdate_Futa(human)
+	end
 end
 
 -------------------------------------------------------------------------------------------------

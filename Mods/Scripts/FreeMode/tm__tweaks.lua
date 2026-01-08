@@ -51,3 +51,7 @@ TM_WetnessStep = 200	-- Wetness Control step
 TM_CumflateStepUp = 0.005		-- Increment (each 0.1sec once) of hip size increase
 TM_CumflateStepDown = 0.02		-- Decrement (each 0.1sec once) of hip size reduction
 TM_CumflateHipSizeLimit = 1.5	-- Maximum amout to increase to (deformed afer 1.5)
+
+-- Arousal
+TM_HumanArousalIncrease = 0.003
+TM_HumanArousalDecay = 0.01
