@@ -1,12 +1,12 @@
 -- TrueMoan v2.0 by illa3d
 -- Ambience Constants
-tmAmbienceTrackSec = 140	-- depends on the mp3 file length (all files must be of same length)
-tmAmbienceTracks = 6		-- number of files: Sounds/tm_ambience (N).mp3 (modify this to add your own)
+local tmAmbienceTrackSec = 140	-- depends on the mp3 file length (all files must be of same length)
+local tmAmbienceTracks = 6		-- number of files: Sounds/tm_ambience (N).mp3 (modify this to add your own)
 -- Ambience Variables
-tmPlayingAmbience = false
-tmLoopingAmbience = false
-tmAmbienceTrack = 0
-tmAmbienceTimer = "AmbienceTimer"
+local tmPlayingAmbience = false
+local tmLoopingAmbience = false
+local tmAmbienceTrack = 0
+local tmAmbienceTimer = "TM_AmbienceTimer"
 
 -- Moan Tier "Enum" (actual filenames)
 -- VAR NAMES MUST BE SAME AS AutoSexTier
@@ -21,6 +21,7 @@ TMMoanTier = {
 	Max = "climax", -- can't rename string, filenames
 }
 
+-- TM Moan categories
 TMMoan = {
 	Sex = "Sex", -- dynamic
 	Climax = "Climax", -- dynamic
@@ -35,29 +36,14 @@ TMMoan = {
 }
 
 -- Human part positions
-HumanPart = {
+TMHumanPartPos = {
 	Mouth = "Mouth",
 	Anus = "Anus",
 	Vagina = "Vagina",
 	Penis = "Penis",
 }
 
-function HumanPosGet(part)
-	if not part then return Pos(0,0,0) end
-	return Pos(part.transform.position.x, part.transform.position.y, part.transform.position.z)
-end
-
-function HumanPartPosGet(human, humanPart)
-	if not human then return Pos(0,0,0) end
-	function GetPos(part) return Pos(part.transform.position.x, part.transform.position.y, part.transform.position.z) end
-	if humanPart == HumanPart.Mouth and human.Mouth then return GetPos(human.Mouth)
-	elseif humanPart == HumanPart.Anus and human.Anus then return GetPos(human.Anus)
-	elseif humanPart == HumanPart.Vagina and human.Vagina then return GetPos(human.Vagina)
-	elseif humanPart == HumanPart.Penis and human.Penis then return GetPos(human.Penis) end
-	if not part then return Pos(0,0,0) end
-end
-
--- Cum Moan Sources (random)
+-- Cum moan tiers (random from)
 TM_Moans_Cumming = { TMMoanTier.Fast, TMMoanTier.Faster, TMMoanTier.Wild }
 TM_Moans_CumEye = { TMMoanTier.Faster, TMMoanTier.Wild, TMMoanTier.Max }
 TM_Moans_CumMouth = { TMMoanTier.Fast, TMMoanTier.Faster }
@@ -66,7 +52,33 @@ TM_Moans_CumInside = { TMMoanTier.Slow, TMMoanTier.Normal, TMMoanTier.Fast }
 TM_Moans_Cumflating = { TMMoanTier.Fast, TMMoanTier.Faster, TMMoanTier.Wild }
 TM_Moans_Cumdeflating = { TMMoanTier.Slow, TMMoanTier.Fast, TMMoanTier.Faster }
 
--- MOANS
+-------------------------------------------------------------------------------------------------
+-- SFX / SOUND SOURCE POSITION
+-------------------------------------------------------------------------------------------------
+
+local function TMHumanPartPosGet(part)
+	if not part then return Pos(0,0,0) end
+	return Pos(part.transform.position.x, part.transform.position.y, part.transform.position.z)
+end
+
+function TMSoundSourcePosGet(human, tmHumanPartPos)
+	if not human then return Pos(0,0,0) end
+	if tmHumanPartPos == TMHumanPartPos.Mouth and human.Mouth then return TMHumanPartPosGet(human.Mouth)
+	elseif tmHumanPartPos == TMHumanPartPos.Anus and human.Anus then return TMHumanPartPosGet(human.Anus)
+	elseif tmHumanPartPos == TMHumanPartPos.Vagina and human.Vagina then return TMHumanPartPosGet(human.Vagina)
+	elseif tmHumanPartPos == TMHumanPartPos.Penis and human.Penis then return TMHumanPartPosGet(human.Penis) end
+	if not part then return Pos(0,0,0) end
+end
+
+function TMPlaySFX(girl, name, humanPart)
+	if not TM_AllowVoice() or not girl or girl.m_isMale then return end
+	PlaySoundAt(name, TMSoundSourcePosGet(girl, humanPart), 0.5)
+end
+
+-------------------------------------------------------------------------------------------------
+-- MOANING
+-------------------------------------------------------------------------------------------------
+
 function TMPlayMoan(girl, tmMoan)
 	local stats = TMHStatsGet(girl)
 	if not stats or stats.Climax then return end
@@ -83,23 +95,24 @@ function TMPlayMoan(girl, tmMoan)
 	end
 end
 
-function TMPlayEffect(girl, name, humanPart)
-	if not TM_AllowVoice() or not girl or girl.m_isMale then return end
-	PlaySoundAt(name, HumanPartPosGet(girl, humanPart), 0.5)
-end
-
 function TMPlayMoanTier(girl, tmMoanTier)
 	-- don't moan with other voice mods
 	if not TM_AllowVoice() or not girl or girl.m_isMale then return end
 	girl.SayCustom("tm_" .. tmMoanTier)
 end
 
+-------------------------------------------------------------------------------------------------
 -- MUSIC
+-------------------------------------------------------------------------------------------------
+
 function TMPlayMusic(track)
 	Music(track , 0.05, 0)
 end
 
+-------------------------------------------------------------------------------------------------
 -- AMBIENCE
+-------------------------------------------------------------------------------------------------
+
 function TMAmbienceLeftSec()
 	return FDec(tmAmbienceTrackSec - Timer(tmAmbienceTimer))
 end
