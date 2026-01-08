@@ -17,6 +17,11 @@ function IncrementRandom(value, min, max) return value + GetRandomFloat(min, max
 function IncrementMultiplier(oldValue, value, mult) return oldValue + (value * mult) end
 function IncrementMultiplierRandom(oldValue, value, multMin, multMax) return oldValue + (value * GetRandomFloat(multMin, multMax)) end
 
+function Lerp(a, b, t)
+	if a == nil or b == nil or t == nil then return a or b or 0 end
+	return a + (b - a) * Clamp01(t)
+end
+
 -------------------------------------------------------------------------------------------------
 -- LISTS
 -------------------------------------------------------------------------------------------------

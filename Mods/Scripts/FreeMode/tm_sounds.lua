@@ -1,11 +1,10 @@
 -- TrueMoan v2.0 by illa3d
 -- Ambience Constants
 local tmAmbienceTrackSec = 140	-- depends on the mp3 file length (all files must be of same length)
-local tmAmbienceTracks = 6		-- number of files: Sounds/tm_ambience (N).mp3 (modify this to add your own)
 -- Ambience Variables
+local tmAmbienceTrack = 0
 local tmPlayingAmbience = false
 local tmLoopingAmbience = false
-local tmAmbienceTrack = 0
 local tmAmbienceTimer = "TM_AmbienceTimer"
 
 -- Moan Tier "Enum" (actual filenames)
@@ -35,14 +34,6 @@ TMMoan = {
 	DoubleClick = "DoubleClick",
 }
 
--- Human part positions
-TMHumanPartPos = {
-	Mouth = "Mouth",
-	Anus = "Anus",
-	Vagina = "Vagina",
-	Penis = "Penis",
-}
-
 -- Cum body area moan tiers (random from)
 TM_Moans_Cumming = { TMMoanTier.Fast, TMMoanTier.Faster, TMMoanTier.Wild }
 TM_Moans_CumEye = { TMMoanTier.Faster, TMMoanTier.Wild, TMMoanTier.Max }
@@ -51,6 +42,35 @@ TM_Moans_CumBody = { TMMoanTier.Slow, TMMoanTier.Normal }
 TM_Moans_CumInside = { TMMoanTier.Slow, TMMoanTier.Normal, TMMoanTier.Fast }
 TM_Moans_Cumflating = { TMMoanTier.Fast, TMMoanTier.Faster, TMMoanTier.Wild }
 TM_Moans_Cumdeflating = { TMMoanTier.Slow, TMMoanTier.Fast, TMMoanTier.Faster }
+
+-- Human part positions
+TMHumanSource = {
+	Mouth = "Mouth",
+	Anus = "Anus",
+	Vagina = "Vagina",
+	Penis = "Penis",
+}
+
+-- SOUND EFFECTS
+TMSfx = {
+	Ambience = "Ambience",
+	Blowjob = "Blowjob",
+	Plap = "Plap",
+}
+-- Tracks = number of files: Sounds/tm_sfxname (N).mp3 (modify this to add your own)
+TMSfxData = {
+	[TMSfx.Ambience] =	{ Tracks = 6, Volume = 0 }, -- volume in config
+	[TMSfx.Blowjob] =	{ Tracks = 5, Volume = 0.5 },
+	[TMSfx.Plap] =		{ Tracks = 1, Volume = 0.5 },
+}
+
+function TMSfxGetFilenameRandom(tmSfx)
+	return TMSfxGetFilename(tmSfx, GetRandom(1, TMSfxData[tmSfx].Tracks)) end
+function TMSfxGetFilename(tmSfx, track)
+	track = ClampValue(track, 1, TMSfxData[tmSfx].Tracks)
+	return "tm_" .. tmSfx:lower() .. " (" .. track .. ")" end
+function TMSfxGetTrackClamp(tmSfx, track)
+	return ClampValue(track, 1, TMSfxData[tmSfx].Tracks) end
 
 -------------------------------------------------------------------------------------------------
 -- SFX / SOUND SOURCE POSITION
@@ -61,18 +81,18 @@ local function TMHumanPartPosGet(part)
 	return Pos(part.transform.position.x, part.transform.position.y, part.transform.position.z)
 end
 
-function TMSoundSourcePosGet(human, tmHumanPartPos)
+function TMSoundSourcePosGet(human, tmHumanSource)
 	if not human then return Pos(0,0,0) end
-	if tmHumanPartPos == TMHumanPartPos.Mouth and human.Mouth then return TMHumanPartPosGet(human.Mouth)
-	elseif tmHumanPartPos == TMHumanPartPos.Anus and human.Anus then return TMHumanPartPosGet(human.Anus)
-	elseif tmHumanPartPos == TMHumanPartPos.Vagina and human.Vagina then return TMHumanPartPosGet(human.Vagina)
-	elseif tmHumanPartPos == TMHumanPartPos.Penis and human.Penis then return TMHumanPartPosGet(human.Penis) end
+	if tmHumanSource == TMHumanSource.Mouth and human.Mouth then return TMHumanPartPosGet(human.Mouth)
+	elseif tmHumanSource == TMHumanSource.Anus and human.Anus then return TMHumanPartPosGet(human.Anus)
+	elseif tmHumanSource == TMHumanSource.Vagina and human.Vagina then return TMHumanPartPosGet(human.Vagina)
+	elseif tmHumanSource == TMHumanSource.Penis and human.Penis then return TMHumanPartPosGet(human.Penis) end
 	if not part then return Pos(0,0,0) end
 end
 
-function TMPlaySFX(girl, name, humanPart)
+function TMPlayHumanSFX(girl, tmSfx, humanPart)
 	if not TM_AllowVoice() or not girl or girl.m_isMale then return end
-	PlaySoundAt(name, TMSoundSourcePosGet(girl, humanPart), 0.5)
+	PlaySoundAt(TMSfxGetFilenameRandom(tmSfx), TMSoundSourcePosGet(girl, humanPart), TMSfxData[tmSfx].Volume)
 end
 
 -------------------------------------------------------------------------------------------------
@@ -137,18 +157,16 @@ function TMPlayAmbienceRandom()
 end
 
 function TMPlayAmbience(track)
-	if TM_AllowAmbience == false then return end
-
+	if not TM_AllowAmbience then return end
 	-- set next ambience to play
-	track = math.max(1, math.min(track, tmAmbienceTracks)) -- Clamp
-	tmAmbienceTrack = track
+	tmAmbienceTrack = TMSfxGetTrackClamp(TMSfx.Ambience, track)
 	tmPlayingAmbience = true
 
 	-- Loop playback
 	if tmLoopingAmbience then return end
 	ResetTimer(tmAmbienceTimer)
 	tmLoopingAmbience = true
-	PlaySound("tm_ambience" .. " (" .. track .. ")", TM_AmbienceVolume)
+	PlaySound(TMSfxGetFilename(TMSfx.Ambience, track), TM_AmbienceVolume)
 	Delayed(tmAmbienceTrackSec, function()
 		tmLoopingAmbience = false
 		if TM_AllowAmbience and tmPlayingAmbience then TMPlayAmbience(tmAmbienceTrack) end

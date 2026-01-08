@@ -62,6 +62,12 @@ label TMMenuOptions(human)
 			+ "Moan futa	| " .. AccBool(TM_MoanFuta)
 				TM_MoanFuta = not TM_MoanFuta
 				Return()
+			+ "SFX blowjob	| " .. AccBool(TM_AllowSfxBlowjob)
+				TM_AllowSfxBlowjob = not TM_AllowSfxBlowjob
+				Return()
+			+ "SFX sex	| " .. AccBool(TM_AllowSfxSex)
+				TM_AllowSfxSex = not TM_AllowSfxSex
+				Return()
 		+ else
 			+ "True Moan	| Disabled (VoiceMod)"
 				Return()

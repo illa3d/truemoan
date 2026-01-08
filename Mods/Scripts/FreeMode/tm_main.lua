@@ -88,6 +88,7 @@ function TMOnUpdate_Humans()
 	for _, human in ipairs(game.GetHumans()) do
 		TMOnUpdate_CumFinish(human)
 		TMOnUpdate_Futa(human)
+		TMOnUpdate_BlowJob(human)
 	end
 end
 
@@ -132,21 +133,39 @@ end
 -------------------------------------------------------------------------------------------------
 -- SEX REACTIONS
 -------------------------------------------------------------------------------------------------
+-- FUTA MOANING > ONPENETRATION ROUTER
 function TMOnUpdate_Futa(girl)
 	if not TM_MoanFuta or not girl or girl.m_isMale then return end
-
-	local function FutaMoan(actBody)
+	local function DoFutaMoan(actBody)
 		act = ActGet(girl, actBody)
 		if not act or not ActActiveGet(act, actBody == ActBody.PenisHand) then return end
 		TMOnPenetration(girl, actBody, ActSpeedGet(act, false)/3, 0, SexPartner_Get(girl, actBody))
 	end
-
-	if HasSexPartner(girl, ActBody.PenisHole) then FutaMoan(ActBody.PenisHole)
-	elseif HasSexPartner(girl, ActBody.PenisHand) then FutaMoan(ActBody.PenisHand) end
+	-- Detect penis in hole or hand and call OnPenetration
+	if HasSexPartner(girl, ActBody.PenisHole) then DoFutaMoan(ActBody.PenisHole)
+	elseif HasSexPartner(girl, ActBody.PenisHand) then DoFutaMoan(ActBody.PenisHand) end
 end
 
+-- BLOWJOB SOUNDS
+function TMOnUpdate_BlowJob(girl)
+	if not girl or girl.m_isMale then return end
+	local act = ActGet(girl, ActBody.Mouth)
+	if not act or not ActActiveGet(act, false) then return end
+	
+	local timerKey = "TMBlowJobSFX_" .. girl.Name
+	local lastBlowJobSFX = Timer(timerKey)
+	
+	-- Calculate speed
+	local speed = Clamp01(ActValueGet(act, ActParam.Speed, false)/2)
+	local pause = Lerp(TM_BlowJobMaxPause, 0.5, speed)
 
--- Updated on penetration (holeName: "Vagina" "Anus" Mouth")
+	if lastBlowJobSFX > pause then
+		TMPlayHumanSFX(girl, TMSfx.Blowjob, TMHumanSource.Mouth)
+		ResetTimer(timerKey)
+	end
+end
+
+-- PENETRATION MOANING & SFX (HoleName = "Vagina" "Anus" Mouth")
 function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	TMOnPenetration_Cum(girl, holeName)
 	TMOnClimaxEffects(girl)
@@ -155,8 +174,8 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 
 	-- Variables
 	local stats = TMHStatsGet(girl)
-	local keyMoan = "TMSexMoan_" .. girl.Name .. holeName
-	local lastMoanTime = Timer(keyMoan)
+	local timerKey = "TMSexMoan_" .. girl.Name .. holeName
+	local lastMoanTime = Timer(timerKey)
 	local tier = ""
 	local pauseMax = 0
 	local tierMin = 0
@@ -230,7 +249,7 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 		else
 			WetSet(girl, 0, holeName)
 		end
-		ResetTimer(keyMoan)
+		ResetTimer(timerKey)
 	end
 end
 

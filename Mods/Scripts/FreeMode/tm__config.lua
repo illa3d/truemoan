@@ -40,6 +40,8 @@ TM_TweenTime = 1					-- [0 = off, max 3] Time in seconds to transition between s
 -- Body Edit
 TM_BodyEditSafe = true				-- 21. Turns on safe body editing using SafeMin values
 
--- SFX Ambience
+-- SFX
 TM_AllowAmbience = true				-- 22. Ambient sounds
 TM_AmbienceVolume = 0.7				-- 23. [0-1] Ambient volume
+TM_AllowSfxBlowjob = true			-- 24. Blowjob sounds
+TM_AllowSfxSex = true				-- 25. Sex sounds
