@@ -167,13 +167,14 @@ end
 
 -- PENETRATION MOANING & SFX (HoleName = "Vagina" "Anus" Mouth")
 function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
-	TMOnPenetration_Cum(girl, holeName)
-	TMOnClimaxEffects(girl)
+	if not girl or girl.m_isMale then return end
+	local stats = TMHStatsGet(girl)
+	TMOnPenetration_Cum(girl, stats, holeName)
+	TMOnClimaxEffects(girl, stats)
 
 	if not TM_AllowVoice() or not TM_MoanSex or inVelocity < outVelocity then return end
 
 	-- Variables
-	local stats = TMHStatsGet(girl)
 	local timerKey = "TMSexMoan_" .. girl.Name .. holeName
 	local lastMoanTime = Timer(timerKey)
 	local tier = ""
@@ -256,7 +257,12 @@ end
 -------------------------------------------------------------------------------------------------
 -- CLIMAX
 -------------------------------------------------------------------------------------------------
-function TMOnClimaxEffects(girl)
+function TMOnClimaxEffects(girl, stats)
+	if not girl or girl.m_isMale or not stats then return end
+	if not stats.IsSexActive or stats.Arousal < 1 or stats.Climax or not stats:IsFeelingCum() then return end
+	
+	local delay = 6
+	local function Increment() delay = IncrementRandom(delay, 2, 4) end
 	local function AutoSexTierSet(girl, autoSexTier)
 		stats = TMHStatsGet(girl)
 		stats:AutoSexTierSet(autoSexTier)
@@ -265,13 +271,7 @@ function TMOnClimaxEffects(girl)
 		ActAll_DepthSet(girl, AutoSexTierConfig_Climax[ActParam.DepthEnd].Max, false) -- increase depth
 		if autoSexTier == AutoSexTier.Idle then stats.Climax = false end
 	end
-	
-	local delay = 6
-	local function Increment() delay = IncrementRandom(delay, 2, 4) end
 
-	if not girl then return end
-	local stats = TMHStatsGet(girl)
-	if not stats.IsSexActive or stats.Arousal < 1 or stats.Climax or not stats:IsFeelingCum() then return end
 	stats.Climax = true
 	if TM_WetSex then WetSet(girl, 100000, ActBody.Vagina) end
 	AutoSexTierSet(girl, AutoSexTier.Max)
@@ -293,10 +293,8 @@ local function TMHCanPlayCumEffect(stats)
 end
 
 -- Updated on cum inside reaction
-function TMOnPenetration_Cum(girl, holeName)
-	if not girl or girl.m_isMale then return end
-	local stats = TMHStatsGet(girl)
-	if not stats then return end
+function TMOnPenetration_Cum(girl, stats, holeName)
+	if not girl or girl.m_isMale or not stats then return end
 	-- throttle only if we have a previous update time
 	local now = os.time()
 	if stats.CumLastUpdate and now - stats.CumLastUpdate < TM_CumStepTime then return end
