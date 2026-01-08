@@ -34,6 +34,29 @@ TMMoan = {
 	DoubleClick = "DoubleClick",
 }
 
+-- Human part positions
+HumanPart = {
+	Mouth = "Mouth",
+	Anus = "Anus",
+	Vagina = "Vagina",
+	Penis = "Penis",
+}
+
+function HumanPosGet(part)
+	if not part then return Pos(0,0,0) end
+	return Pos(part.transform.position.x, part.transform.position.y, part.transform.position.z)
+end
+
+function HumanPartPosGet(human, humanPart)
+	if not human then return Pos(0,0,0) end
+	function GetPos(part) return Pos(part.transform.position.x, part.transform.position.y, part.transform.position.z) end
+	if humanPart == HumanPart.Mouth and human.Mouth then return GetPos(human.Mouth)
+	elseif humanPart == HumanPart.Anus and human.Anus then return GetPos(human.Anus)
+	elseif humanPart == HumanPart.Vagina and human.Vagina then return GetPos(human.Vagina)
+	elseif humanPart == HumanPart.Penis and human.Penis then return GetPos(human.Penis) end
+	if not part then return Pos(0,0,0) end
+end
+
 -- Cum Moan Sources (random)
 TM_Moans_Cumming = { TMMoanTier.Fast, TMMoanTier.Faster, TMMoanTier.Wild }
 TM_Moans_CumEye = { TMMoanTier.Faster, TMMoanTier.Wild, TMMoanTier.Max }
@@ -58,6 +81,11 @@ function TMPlayMoan(girl, tmMoan)
 	elseif tmMoan == TMMoan.Cumdeflating then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_Cumdeflating))
 	elseif tmMoan == TMMoan.DoubleClick then TMPlayMoanTier(girl, TableItemRandom(TMMoanTier))
 	end
+end
+
+function TMPlayEffect(girl, name, humanPart)
+	if not TM_AllowVoice() or not girl or girl.m_isMale then return end
+	PlaySoundAt(name, HumanPartPosGet(girl, humanPart), 0.5)
 end
 
 function TMPlayMoanTier(girl, tmMoanTier)
