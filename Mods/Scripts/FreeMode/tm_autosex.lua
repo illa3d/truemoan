@@ -52,59 +52,59 @@ local ActAutoSexTimerRange = { Min = 1, Max = 20 } -- seconds (timer to allow ne
 -- When user modifies the speed, value it will jump up or down the tier
 -- These values are used in AutoSex Tiers when user changes the sex speed
 AutoSexTierConfig_Idle = {
-	[ActValue.Speed] =			{ Min = 0.001,	Max = 0.1,	Delta = 0.03 },	-- 0.001 - 2
-	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.04 },	-- 0 - 1
-	[ActValue.Thrust] =			{ Min = 0,		Max = 0.9,	Delta = 0.06 },	-- 0 - 1 (normalized)
-	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
-	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
+	[ActParam.Speed] =			{ Min = 0.001,	Max = 0.1,	Delta = 0.03 },	-- 0.001 - 2
+	[ActParam.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.04 },	-- 0 - 1
+	[ActParam.Thrust] =			{ Min = 0,		Max = 0.9,	Delta = 0.06 },	-- 0 - 1 (normalized)
+	[ActParam.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
+	[ActParam.DepthEnd] =		{ Min = 0.6,	Max = 1.2,	Delta = 0.1 },	-- (0.05 - 1.3)
 }
 
 AutoSexTierConfig_Slow = {
-	[ActValue.Speed] =			{ Min = 0.05,	Max = 0.35,	Delta = 0.05 },	-- 0.001 - 2
-	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.04 },	-- 0 - 1
-	[ActValue.Thrust] =			{ Min = 0,		Max = 0.7,	Delta = 0.06 },	-- 0 - 1 (normalized)
-	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
-	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.1, Delta = 0.1 },	-- (0.05 - 1.3)
+	[ActParam.Speed] =			{ Min = 0.05,	Max = 0.35,	Delta = 0.05 },	-- 0.001 - 2
+	[ActParam.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.04 },	-- 0 - 1
+	[ActParam.Thrust] =			{ Min = 0,		Max = 0.7,	Delta = 0.06 },	-- 0 - 1 (normalized)
+	[ActParam.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
+	[ActParam.DepthEnd] =		{ Min = 0.6,	Max = 1.1, Delta = 0.1 },	-- (0.05 - 1.3)
 }
 
 AutoSexTierConfig_Normal = {
-	[ActValue.Speed] =			{ Min = 0.2,	Max = 0.5,	Delta = 0.07 },	-- 0.001 - 2
-	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.04 },	-- 0 - 1
-	[ActValue.Thrust] =			{ Min = 0,		Max = 0.5,	Delta = 0.06 },	-- 0 - 1 (normalized)
-	[ActValue.DepthStart] = 	{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
-	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.1,	Delta = 0.1 },	-- (0.05 - 1.3)
+	[ActParam.Speed] =			{ Min = 0.2,	Max = 0.5,	Delta = 0.07 },	-- 0.001 - 2
+	[ActParam.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.04 },	-- 0 - 1
+	[ActParam.Thrust] =			{ Min = 0,		Max = 0.5,	Delta = 0.06 },	-- 0 - 1 (normalized)
+	[ActParam.DepthStart] = 	{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
+	[ActParam.DepthEnd] =		{ Min = 0.6,	Max = 1.1,	Delta = 0.1 },	-- (0.05 - 1.3)
 }
 
 AutoSexTierConfig_Fast = {
-	[ActValue.Speed] =			{ Min = 0.4,	Max = 0.9,	Delta = 0.08 },	-- 0.001 - 2
-	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
-	[ActValue.Thrust] =			{ Min = 0,		Max = 0.5,	Delta = 0.1 },	-- 0 - 1 (normalized)
-	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
-	[ActValue.DepthEnd] =		{ Min = 0.6,	Max = 1.1,	Delta = 0.1 },	-- (0.05 - 1.3)
+	[ActParam.Speed] =			{ Min = 0.4,	Max = 0.9,	Delta = 0.08 },	-- 0.001 - 2
+	[ActParam.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
+	[ActParam.Thrust] =			{ Min = 0,		Max = 0.5,	Delta = 0.1 },	-- 0 - 1 (normalized)
+	[ActParam.DepthStart] =		{ Min = 0.1,	Max = 0.5,	Delta = 0.1 },	-- (0 - 1.25)
+	[ActParam.DepthEnd] =		{ Min = 0.6,	Max = 1.1,	Delta = 0.1 },	-- (0.05 - 1.3)
 }
 
 AutoSexTierConfig_Faster = {
-	[ActValue.Speed] =			{ Min = 0.5,	Max = 1.5,	Delta = 0.12 },	-- 0.001 - 2
-	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
-	[ActValue.Thrust] =			{ Min = 0,		Max = 0.3,	Delta = 0.1 },	-- normalized
-	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.7,	Delta = 0.1 },	-- (0 - 1.25)
-	[ActValue.DepthEnd] =		{ Min = 0.7,	Max = 1.1,	Delta = 0.1 },	-- (0.05 - 1.3)
+	[ActParam.Speed] =			{ Min = 0.5,	Max = 1.5,	Delta = 0.12 },	-- 0.001 - 2
+	[ActParam.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
+	[ActParam.Thrust] =			{ Min = 0,		Max = 0.3,	Delta = 0.1 },	-- normalized
+	[ActParam.DepthStart] =		{ Min = 0.1,	Max = 0.7,	Delta = 0.1 },	-- (0 - 1.25)
+	[ActParam.DepthEnd] =		{ Min = 0.7,	Max = 1.1,	Delta = 0.1 },	-- (0.05 - 1.3)
 }
 
 AutoSexTierConfig_Wild = {
-	[ActValue.Speed] =			{ Min = 0.7,	Max = 1.7,	Delta = 0.15 },	-- 0.001 - 2
-	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
-	[ActValue.Thrust] =			{ Min = 0,		Max = 0.2,	Delta = 0.1 },	-- 0 - 1 (normalized)
-	[ActValue.DepthStart] =		{ Min = 0.1,	Max = 0.6,	Delta = 0.1 },	-- (0 - 1.25)
-	[ActValue.DepthEnd] =		{ Min = 0.8,	Max = 1.1,	Delta = 0.1 },	-- (0.05 - 1.3)
+	[ActParam.Speed] =			{ Min = 0.7,	Max = 1.7,	Delta = 0.15 },	-- 0.001 - 2
+	[ActParam.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
+	[ActParam.Thrust] =			{ Min = 0,		Max = 0.2,	Delta = 0.1 },	-- 0 - 1 (normalized)
+	[ActParam.DepthStart] =		{ Min = 0.1,	Max = 0.6,	Delta = 0.1 },	-- (0 - 1.25)
+	[ActParam.DepthEnd] =		{ Min = 0.8,	Max = 1.1,	Delta = 0.1 },	-- (0.05 - 1.3)
 }
 
 AutoSexTierConfig_Climax = {
-	[ActValue.Speed] =			{ Min = 1,		Max = 2,	Delta = 0.2 },	-- 0.001 - 2
-	[ActValue.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
-	[ActValue.Thrust] =			{ Min = 0,		Max = 0.2,	Delta = 0.1 },	-- 0 - 1 (normalized)
-	[ActValue.DepthStart] =		{ Min = 0.3,	Max = 0.7,	Delta = 0.1 },	-- (0 - 1.25)
-	[ActValue.DepthEnd] =		{ Min = 0.9,	Max = 1.1,	Delta = 0.1 },	-- (0.05 - 1.3)
+	[ActParam.Speed] =			{ Min = 1,		Max = 2,	Delta = 0.2 },	-- 0.001 - 2
+	[ActParam.Weight] =			{ Min = 0.05,	Max = 0.95,	Delta = 0.05 },	-- 0 - 1
+	[ActParam.Thrust] =			{ Min = 0,		Max = 0.2,	Delta = 0.1 },	-- 0 - 1 (normalized)
+	[ActParam.DepthStart] =		{ Min = 0.3,	Max = 0.7,	Delta = 0.1 },	-- (0 - 1.25)
+	[ActParam.DepthEnd] =		{ Min = 0.9,	Max = 1.1,	Delta = 0.1 },	-- (0.05 - 1.3)
 }
 
 -- Tier switch speed limits and random definitions
@@ -127,12 +127,12 @@ AutoSexTierConfig = {
 
 function AutoSexMinTime() return ClampValue(TM_AutoSexTimeMin, ActAutoSexTimerRange.Min , ActAutoSexTimerRange.Max) end
 function AutoSexMaxTime() return ClampValue(TM_AutoSexTimeMax, ActAutoSexTimerRange.Min , ActAutoSexTimerRange.Max) end
-function AutoSexDrift(actValue)
-	if actValue == ActValue.Speed then return Clamp01(TM_AutoSexSpeedDrift)
-	elseif actValue == ActValue.Thrust then return Clamp01(TM_AutoSexThrustDrift)
-	elseif actValue == ActValue.Weight then return Clamp01(TM_AutoSexWeightDrift)
-	elseif actValue == ActValue.DepthStart then return Clamp01(TM_AutoSexDepthStartDrift)
-	elseif actValue == ActValue.DepthEnd then return Clamp01(TM_AutoSexDepthEndDrift)
+function AutoSexDrift(actParam)
+	if actParam == ActParam.Speed then return Clamp01(TM_AutoSexSpeedDrift)
+	elseif actParam == ActParam.Thrust then return Clamp01(TM_AutoSexThrustDrift)
+	elseif actParam == ActParam.Weight then return Clamp01(TM_AutoSexWeightDrift)
+	elseif actParam == ActParam.DepthStart then return Clamp01(TM_AutoSexDepthStartDrift)
+	elseif actParam == ActParam.DepthEnd then return Clamp01(TM_AutoSexDepthEndDrift)
 	else return 0 end
 end
 
@@ -278,33 +278,33 @@ function AutoSex_OnTickParamsSet(human, body)
 	local bodyTimers = timers[body]
 	if not bodyTimers then bodyTimers = {} timers[body] = bodyTimers end
 	-- Iterate through all timers, execute ones that have timeouted
-	for actValue, paramSetFunc in pairs(ActParamFunctionsSet) do
+	for actParam, paramSetFunc in pairs(ActParamFunctionSet) do
 		-- If AutoSex drift is 0, don't animate parameters
-		if AutoSexDrift(actValue) > 0 then
+		if AutoSexDrift(actParam) > 0 then
 			-- Init or subtract interaction timer (for all parameters)
-			bodyTimers[actValue] = (bodyTimers[actValue] or 0) - ActAutoSexTickTime
-			if bodyTimers[actValue] <= 0 then
-				local tierConfig = AutoSexTier_ConfigGet(stats.AutoSexTier)[actValue]
+			bodyTimers[actParam] = (bodyTimers[actParam] or 0) - ActAutoSexTickTime
+			if bodyTimers[actParam] <= 0 then
+				local tierConfig = AutoSexTier_ConfigGet(stats.AutoSexTier)[actParam]
 				if tierConfig then
 					local isHand = body == ActBody.PenisHand
-					local value = AutoSexValueGen_Random(interaction, actValue, isHand, tierConfig )
+					local value = AutoSexValueGen_Random(interaction, actParam, isHand, tierConfig )
 					-- START RANDOM TWEEN/RAW INTERACTION PARAMETER VALUE (ActAutoSexParams: Speed, Thrust, DepthStart, DepthEnd, Weight)
 					-- If SexTweenAllow() is allowed, this is where the tween starts. If not, raw value is changed directly in the game body property
 					if value ~= nil then paramSetFunc(interaction, value, isHand) end
 				end
-				bodyTimers[actValue] = GetRandom(AutoSexMinTime(), AutoSexMaxTime())
+				bodyTimers[actParam] = GetRandom(AutoSexMinTime(), AutoSexMaxTime())
 			end
 		end
 	end
 end
 
-function AutoSex_ResetTimers(human, actValue)
+function AutoSex_ResetTimers(human, actParam)
 	if not human then return end
 	for interaction, bodies in pairs(ActAutoSexTimers) do
 		if interaction and interaction.Owner == human then
 			for body, bodyTimers in pairs(bodies) do
 				for actVal in pairs(bodyTimers) do
-					if actVal == actValue then bodyTimers[actVal] = 0 end
+					if actVal == actParam then bodyTimers[actVal] = 0 end
 				end
 			end
 		end
@@ -320,17 +320,17 @@ function AutoSexTier_ConfigGet(autoSexTier)
 	return values or AutoSexTierRandom_Default
 end
 
-function AutoSexValueGen_Random(interaction, actValue, isHand, tierconfig)
+function AutoSexValueGen_Random(interaction, actParam, isHand, tierconfig)
 	if not interaction or not tierconfig then return nil end
-	local drift = AutoSexDrift(actValue)
+	local drift = AutoSexDrift(actParam)
 	if drift <= 0 then return nil end
 	-- GET A RANDOM VALUE, SPECIFIC FUNCTION TYPES
 	-- 1. Fixed delta + truncated range - Uniform, unbiased, no edge sticking, no loop (best overall)
-	return GetRandomFloatNear_FixedDeltaTruncated(ActValueGet(interaction, actValue, isHand), drift, tierconfig.Min, tierconfig.Max, tierconfig.Delta)
+	return GetRandomFloatNear_FixedDeltaTruncated(ActValueGet(interaction, actParam, isHand), drift, tierconfig.Min, tierconfig.Max, tierconfig.Delta)
 	-- -- 2. Value-dependent delta + truncated range - No boundary bias, safe, but movement slows near zero
-	-- return value = GetRandomFloatNear_ValueDeltaTruncated(ActValueGet_Current(interaction, actValue, isHand), drift, tierconfig.Min, tierconfig.Max, tierconfig.Delta)
+	-- return value = GetRandomFloatNear_ValueDeltaTruncated(ActValueGet_Current(interaction, actParam, isHand), drift, tierconfig.Min, tierconfig.Max, tierconfig.Delta)
 	-- -- 3. Value-dependent delta + reflect - Fast, but biased and lingers near bounds
-	-- return value = GetRandomFloatNear_ReflectValueDelta(ActValueGet_Current(interaction, actValue, isHand), drift, tierconfig.Min, tierconfig.Max, tierconfig.Delta)
+	-- return value = GetRandomFloatNear_ReflectValueDelta(ActValueGet_Current(interaction, actParam, isHand), drift, tierconfig.Min, tierconfig.Max, tierconfig.Delta)
 	-- -- 4. Value-dependent delta + clamp - Very fast, but strong boundary bias and hard sticking
-	-- return value = GetRandomFloatAroundClamped(ActValueGet_Current(interaction, actValue, isHand), drift, tierconfig.Min, tierconfig.Max, tierconfig.Delta)
+	-- return value = GetRandomFloatAroundClamped(ActValueGet_Current(interaction, actParam, isHand), drift, tierconfig.Min, tierconfig.Max, tierconfig.Delta)
 end

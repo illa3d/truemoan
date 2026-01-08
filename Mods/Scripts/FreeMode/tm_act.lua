@@ -43,7 +43,7 @@ ActBody = {
 }
 
 -- INTERACTION PARAMETER ENUM
-ActValue = {
+ActParam = {
 	Active = "Active",
 	Speed = "Speed",
 	Weight = "Weight", -- no hand weight
@@ -52,34 +52,57 @@ ActValue = {
 	DepthEnd = "DepthEnd",
 }
 
+ActBodyArea = {
+	None = "None", -- everything else
+	Feet = "Feet",
+	Ass = "Ass",
+	Anus = "Anus",
+	Vagina = "Vagina",
+	Hands = "Hands",
+	Nipples = "Nipples",
+	Breasts = "Breasts",
+	Throat = "Throat",
+	Head = "Head",
+	Face = "Face",
+	Cheeks = "Cheeks",
+	Lips = "Lips",
+	Tongue = "Tongue",
+	L_Eye = "L_Eye",
+	R_Eye = "R_Eye",
+	UpperEyelids = "UpperEyelids",
+	LowerEyelids = "LowerEyelids",
+	InnerBrows = "InnerBrows",
+	OuterBrows = "OuterBrows",
+}
+
 -------------------------------------------------------------------------------------------------
 
 -- GAME PARAMETER NAME ENUM - Act (interaction) Parameters (actual names of values in interaction)
 local ActValueParamMap = {
-	[ActValue.Active] =		{ penis = "AutoActive",			hand = "m_autoHandActive" },
-	[ActValue.Speed] =		{ penis = "m_autoSpeed",		hand  = "m_autoHandSpeed" },
-	[ActValue.Thrust] =		{ penis = "m_autoThrustWeight",	hand  = "m_autoHandThrustWeight", },
-	[ActValue.DepthStart] =	{ penis = "m_autoStartDepth",	hand  = "m_autoHandStartDepth", },
-	[ActValue.DepthEnd] =	{ penis = "m_autoEndDepth",		hand  = "m_autoHandEndDepth", },
-	[ActValue.Weight] =		{ penis = "AutoPenisWeight" }-- no hand weight
+	[ActParam.Active] =		{ penis = "AutoActive",			hand = "m_autoHandActive" },
+	[ActParam.Speed] =		{ penis = "m_autoSpeed",		hand  = "m_autoHandSpeed" },
+	[ActParam.Thrust] =		{ penis = "m_autoThrustWeight",	hand  = "m_autoHandThrustWeight", },
+	[ActParam.DepthStart] =	{ penis = "m_autoStartDepth",	hand  = "m_autoHandStartDepth", },
+	[ActParam.DepthEnd] =	{ penis = "m_autoEndDepth",		hand  = "m_autoHandEndDepth", },
+	[ActParam.Weight] =		{ penis = "AutoPenisWeight" }-- no hand weight
 }
 
 -- GAME PARAMETER VALUE LIMITS (values as they are in TrueFacials)
 ActValueMinMax_Raw = {
-	[ActValue.Speed] =		{ Min = 0.001, Max = 2 },
-	[ActValue.Weight] =		{ Min = 0, Max = 1 },
-	[ActValue.Thrust] =		{ Min = 1, Max = 3 }, -- raw thrust values
-	[ActValue.DepthStart] =	{ Min = 0, Max = 1.2 },
-	[ActValue.DepthEnd] =	{ Min = 0.1, Max = 1.3 }
+	[ActParam.Speed] =		{ Min = 0.001, Max = 2 },
+	[ActParam.Weight] =		{ Min = 0, Max = 1 },
+	[ActParam.Thrust] =		{ Min = 1, Max = 3 }, -- raw thrust values
+	[ActParam.DepthStart] =	{ Min = 0, Max = 1.2 },
+	[ActParam.DepthEnd] =	{ Min = 0.1, Max = 1.3 }
 }
 
 -- TRUEMOAN PARAMETER VALUE LIMITS (values with thrust normalized)
 ActValueMinMax = {
-	[ActValue.Speed] =		{ Min = 0.1, Max = 1 },
-	[ActValue.Weight] =		{ Min = 0, Max = 1 },
-	[ActValue.Thrust] =		{ Min = 0, Max = 0.6 },
-	[ActValue.DepthStart] =	{ Min = 0.2, Max = 0.6 },
-	[ActValue.DepthEnd] =	{ Min = 0.5, Max = 1.1 },
+	[ActParam.Speed] =		{ Min = 0.1, Max = 1 },
+	[ActParam.Weight] =		{ Min = 0, Max = 1 },
+	[ActParam.Thrust] =		{ Min = 0, Max = 0.6 },
+	[ActParam.DepthStart] =	{ Min = 0.2, Max = 0.6 },
+	[ActParam.DepthEnd] =	{ Min = 0.5, Max = 1.1 },
 }
 
 -------------------------------------------------------------------------------------------------
@@ -212,30 +235,30 @@ end
 -------------------------------------------------------------------------------------------------
 
 -- PARAMETER VALUES
-function ActValueGet(interaction, actValue, isHand)
-	if not interaction or not actValue then return 0 end
-	if actValue == ActValue.Active then return ActActiveGet(interaction, isHand) and 1 or 0 -- unify bool returns as rest
-	elseif actValue == ActValue.Speed then return ActSpeedGet(interaction, isHand)
-	elseif actValue == ActValue.Weight then return ActWeightGet(interaction, isHand)
-	elseif actValue == ActValue.Thrust then return ActThrustGet(interaction, isHand)
-	elseif actValue == ActValue.DepthStart then return ActDepthGet(interaction, isHand, true)
-	elseif actValue == ActValue.DepthEnd then return ActDepthGet(interaction, isHand, false) end
+function ActValueGet(interaction, actParam, isHand)
+	if not interaction or not actParam then return 0 end
+	if actParam == ActParam.Active then return ActActiveGet(interaction, isHand) and 1 or 0 -- unify bool returns as rest
+	elseif actParam == ActParam.Speed then return ActSpeedGet(interaction, isHand)
+	elseif actParam == ActParam.Weight then return ActWeightGet(interaction, isHand)
+	elseif actParam == ActParam.Thrust then return ActThrustGet(interaction, isHand)
+	elseif actParam == ActParam.DepthStart then return ActDepthGet(interaction, isHand, true)
+	elseif actParam == ActParam.DepthEnd then return ActDepthGet(interaction, isHand, false) end
 	return 0
 end
 
-function ActValueGet_ByBody(human, actBody, actValue)
+function ActValueGet_ByBody(human, actBody, actParam)
 	local isHand = actBody == ActBody.PenisHand
-	if actValue == ActValue.Active then return ActActiveGet(ActGet(human, actBody), isHand) and 1 or 0 -- unify bool returns as rest
-	elseif actValue == ActValue.Speed then return ActSpeedGet(ActGet(human, actBody), isHand)
-	elseif actValue == ActValue.Thrust then return ActThrustGet(ActGet(human, actBody), isHand)
-	elseif actValue == ActValue.Weight then return ActWeightGet(ActGet(human, actBody), isHand)
-	elseif actValue == ActValue.DepthStart then return ActDepthGet(ActGet(human, actBody), isHand, true)
-	elseif actValue == ActValue.DepthEnd then return ActDepthGet(ActGet(human, actBody), isHand, false) end
+	if actParam == ActParam.Active then return ActActiveGet(ActGet(human, actBody), isHand) and 1 or 0 -- unify bool returns as rest
+	elseif actParam == ActParam.Speed then return ActSpeedGet(ActGet(human, actBody), isHand)
+	elseif actParam == ActParam.Thrust then return ActThrustGet(ActGet(human, actBody), isHand)
+	elseif actParam == ActParam.Weight then return ActWeightGet(ActGet(human, actBody), isHand)
+	elseif actParam == ActParam.DepthStart then return ActDepthGet(ActGet(human, actBody), isHand, true)
+	elseif actParam == ActParam.DepthEnd then return ActDepthGet(ActGet(human, actBody), isHand, false) end
 end
 
 -- RANDOM QUICK PARAMETER VALUE (new generated value, used in menu, "quick wide random" for responsive "FeelingLucky")
-function ActValueGen_Random(actValue)
-	local r = ActValueMinMax[actValue]
+function ActValueGen_Random(actParam)
+	local r = ActValueMinMax[actParam]
 	return r and GetRandomFloat(r.Min, r.Max) or 0
 end
 
@@ -243,9 +266,9 @@ end
 -- (RAW) INTERACTION PARAMETER VALUE (Speed, Thrust, DepthStart, DepthEnd, Weight)
 -------------------------------------------------------------------------------------------------
 -- MAIN RAW PARAMETER VALUE (from interaction or tween target (where it's ending up afer tween))
-function ActValueGet_RawOrTween(act, actValue, isHand)
+function ActValueGet_RawOrTween(act, actParam, isHand)
 	if not act then return nil end
-	local param = ActValueParamNameGet(actValue, isHand)
+	local param = ActParamValueNameGet(actParam, isHand)
 	if not param then return nil end
 	local map = actActiveTweenMap[act]
 	local t = map and map[param]
@@ -255,14 +278,14 @@ function ActValueGet_RawOrTween(act, actValue, isHand)
 	return act[param]
 end
 
-function ActValueSet_RawOrTween(act, actValue, isHand, value)
-	if SexTweenAllow() then ActTweenTo(act, ActValueParamNameGet(actValue, isHand), value, SexTweenTime() )
-	else ActValueSet_Raw(act, actValue, isHand, value) end
+function ActValueSet_RawOrTween(act, actParam, isHand, value)
+	if SexTweenAllow() then ActTweenTo(act, ActParamValueNameGet(actParam, isHand), value, SexTweenTime() )
+	else ActValueSet_Raw(act, actParam, isHand, value) end
 end
 
 -- RAW PARAMETER VALUE CLAMP (Clamp to actual game value, might be tweened, tween target is "new value" tween is going to)
-function ActValueClamp_Raw(value, actValue)
-	local mm = ActValueMinMax_Raw[actValue]
+function ActValueClamp_Raw(value, actParam)
+	local mm = ActValueMinMax_Raw[actParam]
 	return mm and ClampValue(value, mm.Min, mm.Max) or value
 end
 
@@ -270,20 +293,20 @@ end
 -- RAW PARAMETER VALUE (possibly being tweened)
 
 -- Set Interaction value directly to character
-function ActValueSet_Raw(act, actValue, isHand, value)
-	local param = ActValueParamNameGet(actValue, isHand)
+function ActValueSet_Raw(act, actParam, isHand, value)
+	local param = ActParamValueNameGet(actParam, isHand)
 	if act and param then act[param] = value end
 end
 
 -- Get Interaction value from interaction (if object is tweening will get value "on the way to the target")
-function ActValueGet_Raw(act, actValue, isHand)
-	local param = ActValueParamNameGet(actValue, isHand)
+function ActValueGet_Raw(act, actParam, isHand)
+	local param = ActParamValueNameGet(actParam, isHand)
 	return act and param and act[param] or nil
 end
 
 -- Get Interaction parameter
-function ActValueParamNameGet(actValue, isHand)
-	local entry = ActValueParamMap[actValue]
+function ActParamValueNameGet(actParam, isHand)
+	local entry = ActValueParamMap[actParam]
 	if not entry then return nil end
 	return isHand and entry.hand or entry.penis
 end
@@ -295,8 +318,8 @@ end
 -------------------------------------------------------------------------------------------------
 -- INTERACTION ACTIVE
 -------------------------------------------------------------------------------------------------
-function ActActiveGet(interaction, isHand) return ActValueGet_RawOrTween(interaction, ActValue.Active, isHand) end
-function ActActiveSet(interaction, isHand, isActive) ActValueSet_Raw(interaction, ActValue.Active, isHand, isActive) end
+function ActActiveGet(interaction, isHand) return ActValueGet_RawOrTween(interaction, ActParam.Active, isHand) end
+function ActActiveSet(interaction, isHand, isActive) ActValueSet_Raw(interaction, ActParam.Active, isHand, isActive) end
 function ActActiveSet_Human(human, actBody, isActive) ActActiveSet(ActGet(human, actBody), actBody == ActBody.PenisHand, isActive) end
 function ActActiveSetAll_Human(human, isActive)
 	if IsSexActive(human, ActBody.PenisHand) then ActActiveSet(ActGet(human, ActBody.PenisHand), true, isActive) end
@@ -310,11 +333,11 @@ end
 -- INTERACTION SPEED (PENIS/HAND) (0.001 - 2), UI ALLOWS ONLY (0.001 - 0.5)
 -------------------------------------------------------------------------------------------------
 -- GET
-function ActSpeedGet_Raw(interaction, isHand) return ActValueGet_Raw(interaction, ActValue.Speed, isHand) end
-function ActSpeedGet(interaction, isHand) return ActValueGet_RawOrTween(interaction, ActValue.Speed, isHand) end
+function ActSpeedGet_Raw(interaction, isHand) return ActValueGet_Raw(interaction, ActParam.Speed, isHand) end
+function ActSpeedGet(interaction, isHand) return ActValueGet_RawOrTween(interaction, ActParam.Speed, isHand) end
 
 -- SET
-function ActSpeedSet_MenuRandom(interaction, isHand) ActSpeedSet(interaction, ActValueGen_Random(ActValue.Speed), isHand) end
+function ActSpeedSet_MenuRandom(interaction, isHand) ActSpeedSet(interaction, ActValueGen_Random(ActParam.Speed), isHand) end
 function ActSpeedSet_Step(interaction, speedStep, increase, isHand)
 	local speed = ActSpeedGet(interaction, isHand) -- Use Target Value to prevent dampening
 	local increment = 1 + (speedStep / (speed ^ 0.6)) -- 1 + (speed multiplier / (speed / curve))
@@ -325,8 +348,8 @@ end
 
 function ActSpeedSet(interaction, speed, isHand)
 	ActActiveSet(interaction, isHand, true)
-	local speed = ActValueClamp_Raw(speed, ActValue.Speed)
-	ActValueSet_RawOrTween(interaction, ActValue.Speed, isHand, speed)
+	local speed = ActValueClamp_Raw(speed, ActParam.Speed)
+	ActValueSet_RawOrTween(interaction, ActParam.Speed, isHand, speed)
 end
 
 -------------------------------------------------------------------------------------------------
@@ -334,11 +357,11 @@ end
 -------------------------------------------------------------------------------------------------
 
 -- GET
-function ActWeightGet_Raw(interaction, isHand) return ActValueGet_Raw(interaction, ActValue.Weight, isHand) end
-function ActWeightGet(interaction, isHand) return isHand and 0 or ActValueGet_RawOrTween(interaction, ActValue.Weight, false) end
+function ActWeightGet_Raw(interaction, isHand) return ActValueGet_Raw(interaction, ActParam.Weight, isHand) end
+function ActWeightGet(interaction, isHand) return isHand and 0 or ActValueGet_RawOrTween(interaction, ActParam.Weight, false) end
 
 -- SET
-function ActWeightSet_MenuRandom(interaction, isHand) ActWeightSet(interaction, ActValueGen_Random(ActValue.Weight), isHand) end
+function ActWeightSet_MenuRandom(interaction, isHand) ActWeightSet(interaction, ActValueGen_Random(ActParam.Weight), isHand) end
 function ActWeightSet_Step(interaction, weightStep, increase, isHand)
 	local weight = ActWeightGet(interaction, isHand) -- Use Target Value to prevent dampening
 	if increase then weight = weight + weightStep
@@ -348,22 +371,22 @@ end
 function ActWeightSet(interaction, weight, isHand)
 	if isHand then return end -- no interaction weight in handjobs
 	ActActiveSet(interaction, false, true)
-	local weight = ActValueClamp_Raw(weight, ActValue.Weight)
-	ActValueSet_RawOrTween(interaction, ActValue.Weight, false, weight)
+	local weight = ActValueClamp_Raw(weight, ActParam.Weight)
+	ActValueSet_RawOrTween(interaction, ActParam.Weight, false, weight)
 end
 
 -------------------------------------------------------------------------------------------------
 -- INTERACTION THRUST (PENIS/HAND) (normalized 0-1 to actual 1-3)
 -------------------------------------------------------------------------------------------------
 function ActThrust_Norm(weight) return NormalizeValue(weight, 1, 3) end
-function ActThrust_Denorm(weight) return ActValueClamp_Raw(DenormalizeValue(Clamp01(weight), 1, 3), ActValue.Thrust) end
+function ActThrust_Denorm(weight) return ActValueClamp_Raw(DenormalizeValue(Clamp01(weight), 1, 3), ActParam.Thrust) end
 
 -- GET
-function ActThrustGet_Raw(interaction, isHand) return ActThrust_Norm(ActValueGet_Raw(interaction, ActValue.Thrust, isHand)) end
-function ActThrustGet(interaction, isHand) return ActThrust_Norm(ActValueGet_RawOrTween(interaction, ActValue.Thrust, isHand)) end
+function ActThrustGet_Raw(interaction, isHand) return ActThrust_Norm(ActValueGet_Raw(interaction, ActParam.Thrust, isHand)) end
+function ActThrustGet(interaction, isHand) return ActThrust_Norm(ActValueGet_RawOrTween(interaction, ActParam.Thrust, isHand)) end
 
 -- SET
-function ActThrustSet_MenuRandom(interaction, isHand) ActThrustSet(interaction, ActValueGen_Random(ActValue.Thrust), isHand) end
+function ActThrustSet_MenuRandom(interaction, isHand) ActThrustSet(interaction, ActValueGen_Random(ActParam.Thrust), isHand) end
 function ActThrustSet_Step(interaction, weightStep, increase, isHand)
 	local weight = ActThrustGet(interaction, isHand) -- Use Target Value to prevent dampening
 	if increase then weight = weight + weightStep
@@ -373,7 +396,7 @@ end
 function ActThrustSet(interaction, weight, isHand)
 	ActActiveSet(interaction, isHand, true)
 	local weight = ActThrust_Denorm(weight)
-	ActValueSet_RawOrTween(interaction, ActValue.Thrust, isHand, weight)
+	ActValueSet_RawOrTween(interaction, ActParam.Thrust, isHand, weight)
 end
 
 -------------------------------------------------------------------------------------------------
@@ -381,18 +404,18 @@ end
 -------------------------------------------------------------------------------------------------
 -- GET
 function ActDepthGet_Raw(interaction, isHand, isStartDepth)
-	return ActValueGet_Raw(interaction, isStartDepth and ActValue.DepthStart or ActValue.DepthEnd, isHand)
+	return ActValueGet_Raw(interaction, isStartDepth and ActParam.DepthStart or ActParam.DepthEnd, isHand)
 end
 function ActDepthGet(interaction, isHand, isStartDepth)
-	return ActValueGet_RawOrTween(interaction, isStartDepth and ActValue.DepthStart or ActValue.DepthEnd, isHand)
+	return ActValueGet_RawOrTween(interaction, isStartDepth and ActParam.DepthStart or ActParam.DepthEnd, isHand)
 end
 
 -- SET RANDOM
-function ActDepthStartSet_MenuRandom(interaction, isHand) ActDepthSet_Start(interaction, ActValueGen_Random(ActValue.DepthStart), isHand) end
-function ActDepthEndSet_MenuRandom(interaction, isHand) ActDepthSet_End(interaction, ActValueGen_Random(ActValue.DepthEnd), isHand) end
+function ActDepthStartSet_MenuRandom(interaction, isHand) ActDepthSet_Start(interaction, ActValueGen_Random(ActParam.DepthStart), isHand) end
+function ActDepthEndSet_MenuRandom(interaction, isHand) ActDepthSet_End(interaction, ActValueGen_Random(ActParam.DepthEnd), isHand) end
 function ActDepthSet_MenuRandom(interaction, isHand)
-	ActDepthSet_Start(interaction, ActValueGen_Random(ActValue.DepthStart), isHand)
-	ActDepthSet_End(interaction, ActValueGen_Random(ActValue.DepthEnd), isHand)
+	ActDepthSet_Start(interaction, ActValueGen_Random(ActParam.DepthStart), isHand)
+	ActDepthSet_End(interaction, ActValueGen_Random(ActParam.DepthEnd), isHand)
 end
 
 -- SET STEP
@@ -411,24 +434,24 @@ function ActDepthSet_StartEnd(interaction, depthStart, depthEnd, isHand)
 end
 function ActDepthSet_Start(interaction, depth, isHand)
 	ActActiveSet(interaction, isHand, true)
-	depth = ActValueClamp_Raw(depth, ActValue.DepthStart)
-	ActValueSet_RawOrTween(interaction, ActValue.DepthStart, isHand, depth)
+	depth = ActValueClamp_Raw(depth, ActParam.DepthStart)
+	ActValueSet_RawOrTween(interaction, ActParam.DepthStart, isHand, depth)
 end
 function ActDepthSet_End(interaction, depth, isHand)
 	ActActiveSet(interaction, isHand, true)
-	depth = ActValueClamp_Raw(depth, ActValue.DepthEnd)
-	ActValueSet_RawOrTween(interaction, ActValue.DepthEnd, isHand, depth)
+	depth = ActValueClamp_Raw(depth, ActParam.DepthEnd)
+	ActValueSet_RawOrTween(interaction, ActParam.DepthEnd, isHand, depth)
 end
 
 -------------------------------------------------------------------------------------------------
 -- Function definitions after they've been defined up there
 
-ActParamFunctionsSet = {
-	[ActValue.Speed] = ActSpeedSet,
-	[ActValue.Weight] = ActWeightSet,
-	[ActValue.Thrust] = ActThrustSet,
-	[ActValue.DepthStart] = ActDepthSet_Start,
-	[ActValue.DepthEnd] = ActDepthSet_End,
+ActParamFunctionSet = {
+	[ActParam.Speed] = ActSpeedSet,
+	[ActParam.Weight] = ActWeightSet,
+	[ActParam.Thrust] = ActThrustSet,
+	[ActParam.DepthStart] = ActDepthSet_Start,
+	[ActParam.DepthEnd] = ActDepthSet_End,
 }
 
 -------------------------------------------------------------------------------------------------

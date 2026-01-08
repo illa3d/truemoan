@@ -244,7 +244,7 @@ function TMOnClimaxEffects(girl)
 		stats:AutoSexTierSet(autoSexTier)
 		ActAll_ActiveSet(girl, true) -- turn on all interactions
 		ActAll_SpeedSet(girl, AutoSexTierConfig[autoSexTier].Mid) -- force specific start speed
-		ActAll_DepthSet(girl, AutoSexTierConfig_Climax[ActValue.DepthEnd].Max, false) -- increase depth
+		ActAll_DepthSet(girl, AutoSexTierConfig_Climax[ActParam.DepthEnd].Max, false) -- increase depth
 		if autoSexTier == AutoSexTier.Idle then stats.Climax = false end
 	end
 	
