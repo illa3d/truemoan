@@ -6,9 +6,10 @@
 --     Some values will be added through time. If you just copy your backup, you might be losing on options!    --
 ------------------------------------------------------------------------------------------------------------------
 
--- AutoSex Time
+-- AutoSex
 TM_AutoSexTimeMin = 2			-- [1-20] Auto Interaction minimum time to change parameter (speed, thrust, depth) 
 TM_AutoSexTimeMax = 5			-- [1-20] Auto Interaction maximum time to change parameter (speed, thrust, depth) 
+TM_AutoSexClimaxTimeStep = 4	-- pause between each climax step while slowing down
 
 -- AutoSex Drift (bigger values more variety)
 TM_AutoSexSpeedDrift = 0.4		-- [0-1] How close in percent will be next step for sex speed
@@ -27,12 +28,7 @@ TM_SexSpeedStep = 0.05	-- non-linear percent (increments: slow = small, fast = b
 TM_SexMaleStep = 0.05	-- giver/getter, linear percent (of UI slider)
 TM_SexThrustStep = 0.05	-- easier/harder, linear percent (of UI slider)
 TM_SexDepthStep = 0.05	-- shallow/deep, linear percent (of UI slider)
-
--- Sex controls quick command increments
 TM_SexDeeperStep = 0.1	-- Deeper command
-
--- Climax tier ladder-down time for each step
-AutoSexClimaxTimeStep = 4
 
 -- Moan Sex treshold by sex speeed (Min: 0.001, Max: 2)
 TM_MoanTreshold_Climax = 1.3
@@ -47,11 +43,16 @@ TM_MoanCumLipsTime = 3	-- Cum on lips
 TM_MoanCumBodyTime = 5	-- Cum on body
 TM_WetnessStep = 200	-- Wetness Control step
 
+-- Cum reactions
+TM_CumStepTime = 0.1	-- [0.1] How often per second does the cumflation/cumdeflation update 
+TM_CumEffectTime = 0.5	-- [0.3-1] How often does a cum effect (moan, wetness) apply while parner cumming inside
+TM_CumPauseTime = 1		-- [0-3 Pause after cumming inside and pull-out (all holes) to start Cum/Cumflation after effects
+
 -- Cumflation (belly inflation by cumming inside)
 TM_CumflateStepUp = 0.005		-- Increment (each 0.1sec once) of hip size increase
 TM_CumflateStepDown = 0.02		-- Decrement (each 0.1sec once) of hip size reduction
 TM_CumflateHipSizeLimit = 1.5	-- Maximum amout to increase to (deformed afer 1.5)
 
 -- Arousal
-TM_HumanArousalIncrease = 0.003
-TM_HumanArousalDecay = 0.01
+TM_HumanArousalIncrease = 0.3	-- Base rate of arousal increase (multiplied by various factors)
+TM_HumanArousalDecrease = 1		-- Base rate of arousal decrease (when not in sex or cumming)

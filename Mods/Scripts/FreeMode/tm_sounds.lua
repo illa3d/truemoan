@@ -43,7 +43,7 @@ TMHumanPartPos = {
 	Penis = "Penis",
 }
 
--- Cum moan tiers (random from)
+-- Cum body area moan tiers (random from)
 TM_Moans_Cumming = { TMMoanTier.Fast, TMMoanTier.Faster, TMMoanTier.Wild }
 TM_Moans_CumEye = { TMMoanTier.Faster, TMMoanTier.Wild, TMMoanTier.Max }
 TM_Moans_CumMouth = { TMMoanTier.Fast, TMMoanTier.Faster }

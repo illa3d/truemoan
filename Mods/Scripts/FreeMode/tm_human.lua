@@ -120,14 +120,14 @@ end
 function TMHumanStats:UpdateArousal(deltaTime)
 	if self.IsSexActive and self.AutoSexTier and self.Climax ~= true and self.IsCumming ~= true then
 		local tierMul = AutoSexTierConfig[self.AutoSexTier].Arousal
-		local gain = deltaTime * TM_HumanArousalIncrease * tierMul
+		local gain = deltaTime * (TM_HumanArousalIncrease / 100) * tierMul
 		* HoleMultiplier(self.SexBodyCount)
 		* (self:IsCumflating() and 2 or 1)
 		* (self:IsFeelingCum() and 1.3 or 1)
 		self.Arousal = Clamp01(self.Arousal + gain)
 		if self.Arousal >= 0.99 then self.Arousal = 1 end
 	else
-		self.Arousal = Clamp01(self.Arousal - deltaTime * TM_HumanArousalDecay * (self.IsCumming and 4 or 1))
+		self.Arousal = Clamp01(self.Arousal - deltaTime * (TM_HumanArousalDecrease / 100) * (self.IsCumming and 4 or 1))
 	end
 end
 

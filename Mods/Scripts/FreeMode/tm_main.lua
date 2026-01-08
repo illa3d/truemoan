@@ -8,12 +8,9 @@ TM_UIVisible = true -- TrueFacials UI
 function TM_AllowVoice() return VM_VoiceMod_Enabled ~= true end
 TM_AllowGenericChat = false
 TM_DeltaTime = 0
--- Cum reactions
-TMH_CumStepTime = 0.1
-TMH_CumEffectTime = 0.5
-TMH_CumPauseTime = 1
+
 ------------------------------------------------------------------------------------------------
--- FREE MODE START (called from TrueFacials)
+-- TRUE FACIALS CALLS
 -------------------------------------------------------------------------------------------------
 function TMOnStart_Init()
 	Play_FreeMode() -- this makes 3d interactable when TalkMenu visible
@@ -81,8 +78,11 @@ function TMOnRemoveHuman(human)
 end
 
 -------------------------------------------------------------------------------------------------
+--===============================================================================================
 -- HUMANS EVERY FRAME
+--===============================================================================================
 -------------------------------------------------------------------------------------------------
+
 function TMOnUpdate_Humans()
 	-- Iterate and call for every human in the scene
 	for _, human in ipairs(game.GetHumans()) do
@@ -102,25 +102,23 @@ function TMOnFluidHit(hitActor, bodyArea, shootActor)
 	local lastHitTime = Timer(timerKey)
 	local stats = TMHStatsGet(hitActor)
 
-	if bodyArea == "L_Eye" and lastHitTime > TM_MoanCumEyeTime then 
+	if bodyArea == ActBodyArea.L_Eye and lastHitTime > TM_MoanCumEyeTime then 
 		TMPlayMoan(hitActor, TMMoan.CumEye)
 		hitActor.AddInvoluntaryAnim("L_Eye_HitClose", 1, 0.7, 0.7, EyelidL(1))
 		ResetTimer(timerKey)
-	elseif bodyArea == "R_Eye" and lastHitTime > TM_MoanCumEyeTime then 
+	elseif bodyArea == ActBodyArea.R_Eye and lastHitTime > TM_MoanCumEyeTime then 
 		TMPlayMoan(hitActor, TMMoan.CumEye)
 		hitActor.AddInvoluntaryAnim("R_Eye_HitClose", 1, 0.7, 0.7, EyelidR(1))
 		ResetTimer(timerKey)
-	elseif bodyArea == "Lips" and lastHitTime > TM_MoanCumLipsTime then 
+	elseif bodyArea == ActBodyArea.Lips and lastHitTime > TM_MoanCumLipsTime then 
 		TMPlayMoan(hitActor, TMMoan.CumMouth)
 		hitActor.AddInvoluntaryAnim("OpenMouth", 5, 0.4, 0.4, Mouth(-0.83, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.73, 0, 0.39))
-		Delayed(1, function()
-			hitActor.Swallow()
-		end)
+		Delayed(1, function() hitActor.Swallow() end)
 		ResetTimer(timerKey)
 	else
-		local genericVoiceKey = "FluidHit_Generic_" .. hitActor.Name
+		local genericVoiceKey = "TMFluidHit_Generic_" .. hitActor.Name
 		local lastGenericVoiceTime = Timer(genericVoiceKey)
-		if lastGenericVoiceTime > 500 then
+		if TM_AllowGenericChat and lastGenericVoiceTime > 500 then
 			hitActor.SayCustom("gen_cumshot")
 			hitActor.Say(hitActor.FaceMood >= 0 and "Like" or "Dislike")
 			ResetTimer(genericVoiceKey)
@@ -137,14 +135,14 @@ end
 function TMOnUpdate_Futa(girl)
 	if not TM_MoanFuta or not girl or girl.m_isMale then return end
 
-	local function OnPenetration(actBody)
+	local function FutaMoan(actBody)
 		act = ActGet(girl, actBody)
 		if not act or not ActActiveGet(act, actBody == ActBody.PenisHand) then return end
 		TMOnPenetration(girl, actBody, ActSpeedGet(act, false)/3, 0, SexPartner_Get(girl, actBody))
 	end
 
-	if HasSexPartner(girl, ActBody.PenisHole) then OnPenetration(ActBody.PenisHole)
-	elseif HasSexPartner(girl, ActBody.PenisHand) then OnPenetration(ActBody.PenisHand) end
+	if HasSexPartner(girl, ActBody.PenisHole) then FutaMoan(ActBody.PenisHole)
+	elseif HasSexPartner(girl, ActBody.PenisHand) then FutaMoan(ActBody.PenisHand) end
 end
 
 
@@ -204,23 +202,24 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 		wetness = 1
 	end
 
-	-- Organic Speed-based pause scaling: longer to zero near tier end
-	local t = (inVelocity - tierMin) / (tierMax - tierMin)
-	t = math.max(0, math.min(t, 1))
-	local cooldown = pauseMax * (1 - t)
-	-- Small randomness to avoid mechanical timing
+	-- Pause between moans
+	local pause = 1
 	if stats and stats.Climax then
-		cooldown = 0.01
+		pause = 0.03
 	elseif tier == TMMoanTier.Max then
-		cooldown = 0.03
+		pause = 0.05
 	elseif tier == TMMoanTier.Wild then
-		cooldown = 0.05
+		pause = 0.08
 	else
-		cooldown = cooldown + math.random() * 0.05
+		-- Organic Speed-based pause scaling: longer to zero near tier end
+		local t = (inVelocity - tierMin) / (tierMax - tierMin)
+		t = math.max(0, math.min(t, 1))
+		-- Small randomness to avoid mechanical timing
+		pause = (pauseMax * (1 - t)) + (math.random() * 0.05)
 	end
 
 	-- Play
-	if lastMoanTime > cooldown then
+	if lastMoanTime > pause then
 		if stats and stats.Climax then
 			TMPlayMoanTier(girl, TMMoanTier[stats.AutoSexTier]) -- follow stats.AutoSexTier with sounds
 		else
@@ -271,7 +270,7 @@ end
 
 local function TMHCanPlayCumEffect(stats)
 	if not stats.CumEffectLastTime then return true end
-	return os.time() - stats.CumEffectLastTime >= TMH_CumEffectTime
+	return os.time() - stats.CumEffectLastTime >= TM_CumEffectTime
 end
 
 -- Updated on cum inside reaction
@@ -281,7 +280,7 @@ function TMOnPenetration_Cum(girl, holeName)
 	if not stats then return end
 	-- throttle only if we have a previous update time
 	local now = os.time()
-	if stats.CumLastUpdate and now - stats.CumLastUpdate < TMH_CumStepTime then return end
+	if stats.CumLastUpdate and now - stats.CumLastUpdate < TM_CumStepTime then return end
 	local partner = SexPartner_Get(girl, holeName)
 	if partner and not HumanIsCumming(partner) then return end
 	stats.CumLastTime = now
@@ -318,9 +317,9 @@ function TMOnUpdate_CumFinish(girl)
 
 	local now = os.time()
 	-- throttle expensive logic
-	if stats.CumLastUpdate and now - stats.CumLastUpdate < TMH_CumStepTime then return end
+	if stats.CumLastUpdate and now - stats.CumLastUpdate < TM_CumStepTime then return end
 	-- wait after last cum
-	if now - stats.CumLastTime < TMH_CumPauseTime then return end
+	if now - stats.CumLastTime < TM_CumPauseTime then return end
 	-- still having sex
 	if HasSexPartner_HoleAny(girl) then return end
 	stats.CumLastUpdate = now
@@ -355,7 +354,7 @@ end
 function TMOnCumPulloutEffects(girl)
 	if not girl then return end
 	if TM_WetSex then WetSet(girl, 1000, ActBody.Vagina) end
-	local function Increment(oldValue, newValue) return IncrementMultiplierRandom(oldValue, AutoSexClimaxTimeStep, 0.8, 1.5) end 
+	local function Increment(oldValue, newValue) return IncrementMultiplierRandom(oldValue, TM_AutoSexClimaxTimeStep, 0.8, 1.5) end 
 	local delay = 0.5
 	local function Increment(value) delay = IncrementMultiplierRandom(delay, value, 0.8, 1.1) end
 	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Fast) end) Increment(0.5)
