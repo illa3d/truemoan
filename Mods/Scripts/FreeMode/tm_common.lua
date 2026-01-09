@@ -1,4 +1,45 @@
 -- TrueMoan v2.1 by illa3d
+
+-- HUMAN NAMES (used with game.AddRepeatAnim(... and game.RemoveAnim(...)
+-- -- Head & Face
+-- human.headNames
+-- human.browNames
+-- human.upperEyelidNames
+-- human.lowerEyelidNames
+-- human.eyeNames
+-- human.noseNames
+-- human.cheekNames
+-- human.jawNames
+-- human.lipsCornerNames
+-- human.upperLipsNames
+-- human.lowerLipsNames
+-- human.tongueNames
+-- -- Neck & Upper Torso
+-- human.neckNames
+-- human.shoulderNames
+-- human.chestNames
+-- human.breastNames
+-- -- Spine & Core
+-- human.spineNames
+-- human.hipsNames
+-- -- Arms & Hands
+-- human.upperarmNames
+-- human.forearmNames
+-- human.handNames
+-- human.thumbNames
+-- human.indexNames
+-- human.middleNames
+-- human.ringNames
+-- human.pinkyNames
+-- -- Lower Body & Legs
+-- human.thighNames
+-- human.calfNames
+-- -- Feet
+-- -- human.footNames
+-- human.toeNames
+-- -- Other / Non-anatomical
+-- human.ignoreNames
+
 -------------------------------------------------------------------------------------------------
 -- SYSTEM
 -------------------------------------------------------------------------------------------------
