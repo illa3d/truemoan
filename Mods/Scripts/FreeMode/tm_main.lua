@@ -148,7 +148,7 @@ end
 
 -- BLOWJOB SOUNDS
 function TMOnPenetration_BlowJob(girl, holeName, inVelocity)
-	if not girl or girl.m_isMale then return end
+	if not TM_AllowSfxBlowjob or not girl or girl.m_isMale then return end
 	if holeName ~= ActBody.Mouth then return end
 
 	local timerKey = "TMBlowJobSFX_" .. girl.Name
@@ -166,7 +166,7 @@ function TMOnPenetration_BlowJob(girl, holeName, inVelocity)
 end
 
 function TMOnPenetration_Plap(girl, holeName, inVelocity)
-	if not girl or girl.m_isMale then return end
+	if not TM_AllowSfxSex or not girl or girl.m_isMale then return end
 	if holeName ~= ActBody.Vagina and holeName ~= ActBody.Anus then return end
 	
 	local timerKey = "TMPlapSFX_" .. girl.Name

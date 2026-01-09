@@ -26,7 +26,7 @@ label TMMenuOptions(human)
 			+ "Next ambience"
 				TMPlayAmbienceNext()
 				Return()
-			+ "Ambience " .. AccStr(tmAmbienceTrack) .. " | " .. AccBool(TM_AllowAmbience) .. " (in ".. AccNum(TMAmbienceLeftSec()) .. "s)"
+			+ "Ambience " .. AccStr(TM_AmbienceTrack) .. " | " .. AccBool(TM_AllowAmbience) .. " (in ".. AccNum(TMAmbienceLeftSec()) .. "s)"
 				TM_AllowAmbience = false
 				Return()
 		+ else	
@@ -39,45 +39,45 @@ label TMMenuOptions(human)
 		+ TM_MenuClose
 
 	-- MOANING/SEX
-	+ "Sex / Moan »" [gold]
+	+ "Sex / SFX »" [gold]
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
-		+ "Auto sex	| " .. AccBool(TM_AutoSex)
-			TM_AutoSex = not TM_AutoSex
-			Return()
+		+ if TM_AllowVoice()
+			+ "Moan futa		| " .. AccBool(TM_MoanFuta) [if TM_MoanSex]
+				TM_MoanFuta = not TM_MoanFuta
+				Return()
+			+ "Moan sex		| " .. AccBool(TM_MoanSex)
+				TM_MoanSex = not TM_MoanSex
+				Return()
+			+ "Moan cum		| " .. AccBool(game.FluidReaction)
+				game.FluidReaction = not game.FluidReaction
+				Return()
+			+ "SFX blowjob		| " .. AccBool(TM_AllowSfxBlowjob)
+				TM_AllowSfxBlowjob = not TM_AllowSfxBlowjob
+				Return()
+			+ "SFX sex		| " .. AccBool(TM_AllowSfxSex)
+				TM_AllowSfxSex = not TM_AllowSfxSex
+				Return()
+		+ else
+			+ "SFX True Moan	| Disabled (VoiceMod)"
+				Return()
+		+ if TMMOD_VoiceMod
+			+ "SFX VoiceMod		| " .. AccBoolDE(VM_VoiceMod_Enabled)
+				if VM_VoiceMod_Enabled
+					VM_VoiceMod_Disable()
+				else
+					VM_VoiceMod_Enable()
+				Return()
 		+ "Wet sex	| " .. AccBool(TM_WetSex)
 			TM_WetSex = not TM_WetSex
 			Return()
 		+ "Cumflation	| " .. AccBool(TM_Cumflate)
 			TM_Cumflate = not TM_Cumflate
 			Return()
-		+ if TM_AllowVoice()
-			+ "Moan sex	| " .. AccBool(TM_MoanSex)
-				TM_MoanSex = not TM_MoanSex
-				Return()
-			+ "Moan cum	| " .. AccBool(game.FluidReaction)
-				game.FluidReaction = not game.FluidReaction
-				Return()
-			+ "Moan futa	| " .. AccBool(TM_MoanFuta)
-				TM_MoanFuta = not TM_MoanFuta
-				Return()
-			+ "SFX blowjob	| " .. AccBool(TM_AllowSfxBlowjob)
-				TM_AllowSfxBlowjob = not TM_AllowSfxBlowjob
-				Return()
-			+ "SFX sex	| " .. AccBool(TM_AllowSfxSex)
-				TM_AllowSfxSex = not TM_AllowSfxSex
-				Return()
-		+ else
-			+ "True Moan	| Disabled (VoiceMod)"
-				Return()
-		+ if TMMOD_VoiceMod
-			+ "VoiceMod	| " .. AccBoolDE(VM_VoiceMod_Enabled)
-				if VM_VoiceMod_Enabled
-					VM_VoiceMod_Disable()
-				else
-					VM_VoiceMod_Enable()
-				Return()
+		+ "Auto sex	| " .. AccBool(TM_AutoSex)
+			TM_AutoSex = not TM_AutoSex
+			Return()
 		+ "Tween sex	| " .. AccBool(TM_TweenSex) .. " (".. FDec(SexTweenTime(), tmOdec) .."s)"
 			TM_TweenSex = not TM_TweenSex
 			Return()

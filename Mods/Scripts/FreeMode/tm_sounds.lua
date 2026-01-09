@@ -1,8 +1,10 @@
 -- TrueMoan v2.0 by illa3d
 -- Ambience Constants
 local tmAmbienceTrackSec = 140	-- depends on the mp3 file length (all files must be of same length)
+
+-- Ambience publicVariables
+TM_AmbienceTrack = 0
 -- Ambience Variables
-local tmAmbienceTrack = 0
 local tmPlayingAmbience = false
 local tmLoopingAmbience = false
 local tmAmbienceTimer = "TM_AmbienceTimer"
@@ -116,7 +118,7 @@ function TMPlayMoan(girl, tmMoan)
 	if not stats or stats.Climax then return end
 	-- if tmMoanSource == TMMoanSource.Sex then -- dynamic
 	-- elseif tmMoanSource == TMMoanSource.Climax then -- dynamic
-	if tmMoan == TMMoan.Cumming and not TM_MoanSex then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_Cumming))
+	if tmMoan == TMMoan.Cumming and TM_MoanSex then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_Cumming))
 	elseif tmMoan == TMMoan.CumEye then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumEye))
 	elseif tmMoan == TMMoan.CumMouth then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumMouth))
 	elseif tmMoan == TMMoan.CumBody and not stats.IsSexActive then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumBody))
@@ -154,24 +156,24 @@ function TMStopAmbience()
 end
 
 function TMPlayAmbienceCurrent()
-	TMPlayAmbience(tmAmbienceTrack)
+	TMPlayAmbience(TM_AmbienceTrack)
 end
 
 function TMPlayAmbienceNext()
 	track = 1
-	if (tmAmbienceTrack == tmAmbienceTracks) then track = 1
-	else track = tmAmbienceTrack + 1 end
+	if (TM_AmbienceTrack == TMSfxData[TMSfx.Ambience].Tracks) then track = 1
+	else track = TM_AmbienceTrack + 1 end
 	TMPlayAmbience(track)
 end
 
 function TMPlayAmbienceRandom()
-	TMPlayAmbience(math.random(1, tmAmbienceTracks))
+	TMPlayAmbience(math.random(1, TMSfxData[TMSfx.Ambience].Tracks))
 end
 
 function TMPlayAmbience(track)
 	if not TM_AllowAmbience then return end
 	-- set next ambience to play
-	tmAmbienceTrack = TMSfxGetTrackClamp(TMSfx.Ambience, track)
+	TM_AmbienceTrack = TMSfxGetTrackClamp(TMSfx.Ambience, track)
 	tmPlayingAmbience = true
 
 	-- Loop playback
@@ -181,6 +183,6 @@ function TMPlayAmbience(track)
 	PlaySound(TMSfxGetFilename(TMSfx.Ambience, track), TM_AmbienceVolume)
 	Delayed(tmAmbienceTrackSec, function()
 		tmLoopingAmbience = false
-		if TM_AllowAmbience and tmPlayingAmbience then TMPlayAmbience(tmAmbienceTrack) end
+		if TM_AllowAmbience and tmPlayingAmbience then TMPlayAmbience(TM_AmbienceTrack) end
 	end)
 end
