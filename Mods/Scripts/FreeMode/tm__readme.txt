@@ -2,7 +2,7 @@
 --                                               TRUE MOAN                                             --
 ---------------------------------------------------------------------------------------------------------
 
-**Supports: VoiceMod/TalkMenuMM/FaunaLABS | Auto Sex Control | BodyEdit | Realistic Moans | Sex/Climax/Cum reactions | Animation | Poses | Ambient Audio | Skyboxes | Improved Menu |**
+**Supports: VoiceMod/TalkMenuMM/FaunaLABS | Auto Sex Control | BodyEdit | Realistic Sounds | Sex/BJ/Climax/Cum reactions | Animation | Poses | Ambient Audio | Skyboxes | Improved Menu |**
 
 **MOD FEATURES**
 - **Auto Sex Control**
@@ -14,12 +14,13 @@
 - **Body Edit**
   - Reduce/enlarge body beyond slider limits
   - Copy/Paste, Presets
-- **Realistic Moans**
+- **Realistic Moans & SFX**
   - **Generic Voice** for all characters
-  - 950+ moans (Slow,Normal,Fast,Faster,Wild,Climax)
+  - Blowjob & Sex sound effects
 - **Sex/Cum reactions**
-  - Arousal/Climax mechanic
-  - Cum in/out reactions (+ cumflation)
+  - Climax/Arousal mechanic
+  - Cum in/on reactions
+  - Cumflation
   - Wet Sex
 - **Poses/Animation** (requires FaunaLABS)
 - **6x audio ambiences**
@@ -31,8 +32,8 @@
 - **7x skyboxes** (8/4/2k)
 
 **LATEST DOWNLOADS**
-**TrueMoan_v2.0.zip** [2025-12-27] - Just TrueMoan
-**TrueMoan_v2.0_FLABS_v1.02.zip** [2025-12-27] - TrueMoan + Fauna LABS **(recommended)**
+**TrueMoan_v2.1.zip** [2025-12-27] - Just TrueMoan
+**TrueMoan_v2.1_FLABS_v1.02.zip** [2025-12-27] - TrueMoan + Fauna LABS **(recommended)**
 **TrueMoan_Addon_Skyboxes_4k_v1.0.zip** [2025-12-22]
 :warning:**TrueFacials v0.59_ORIGINAL_SCRIPTS_FIX.zip** [2025-12-29] - Required original files, install if they're missing or modified
 https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
@@ -72,6 +73,12 @@ GitHub Repository - https://github.com/illa3d/truemoan
 
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
+
+[ v2.1 ]
+- Added Futa sex & cum moaning
+- Solved sound effects playback while occupied
+- Added Blowjob sound effects (ghh)
+- Added Sex sound effects (plap)
 
 [ v2.0 ]
 - AutoSex Arousal and Climax mechanic (number of partners, speed, cum, cumflation and speed influence rate)

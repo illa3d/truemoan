@@ -1,4 +1,4 @@
--- TrueMoan v2.0 by illa3d
+-- TrueMoan v2.1 by illa3d
 -- Ambience Constants
 local tmAmbienceTrackSec = 140	-- depends on the mp3 file length (all files must be of same length)
 
@@ -76,33 +76,25 @@ function TMSfxGetTrackClamp(tmSfx, track)
 	return ClampValue(track, 1, TMSfxData[tmSfx].Tracks) end
 
 -- TRUE RANDOM
-local function TMSfxEnsureMemory(tmSfx)
-	if not TMSfxPlayedTracks[tmSfx] then
-		TMSfxPlayedTracks[tmSfx] = {
-			played = {},
-			count = 0
-		}
-	end
-end
-
 function TMSfxGetFilenameRandom(tmSfx)
 	local data = TMSfxData[tmSfx]
-	if not data or data.Tracks <= 0 then
-		return nil
+	if not data or data.Tracks <= 0 then return nil end
+	-- Init remembered tracks
+	if not TMSfxPlayedTracks[tmSfx] then
+		TMSfxPlayedTracks[tmSfx] = { Played = {}, Count = 0 }
 	end
-	TMSfxEnsureMemory(tmSfx)
 	local mem = TMSfxPlayedTracks[tmSfx]
 	-- Reset ONLY when all tracks have been used
-	if mem.count >= data.Tracks then
-		mem.played = {}
-		mem.count = 0
+	if mem.Count >= data.Tracks then
+		mem.Played = {}
+		mem.Count = 0
 	end
 	-- Hard safety limit (prevent infinite loops)
 	for _ = 1, 20 do
 		local track = math.random(1, data.Tracks)
-		if not mem.played[track] then
-			mem.played[track] = true
-			mem.count = mem.count + 1
+		if not mem.Played[track] then
+			mem.Played[track] = true
+			mem.Count = mem.Count + 1
 			return TMSfxGetFilename(tmSfx, track)
 		end
 	end
