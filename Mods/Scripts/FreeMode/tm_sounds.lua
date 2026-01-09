@@ -8,6 +8,7 @@ TM_AmbienceTrack = 0
 local tmPlayingAmbience = false
 local tmLoopingAmbience = false
 local tmAmbienceTimer = "TM_AmbienceTimer"
+local TMSfxPlayedTracks = {}
 
 -- Moan Tier "Enum" (actual filenames)
 -- VAR NAMES MUST BE SAME AS AutoSexTier
@@ -68,13 +69,47 @@ TMSfxData = {
 	[TMSfx.Plap] =			{ Tracks = 20, Volume = 0.7 },
 }
 
-function TMSfxGetFilenameRandom(tmSfx)
-	return TMSfxGetFilename(tmSfx, GetRandom(1, TMSfxData[tmSfx].Tracks)) end
 function TMSfxGetFilename(tmSfx, track)
 	track = ClampValue(track, 1, TMSfxData[tmSfx].Tracks)
 	return "tm_" .. tmSfx:lower() .. " (" .. track .. ")" end
 function TMSfxGetTrackClamp(tmSfx, track)
 	return ClampValue(track, 1, TMSfxData[tmSfx].Tracks) end
+
+-- TRUE RANDOM
+local function TMSfxEnsureMemory(tmSfx)
+	if not TMSfxPlayedTracks[tmSfx] then
+		TMSfxPlayedTracks[tmSfx] = {
+			played = {},
+			count = 0
+		}
+	end
+end
+
+function TMSfxGetFilenameRandom(tmSfx)
+	local data = TMSfxData[tmSfx]
+	if not data or data.Tracks <= 0 then
+		return nil
+	end
+	TMSfxEnsureMemory(tmSfx)
+	local mem = TMSfxPlayedTracks[tmSfx]
+	-- Reset ONLY when all tracks have been used
+	if mem.count >= data.Tracks then
+		mem.played = {}
+		mem.count = 0
+	end
+	-- Hard safety limit (prevent infinite loops)
+	for _ = 1, 20 do
+		local track = math.random(1, data.Tracks)
+		if not mem.played[track] then
+			mem.played[track] = true
+			mem.count = mem.count + 1
+			return TMSfxGetFilename(tmSfx, track)
+		end
+	end
+	-- Fallback
+	local track = math.random(1, data.Tracks)
+	return TMSfxGetFilename(tmSfx, track)
+end
 
 -------------------------------------------------------------------------------------------------
 -- SFX / SOUND SOURCE POSITION
