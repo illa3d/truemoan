@@ -230,6 +230,16 @@ function ActGet(human, body)
 	else return nil end
 end
 
+function ActGetDistance(human, body)
+	if not HasSexPartner(human, body) then return 1000 end
+	if body == ActBody.PenisHand then return 1000 -- TODO Figure out how to find distance
+	elseif body == ActBody.PenisHole then return human.Penis.Hole.DistanceToEntry
+	elseif body == ActBody.Mouth then return human.Mouth.DistanceToEntry
+	elseif body == ActBody.Anus then return human.Anus.DistanceToEntry
+	elseif body == ActBody.Vagina then return human.Vagina.DistanceToEntry
+	else return 1000 end
+end
+
 -------------------------------------------------------------------------------------------------
 -- (NORMALIZED) INTERACTION PARAMETER VALUE (Speed, Thrust, DepthStart, DepthEnd, Weight)
 -------------------------------------------------------------------------------------------------

@@ -55,15 +55,15 @@ TMHumanSource = {
 TMSfx = {
 	Ambience = "Ambience",
 	Blowjob = "Blowjob",
-	BlowjobDeep = "BlowjobDeep",
+	Blowjob_Deep = "Blowjob_Deep",
 	Plap = "Plap",
 }
 -- Tracks = number of files: Sounds/tm_sfxname (N).mp3 (modify this to add your own)
 TMSfxData = {
 	[TMSfx.Ambience] =		{ Tracks = 6, Volume = 0 }, -- volume in config
-	[TMSfx.Blowjob] =		{ Tracks = 17, Volume = 0.9 },
-	[TMSfx.BlowjobDeep] =	{ Tracks = 25, Volume = 0.9 },
-	[TMSfx.Plap] =			{ Tracks = 20, Volume = 0.9 },
+	[TMSfx.Blowjob] =		{ Tracks = 25, Volume = 0.9 },
+	[TMSfx.Blowjob_Deep] =	{ Tracks = 25, Volume = 0.9 },
+	[TMSfx.Plap] =			{ Tracks = 20, Volume = 0.7 },
 }
 
 function TMSfxGetFilenameRandom(tmSfx)
@@ -99,9 +99,11 @@ function TMSoundSourcePosGet(human, tmHumanSource)
 	if not part then return Pos(0,0,0) end
 end
 
-function TMPlayHumanSFX(girl, tmSfx, humanPart)
+function TMPlayHumanSFX(girl, tmSfx, humanPart, volume)
 	if not TM_AllowVoice() or not girl or girl.m_isMale then return end
-	PlaySoundAt(TMSfxGetFilenameRandom(tmSfx), TMSoundSourcePosGet(girl, humanPart), TMSfxData[tmSfx].Volume)
+	-- if defined volume in param, multiply by volume in config. if not defined, just use volume config
+	local vol = volume and (volume * TMSfxData[tmSfx].Volume) or TMSfxData[tmSfx].Volume
+	PlaySoundAt(TMSfxGetFilenameRandom(tmSfx), TMSoundSourcePosGet(girl, humanPart), vol)
 end
 
 -------------------------------------------------------------------------------------------------

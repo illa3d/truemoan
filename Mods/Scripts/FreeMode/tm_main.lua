@@ -86,9 +86,9 @@ end
 function TMOnUpdate_Humans()
 	-- Iterate and call for every human in the scene
 	for _, human in ipairs(game.GetHumans()) do
-		TMOnUpdate_CumFinish(human)
 		TMOnUpdate_Futa(human)
-		TMOnUpdate_BlowJob(human)
+		TMOnUpdate_FinishClimax(human)
+		TMOnUpdate_FinishCumCumflate(human)
 	end
 end
 
@@ -147,31 +147,48 @@ function TMOnUpdate_Futa(girl)
 end
 
 -- BLOWJOB SOUNDS
-function TMOnUpdate_BlowJob(girl)
+function TMOnPenetration_BlowJob(girl, holeName, inVelocity)
 	if not girl or girl.m_isMale then return end
-	local act = ActGet(girl, ActBody.Mouth)
-	if not act or not ActActiveGet(act, false) then return end
-	
+	if holeName ~= ActBody.Mouth then return end
+
 	local timerKey = "TMBlowJobSFX_" .. girl.Name
-	local lastBlowJobSFX = Timer(timerKey)
+	local lastBlowJobSfx = Timer(timerKey)
 	
-	-- Calculate speed
-	local speed = Clamp01(ActValueGet(act, ActParam.Speed, false)) -- Speed = 0.001 - 2 
+	local speed = Clamp01(inVelocity)
 	local pause = Lerp(GetRandomFloat(0.8, 1.2), 0.2, speed)
+	local distance = ActGetDistance(girl, ActBody.Mouth)
 	
-	if lastBlowJobSFX > pause and girl.Mouth.DistanceToEntry < 0.08 then
-		local tmSfx = girl.Mouth.DistanceToEntry < 0.04 and TMSfx.BlowjobDeep or TMSfx.Blowjob
-		TMPlayHumanSFX(girl, tmSfx, TMHumanSource.Mouth)
+	if lastBlowJobSfx > pause and distance < 0.08 then
+		local tmSfx = distance < 0.04 and TMSfx.Blowjob_Deep or TMSfx.Blowjob
+		TMPlayHumanSFX(girl, tmSfx, holeName)
 		ResetTimer(timerKey)
 	end
 end
 
--- PENETRATION MOANING & SFX (HoleName = "Vagina" "Anus" Mouth")
+function TMOnPenetration_Plap(girl, holeName, inVelocity)
+	if not girl or girl.m_isMale then return end
+	if holeName ~= ActBody.Vagina and holeName ~= ActBody.Anus then return end
+	
+	local timerKey = "TMPlapSFX_" .. girl.Name
+	local lastPlapSfx = Timer(timerKey)
+	
+	local speed = Clamp01(inVelocity)
+	local pause = Lerp(GetRandomFloat(0.8, 1.2), 0.3, speed)
+	local distance = ActGetDistance(girl, holeName)
+	
+	if lastPlapSfx > pause and distance < 0.065 then
+		TMPlayHumanSFX(girl, TMSfx.Plap, holeName, speed)
+		ResetTimer(timerKey)
+	end
+end
+
+-- PENETRATION MOANING & SFX (HoleName = "Vagina" "Anus" Mouth", outVelocity is always 0 :(
 function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	if not girl or girl.m_isMale then return end
 	local stats = TMHStatsGet(girl)
-	TMOnPenetration_Cum(girl, stats, holeName)
-	TMOnClimaxEffects(girl, stats)
+	TMOnPenetration_CumCumflate(girl, stats, holeName)
+	TMOnPenetration_BlowJob(girl, holeName, inVelocity)
+	TMOnPenetration_Plap(girl, holeName, inVelocity)
 
 	if inVelocity < outVelocity then return end
 
@@ -258,9 +275,10 @@ end
 -------------------------------------------------------------------------------------------------
 -- CLIMAX
 -------------------------------------------------------------------------------------------------
-function TMOnClimaxEffects(girl, stats)
-	if not girl or girl.m_isMale or not stats then return end
-	if not stats.IsSexActive or stats.Arousal < 1 or stats.Climax or not stats:IsFeelingCum() then return end
+function TMOnUpdate_FinishClimax(girl)
+	if not girl or girl.m_isMale then return end
+	local stats = TMHStatsGet(girl)
+	if not stats or not stats.IsSexActive or stats.Arousal < 1 or stats.Climax or not stats:IsFeelingCum() then return end
 	
 	local delay = 6
 	local function Increment() delay = IncrementRandom(delay, 2, 4) end
@@ -294,7 +312,7 @@ local function TMHCanPlayCumEffect(stats)
 end
 
 -- Updated on cum inside reaction
-function TMOnPenetration_Cum(girl, stats, holeName)
+function TMOnPenetration_CumCumflate(girl, stats, holeName)
 	if not girl or girl.m_isMale or not stats then return end
 	-- throttle only if we have a previous update time
 	local now = os.time()
@@ -328,7 +346,7 @@ function TMOnPenetration_Cum(girl, stats, holeName)
 	end 
 end
 
-function TMOnUpdate_CumFinish(girl)
+function TMOnUpdate_FinishCumCumflate(girl)
 	if not girl or girl.m_isMale then return end
 	local stats = TMHStatsGet(girl)
 	if not stats or not stats.CumLastTime then return end
