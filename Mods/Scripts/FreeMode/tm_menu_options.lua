@@ -16,22 +16,22 @@ label TMMenuOptions(human)
 		TMMenuList_Music(TM_MusicTracks)
 
 	-- AMBIENCE
-	+ "Ambience » | " .. AccBool(TM_AllowAmbience) [gold]
+	+ "Ambience » | " .. AccBool(TM_SFX_Ambience) [gold]
 		+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 			TM_UITips_Options = false
 			Return()
 		+ "Refresh"
 			Return()
-		+ if TM_AllowAmbience
+		+ if TM_SFX_Ambience
 			+ "Next ambience"
 				TMPlayAmbienceNext()
 				Return()
-			+ "Ambience " .. AccStr(TM_AmbienceTrack) .. " | " .. AccBool(TM_AllowAmbience) .. " (in ".. AccNum(TMAmbienceLeftSec()) .. "s)"
-				TM_AllowAmbience = false
+			+ "Ambience " .. AccStr(TM_AmbienceTrack) .. " | " .. AccBool(TM_SFX_Ambience) .. " (in ".. AccNum(TMAmbienceLeftSec()) .. "s)"
+				TM_SFX_Ambience = false
 				Return()
 		+ else	
-			+ "Ambience | " .. AccBool(TM_AllowAmbience) .. (TMAmbienceLeftSec() > 0 and " (in ".. AccNum(TMAmbienceLeftSec()) .. "s)" or "") 
-				TM_AllowAmbience = true
+			+ "Ambience | " .. AccBool(TM_SFX_Ambience) .. (TMAmbienceLeftSec() > 0 and " (in ".. AccNum(TMAmbienceLeftSec()) .. "s)" or "") 
+				TM_SFX_Ambience = true
 				TMPlayAmbienceCurrent()
 				Return()
 		+ TM_MenuBack
@@ -44,20 +44,24 @@ label TMMenuOptions(human)
 			TM_UITips_Options = false
 			Return()
 		+ if TM_AllowVoice()
-			+ "Moan futa		| " .. AccBool(TM_MoanFuta) [if TM_MoanSex]
-				TM_MoanFuta = not TM_MoanFuta
-				Return()
-			+ "Moan sex		| " .. AccBool(TM_MoanSex)
-				TM_MoanSex = not TM_MoanSex
-				Return()
-			+ "Moan cum		| " .. AccBool(game.FluidReaction)
-				game.FluidReaction = not game.FluidReaction
-				Return()
-			+ "SFX blowjob		| " .. AccBool(TM_AllowSfxBlowjob)
-				TM_AllowSfxBlowjob = not TM_AllowSfxBlowjob
-				Return()
-			+ "SFX sex		| " .. AccBool(TM_AllowSfxSex)
-				TM_AllowSfxSex = not TM_AllowSfxSex
+			+ if TM_SFX_AllReactions
+				+ "React futa		| " .. AccBool(TM_SFX_ReactFuta) [if TM_SFX_ReactSex]
+					TM_SFX_ReactFuta = not TM_SFX_ReactFuta
+					Return()
+				+ "React sex		| " .. AccBool(TM_SFX_ReactSex)
+					TM_SFX_ReactSex = not TM_SFX_ReactSex
+					Return()
+				+ "React fluid		| " .. AccBool(game.FluidReaction)
+					game.FluidReaction = not game.FluidReaction
+					Return()
+				+ "React blowjob	| " .. AccBool(TM_SFX_ReactBlowjob)
+					TM_SFX_ReactBlowjob = not TM_SFX_ReactBlowjob
+					Return()
+				+ "React plap		| " .. AccBool(TM_SFX_ReactPlap)
+					TM_SFX_ReactPlap = not TM_SFX_ReactPlap
+					Return()
+			+ "SFX Reactions	| " .. AccBool(TM_SFX_AllReactions)
+				TM_SFX_AllReactions = not TM_SFX_AllReactions
 				Return()
 		+ else
 			+ "SFX True Moan	| Disabled (VoiceMod)"
@@ -69,11 +73,11 @@ label TMMenuOptions(human)
 				else
 					VM_VoiceMod_Enable()
 				Return()
-		+ "Wet sex	| " .. AccBool(TM_WetSex)
-			TM_WetSex = not TM_WetSex
-			Return()
 		+ "Cumflation	| " .. AccBool(TM_Cumflate)
 			TM_Cumflate = not TM_Cumflate
+			Return()
+		+ "Wet sex	| " .. AccBool(TM_WetSex)
+			TM_WetSex = not TM_WetSex
 			Return()
 		+ "Auto sex	| " .. AccBool(TM_AutoSex)
 			TM_AutoSex = not TM_AutoSex

@@ -141,7 +141,7 @@ end
 -------------------------------------------------------------------------------------------------
 -- FUTA MOANING > ONPENETRATION ROUTER
 function TMOnUpdate_Futa(girl)
-	if not TM_MoanFuta or not girl or girl.m_isMale then return end
+	if not TM_SFX_AllReactions or not TM_SFX_ReactSex or not TM_SFX_ReactFuta or not girl or girl.m_isMale then return end
 	local function DoFutaMoan(actBody)
 		act = ActGet(girl, actBody)
 		if not act or not ActActiveGet(act, actBody == ActBody.PenisHand) then return end
@@ -154,7 +154,7 @@ end
 
 -- BLOWJOB SOUNDS
 function TMOnPenetration_BlowJob(girl, holeName, inVelocity)
-	if not TM_AllowSfxBlowjob or not girl or girl.m_isMale then return end
+	if not TM_SFX_AllReactions or not TM_SFX_ReactBlowjob or not girl or girl.m_isMale then return end
 	if holeName ~= ActBody.Mouth then return end
 
 	local timerKey = "TMBlowJobSFX_" .. girl.Name
@@ -172,7 +172,7 @@ function TMOnPenetration_BlowJob(girl, holeName, inVelocity)
 end
 
 function TMOnPenetration_Plap(girl, holeName, inVelocity)
-	if not TM_AllowSfxSex or not girl or girl.m_isMale then return end
+	if not TM_SFX_AllReactions or not TM_SFX_ReactPlap or not girl or girl.m_isMale then return end
 	if holeName ~= ActBody.Vagina and holeName ~= ActBody.Anus then return end
 	
 	local timerKey = "TMPlapSFX_" .. girl.Name
@@ -196,7 +196,7 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	TMOnPenetration_BlowJob(girl, holeName, inVelocity)
 	TMOnPenetration_Plap(girl, holeName, inVelocity)
 
-	if inVelocity < outVelocity then return end
+	if inVelocity < outVelocity then return end -- useless, outVelocity is zero :(
 
 	-- Variables
 	local timerKey = "TMSexMoan_" .. girl.Name .. holeName
@@ -264,10 +264,14 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 
 	-- Play
 	if lastMoanTime > pause then
-		if stats and stats.Climax then
-			TMPlayMoanTier(girl, TMMoanTier[stats.AutoSexTier]) -- follow stats.AutoSexTier with sounds
-		else
-			TMPlayMoanTier(girl, tier) end -- follow penetration speed values set above
+		if TM_SFX_AllReactions and TM_SFX_ReactSex then
+			if stats and stats.Climax then
+				-- SFX: CLIMAX MOANING
+				TMPlayMoanTier(girl, TMMoanTier[stats.AutoSexTier]) -- follow stats.AutoSexTier with sounds
+			else
+				-- SFX: SEX MOANING
+				TMPlayMoanTier(girl, tier) end -- follow penetration speed values set above
+			end
 		-- Auto Wetness
 		if TM_WetSex then
 			WetSet(girl, wetness, holeName)
@@ -282,6 +286,7 @@ end
 -- CLIMAX
 -------------------------------------------------------------------------------------------------
 function TMOnUpdate_FinishClimax(girl)
+	-- SFX: CLIMAX MOANING in OnPenetration
 	if not girl or girl.m_isMale then return end
 	local stats = TMHStatsGet(girl)
 	if not stats or not stats.IsSexActive or stats.Arousal < 1 or stats.Climax or not stats:IsFeelingCum() then return end
@@ -313,6 +318,7 @@ end
 -------------------------------------------------------------------------------------------------
 
 local function TMHCanPlayCumEffect(stats)
+	if not TM_SFX_AllReactions or not TM_SFX_ReactSex then return end
 	if not stats.CumEffectLastTime then return true end
 	return os.time() - stats.CumEffectLastTime >= TM_CumEffectTime
 end
@@ -329,6 +335,7 @@ function TMOnPenetration_CumCumflate(girl, stats, holeName)
 	stats.CumLastUpdate = now
 	-- Cum & Cumflation effects (same)
 	if TMHCanPlayCumEffect(stats) then
+		-- SFX: CUM INSIDE / CUMFLATION
 		TMPlayMoan(girl, TM_Cumflate and TMMoan.Cumflating or TMMoan.CumInside)
 		stats.CumEffectLastTime = now
 	end
@@ -370,6 +377,7 @@ function TMOnUpdate_FinishCumCumflate(girl)
 	if TM_Cumflate and stats.CumflateHipsSizeOrig and stats.CumflateHipsSize then
 		if stats.CumflateHipsSize > stats.CumflateHipsSizeOrig then
 			if TMHCanPlayCumEffect(stats) then
+				-- SFX: CUMDEFLATION
 				TMPlayMoan(girl, TMMoan.Cumflating)
 				if TM_WetSex then WetSet(girl, 50000, ActBody.Vagina) end
 				stats.CumEffectLastTime = now
@@ -399,6 +407,8 @@ function TMOnCumPulloutEffects(girl)
 	local function Increment(oldValue, newValue) return IncrementMultiplierRandom(oldValue, TM_AutoSexClimaxTimeStep, 0.8, 1.5) end 
 	local delay = 0.5
 	local function Increment(value) delay = IncrementMultiplierRandom(delay, value, 0.8, 1.1) end
+	-- SFX: CUM PULLOUT
+	if not TM_SFX_AllReactions or not TM_SFX_ReactSex then return end
 	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Fast) end) Increment(0.5)
 	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Fast) end) Increment(0.5)
 	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Normal) end) Increment(1.5)
@@ -413,6 +423,8 @@ function TMOnCumflatePulloutEffects(girl)
 	if TM_WetSex then WetSet(girl, 10000, ActBody.Vagina) end
 	local delay = 0.4
 	local function Increment(value) delay = IncrementMultiplierRandom(delay, value, 0.8, 1.1) end
+	-- SFX: CUMFLATION PULLOUT
+	if not TM_SFX_AllReactions or not TM_SFX_ReactSex then return end
 	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Faster) end) Increment(0.4)
 	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Faster) end) Increment(0.4)
 	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Faster) end) Increment(0.4)
