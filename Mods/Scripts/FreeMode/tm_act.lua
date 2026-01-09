@@ -392,6 +392,7 @@ function ActWeightSet_Step(interaction, weightStep, increase, isHand)
 	else weight = weight - weightStep end
 	ActWeightSet(interaction, weight, isHand)
 end
+function ActWeightSet_Toggle(interaction, isHand) ActWeightSet(interaction, ActWeightGet(interaction, isHand) == 0 and 1 or 0, isHand) end
 function ActWeightSet(interaction, weight, isHand)
 	if isHand then return end -- no interaction weight in handjobs
 	ActActiveSet(interaction, false, true)

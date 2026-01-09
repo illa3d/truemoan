@@ -103,7 +103,7 @@ end
 -------------------------------------------------------------------------------------------------
 -- Updated on fluid hit (cum)
 function TMOnFluidHit(hitActor, bodyArea, shootActor)
-	if game.FluidReaction == false or shootActor == nil or hitActor.m_isMale == true then return end
+	if game.FluidReaction == false or not hitActor or hitActor.m_isMale == true then return end
 
 	local timerKey = "TMFluidHit_" .. hitActor.Name .. bodyArea
 	local lastHitTime = Timer(timerKey)

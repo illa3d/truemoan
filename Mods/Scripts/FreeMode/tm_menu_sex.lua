@@ -123,8 +123,8 @@ label TMSexControl(human, interaction, isHand)
 				+ TM_DN.."Male"
 					ActWeightSet_Step(interaction, TM_SexMaleStep, false)
 					Return()
-				+ "RESET Male | " .. AccNumPC(ActWeightGet(interaction, isHand), tmSdec)
-					ActWeightSet(interaction, 0)
+				+ "TOGGLE Male | " .. AccNumPC(ActWeightGet(interaction, isHand), tmSdec)
+					ActWeightSet_Toggle(interaction)
 					Return()
 				+ "Random" [gold]
 					ActThrustSet_MenuRandom(interaction, isHand)
