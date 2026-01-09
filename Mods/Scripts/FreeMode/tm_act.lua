@@ -213,6 +213,20 @@ function WetAllReset(girl)
 	WetSet(girl, 0, ActBody.Mouth)
 end
 
+
+function WetInsideClear_All()
+	ClearInsideFluids(human, ActBody.Mouth)
+	ClearInsideFluids(human, ActBody.Vagina)
+	ClearInsideFluids(human, ActBody.Anus)
+end
+
+function ClearInsideFluids(human, body)
+	if body == ActBody.Mouth and human.Mouth ~= nil then human.Mouth.ClearInsideFluids()
+	elseif body == ActBody.Anus and human.Anus ~= nil then human.Anus.ClearInsideFluids()
+	elseif body == ActBody.Vagina and human.Vagina~= nil then human.Vagina.ClearInsideFluids()
+	end
+end	
+
 -------------------------------------------------------------------------------------------------
 --===============================================================================================
 -- INTERACTION

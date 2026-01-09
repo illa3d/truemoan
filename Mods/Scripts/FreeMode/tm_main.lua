@@ -34,7 +34,7 @@ function TMOnHumanSingleClick(human, hittri)
 end
 
 function TMOnHumanDoubleClick(human, hittri)
-	if (TM_DoubleClickReset) then HumanReset(human) end
+	if (TM_DoubleClickReset) then TMHumanReset(human) end
 	if (TM_DoubleClickUndress) then HumanClothes(human, false) end
 	if (TM_DoubleClickMoan) then TMPlayMoan(human, TMMoan.DoubleClick) end
 end 
@@ -67,7 +67,7 @@ function TMOnCreateHuman(human)
 	if TM_SpawnRandomBody then TMBEPreset_StartRandom(human) end
 	if TM_SpawnNaked then HumanClothes(human) end
 	if TM_SpawnNoFuta then Delayed(0.05, function() HumanPenisSet(human, false) end) end
-	if TM_SpawnReset then Delayed(0.1, function() HumanReset(human) end) end
+	if TM_SpawnReset then Delayed(0.1, function() TMHumanReset(human) end) end
 	if TM_SpawnAutoSexOn then AutoSexActive(human, true, true) end
 	game.PlayCharacterMusic(human)
 	if TM_AllowGenericChat then human.Say("Greeting") end
@@ -75,6 +75,12 @@ end
 
 function TMOnRemoveHuman(human)
 	game.PlayRandomCharacterMusic()
+end
+
+-- Resets Inside fluids, pose, interactions...
+function TMHumanReset(human)
+	WetAllReset(human)
+	HumanReset(human)
 end
 
 -------------------------------------------------------------------------------------------------

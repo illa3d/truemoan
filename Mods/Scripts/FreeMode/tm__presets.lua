@@ -11,7 +11,7 @@ label TMMenuBodySize(human)
 		HumanClothes(human, false)
 		TMBodyEdit_Preset(human, TMBEPreset_Normal)
 		TMBodyEdit_Preset(human, TMBEPreset_Dildo)
-		HumanReset(human)
+		TMHumanReset(human)
 		Return()
 	+ "• Giant"
 		TMBodyEdit(human, TMBody.Body, 0.7)

@@ -159,15 +159,22 @@ function TMHumanStats:CumReset()
 	self.CumflateHipsSizeOrig = nil
 end
 
-function TMHumanCumEvery(human, sec)
+function TMHumanCumEvery(human, sec, repeatRandom)
 	if not human or not human.Penis then return end
 	stats = TMHStatsGet(human)
 	if not stats then return end
+	if repeatRandom == true then sec = ClampValue(sec * math.random(), 1, 7)  end
 	stats.IsCumming = true
 	stats.CumFrequency = sec
-	game.AddRepeatAnim(sec, function ()
+	game.AddRepeatAnim(stats.CumFrequency, function ()
 		TMPlayMoan(human, TMMoan.Cumming)
 		human.Shoot()
+		if not repeatRandom == true then return end
+		Delayed(stats.CumFrequency, function() 
+			if not stats.IsCumming then return end
+			TMHumanCumStop(human)
+			TMHumanCumEvery(human, sec)
+		end)
 	end, human.Penis)
 end
 

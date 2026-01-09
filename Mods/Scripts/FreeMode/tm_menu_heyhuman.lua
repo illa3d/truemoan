@@ -43,7 +43,7 @@ label TMMenuHeyHuman(human)
 			Return(2)
 		Return()
 	+ "RESET ".. AccStr(human.Name)
-		HumanReset(human)
+		TMHumanReset(human)
 		Return()
 	+ if not human.m_isMale
 		+ "Penis		| " .. AccStr("OFF") [if not human.Penis.IsActive]
