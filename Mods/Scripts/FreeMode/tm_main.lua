@@ -39,6 +39,7 @@ function TMOnHumanDoubleClick(human, hittri)
 	if (TM_DoubleClickMoan) then TMPlayMoan(human, TMMoan.DoubleClick) end
 end 
 
+-- Main update function (every frame)
 function TMOnUpdate()
 	TM_DeltaTime = Timer("TMDeltaTime")
 	ResetTimer("TMDeltaTime")
@@ -47,7 +48,7 @@ function TMOnUpdate()
 	OnUpdate_ActTweens(TM_DeltaTime)
 end
 
--- Updated every frame
+-- Generic chat update function (every frame)
 function TMOnUpdate_GenericChat()
 	local timerKey = "TMGenericChat"
 	-- don't talk with other voice mods
@@ -85,10 +86,9 @@ end
 
 -------------------------------------------------------------------------------------------------
 --===============================================================================================
--- HUMANS EVERY FRAME
+-- HUMANS UPDATE (every frame)
 --===============================================================================================
 -------------------------------------------------------------------------------------------------
-
 function TMOnUpdate_Humans()
 	-- Iterate and call for every human in the scene
 	for _, human in ipairs(game.GetHumans()) do
@@ -99,8 +99,9 @@ function TMOnUpdate_Humans()
 end
 
 -------------------------------------------------------------------------------------------------
--- FLUID REACTIONS
+-- FLUID REACTIONS (every frame)
 -------------------------------------------------------------------------------------------------
+
 -- Updated on fluid hit (cum)
 function TMOnFluidHit(hitActor, bodyArea, shootActor)
 	if game.FluidReaction == false or not hitActor or hitActor.m_isMale == true then return end
@@ -141,22 +142,10 @@ function TMOnFluidHit(hitActor, bodyArea, shootActor)
 end
 
 -------------------------------------------------------------------------------------------------
--- SEX REACTIONS
+-- PENETRATION SEX REACTIONS (every frame)
 -------------------------------------------------------------------------------------------------
--- FUTA MOANING > ONPENETRATION ROUTER
-function TMOnUpdate_Futa(girl)
-	if not TM_SFX_AllReactions or not TM_SFX_ReactSex or not TM_SFX_ReactFuta or not girl or girl.m_isMale then return end
-	local function DoFutaMoan(actBody)
-		act = ActGet(girl, actBody)
-		if not act or not ActActiveGet(act, actBody == ActBody.PenisHand) then return end
-		TMOnPenetration(girl, actBody, ActSpeedGet(act, false)/3, 0, SexPartner_Get(girl, actBody))
-	end
-	-- Detect penis in hole or hand and call OnPenetration
-	if HasSexPartner(girl, ActBody.PenisHole) then DoFutaMoan(ActBody.PenisHole)
-	elseif HasSexPartner(girl, ActBody.PenisHand) then DoFutaMoan(ActBody.PenisHand) end
-end
 
--- BLOWJOB SOUNDS
+-- BLOWJOB SFX
 function TMOnPenetration_BlowJob(girl, holeName, inVelocity)
 	if not TM_SFX_AllReactions or not TM_SFX_ReactBlowjob or not girl or girl.m_isMale then return end
 	if holeName ~= ActBody.Mouth then return end
@@ -170,11 +159,13 @@ function TMOnPenetration_BlowJob(girl, holeName, inVelocity)
 	
 	if lastBlowJobSfx > pause and distance < 0.08 then
 		local tmSfx = distance < 0.04 and TMSfx.Blowjob_Deep or TMSfx.Blowjob
+		-- SFX: Blowjob
 		TMPlayHumanSFX(girl, tmSfx, holeName)
 		ResetTimer(timerKey)
 	end
 end
 
+-- PLAP SFX
 function TMOnPenetration_Plap(girl, holeName, inVelocity)
 	if not TM_SFX_AllReactions or not TM_SFX_ReactPlap or not girl or girl.m_isMale then return end
 	if holeName ~= ActBody.Vagina and holeName ~= ActBody.Anus then return end
@@ -187,12 +178,31 @@ function TMOnPenetration_Plap(girl, holeName, inVelocity)
 	local distance = ActGetDistance(girl, holeName)
 	
 	if lastPlapSfx > pause and distance < 0.065 then
+		-- SFX: Sex plap
 		TMPlayHumanSFX(girl, TMSfx.Plap, holeName, speed)
 		ResetTimer(timerKey)
 	end
 end
 
+-- FUTA MOANING > ONPENETRATION ROUTER
+function TMOnUpdate_Futa(girl)
+	if not TM_SFX_AllReactions or not TM_SFX_ReactSex or not TM_SFX_ReactFuta or not girl or girl.m_isMale then return end
+	local function DoFutaMoan(actBody)
+		act = ActGet(girl, actBody)
+		if not act or not ActActiveGet(act, actBody == ActBody.PenisHand) then return end
+		TMOnPenetration(girl, actBody, ActSpeedGet(act, false)/3, 0, SexPartner_Get(girl, actBody))
+	end
+	if HasSexPartner(girl, ActBody.PenisHole) then DoFutaMoan(ActBody.PenisHole)
+		-- Detect penis in hole or hand and call OnPenetration
+	elseif HasSexPartner(girl, ActBody.PenisHand) then DoFutaMoan(ActBody.PenisHand) end
+end
+
+-------------------------------------------------------------------------------------------------
+--===============================================================================================
 -- PENETRATION MOANING & SFX (HoleName = "Vagina" "Anus" Mouth", outVelocity is always 0 :(
+--===============================================================================================
+-------------------------------------------------------------------------------------------------
+
 function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	if not girl or girl.m_isMale then return end
 	local stats = TMHStatsGet(girl)
@@ -287,8 +297,11 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 end
 
 -------------------------------------------------------------------------------------------------
+--===============================================================================================
 -- CLIMAX
+--===============================================================================================
 -------------------------------------------------------------------------------------------------
+
 function TMOnUpdate_FinishClimax(girl)
 	-- SFX: CLIMAX MOANING in OnPenetration
 	if not girl or girl.m_isMale then return end
@@ -318,7 +331,9 @@ function TMOnUpdate_FinishClimax(girl)
 end
 
 -------------------------------------------------------------------------------------------------
--- CUM REACTIONS
+--===============================================================================================
+-- CUM/CUMFLATION REACTIONS (every frame)
+--===============================================================================================
 -------------------------------------------------------------------------------------------------
 
 local function TMHCanPlayCumEffect(stats)
@@ -327,7 +342,7 @@ local function TMHCanPlayCumEffect(stats)
 	return os.time() - stats.CumEffectLastTime >= TM_CumEffectTime
 end
 
--- Updated on cum inside reaction
+-- START OF CUM / CUMFLATION
 function TMOnPenetration_CumCumflate(girl, stats, holeName)
 	if not girl or girl.m_isMale or not stats then return end
 	-- throttle only if we have a previous update time
@@ -363,6 +378,7 @@ function TMOnPenetration_CumCumflate(girl, stats, holeName)
 	end 
 end
 
+-- END OF CUM / CUMFLATION
 function TMOnUpdate_FinishCumCumflate(girl)
 	if not girl or girl.m_isMale then return end
 	local stats = TMHStatsGet(girl)
@@ -402,9 +418,10 @@ function TMOnUpdate_FinishCumCumflate(girl)
 end
 
 -------------------------------------------------------------------------------------------------
--- CUM PULLOUT REACTIONS
+-- CUM PULLOUT REACTIONS (called once)
 -------------------------------------------------------------------------------------------------
 
+-- CUM REACTION ON PULLOUT
 function TMOnCumPulloutEffects(girl)
 	if not girl then return end
 	if TM_WetSex then WetSet(girl, 1000, ActBody.Vagina) end
@@ -422,6 +439,7 @@ function TMOnCumPulloutEffects(girl)
 	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Slow) end)
 end
 
+-- CUMFLATION REACTION ON PULLOUT
 function TMOnCumflatePulloutEffects(girl)
 	if not girl then return end
 	if TM_WetSex then WetSet(girl, 10000, ActBody.Vagina) end
