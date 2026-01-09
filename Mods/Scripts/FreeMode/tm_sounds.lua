@@ -28,8 +28,8 @@ TMMoan = {
 	Sex = "Sex", -- dynamic
 	Climax = "Climax", -- dynamic
 	Cumming = "Cumming",
-	CumEye = "CumEye",
-	CumMouth = "CumMouth",
+	CumHead = "CumHead",
+	CumHole = "CumHole",
 	CumBody = "CumBody",
 	CumInside = "CumInside",
 	Cumflating = "Cumflating",
@@ -39,8 +39,8 @@ TMMoan = {
 
 -- Cum body area moan tiers (random from)
 TM_Moans_Cumming = { TMMoanTier.Fast, TMMoanTier.Faster, TMMoanTier.Wild }
-TM_Moans_CumEye = { TMMoanTier.Faster, TMMoanTier.Wild, TMMoanTier.Max }
-TM_Moans_CumMouth = { TMMoanTier.Fast, TMMoanTier.Faster }
+TM_Moans_CumHead = { TMMoanTier.Faster, TMMoanTier.Wild, TMMoanTier.Max }
+TM_Moans_CumHole = { TMMoanTier.Normal, TMMoanTier.Fast }
 TM_Moans_CumBody = { TMMoanTier.Slow, TMMoanTier.Normal }
 TM_Moans_CumInside = { TMMoanTier.Slow, TMMoanTier.Normal, TMMoanTier.Fast }
 TM_Moans_Cumflating = { TMMoanTier.Fast, TMMoanTier.Faster, TMMoanTier.Wild }
@@ -106,6 +106,12 @@ end
 -------------------------------------------------------------------------------------------------
 -- SFX / SOUND SOURCE POSITION
 -------------------------------------------------------------------------------------------------
+TMHumanSource = {
+	Mouth = "Mouth",
+	Anus = "Anus",
+	Vagina = "Vagina",
+	Penis = "Penis",
+}
 
 function TMHumanHolePosGet(part)
 	if not part then return Pos(0,0,0) end
@@ -146,8 +152,8 @@ function TMPlayMoan(girl, tmMoan)
 	-- if tmMoanSource == TMMoanSource.Sex then -- dynamic
 	-- elseif tmMoanSource == TMMoanSource.Climax then -- dynamic
 	if tmMoan == TMMoan.Cumming and TM_SFX_ReactSex then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_Cumming))
-	elseif tmMoan == TMMoan.CumEye then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumEye))
-	elseif tmMoan == TMMoan.CumMouth then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumMouth))
+	elseif tmMoan == TMMoan.CumHead then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumHead))
+	elseif tmMoan == TMMoan.CumHole then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumHole))
 	elseif tmMoan == TMMoan.CumBody then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumBody))
 	elseif tmMoan == TMMoan.CumInside and TM_SFX_ReactSex and not stats.IsSexActive then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumInside))
 	elseif tmMoan == TMMoan.Cumflating and TM_SFX_ReactSex then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_Cumflating))

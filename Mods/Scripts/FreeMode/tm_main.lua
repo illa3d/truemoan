@@ -106,21 +106,25 @@ function TMOnFluidHit(hitActor, bodyArea, shootActor)
 	if game.FluidReaction == false or not hitActor or hitActor.m_isMale == true then return end
 
 	local timerKey = "TMFluidHit_" .. hitActor.Name .. bodyArea
-	local lastHitTime = Timer(timerKey)
+	local lastTime = Timer(timerKey)
 	local stats = TMHStatsGet(hitActor)
 
-	if bodyArea == ActBodyArea.L_Eye and lastHitTime > TM_MoanCumEyeTime then 
-		TMPlayMoan(hitActor, TMMoan.CumEye)
+	if lastTime > TM_MoanCumHeadTime and (bodyArea == ActBodyArea.L_Eye or bodyArea == ActBodyArea.Tongue or bodyArea == ActBodyArea.Cheeks) then 
+		TMPlayMoan(hitActor, TMMoan.CumHead)
 		hitActor.AddInvoluntaryAnim("L_Eye_HitClose", 1, 0.7, 0.7, EyelidL(1))
 		ResetTimer(timerKey)
-	elseif bodyArea == ActBodyArea.R_Eye and lastHitTime > TM_MoanCumEyeTime then 
-		TMPlayMoan(hitActor, TMMoan.CumEye)
+	elseif lastTime > TM_MoanCumHeadTime and bodyArea == ActBodyArea.R_Eye then 
+		TMPlayMoan(hitActor, TMMoan.CumHead)
 		hitActor.AddInvoluntaryAnim("R_Eye_HitClose", 1, 0.7, 0.7, EyelidR(1))
 		ResetTimer(timerKey)
-	elseif bodyArea == ActBodyArea.Lips and lastHitTime > TM_MoanCumLipsTime then 
-		TMPlayMoan(hitActor, TMMoan.CumMouth)
+	elseif lastTime > TM_MoanCumHoleTime and bodyArea == ActBodyArea.Lips then 
+		TMPlayMoan(hitActor, TMMoan.CumHole)
 		hitActor.AddInvoluntaryAnim("OpenMouth", 5, 0.4, 0.4, Mouth(-0.83, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.73, 0, 0.39))
 		Delayed(1, function() hitActor.Swallow() end)
+		ResetTimer(timerKey)
+	elseif lastTime > TM_MoanCumHoleTime and
+		(bodyArea == ActBodyArea.Vagina or bodyArea == ActBodyArea.Anus or bodyArea == ActBodyArea.Breasts) then 
+		TMPlayMoan(hitActor, TMMoan.CumHole)
 		ResetTimer(timerKey)
 	else
 		local genericVoiceKey = "TMFluidHit_Generic_" .. hitActor.Name
@@ -129,7 +133,7 @@ function TMOnFluidHit(hitActor, bodyArea, shootActor)
 			hitActor.SayCustom("gen_cumshot")
 			hitActor.Say(hitActor.FaceMood >= 0 and "Like" or "Dislike")
 			ResetTimer(genericVoiceKey)
-		elseif lastHitTime > TM_MoanCumBodyTime then
+		elseif lastTime > TM_MoanCumBodyTime then
 			TMPlayMoan(hitActor, TMMoan.CumBody)
 			ResetTimer(timerKey)
 		end

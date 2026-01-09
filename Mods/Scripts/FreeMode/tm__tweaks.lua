@@ -38,8 +38,8 @@ TM_MoanTreshold_Fast = 0.3
 TM_MoanTreshold_Normal = 0.1
 
 -- Moan Cum frequency (sec)
-TM_MoanCumEyeTime = 1			-- Cum in eye
-TM_MoanCumLipsTime = 3			-- Cum on lips
+TM_MoanCumHeadTime = 1			-- Cum in eyes, cheeks, tongue
+TM_MoanCumHoleTime = 3			-- Cum on lips, vagina, anus, breasts
 TM_MoanCumBodyTime = 5			-- Cum on body
 TM_WetnessStep = 200			-- Wetness Control step
 
