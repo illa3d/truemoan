@@ -61,9 +61,9 @@ TMSfx = {
 -- Tracks = number of files: Sounds/tm_sfxname (N).mp3 (modify this to add your own)
 TMSfxData = {
 	[TMSfx.Ambience] =		{ Tracks = 6, Volume = 0 }, -- volume in config
-	[TMSfx.Blowjob] =		{ Tracks = 17, Volume = 0.8 },
-	[TMSfx.BlowjobDeep] =	{ Tracks = 25, Volume = 0.8 },
-	[TMSfx.Plap] =			{ Tracks = 20, Volume = 0.8 },
+	[TMSfx.Blowjob] =		{ Tracks = 17, Volume = 0.9 },
+	[TMSfx.BlowjobDeep] =	{ Tracks = 25, Volume = 0.9 },
+	[TMSfx.Plap] =			{ Tracks = 20, Volume = 0.9 },
 }
 
 function TMSfxGetFilenameRandom(tmSfx)
@@ -78,17 +78,24 @@ function TMSfxGetTrackClamp(tmSfx, track)
 -- SFX / SOUND SOURCE POSITION
 -------------------------------------------------------------------------------------------------
 
-local function TMHumanPartPosGet(part)
+function TMHumanHolePosGet(part)
+	if not part then return Pos(0,0,0) end
+	return Pos(part.m_autoTarget.transform.position.x, part.m_autoTarget.transform.position.y, part.m_autoTarget.transform.position.z)
+	-- return Pos(part.m_entry.transform.position.x, part.m_entry.transform.position.y, part.m_entry.transform.position.z) -- too in forward
+	-- return Pos(part.transform.position.x, part.transform.position.y, part.transform.position.z) -- this is not following actual head, just human roughly
+end
+
+function TMHumanPenisPosGet(part)
 	if not part then return Pos(0,0,0) end
 	return Pos(part.transform.position.x, part.transform.position.y, part.transform.position.z)
 end
 
 function TMSoundSourcePosGet(human, tmHumanSource)
 	if not human then return Pos(0,0,0) end
-	if tmHumanSource == TMHumanSource.Mouth and human.Mouth then return TMHumanPartPosGet(human.Mouth)
-	elseif tmHumanSource == TMHumanSource.Anus and human.Anus then return TMHumanPartPosGet(human.Anus)
-	elseif tmHumanSource == TMHumanSource.Vagina and human.Vagina then return TMHumanPartPosGet(human.Vagina)
-	elseif tmHumanSource == TMHumanSource.Penis and human.Penis then return TMHumanPartPosGet(human.Penis) end
+	if tmHumanSource == TMHumanSource.Mouth and human.Mouth then return TMHumanHolePosGet(human.Mouth)
+	elseif tmHumanSource == TMHumanSource.Anus and human.Anus then return TMHumanHolePosGet(human.Anus)
+	elseif tmHumanSource == TMHumanSource.Vagina and human.Vagina then return TMHumanHolePosGet(human.Vagina)
+	elseif tmHumanSource == TMHumanSource.Penis and human.Penis then return TMHumanPenisPosGet(human.Penis) end
 	if not part then return Pos(0,0,0) end
 end
 

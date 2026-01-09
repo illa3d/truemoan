@@ -156,13 +156,12 @@ function TMOnUpdate_BlowJob(girl)
 	local lastBlowJobSFX = Timer(timerKey)
 	
 	-- Calculate speed
-	local speed = Clamp01(ActValueGet(act, ActParam.Speed, false)/2) -- Speed = 0.001 - 2 
-	local pause = Lerp(TM_BlowJobMaxPause, 0.3, speed)
-	-- Get depth
-	local depth = ActValueGet(act, ActParam.DepthEnd, false)
+	local speed = Clamp01(ActValueGet(act, ActParam.Speed, false)) -- Speed = 0.001 - 2 
+	local pause = Lerp(GetRandomFloat(0.8, 1.2), 0.2, speed)
 	
-	if lastBlowJobSFX > pause then
-		TMPlayHumanSFX(girl, (depth > 0.8 and TMSfx.BlowjobDeep or TMSfx.Blowjob), TMHumanSource.Mouth)
+	if lastBlowJobSFX > pause and girl.Mouth.DistanceToEntry < 0.08 then
+		local tmSfx = girl.Mouth.DistanceToEntry < 0.04 and TMSfx.BlowjobDeep or TMSfx.Blowjob
+		TMPlayHumanSFX(girl, tmSfx, TMHumanSource.Mouth)
 		ResetTimer(timerKey)
 	end
 end
