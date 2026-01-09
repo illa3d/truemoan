@@ -58,4 +58,4 @@ TM_HumanArousalIncrease = 0.3	-- Base rate of arousal increase (multiplied by va
 TM_HumanArousalDecrease = 1		-- Base rate of arousal decrease (when not in sex or cumming)
 
 -- Blowjob
-TM_BlowJobMaxPause = 2
+TM_BlowJobMaxPause = 1

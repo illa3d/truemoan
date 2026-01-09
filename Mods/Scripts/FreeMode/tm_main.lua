@@ -4,8 +4,8 @@
 -- same function in multiple files, alphabetically last one is used
 -------------------------------------------------------------------------------------------------
 -- TrueMoan module global switches
-TM_UIVisible = true -- TrueFacials UI
 function TM_AllowVoice() return VM_VoiceMod_Enabled ~= true end
+TM_UIVisible = true -- TrueFacials UI
 TM_AllowGenericChat = false
 TM_DeltaTime = 0
 
@@ -156,11 +156,13 @@ function TMOnUpdate_BlowJob(girl)
 	local lastBlowJobSFX = Timer(timerKey)
 	
 	-- Calculate speed
-	local speed = Clamp01(ActValueGet(act, ActParam.Speed, false)/2)
-	local pause = Lerp(TM_BlowJobMaxPause, 0.5, speed)
-
+	local speed = Clamp01(ActValueGet(act, ActParam.Speed, false)/2) -- Speed = 0.001 - 2 
+	local pause = Lerp(TM_BlowJobMaxPause, 0.3, speed)
+	-- Get depth
+	local depth = ActValueGet(act, ActParam.DepthEnd, false)
+	
 	if lastBlowJobSFX > pause then
-		TMPlayHumanSFX(girl, TMSfx.Blowjob, TMHumanSource.Mouth)
+		TMPlayHumanSFX(girl, (depth > 0.8 and TMSfx.BlowjobDeep or TMSfx.Blowjob), TMHumanSource.Mouth)
 		ResetTimer(timerKey)
 	end
 end
@@ -172,7 +174,7 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	TMOnPenetration_Cum(girl, stats, holeName)
 	TMOnClimaxEffects(girl, stats)
 
-	if not TM_AllowVoice() or not TM_MoanSex or inVelocity < outVelocity then return end
+	if inVelocity < outVelocity then return end
 
 	-- Variables
 	local timerKey = "TMSexMoan_" .. girl.Name .. holeName

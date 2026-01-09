@@ -55,13 +55,15 @@ TMHumanSource = {
 TMSfx = {
 	Ambience = "Ambience",
 	Blowjob = "Blowjob",
+	BlowjobDeep = "BlowjobDeep",
 	Plap = "Plap",
 }
 -- Tracks = number of files: Sounds/tm_sfxname (N).mp3 (modify this to add your own)
 TMSfxData = {
-	[TMSfx.Ambience] =	{ Tracks = 6, Volume = 0 }, -- volume in config
-	[TMSfx.Blowjob] =	{ Tracks = 5, Volume = 0.5 },
-	[TMSfx.Plap] =		{ Tracks = 1, Volume = 0.5 },
+	[TMSfx.Ambience] =		{ Tracks = 6, Volume = 0 }, -- volume in config
+	[TMSfx.Blowjob] =		{ Tracks = 17, Volume = 0.8 },
+	[TMSfx.BlowjobDeep] =	{ Tracks = 25, Volume = 0.8 },
+	[TMSfx.Plap] =			{ Tracks = 20, Volume = 0.8 },
 }
 
 function TMSfxGetFilenameRandom(tmSfx)
@@ -100,11 +102,12 @@ end
 -------------------------------------------------------------------------------------------------
 
 function TMPlayMoan(girl, tmMoan)
+	if not TM_AllowVoice() or not girl or girl.m_isMale then return end
 	local stats = TMHStatsGet(girl)
 	if not stats or stats.Climax then return end
 	-- if tmMoanSource == TMMoanSource.Sex then -- dynamic
 	-- elseif tmMoanSource == TMMoanSource.Climax then -- dynamic
-	if tmMoan == TMMoan.Cumming then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_Cumming))
+	if tmMoan == TMMoan.Cumming and not TM_MoanSex then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_Cumming))
 	elseif tmMoan == TMMoan.CumEye then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumEye))
 	elseif tmMoan == TMMoan.CumMouth then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumMouth))
 	elseif tmMoan == TMMoan.CumBody and not stats.IsSexActive then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumBody))
@@ -117,7 +120,7 @@ end
 
 function TMPlayMoanTier(girl, tmMoanTier)
 	-- don't moan with other voice mods
-	if not TM_AllowVoice() or not girl or girl.m_isMale then return end
+	if not TM_AllowVoice() or not TM_MoanSex or not girl or girl.m_isMale then return end
 	girl.SayCustom("tm_" .. tmMoanTier)
 end
 
