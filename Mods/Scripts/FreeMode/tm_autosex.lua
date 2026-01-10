@@ -163,6 +163,7 @@ function AutoSexToggle(human)
 		-- set the default tier for cycling (else it goes to last set and doesnt cycle)
 		stats:AutoSexTierSet(AutoSexTier_ToggleDefault)
 		AutoSexAnim_Handle(human)
+		AutoSexTierSet_SyncPartners(human, stats)
 		return
 	end
 	-- AutoSex is ON, step down tiers
@@ -210,28 +211,43 @@ end
 -- end
 
 -- AutoSexTier set by UI speed controls
-function AutoSexTierSet_BySpeed(human, speed)
+function AutoSexTierSet_BySpeed(human, actBody, speed)
 	if not human or type(speed) ~= "number" then return end
 	local stats = TMHStatsGet(human)
 	if not stats or stats.Climax then return end
 	for tier, mm in pairs(AutoSexTierConfig) do
 		if speed >= mm.Min and speed < mm.Max then
 			stats:AutoSexTierSet(tier)
-			AutoSexTierSet_SyncPartners(human, stats) -- propagate tier to all partners
+			 -- propagate tier to specific body partners
+			AutoSexTierSet_SyncPartners(human, stats, actBody)
 			return
 		end
 	end
 end
 
 -- AutoSexTier synchronization with partners
-function AutoSexTierSet_SyncPartners(human, humanStats)
+-- Everyone follows: UI AutoSex toggle OR Climax
+-- Specific interaction follows: UI Speed setting per interaction
+function AutoSexTierSet_SyncPartners(human, humanStats, actBody)
 	if not human or not humanStats then return end
-	for _, human in ipairs(SexPartners_Get(human)) do
-		if not human then return end
-		local stats = TMHStatsGet(human)
-		if not stats or stats.Climax then return end
+	
+	function SyncPartnerStatus(partner)
+		if not partner then return end
+		local stats = TMHStatsGet(partner)
+		if not stats then return end
 		stats:AutoSexSet(humanStats.AutoSex)
 		stats:AutoSexTierSet(humanStats.AutoSexTier)
+	end
+
+	-- if actbody was provided sync just that interaction (changed the speed on one interaction)
+	if actBody then SyncPartnerStatus(SexPartner_Get(human, actBody))
+	
+	-- sync all interactions (changed AutoSex setting per character or Climax is tiering down)
+	else 
+		-- loop through all interactions and sync autosextiers
+		for _, partner in ipairs(SexPartners_Get(human)) do
+			SyncPartnerStatus(partner)
+		end
 	end
 end
 

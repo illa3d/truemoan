@@ -7,18 +7,18 @@ tmSdec = 0
 -- function TMIsAutoSexNormalNeeded(interaction, isHand) return TM_AutoSexTurbo and ActSpeedGet(interaction, isHand) < ActAutoSexNormalMinMax.Speed.Max end
 
 -- SEX CONTROL (in many menus)
-label TMSexControl(human, interaction, isHand)
+label TMSexControl(human, interaction, actBody, isHand)
 	+ "• Max"
 		ActSpeedSet(interaction, AutoSexTierConfig[AutoSexTier.Max].Mid, isHand)
-		AutoSexTierSet_BySpeed(human, AutoSexTierConfig[AutoSexTier.Max].Mid)
+		AutoSexTierSet_BySpeed(human, actBody, AutoSexTierConfig[AutoSexTier.Max].Mid)
 		Return()
 	+ "• Wild"
 		ActSpeedSet(interaction, AutoSexTierConfig[AutoSexTier.Wild].Mid, isHand)
-		AutoSexTierSet_BySpeed(human, AutoSexTierConfig[AutoSexTier.Wild].Mid)
+		AutoSexTierSet_BySpeed(human, actBody, AutoSexTierConfig[AutoSexTier.Wild].Mid)
 		Return()
 	+ "• Faster"
 		ActSpeedSet(interaction, AutoSexTierConfig[AutoSexTier.Faster].Mid, isHand)
-		AutoSexTierSet_BySpeed(human, AutoSexTierConfig[AutoSexTier.Faster].Mid)
+		AutoSexTierSet_BySpeed(human, actBody, AutoSexTierConfig[AutoSexTier.Faster].Mid)
 		Return()
 	+ "• Fast"
 		ActSpeedSet(interaction, AutoSexTierConfig[AutoSexTier.Fast].Mid, isHand)
@@ -26,27 +26,27 @@ label TMSexControl(human, interaction, isHand)
 		Return()
 	+ "• Normal"
 		ActSpeedSet(interaction, AutoSexTierConfig[AutoSexTier.Normal].Mid, isHand)
-		AutoSexTierSet_BySpeed(human, AutoSexTierConfig[AutoSexTier.Normal].Mid)
+		AutoSexTierSet_BySpeed(human, actBody, AutoSexTierConfig[AutoSexTier.Normal].Mid)
 		Return()
 	+ "• Slow"
 		ActSpeedSet(interaction, AutoSexTierConfig[AutoSexTier.Slow].Mid, isHand)
-		AutoSexTierSet_BySpeed(human, AutoSexTierConfig[AutoSexTier.Slow].Mid)
+		AutoSexTierSet_BySpeed(human, actBody, AutoSexTierConfig[AutoSexTier.Slow].Mid)
 		Return()
 	+ TM_UP.."Speed"
 		ActSpeedSet_Step(interaction, TM_SexSpeedStep, true, isHand)
-		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
+		AutoSexTierSet_BySpeed(human, actBody, ActSpeedGet(interaction, isHand))
 		Return()
 	+ TM_DN.."Speed"
 		ActSpeedSet_Step(interaction, TM_SexSpeedStep, false, isHand)
-		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
+		AutoSexTierSet_BySpeed(human, actBody, ActSpeedGet(interaction, isHand))
 		Return()
 	+ "RESET Speed	| " .. AccNumPC(ActSpeedGet(interaction, isHand), tmSdecSpd) .. " | " .. TMMLabel_AutoSex(human)
 		ActSpeedSet(interaction, 0, isHand)
-		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
+		AutoSexTierSet_BySpeed(human, actBody, ActSpeedGet(interaction, isHand))
 		Return()
 	+ "Random Speed" [gold]
 		ActSpeedSet_MenuRandom(interaction, isHand)
-		AutoSexTierSet_BySpeed(human, ActSpeedGet(interaction, isHand))
+		AutoSexTierSet_BySpeed(human, actBody, ActSpeedGet(interaction, isHand))
 		Return()
 	+ "Feeling Lucky" [gold]
 		--SetInteractionSpeedRandom(interaction, isHand) -- random speed control is above
@@ -263,19 +263,19 @@ label TMMenuSex(human)
 
 	-- GIVER (HAND)
 	+ "| Handjob »	|S " .. AccNumPC(ActValueGet_ByBody(human, ActBody.PenisHand, ActParam.Speed), tmSdecSpd) [if HasSexPartner(human,ActBody.PenisHand)] [gold]
-		TMSexControl(human, ActGet(human,ActBody.PenisHand), true)
+		TMSexControl(human, ActGet(human, ActBody.PenisHand), ActBody.PenisHand, true)
 	-- GIVER (MOUTH, VAGINA, ANUS)
 	+ "| Penis »	|S " .. AccNumPC(ActValueGet_ByBody(human, ActBody.PenisHole, ActParam.Speed), tmSdecSpd) [if HasSexPartner(human,ActBody.PenisHole)] [gold]
-		TMSexControl(human, ActGet(human,ActBody.PenisHole), false)
+		TMSexControl(human, ActGet(human, ActBody.PenisHole), ActBody.PenisHole, false)
 	-- GETTER MOUTH
 	+ "| Oral »	|S " .. AccNumPC(ActValueGet_ByBody(human, ActBody.Mouth, ActParam.Speed), tmSdecSpd) [if HasSexPartner(human,ActBody.Mouth)] [gold]
-		TMSexControl(human, ActGet(human,ActBody.Mouth), false)
+		TMSexControl(human, ActGet(human, ActBody.Mouth), ActBody.Mouth, false)
 	-- GETTER ANUS
 	+ "| Anal »	|S " .. AccNumPC(ActValueGet_ByBody(human, ActBody.Anus, ActParam.Speed), tmSdecSpd) [if HasSexPartner(human,ActBody.Anus)] [gold]
-		TMSexControl(human, ActGet(human,ActBody.Anus), false)
+		TMSexControl(human, ActGet(human, ActBody.Anus), ActBody.Anus, false)
 	-- GETTER VAGINA
 	+ "| Pussy »	|S " .. AccNumPC(ActValueGet_ByBody(human, ActBody.Vagina, ActParam.Speed), tmSdecSpd) [if HasSexPartner(human,ActBody.Vagina)] [gold]
-		TMSexControl(human, ActGet(human,ActBody.Vagina), false)
+		TMSexControl(human, ActGet(human, ActBody.Vagina), ActBody.Vagina, false)
 	-- AUTOSEX
 
 	-- PENIS
