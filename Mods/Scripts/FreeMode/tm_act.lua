@@ -184,19 +184,19 @@ end
 -- WETNESS
 -------------------------------------------------------------------------------------------------
 
-function IsWet(human) return IsWetBody(human, ActBody.Mouth) or IsWetBody(human, ActBody.Anus) or IsWetBody(human, ActBody.Vagina) end
+function IsWet(girl) return IsWetBody(girl, ActBody.Mouth) or IsWetBody(girl, ActBody.Anus) or IsWetBody(girl, ActBody.Vagina) end
 
-function IsWetBody(human, body)
-	if body == ActBody.Mouth and human.m_mouth.m_wetness > 0 then return true
-	elseif body == ActBody.Anus and human.m_anus.m_wetness > 0 then return true
-	elseif body == ActBody.Vagina and human.m_vagina.m_wetness > 0 then return true
+function IsWetBody(girl, body)
+	if body == ActBody.Mouth and girl.m_mouth.m_wetness > 0 then return true
+	elseif body == ActBody.Anus and girl.m_anus.m_wetness > 0 then return true
+	elseif body == ActBody.Vagina and girl.m_vagina.m_wetness > 0 then return true
 	else return false end
 end
 
-function WetGet(human, body)
-	if body == ActBody.Mouth then return human.m_mouth.m_wetness
-	elseif body == ActBody.Anus then return human.m_anus.m_wetness
-	elseif body == ActBody.Vagina then return human.m_vagina.m_wetness
+function WetGet(girl, body)
+	if body == ActBody.Mouth then return girl.m_mouth.m_wetness
+	elseif body == ActBody.Anus then return girl.m_anus.m_wetness
+	elseif body == ActBody.Vagina then return girl.m_vagina.m_wetness
 	else return 0 end
 end
 
@@ -207,23 +207,25 @@ function WetSet(girl, value, actBody)
 	elseif actBody == ActBody.Vagina then girl.m_vagina.m_wetness = value end
 end
 
-function WetAllReset(girl)
+function WetReset_All(girl, clearInside)
 	WetSet(girl, 0, ActBody.Vagina)
 	WetSet(girl, 0, ActBody.Anus)
 	WetSet(girl, 0, ActBody.Mouth)
+	if clearInside ~= false then WetClearInside_All(girl) end
 end
 
-
-function WetInsideClear_All()
-	ClearInsideFluids(human, ActBody.Mouth)
-	ClearInsideFluids(human, ActBody.Vagina)
-	ClearInsideFluids(human, ActBody.Anus)
+-- Doesn't seem to do anything, but it's there lol
+function WetClearInside_All(girl)
+	WetClearInside(girl, ActBody.Mouth)
+	WetClearInside(girl, ActBody.Vagina)
+	WetClearInside(girl, ActBody.Anus)
 end
 
-function ClearInsideFluids(human, body)
-	if body == ActBody.Mouth and human.Mouth ~= nil then human.Mouth.ClearInsideFluids()
-	elseif body == ActBody.Anus and human.Anus ~= nil then human.Anus.ClearInsideFluids()
-	elseif body == ActBody.Vagina and human.Vagina~= nil then human.Vagina.ClearInsideFluids()
+-- Doesn't seem to do anything, but it's there lol
+function WetClearInside(girl, body)
+	if body == ActBody.Mouth and girl.Mouth ~= nil then girl.Mouth.ClearInsideFluids()
+	elseif body == ActBody.Anus and girl.Anus ~= nil then girl.Anus.ClearInsideFluids()
+	elseif body == ActBody.Vagina and girl.Vagina~= nil then girl.Vagina.ClearInsideFluids()
 	end
 end	
 

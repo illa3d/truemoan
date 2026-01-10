@@ -60,7 +60,7 @@ end
 function TMMLabel_Cum(human)
 	local stats = TMHStatsGet(human)
 	if not stats then return "" end
-	return AccBoolYN(stats.IsCumming) .. (stats.IsCumming and " | " .. AccNum(stats.CumFrequency) .. "s" or "")
+	return AccBoolYN(stats.IsCumming) .. (stats.IsCumming and " | " .. AccNum(stats.CumFrequency, 3) .. "s" or "")
 end
 
 function TMMLabel_AutoSex(human)

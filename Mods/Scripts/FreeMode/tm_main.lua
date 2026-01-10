@@ -64,7 +64,7 @@ function TMOnUpdate_GenericChat()
 end
 
 function TMOnCreateHuman(human)
-	WetAllReset(human)
+	WetReset_All(human)
 	if TM_SpawnRandomBody then TMBEPreset_StartRandom(human) end
 	if TM_SpawnNaked then HumanClothes(human) end
 	if TM_SpawnNoFuta then Delayed(0.05, function() HumanPenisSet(human, false) end) end
@@ -78,10 +78,52 @@ function TMOnRemoveHuman(human)
 	game.PlayRandomCharacterMusic()
 end
 
+
+-------------------------------------------------------------------------------------------------
+-- HUMAN FUNCTIONS (called from UI)
+-------------------------------------------------------------------------------------------------
+
 -- Resets Inside fluids, pose, interactions...
 function TMHumanReset(human)
-	WetAllReset(human)
+	WetReset_All(human)
+	WetClearInside_All(human)
 	HumanReset(human)
+end
+
+-- Cum with a provided sec frequency (min 2, max 60), if randomMax is provided, random cum will select between 2 and randomMax
+function TMHumanCum(human, sec, randomMax)
+	if not human or not human.Penis then return end
+	local stats = TMHStatsGet(human)
+	if not stats then return end
+	stats.IsCumming = true
+	stats.CumFrequency = ClampValue(sec, 2, 60)
+	local isFirstRun = true
+	game.AddRepeatAnim(stats.CumFrequency, function ()
+		if not stats.IsCumming then return end
+		TMPlayMoan(human, TMMoan.Cumming)
+		-- randomly pass another moan
+		if math.random() > 0.5 then Delayed(TM_Moans_CummingPause, function () TMPlayMoan(human, TMMoan.Cumming) end) end
+		-- shoot with random delay from moan
+		Delayed(GetRandomFloat(0.2, 0.8), function() human.Shoot() end)
+		if isFirstRun then isFirstRun = false return end
+		if randomMax ~= nil then
+			Delayed(0.1, function()
+				-- adding repeat animations is not cumulative, calling again replaces the first one
+				-- but can't remove anim without waiting at least a frame, hence the delay
+				-- game.RemoveAnim(human.Penis) -- not needed
+				TMHumanCum(human, GetRandomFloat(2, randomMax), randomMax)
+			end)
+		end
+	end, human.Penis)
+end
+
+-- Stop the human cumming
+function TMHumanCumStop(human)
+	stats = TMHStatsGet(human)
+	if not stats then return end
+	stats.IsCumming = false
+	stats.CumFrequency = 0
+	game.RemoveAnim(human.Penis)
 end
 
 -------------------------------------------------------------------------------------------------
