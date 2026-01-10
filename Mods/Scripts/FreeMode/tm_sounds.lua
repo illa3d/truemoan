@@ -38,6 +38,7 @@ TMMoan = {
 }
 
 -- Cum body area moan tiers (random from)
+TM_Moans_CummingPause = 0.6 -- between two moans on cumming
 TM_Moans_Cumming = { TMMoanTier.Fast, TMMoanTier.Faster, TMMoanTier.Wild }
 TM_Moans_CumHead = { TMMoanTier.Faster, TMMoanTier.Wild, TMMoanTier.Max }
 TM_Moans_CumHole = { TMMoanTier.Normal, TMMoanTier.Fast }

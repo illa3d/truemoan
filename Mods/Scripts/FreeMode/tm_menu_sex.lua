@@ -245,7 +245,7 @@ label TMMenuSex(human)
 				Return()
 		+ else
 			+ "Cum start"
-				TMHumanCumEvery(human, 5, true)
+				TMHumanCum(human, 2, 6)
 				Return()
 	-- VAGINA
 	+ else 
@@ -281,28 +281,25 @@ label TMMenuSex(human)
 	-- PENIS
 	+ "| Cum »	| " .. TMMLabel_Cum(human) [if HumanHasPenis(human)] [gold]
 		+ "• Cum every 60 sec"
-			TMHumanCumEvery(human, 60)
+			TMHumanCum(human, 60)
 			Return()
 		+ "• Cum every 30 sec"
-			TMHumanCumEvery(human, 30)
+			TMHumanCum(human, 30)
 			Return()
 		+ "• Cum every 10 sec"
-			TMHumanCumEvery(human, 10)
+			TMHumanCum(human, 10)
 			Return()
 		+ "• Cum every 5 sec"
-			TMHumanCumEvery(human, 5)
+			TMHumanCum(human, 5)
 			Return()
 		+ "• Cum every 2 sec"
-			TMHumanCumEvery(human, 2)
-			Return()
-		+ "• Cum every 1 sec"
-			TMHumanCumEvery(human, 1)
+			TMHumanCum(human, 2)
 			Return()
 		+ "RESET | " .. TMMLabel_Cum(human)
 			TMHumanCumStop(human)
 			Return()
 		+ "Random" [gold]
-			TMHumanCumEvery(human, 5, true)
+			TMHumanCum(human, GetRandom(2,60), 60)
 			Return()
 		+ TM_MenuBack
 			Return(2)
