@@ -7,6 +7,7 @@
 -- Body Edit Defaults
 TMBD_RagdollSizeDefault = 0.228
 TMBD_BodyDefault = 0
+TMB_StepMultiplier = 1
 
 -------------------------------------------------------------------------------------------------
 -- BODY EDIT VALUES
@@ -160,6 +161,14 @@ local function TMBodyGetRandom(tmBody)
 	return GetRandomFloat(limit.min, limit.max)
 end
 
+function TMBodyStepMultiplierToggle()
+	if TMB_StepMultiplier == 1 then TMB_StepMultiplier = 1.5
+	elseif TMB_StepMultiplier == 1.5 then TMB_StepMultiplier = 2
+	elseif TMB_StepMultiplier == 2 then TMB_StepMultiplier = 3
+	elseif TMB_StepMultiplier == 3 then TMB_StepMultiplier = 0.5
+	elseif TMB_StepMultiplier == 0.5 then TMB_StepMultiplier = 1 end
+end
+
 -------------------------------------------------------------------------------------------------
 -- BODY EDIT
 -------------------------------------------------------------------------------------------------
@@ -183,16 +192,16 @@ end
 function TMBodyEdit_Up(human, tmBody, step)
 	if not tmBody then return end
 	local value = TMBodyValueUI[tmBody]
-	local mult = 1 + math.floor(math.abs(value) / 2) -- step function to multiply step for bigger values
-	value = value + step * mult
+	local mult = 1 + math.floor(math.abs(value) / 1) -- step function to multiply step for bigger values
+	value = value + step * mult * TMB_StepMultiplier
 	TMBodyEdit(human, tmBody, value)
 end
 
 function TMBodyEdit_Down(human, tmBody, step)
 	if not tmBody then return end
 	local value = TMBodyValueUI[tmBody]
-	local mult = 1 + math.floor(math.abs(value) / 2) -- step function to multiply step for bigger values
-	value = value - step * mult
+	local mult = 1 + math.floor(math.abs(value) / 1) -- step function to multiply step for bigger values
+	value = value - step * mult * TMB_StepMultiplier 
 	TMBodyEdit(human, tmBody, value)
 end
 

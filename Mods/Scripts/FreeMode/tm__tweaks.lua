@@ -20,8 +20,8 @@ TM_AutoSexDepthEndDrift = 0.3	-- [0-1] How close in percent will be next step fo
 								-- setting values [24. - 28.] to zero turns them off
 -- Body Edit Increments
 TM_BodyStepA = 0.1				-- nipples hip, waist, muscle
-TM_BodyStepB = 0.05				-- ass, penis-length, penis-size, forearm, upperarm, calf, thigh, neck
-TM_BodyStepC = 0.025			-- breast, body
+TM_BodyStepB = 0.05				-- ass, breast, forearm, upperarm, calf, thigh, neck
+TM_BodyStepC = 0.025			-- body, penis-length, penis-size
 
 -- Sex Control increments
 TM_SexSpeedStep = 0.05			-- non-linear percent (increments: slow = small, fast = big)
