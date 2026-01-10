@@ -111,14 +111,14 @@ AutoSexTierConfig_Climax = {
 AutoSexTierRandom_Default = AutoSexTierConfig_Normal
 
 -- Collection of all the tier parameters, their tier speed and parameter value limits
-AutoSexTierConfig = {
+AutoSexTierConfig = {		-- speed min max when generating randomly, mid when setting the tier
 	[AutoSexTier.Idle] =	{ Min = 0,		Mid = 0.1,	Max = 0.2,	Arousal = 0.1,	Random = AutoSexTierConfig_Idle },
-	[AutoSexTier.Slow] =	{ Min = 0.3,	Mid = 0.5,	Max = 0.6,	Arousal = 0.5,	Random = AutoSexTierConfig_Slow },
-	[AutoSexTier.Normal] =	{ Min = 0.6,	Mid = 0.7,	Max = 0.8,	Arousal = 1,	Random = AutoSexTierConfig_Normal },
-	[AutoSexTier.Fast] =	{ Min = 0.7,	Mid = 0.9,	Max = 1,	Arousal = 1.5,	Random = AutoSexTierConfig_Fast },
+	[AutoSexTier.Slow] =	{ Min = 0.3,	Mid = 0.5,	Max = 0.6,	Arousal = 0.3,	Random = AutoSexTierConfig_Slow },
+	[AutoSexTier.Normal] =	{ Min = 0.6,	Mid = 0.7,	Max = 0.8,	Arousal = 0.6,	Random = AutoSexTierConfig_Normal },
+	[AutoSexTier.Fast] =	{ Min = 0.7,	Mid = 0.9,	Max = 1,	Arousal = 1,	Random = AutoSexTierConfig_Fast },
 	[AutoSexTier.Faster] =	{ Min = 0.9,	Mid = 1.1,	Max = 1.2,	Arousal = 2,	Random = AutoSexTierConfig_Faster },
-	[AutoSexTier.Wild] =	{ Min = 1,		Mid = 1.3,	Max = 1.5,	Arousal = 2.5,	Random = AutoSexTierConfig_Wild },
-	[AutoSexTier.Max] =		{ Min = 1.4,	Mid = 1.9,	Max = 2,	Arousal = 3.0,	Random = AutoSexTierConfig_Climax },
+	[AutoSexTier.Wild] =	{ Min = 1,		Mid = 1.3,	Max = 1.5,	Arousal = 3,	Random = AutoSexTierConfig_Wild },
+	[AutoSexTier.Max] =		{ Min = 1.4,	Mid = 1.9,	Max = 2,	Arousal = 4,	Random = AutoSexTierConfig_Climax },
 }
 
 -------------------------------------------------------------------------------------------------
@@ -239,6 +239,7 @@ function HasAutoSexMaleOverride(human, body)
 	if human == nil or not HasSexPartner(human, body) then return false end
 	if body == ActBody.PenisHand then return false -- don't know path: penis -> hand? -> human?
 	elseif body == ActBody.PenisHole then return false -- ton't know path: penis -> hole -> human?
+	-- female always leaves males to do the job
 	elseif body == ActBody.Mouth and HasAutoSexAnim(human.Mouth.Fucker) then return true
 	elseif body == ActBody.Anus and HasAutoSexAnim(human.Anus.Fucker) then return true
 	elseif body == ActBody.Vagina and HasAutoSexAnim(human.Vagina.Fucker) then return true

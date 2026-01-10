@@ -55,4 +55,4 @@ TM_CumflateHipSizeLimit = 1.5	-- Maximum amout to increase to (deformed afer 1.5
 
 -- Arousal
 TM_HumanArousalIncrease = 0.3	-- Base rate of arousal increase (multiplied by various factors)
-TM_HumanArousalDecrease = 1		-- Base rate of arousal decrease (when not in sex or cumming)
+TM_HumanArousalDecrease = 1.5	-- Base rate of arousal decrease (when not in sex or cumming)
