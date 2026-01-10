@@ -362,12 +362,15 @@ function TMOnUpdate_AutoSexClimax(human)
 	
 	-- female needs to feel cum and the climax starts
 	elseif not stats:IsFeelingCum() then return end
-		
+	
+	-- Just girls can set this, they lead the Climax
 	local delay = 6
 	local function Increment() delay = IncrementRandom(delay, 2, 4) end
 	local function AutoSexTierSet(girl, autoSexTier)
 		stats = TMHStatsGet(girl)
 		stats:AutoSexTierSet(autoSexTier)
+		 -- when climaxing females tell males where to take the autosex, since males have autosex priority
+		AutoSexTierSet_SyncPartners(girl, stats)
 		ActAll_ActiveSet(girl, true) -- turn on all interactions
 		ActAll_SpeedSet(girl, AutoSexTierConfig[autoSexTier].Mid) -- force specific start speed
 		ActAll_DepthSet(girl, AutoSexTierConfig_Climax[ActParam.DepthEnd].Max, false) -- increase depth

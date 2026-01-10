@@ -160,14 +160,17 @@ function AutoSexToggle(human)
 	-- If AutoSex is OFF, turn it ON
 	if not stats.AutoSex then
 		stats:AutoSexSet(true)
+		-- set the default tier for cycling (else it goes to last set and doesnt cycle)
 		stats:AutoSexTierSet(AutoSexTier_ToggleDefault)
 		AutoSexAnim_Handle(human)
 		return
 	end
 	-- AutoSex is ON, step down tiers
-	if stats.AutoSexTier ~= AutoSexTier_ToggleMin  then stats.AutoSexTier = ListItemStep(AutoSexTier_Toggle, stats.AutoSexTier, -1)
+	if stats.AutoSexTier ~= AutoSexTier_ToggleMin then
+		stats:AutoSexTierSet(ListItemStep(AutoSexTier_Toggle, stats.AutoSexTier, -1))
 	else stats:AutoSexSet(false) end
 	AutoSexAnim_Handle(human)
+	AutoSexTierSet_SyncPartners(human, stats)
 end
 
 -- -- pint pong (off missing)
@@ -206,6 +209,7 @@ end
 -- 	AutoSexAnimHandle(human)
 -- end
 
+-- AutoSexTier set by UI speed controls
 function AutoSexTierSet_BySpeed(human, speed)
 	if not human or type(speed) ~= "number" then return end
 	local stats = TMHStatsGet(human)
@@ -213,8 +217,21 @@ function AutoSexTierSet_BySpeed(human, speed)
 	for tier, mm in pairs(AutoSexTierConfig) do
 		if speed >= mm.Min and speed < mm.Max then
 			stats:AutoSexTierSet(tier)
+			AutoSexTierSet_SyncPartners(human, stats) -- propagate tier to all partners
 			return
 		end
+	end
+end
+
+-- AutoSexTier synchronization with partners
+function AutoSexTierSet_SyncPartners(human, humanStats)
+	if not human or not humanStats then return end
+	for _, human in ipairs(SexPartners_Get(human)) do
+		if not human then return end
+		local stats = TMHStatsGet(human)
+		if not stats or stats.Climax then return end
+		stats:AutoSexSet(humanStats.AutoSex)
+		stats:AutoSexTierSet(humanStats.AutoSexTier)
 	end
 end
 
@@ -265,7 +282,7 @@ end
 -- START INTERACTION PARAMETER SET (Calculate timer against ticker and fire events for each active interaction)
 function AutoSex_OnTickParamsSet(human, body)
 	if not TM_AutoSex or not human then return end
-	-- Status
+	-- Stats
 	local interaction = ActGet(human, body)
 	if not interaction then return end
 	-- Interaction

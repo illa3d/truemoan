@@ -44,7 +44,7 @@ function TMHumanStatsCloneDefault() return TableClone(TMHumanStats) end
 -------------------------------------------------------------------------------------------------
 
 local function TMHStatsNew(human)
-	local clone = TMHumanStatsCloneDefault() -- TMHUmanStatus is authoritative source of Status for each human
+	local clone = TMHumanStatsCloneDefault() -- TMHUmanStats is authoritative source of Stats for each human
 	clone.LastUpdate = os.time()
 	clone.TMBValue = TMBodyValueCloneDefault() --TMBValue is AUTHORITATIVE source of Human Body customization values
 	clone.SexBody = {}
@@ -92,26 +92,33 @@ function TMOnUpdate_HumanStats(deltaTime)
 end
 
 -------------------------------------------------------------------------------------------------
--- HUMAN SEX STATS
+-- HUMAN STATS SEX UPDATE
 -------------------------------------------------------------------------------------------------
 -- SEX
 function TMHumanStats:UpdateSex(human)
+	-- check each body interaction for sex activity
 	for _, body in pairs(ActBody) do
-		self:SetSexActive(IsSexActive(human, body), body)
+		self:UpdateSexActive(IsSexActive(human, body), body)
 	end
 end
 
-function TMHumanStats:SetSexActive(active, actBody)
+function TMHumanStats:UpdateSexActive(active, actBody)
+	-- set detected body activity and conclude if there's any sex (from all body activities)
 	self[actBody] = active
 	self.IsSexActive = self.PenisHand or self.PenisHole or self.Mouth or self.Anus or self.Vagina
+	-- add or remove current body activity and bodycount (how many activities)
 	if active then
 		if not TableHasValue(self.SexBody, actBody) then table.insert(self.SexBody, actBody) end
 	else TableRemoveValue(self.SexBody, actBody) end
 	self.SexBodyCount = TableCount(self.SexBody)
 end
 
+-------------------------------------------------------------------------------------------------
+-- HUMAN STATS AROUSAL UPDATE
+-------------------------------------------------------------------------------------------------
+
 -- AROUSAL
-local function HoleMultiplier(holeCount)
+local function ArousalHoleMultiplier(holeCount)
 	-- diminishing returns: 1 hole = 1.0, 2 = 1.35, 3 = 1.6
 	if holeCount <= 0 then return 0 end
 	return 1 + math.log(holeCount + 1) * 0.6
@@ -121,7 +128,7 @@ function TMHumanStats:UpdateArousal(deltaTime)
 	if self.IsSexActive and self.AutoSexTier and self.Climax ~= true and self.IsCumming ~= true then
 		local tierMul = AutoSexTierConfig[self.AutoSexTier].Arousal
 		local gain = deltaTime * (TM_HumanArousalIncrease / 100) * tierMul
-		* HoleMultiplier(self.SexBodyCount)
+		* ArousalHoleMultiplier(self.SexBodyCount)
 		* (self:IsCumflating() and 2 or 1)
 		* (self:IsFeelingCum() and 1.3 or 1)
 		self.Arousal = Clamp01(self.Arousal + gain)
@@ -130,6 +137,10 @@ function TMHumanStats:UpdateArousal(deltaTime)
 		self.Arousal = Clamp01(self.Arousal - deltaTime * (TM_HumanArousalDecrease / 100) * (self.IsCumming and 4 or 1))
 	end
 end
+
+-------------------------------------------------------------------------------------------------
+-- HUMAN STATS FUNCTIONS
+-------------------------------------------------------------------------------------------------
 
 -- AUTOSEX
 function TMHumanStats:AutoSexSet(active)
@@ -166,6 +177,7 @@ end
 -------------------------------------------------------------------------------------------------
 -- BODY EDIT VALUES
 -------------------------------------------------------------------------------------------------
+
 -- Direct access to per-human TMBValue table
 function TMHStatsGet_TMBValue(human)
 	local stats = TMHStatsGet(human)
