@@ -142,6 +142,10 @@ function TMHumanStats:AutoSexTierSet(autoSexTier)
 	self.AutoSexTier = autoSexTier
 end
 
+function TMHumanStats:CanStartClimax()
+	return self.AutoSex and self.IsSexActive and self.Arousal == 1 and not self.Climax and not self.IsCumming 
+end
+
 -- CUM
 function TMHumanStats:IsFeelingCum()
 	return self.CumLastTime ~= nil

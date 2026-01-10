@@ -69,7 +69,7 @@ function TMOnCreateHuman(human)
 	if TM_SpawnNaked then HumanClothes(human) end
 	if TM_SpawnNoFuta then Delayed(0.05, function() HumanPenisSet(human, false) end) end
 	if TM_SpawnReset then Delayed(0.1, function() TMHumanReset(human) end) end
-	if TM_SpawnAutoSexOn then AutoSexActive(human, true, true) end
+	if TM_SpawnAutoSexOn then AutoSexActive(human, true) end
 	game.PlayCharacterMusic(human)
 	if TM_AllowGenericChat then human.Say("Greeting") end
 end
@@ -135,7 +135,7 @@ function TMOnUpdate_Humans()
 	-- Iterate and call for every human in the scene
 	for _, human in ipairs(game.GetHumans()) do
 		TMOnUpdate_Futa(human)
-		TMOnUpdate_FinishClimax(human)
+		TMOnUpdate_AutoSexClimax(human)
 		TMOnUpdate_FinishCumCumflate(human)
 	end
 end
@@ -340,16 +340,29 @@ end
 
 -------------------------------------------------------------------------------------------------
 --===============================================================================================
--- CLIMAX
+-- AUTOSEX CLIMAX
 --===============================================================================================
 -------------------------------------------------------------------------------------------------
 
-function TMOnUpdate_FinishClimax(girl)
+function TMOnUpdate_AutoSexClimax(human)
 	-- SFX: CLIMAX MOANING in OnPenetration
-	if not girl or girl.m_isMale then return end
-	local stats = TMHStatsGet(girl)
-	if not stats or not stats.IsSexActive or stats.Arousal < 1 or stats.Climax or not stats:IsFeelingCum() then return end
+	if not TM_AutoSex or not human then return end
+	local stats = TMHStatsGet(human)
+	if not stats or not stats:CanStartClimax() then return end
+	-- CanStartClimax() return self.Autosex and self.IsSexActive and self.Arousal == 1 and not self.Climax and not self.IsCumming 
+
+	-- penis owners never initiate climax, just start & stop cumming
+	if HumanHasPenis(human) then
+		-- just start cumming and stop after 10 secs
+		if TM_AutoCum and not stats.IsCumming then
+			TMHumanCum(human, 2, 5)
+			Delayed(10, function () TMHumanCumStop(human) end)
+		end
+		return
 	
+	-- female needs to feel cum and the climax starts
+	elseif not stats:IsFeelingCum() then return end
+		
 	local delay = 6
 	local function Increment() delay = IncrementRandom(delay, 2, 4) end
 	local function AutoSexTierSet(girl, autoSexTier)
@@ -358,18 +371,22 @@ function TMOnUpdate_FinishClimax(girl)
 		ActAll_ActiveSet(girl, true) -- turn on all interactions
 		ActAll_SpeedSet(girl, AutoSexTierConfig[autoSexTier].Mid) -- force specific start speed
 		ActAll_DepthSet(girl, AutoSexTierConfig_Climax[ActParam.DepthEnd].Max, false) -- increase depth
-		if autoSexTier == AutoSexTier.Idle then stats.Climax = false end
+		-- CLIMAX ENDED
+		if autoSexTier == AutoSexTier.Idle then
+			if stats.IsCumming and HumanHasPenis(girl) then TMHumanCumStop(girl) end
+			stats.Climax = false
+		end
 	end
 
 	stats.Climax = true
-	if TM_WetSex then WetSet(girl, 100000, ActBody.Vagina) end
-	AutoSexTierSet(girl, AutoSexTier.Max)
-	Delayed(delay, function() AutoSexTierSet(girl, AutoSexTier.Wild) end) Increment()
-	Delayed(delay, function() AutoSexTierSet(girl, AutoSexTier.Faster) end) Increment()
-	Delayed(delay, function() AutoSexTierSet(girl, AutoSexTier.Fast) end) Increment()
-	Delayed(delay, function() AutoSexTierSet(girl, AutoSexTier.Normal) end) Increment()
-	Delayed(delay, function() AutoSexTierSet(girl, AutoSexTier.Slow) end) Increment()
-	Delayed(delay, function() AutoSexTierSet(girl, AutoSexTier.Idle) end)
+	if TM_WetSex then WetSet(human, 100000, ActBody.Vagina) end
+	AutoSexTierSet(human, AutoSexTier.Max)
+	Delayed(delay, function() AutoSexTierSet(human, AutoSexTier.Wild) end) Increment()
+	Delayed(delay, function() AutoSexTierSet(human, AutoSexTier.Faster) end) Increment()
+	Delayed(delay, function() AutoSexTierSet(human, AutoSexTier.Fast) end) Increment()
+	Delayed(delay, function() AutoSexTierSet(human, AutoSexTier.Normal) end) Increment()
+	Delayed(delay, function() AutoSexTierSet(human, AutoSexTier.Slow) end) Increment()
+	Delayed(delay, function() AutoSexTierSet(human, AutoSexTier.Idle) end)
 end
 
 -------------------------------------------------------------------------------------------------
@@ -465,7 +482,7 @@ end
 
 -- CUM REACTION ON PULLOUT
 function TMOnCumPulloutEffects(girl)
-	if not girl then return end
+	if not girl or girl.m_isMale then return end
 	if TM_WetSex then WetSet(girl, 1000, ActBody.Vagina) end
 	local function Increment(oldValue, newValue) return IncrementMultiplierRandom(oldValue, TM_AutoSexClimaxTimeStep, 0.8, 1.5) end 
 	local delay = 0.5
@@ -483,7 +500,7 @@ end
 
 -- CUMFLATION REACTION ON PULLOUT
 function TMOnCumflatePulloutEffects(girl)
-	if not girl then return end
+	if not girl or girl.m_isMale then return end
 	if TM_WetSex then WetSet(girl, 10000, ActBody.Vagina) end
 	local delay = 0.4
 	local function Increment(value) delay = IncrementMultiplierRandom(delay, value, 0.8, 1.1) end
