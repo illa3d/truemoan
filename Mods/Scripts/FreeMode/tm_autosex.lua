@@ -145,11 +145,13 @@ function HasAutoSex(human)
 	return stats and stats.AutoSex
 end
 
-function AutoSexActive(human, active, excludeMales)
+function AutoSexActive(human, active, autoSexTier, syncPartners)
 	if not TM_AutoSex or not human then return end
-	if human.m_isMale == true and excludeMales == true then return end
 	local stats = TMHStatsGet(human)
+	if not stats then return end
 	stats:AutoSexSet(active)
+	if autoSexTier then stats:AutoSexTierSet(autoSexTier) end
+	if syncPartners ~= false then AutoSexTierSet_SyncPartners(human, stats) end
 	AutoSexAnim_Handle(human)
 end
 
@@ -159,56 +161,15 @@ function AutoSexToggle(human)
 	if not stats then return end
 	-- If AutoSex is OFF, turn it ON
 	if not stats.AutoSex then
-		stats:AutoSexSet(true)
-		-- set the default tier for cycling (else it goes to last set and doesnt cycle)
-		stats:AutoSexTierSet(AutoSexTier_ToggleDefault)
-		AutoSexAnim_Handle(human)
-		AutoSexTierSet_SyncPartners(human, stats)
+		AutoSexActive(human, true, AutoSexTier_ToggleDefault)
 		return
 	end
 	-- AutoSex is ON, step down tiers
 	if stats.AutoSexTier ~= AutoSexTier_ToggleMin then
-		stats:AutoSexTierSet(ListItemStep(AutoSexTier_Toggle, stats.AutoSexTier, -1))
-	else stats:AutoSexSet(false) end
-	AutoSexAnim_Handle(human)
-	AutoSexTierSet_SyncPartners(human, stats)
+		AutoSexActive(human, true, ListItemStep(AutoSexTier_Toggle, stats.AutoSexTier, -1))
+	-- AutoSex is ON, minimum tier toggles to OFF
+	else AutoSexActive(human, false) end
 end
-
--- -- pint pong (off missing)
--- local autoSexDir = {}
--- function AutoSexToggle(human)
--- 	local stats = TMHStatsGet(human)
--- 	if not stats then return end
-
--- 	-- init direction
--- 	if autoSexDir[human] == nil then autoSexDir[human] = -1 end
-
--- 	-- OFF → ON → start climbing up
--- 	if not stats.AutoSex then
--- 		stats:AutoSexSet(true)
--- 		stats:AutoSexTierSet(AutoSexTierDefault)
--- 		autoSexDir[human] = 1
--- 		AutoSexAnimHandle(human)
--- 		return
--- 	end
-
--- 	local dir = autoSexDir[human]
--- 	local current = stats.AutoSexTier
--- 	local nextTier = StepInOrderedList(AutoSexTierToggle, current, dir)
-
--- 	-- if we hit an edge, flip direction and step again
--- 	if nextTier == current then
--- 		autoSexDir[human] = -dir
--- 		dir = autoSexDir[human]
--- 		nextTier = StepInOrderedList(AutoSexTierToggle, current, dir)
--- 	end
-
--- 	-- if still stuck, turn OFF
--- 	if nextTier == current then stats:AutoSexSet(false)
--- 	else stats.AutoSexTier = nextTier end
-
--- 	AutoSexAnimHandle(human)
--- end
 
 -- AutoSexTier set by UI speed controls
 function AutoSexTierSet_BySpeed(human, actBody, speed)
@@ -217,9 +178,7 @@ function AutoSexTierSet_BySpeed(human, actBody, speed)
 	if not stats or stats.Climax then return end
 	for tier, mm in pairs(AutoSexTierConfig) do
 		if speed >= mm.Min and speed < mm.Max then
-			stats:AutoSexTierSet(tier)
-			 -- propagate tier to specific body partners
-			AutoSexTierSet_SyncPartners(human, stats, actBody)
+			AutoSexActive(human, true, tier)
 			return
 		end
 	end
@@ -228,25 +187,14 @@ end
 -- AutoSexTier synchronization with partners
 -- Everyone follows: UI AutoSex toggle OR Climax
 -- Specific interaction follows: UI Speed setting per interaction
-function AutoSexTierSet_SyncPartners(human, humanStats, actBody)
-	if not human or not humanStats then return end
-	
-	function SyncPartnerStatus(partner)
-		if not partner then return end
-		local stats = TMHStatsGet(partner)
-		if not stats then return end
-		stats:AutoSexSet(humanStats.AutoSex)
-		stats:AutoSexTierSet(humanStats.AutoSexTier)
-	end
-
+function AutoSexTierSet_SyncPartners(human, stats, actBody)
+	if not human or not stats then return end
 	-- if actbody was provided sync just that interaction (changed the speed on one interaction)
-	if actBody then SyncPartnerStatus(SexPartner_Get(human, actBody))
-	
+	if actBody then AutoSexActive(SexPartner_Get(human, actBody), stats.AutoSex, stats.AutoSexTier, false)
 	-- sync all interactions (changed AutoSex setting per character or Climax is tiering down)
 	else 
-		-- loop through all interactions and sync autosextiers
 		for _, partner in ipairs(SexPartners_Get(human)) do
-			SyncPartnerStatus(partner)
+			AutoSexActive(partner, stats.AutoSex, stats.AutoSexTier, false)
 		end
 	end
 end

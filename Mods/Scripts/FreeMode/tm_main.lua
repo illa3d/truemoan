@@ -367,16 +367,16 @@ function TMOnUpdate_AutoSexClimax(human)
 	local delay = 6
 	local function Increment() delay = IncrementRandom(delay, 2, 4) end
 	local function AutoSexTierSet(girl, autoSexTier)
-		stats = TMHStatsGet(girl)
-		stats:AutoSexTierSet(autoSexTier)
-		 -- when climaxing females tell males where to take the autosex, since males have autosex priority
-		AutoSexTierSet_SyncPartners(girl, stats)
+		local stats = TMHStatsGet(girl)
+		if not stats then return end
+		AutoSexActive(girl, true, autoSexTier)
 		ActAll_ActiveSet(girl, true) -- turn on all interactions
 		ActAll_SpeedSet(girl, AutoSexTierConfig[autoSexTier].Mid) -- force specific start speed
 		ActAll_DepthSet(girl, AutoSexTierConfig_Climax[ActParam.DepthEnd].Max, false) -- increase depth
 		-- CLIMAX ENDED
 		if autoSexTier == AutoSexTier.Idle then
-			if stats.IsCumming and HumanHasPenis(girl) then TMHumanCumStop(girl) end
+			-- Penises never end up here for now
+			--if stats.IsCumming and HumanHasPenis(girl) then TMHumanCumStop(girl) end
 			stats.Climax = false
 		end
 	end

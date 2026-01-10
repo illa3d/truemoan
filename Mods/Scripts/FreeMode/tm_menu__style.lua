@@ -72,7 +72,7 @@ function TMMLabel_AutoSex(human)
 end
 
 function TMMLabel_Arousal(human, skipLetter)
-	stats = TMHStatsGet(human)
+	local stats = TMHStatsGet(human)
 	if not stats then return "" end
 	return (skipLetter and "" or "A ") .. (stats.Climax and AccStr("Climax!") or AccNumPC(stats.Arousal))
 end
