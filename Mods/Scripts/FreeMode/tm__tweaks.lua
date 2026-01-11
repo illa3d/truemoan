@@ -13,14 +13,14 @@ TM_AutoSexTier_Default = AutoSexTier.Normal		-- Default AutoSex tier for all new
 TM_AutoSexTier_ToggleMin = AutoSexTier.Idle		-- UI AutoSex toggle minimum tier (after which is OFF)
 TM_AutoSexTier_ToggleMax = AutoSexTier.Faster	-- UI AutoSex toggle maximum tier (after OFF)
 
+-- AutoSex Arousal
+TM_HumanArousalIncrease = 0.3	-- Base rate of arousal increase (multiplied by various factors)
+TM_HumanArousalDecrease = 2		-- Base rate of arousal decrease (when not in sex or cumming)
+
 -- AutoSex Timings
 TM_AutoSexTimeMin = 2			-- [1-20] Auto Interaction minimum time to change parameter (speed, thrust, depth) 
 TM_AutoSexTimeMax = 5			-- [1-20] Auto Interaction maximum time to change parameter (speed, thrust, depth) 
 TM_AutoSexClimaxTimeStep = 4	-- pause between each climax step while slowing down (+ random values)
-
--- AutoSex Arousal
-TM_HumanArousalIncrease = 0.3	-- Base rate of arousal increase (multiplied by various factors)
-TM_HumanArousalDecrease = 1.5	-- Base rate of arousal decrease (when not in sex or cumming)
 
 -- AutoSex Drift (bigger values more variety)
 TM_AutoSexSpeedDrift = 0.4		-- [0-1] How close in percent will be next step for sex speed
