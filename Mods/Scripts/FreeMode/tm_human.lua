@@ -50,7 +50,7 @@ local function TMHStatsNew(human)
 	clone.TMBValue = TMBodyValueCloneDefault() --TMBValue is AUTHORITATIVE source of Human Body customization values
 	clone.SexBody = {}
 	clone.ArousalSeed = GetRandomFloatAround(1, 0.1) -- Add random seed variation 10%
-	clone.AutoSexTier = AutoSexTier_Default
+	clone.AutoSexTier = TM_AutoSexTier_Default
 	TM_HumanStatsList[human] = clone
 end
 
@@ -148,7 +148,7 @@ end
 -- AUTOSEX
 function TMHumanStats:AutoSexSet(active)
 	self.AutoSex = active
-	if self.AutoSexTier == nil then self.AutoSexTier = AutoSexTier_Default end
+	if self.AutoSexTier == nil then self.AutoSexTier = TM_AutoSexTier_Default end
 end
 
 function TMHumanStats:AutoSexTierSet(autoSexTier)

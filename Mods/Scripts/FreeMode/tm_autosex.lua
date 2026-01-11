@@ -37,13 +37,6 @@ AutoSexTier_Toggle = {
 	AutoSexTier.Max,
 }
 
--- Default tier set for new humans
-AutoSexTier_Default = AutoSexTier.Normal
-
--- Minimum tier when toggling (jumps to off from it)
-AutoSexTier_ToggleMin = AutoSexTier.Idle
-AutoSexTier_ToggleDefault = AutoSexTier.Faster
-
 local ActAutoSexTimerRange = { Min = 1, Max = 20 } -- seconds (timer to allow new random sex parameter)
 
 -------------------------------------------------------------------------------------------------
@@ -162,11 +155,11 @@ function AutoSexToggle(human)
 	if not stats then return end
 	-- If AutoSex is OFF, turn it ON
 	if not stats.AutoSex then
-		AutoSexSet(human, true, AutoSexTier_ToggleDefault)
+		AutoSexSet(human, true, TM_AutoSexTier_ToggleMax)
 		return
 	end
 	-- AutoSex is ON, step down tiers
-	if stats.AutoSexTier ~= AutoSexTier_ToggleMin then
+	if stats.AutoSexTier ~= TM_AutoSexTier_ToggleMin then
 		AutoSexSet(human, true, ListItemStep(AutoSexTier_Toggle, stats.AutoSexTier, -1))
 	-- AutoSex is ON, minimum tier toggles to OFF
 	else AutoSexSet(human, false) end
