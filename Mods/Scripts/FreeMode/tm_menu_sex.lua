@@ -332,10 +332,11 @@ label TMMenuSex(human)
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "Auto sex	| " .. TMMLabel_AutoSex(human)
-		if TM_AutoSex
-			AutoSexToggle(human)
+	+ "Auto sex	| " .. TMMLabel_AutoSex(human) [if TM_AutoSex]
+		AutoSexToggle(human)
 		Return()
+	+ "Auto sex	| " .. TMMLabel_AutoSex(human) [if not TM_AutoSex]
+		TMMenuOptions_SexSfx(human)
 	+ TM_MenuBack
 		Return(2)
 	+ TM_MenuClose_AutoSexStats(human)

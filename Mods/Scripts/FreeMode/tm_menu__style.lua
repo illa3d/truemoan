@@ -66,7 +66,7 @@ end
 function TMMLabel_AutoSex(human)
 	local stats = TMHStatsGet(human)
 	if not stats then return "" end
-	if not TM_AutoSex then return "OFF (global)"
+	if not TM_AutoSex then return "OFF (sex options)"
 	elseif not stats.AutoSex then return "OFF"
 	else return AccStr(stats.AutoSexTier) end
 end
