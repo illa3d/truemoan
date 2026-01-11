@@ -69,7 +69,7 @@ function TMOnCreateHuman(human)
 	if TM_SpawnNaked then HumanClothes(human) end
 	if TM_SpawnNoFuta then Delayed(0.05, function() HumanPenisSet(human, false) end) end
 	if TM_SpawnReset then Delayed(0.1, function() TMHumanReset(human) end) end
-	if TM_SpawnAutoSexOn then AutoSexActive(human, true) end
+	if TM_SpawnAutoSexOn then AutoSexSet(human, true) end
 	game.PlayCharacterMusic(human)
 	if TM_AllowGenericChat then human.Say("Greeting") end
 end
@@ -366,10 +366,10 @@ function TMOnUpdate_AutoSexClimax(human)
 	-- Just girls can set this, they lead the Climax
 	local delay = 6
 	local function Increment() delay = IncrementRandom(delay, 2, 4) end
-	local function AutoSexTierSet(girl, autoSexTier)
+	local function AutoSexSet_ClimaxTier(girl, autoSexTier)
 		local stats = TMHStatsGet(girl)
 		if not stats then return end
-		AutoSexActive(girl, true, autoSexTier)
+		AutoSexSet(girl, true, autoSexTier)
 		ActAll_ActiveSet(girl, true) -- turn on all interactions
 		ActAll_SpeedSet(girl, AutoSexTierConfig[autoSexTier].Mid) -- force specific start speed
 		ActAll_DepthSet(girl, AutoSexTierConfig_Climax[ActParam.DepthEnd].Max, false) -- increase depth
@@ -383,13 +383,13 @@ function TMOnUpdate_AutoSexClimax(human)
 
 	stats.Climax = true
 	if TM_WetSex then WetSet(human, 100000, ActBody.Vagina) end
-	AutoSexTierSet(human, AutoSexTier.Max)
-	Delayed(delay, function() AutoSexTierSet(human, AutoSexTier.Wild) end) Increment()
-	Delayed(delay, function() AutoSexTierSet(human, AutoSexTier.Faster) end) Increment()
-	Delayed(delay, function() AutoSexTierSet(human, AutoSexTier.Fast) end) Increment()
-	Delayed(delay, function() AutoSexTierSet(human, AutoSexTier.Normal) end) Increment()
-	Delayed(delay, function() AutoSexTierSet(human, AutoSexTier.Slow) end) Increment()
-	Delayed(delay, function() AutoSexTierSet(human, AutoSexTier.Idle) end)
+	AutoSexSet_ClimaxTier(human, AutoSexTier.Max)
+	Delayed(delay, function() AutoSexSet_ClimaxTier(human, AutoSexTier.Wild) end) Increment()
+	Delayed(delay, function() AutoSexSet_ClimaxTier(human, AutoSexTier.Faster) end) Increment()
+	Delayed(delay, function() AutoSexSet_ClimaxTier(human, AutoSexTier.Fast) end) Increment()
+	Delayed(delay, function() AutoSexSet_ClimaxTier(human, AutoSexTier.Normal) end) Increment()
+	Delayed(delay, function() AutoSexSet_ClimaxTier(human, AutoSexTier.Slow) end) Increment()
+	Delayed(delay, function() AutoSexSet_ClimaxTier(human, AutoSexTier.Idle) end)
 end
 
 -------------------------------------------------------------------------------------------------

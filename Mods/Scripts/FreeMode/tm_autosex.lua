@@ -145,56 +145,56 @@ function HasAutoSex(human)
 	return stats and stats.AutoSex
 end
 
-function AutoSexActive(human, active, autoSexTier, syncPartners)
+-- Set ActiveSex per human, autoSexTier and syncPartners optional parameters
+function AutoSexSet(human, active, autoSexTier, syncPartners)
 	if not TM_AutoSex or not human then return end
 	local stats = TMHStatsGet(human)
 	if not stats then return end
 	stats:AutoSexSet(active)
 	if autoSexTier then stats:AutoSexTierSet(autoSexTier) end
-	if syncPartners ~= false then AutoSexTierSet_SyncPartners(human, stats) end
+	if syncPartners ~= false then AutoSexSet_SyncPartners(human, stats) end
 	AutoSexAnim_Handle(human)
 end
 
--- just one direction
+-- Set AutoSex toggle per human
 function AutoSexToggle(human)
 	local stats = TMHStatsGet(human)
 	if not stats then return end
 	-- If AutoSex is OFF, turn it ON
 	if not stats.AutoSex then
-		AutoSexActive(human, true, AutoSexTier_ToggleDefault)
+		AutoSexSet(human, true, AutoSexTier_ToggleDefault)
 		return
 	end
 	-- AutoSex is ON, step down tiers
 	if stats.AutoSexTier ~= AutoSexTier_ToggleMin then
-		AutoSexActive(human, true, ListItemStep(AutoSexTier_Toggle, stats.AutoSexTier, -1))
+		AutoSexSet(human, true, ListItemStep(AutoSexTier_Toggle, stats.AutoSexTier, -1))
 	-- AutoSex is ON, minimum tier toggles to OFF
-	else AutoSexActive(human, false) end
+	else AutoSexSet(human, false) end
 end
 
 -- AutoSexTier set by UI speed controls
-function AutoSexTierSet_BySpeed(human, actBody, speed)
+function AutoSexSet_TierBySpeed(human, actBody, speed)
 	if not human or type(speed) ~= "number" then return end
 	local stats = TMHStatsGet(human)
 	if not stats or stats.Climax then return end
 	for tier, mm in pairs(AutoSexTierConfig) do
 		if speed >= mm.Min and speed < mm.Max then
-			AutoSexActive(human, true, tier)
+			AutoSexSet(human, true, tier)
 			return
 		end
 	end
 end
 
--- AutoSexTier synchronization with partners
+-- AutoSex synchronization with partners
 -- Everyone follows: UI AutoSex toggle OR Climax
--- Specific interaction follows: UI Speed setting per interaction
-function AutoSexTierSet_SyncPartners(human, stats, actBody)
+-- Specific humans only: UI Speed setting per interaction
+function AutoSexSet_SyncPartners(human, stats, actBody)
 	if not human or not stats then return end
 	-- if actbody was provided sync just that interaction (changed the speed on one interaction)
-	if actBody then AutoSexActive(SexPartner_Get(human, actBody), stats.AutoSex, stats.AutoSexTier, false)
+	if actBody then AutoSexSet(SexPartner_Get(human, actBody), stats.AutoSex, stats.AutoSexTier, false)
 	-- sync all interactions (changed AutoSex setting per character or Climax is tiering down)
-	else 
-		for _, partner in ipairs(SexPartners_Get(human)) do
-			AutoSexActive(partner, stats.AutoSex, stats.AutoSexTier, false)
+	else for _, partner in ipairs(SexPartners_Get(human)) do
+			AutoSexSet(partner, stats.AutoSex, stats.AutoSexTier, false)
 		end
 	end
 end
@@ -216,11 +216,11 @@ function AutoSexAnim_Handle(human)
 	else if HasAutoSexAnim(human) then AutoSexAnim_Remove(human) end end
 end
 
-function HasAutoSexMaleOverride(human, body)
+function HasAutoSex_Body(human, body)
 	if human == nil or not HasSexPartner(human, body) then return false end
 	if body == ActBody.PenisHand then return false -- don't know path: penis -> hand? -> human?
-	elseif body == ActBody.PenisHole then return false -- ton't know path: penis -> hole -> human?
-	-- female always leaves males to do the job
+	elseif body == ActBody.PenisHole and human.Penis and human.Penis.Hole and HasAutoSexAnim(human.Penis.Hole.m_girl) then return true
+	-- female always leaves males to do the job -- just because females can't find partner via hand
 	elseif body == ActBody.Mouth and HasAutoSexAnim(human.Mouth.Fucker) then return true
 	elseif body == ActBody.Anus and HasAutoSexAnim(human.Anus.Fucker) then return true
 	elseif body == ActBody.Vagina and HasAutoSexAnim(human.Vagina.Fucker) then return true
@@ -237,10 +237,10 @@ function AutoSex_OnTick(human)
 	-- Start setting all parameters that are in use
 	if stats.PenisHole then AutoSex_OnTickParamsSet(human, ActBody.PenisHole) end
 	if stats.PenisHand then AutoSex_OnTickParamsSet(human, ActBody.PenisHand) end
-	-- Holes (set params only if male doesn't override)
-	if stats.Mouth and not HasAutoSexMaleOverride(human, ActBody.Mouth) then AutoSex_OnTickParamsSet(human, ActBody.Mouth) end
-	if stats.Anus and not HasAutoSexMaleOverride(human, ActBody.Anus) then AutoSex_OnTickParamsSet(human, ActBody.Anus) end
-	if stats.Vagina and not HasAutoSexMaleOverride(human, ActBody.Vagina) then AutoSex_OnTickParamsSet(human, ActBody.Vagina) end
+	-- Holes (set params only if male doesn't override) -- just because females can't find partner via hand
+	if stats.Mouth and not HasAutoSex_Body(human, ActBody.Mouth) then AutoSex_OnTickParamsSet(human, ActBody.Mouth) end
+	if stats.Anus and not HasAutoSex_Body(human, ActBody.Anus) then AutoSex_OnTickParamsSet(human, ActBody.Anus) end
+	if stats.Vagina and not HasAutoSex_Body(human, ActBody.Vagina) then AutoSex_OnTickParamsSet(human, ActBody.Vagina) end
 end
 
 -- START INTERACTION PARAMETER SET (Calculate timer against ticker and fire events for each active interaction)
