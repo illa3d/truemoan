@@ -56,8 +56,9 @@ label TMMenuSex(human)
 	+ "Pussy " ..AccStr("stop") [if HasSexPartner(human,ActBody.Vagina) and IsSexActive(human,ActBody.Vagina)]
 		human.Vagina.Fucker.Penis.Interaction.AutoActive = false
 		Return()
+
 	-- PENIS
-	+ if human.Penis.IsActive == true
+	+ if HumanHasPenis(human)
 		+ if game.HasAnim(human.Penis)
 			+ "Cum " ..AccStr("stop")
 				TMHumanCumStop(human)
@@ -67,7 +68,7 @@ label TMMenuSex(human)
 				TMHumanCum(human, 2, 6)
 				Return()
 	-- VAGINA
-	+ else 
+	+ elseif not human.m_isMale
 		+ if IsWet(human)
 			+ "Wet " ..AccStr("stop")
 				WetReset_All(human)	
@@ -101,7 +102,7 @@ label TMMenuSex(human)
 		+ "| Cum »	| " .. TMMLabel_Cum(human)[gold]
 			TMMenuSex_Cum(human)
 	-- VAGINA
-	+ else
+	+ elseif not human.m_isMale
 		+ "| Wet »	|" .. AccTextNum3("V", WetGet(human,ActBody.Vagina), "A", WetGet(human,ActBody.Anus), "M", WetGet(human,ActBody.Mouth))[gold]
 			TMMenuSex_Wet(human)
 	-- AUTO SEX
