@@ -22,7 +22,7 @@ label TMMenuHumanStats(human)
 		Return()
 	+ TM_MenuBack
 		Return(2)
-	+ TM_MenuCloseArousal(human)
+	+ TM_MenuClose_AutoSexStats(human)
 stop
 
 label TMMenuHeyHuman(human)
@@ -85,5 +85,5 @@ label TMMenuHeyHuman(human)
 		Return()
 	+ TM_MenuBack
 		Return(2)
-	+ TM_MenuCloseArousal(human)
+	+ TM_MenuClose_AutoSexStats(human)
 stop

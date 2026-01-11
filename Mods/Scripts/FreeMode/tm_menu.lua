@@ -39,7 +39,7 @@ label TMTalkMenu(human, hitTri)
 		+ "Exit POV"
 			game.PovHuman = nil
 			Return()
-	+ TM_MenuCloseArousal(human)
+	+ TM_MenuClose_AutoSexStats(human)
 stop
 
 -------------------------------------------------------------------------------------------------

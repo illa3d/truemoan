@@ -53,14 +53,14 @@ end
 -------------------------------------------------------------------------------------------------
 -- CUSTOM LABELS
 -------------------------------------------------------------------------------------------------
-function TM_MenuCloseArousal(human)
-	return TM_MenuClose .. "		Arousal " .. TMMLabel_Arousal(human, true)
+function TM_MenuClose_AutoSexStats(human)
+	return TM_MenuClose .. "	" .. TMMLabel_AutoSexStats(human)
 end
 
-function TMMLabel_Cum(human)
+function TMMLabel_AutoSexStats(human, skipLetter)
 	local stats = TMHStatsGet(human)
-	if not stats then return "" end
-	return AccBoolYN(stats.IsCumming) .. (stats.IsCumming and " | " .. AccNum(stats.CumFrequency, 3) .. "s" or "")
+	if not TM_AutoSex or not stats then return "" end
+	return "| Hot " ..TMMLabel_Arousal(human, true).. " | " ..TMMLabel_AutoSex(human)
 end
 
 function TMMLabel_AutoSex(human)
@@ -75,6 +75,12 @@ function TMMLabel_Arousal(human, skipLetter)
 	local stats = TMHStatsGet(human)
 	if not stats then return "" end
 	return (skipLetter and "" or "A ") .. (stats.Climax and AccStr("Climax!") or AccNumPC(stats.Arousal))
+end
+
+function TMMLabel_Cum(human)
+	local stats = TMHStatsGet(human)
+	if not stats then return "" end
+	return AccBoolYN(stats.IsCumming) .. (stats.IsCumming and " | " .. AccNum(stats.CumFrequency, 3) .. "s" or "")
 end
 
 function TMMLabel_Holes(human)

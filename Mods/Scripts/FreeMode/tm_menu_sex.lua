@@ -181,7 +181,7 @@ label TMSexControl(human, interaction, actBody, isHand)
 
 	+ TM_MenuBack
 		Return(2)
-	+ TM_MenuCloseArousal(human)
+	+ TM_MenuClose_AutoSexStats(human)
 stop
 
 -- SEX MENU
@@ -338,5 +338,5 @@ label TMMenuSex(human)
 		Return()
 	+ TM_MenuBack
 		Return(2)
-	+ TM_MenuCloseArousal(human)
+	+ TM_MenuClose_AutoSexStats(human)
 stop
