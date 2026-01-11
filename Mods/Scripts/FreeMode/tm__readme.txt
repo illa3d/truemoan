@@ -74,6 +74,12 @@ GitHub Repository - https://github.com/illa3d/truemoan
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
 
+[ v2.2 ]
+- Realistic cumming (randomness)
+- Added AutoSex Cumming when aroused 100%
+- Added partner synchronization (set AutoSex tier for partner automatically)
+- Arousal tweaks
+
 [ v2.1 ]
 - Added Futa sex & cum moaning
 - Solved sound effects playback while occupied
