@@ -1,4 +1,6 @@
 -- TrueMoan v2.2 by illa3d
+-- Requires tm_common.lua
+
 -- Ambience Constants
 local tmAmbienceTrackSec = 140	-- depends on the mp3 file length (all files must be of same length)
 
@@ -46,14 +48,6 @@ TM_Moans_CumBody = { TMMoanTier.Slow, TMMoanTier.Normal }
 TM_Moans_CumInside = { TMMoanTier.Slow, TMMoanTier.Normal, TMMoanTier.Fast }
 TM_Moans_Cumflating = { TMMoanTier.Fast, TMMoanTier.Faster, TMMoanTier.Wild }
 TM_Moans_Cumdeflating = { TMMoanTier.Slow, TMMoanTier.Fast, TMMoanTier.Faster }
-
--- Human part positions
-TMHumanSource = {
-	Mouth = "Mouth",
-	Anus = "Anus",
-	Vagina = "Vagina",
-	Penis = "Penis",
-}
 
 -- SOUND EFFECTS
 TMSfx = {
@@ -107,39 +101,11 @@ end
 -------------------------------------------------------------------------------------------------
 -- SFX / SOUND SOURCE POSITION
 -------------------------------------------------------------------------------------------------
-TMHumanSource = {
-	Mouth = "Mouth",
-	Anus = "Anus",
-	Vagina = "Vagina",
-	Penis = "Penis",
-}
-
-function TMHumanHolePosGet(part)
-	if not part then return Pos(0,0,0) end
-	return Pos(part.m_autoTarget.transform.position.x, part.m_autoTarget.transform.position.y, part.m_autoTarget.transform.position.z)
-	-- return Pos(part.m_entry.transform.position.x, part.m_entry.transform.position.y, part.m_entry.transform.position.z) -- too in forward
-	-- return Pos(part.transform.position.x, part.transform.position.y, part.transform.position.z) -- this is not following actual head, just human roughly
-end
-
-function TMHumanPenisPosGet(part)
-	if not part then return Pos(0,0,0) end
-	return Pos(part.transform.position.x, part.transform.position.y, part.transform.position.z)
-end
-
-function TMSoundSourcePosGet(human, tmHumanSource)
-	if not human then return Pos(0,0,0) end
-	if tmHumanSource == TMHumanSource.Mouth and human.Mouth then return TMHumanHolePosGet(human.Mouth)
-	elseif tmHumanSource == TMHumanSource.Anus and human.Anus then return TMHumanHolePosGet(human.Anus)
-	elseif tmHumanSource == TMHumanSource.Vagina and human.Vagina then return TMHumanHolePosGet(human.Vagina)
-	elseif tmHumanSource == TMHumanSource.Penis and human.Penis then return TMHumanPenisPosGet(human.Penis) end
-	if not part then return Pos(0,0,0) end
-end
-
 function TMPlayHumanSFX(girl, tmSfx, humanPart, volume)
 	if not TM_AllowVoice() or not TM_SFX_AllReactions or not girl or girl.m_isMale then return end
 	-- if defined volume in param, multiply by volume in config. if not defined, just use volume config
 	local vol = volume and (volume * TMSfxData[tmSfx].Volume) or TMSfxData[tmSfx].Volume
-	PlaySoundAt(TMSfxGetFilenameRandom(tmSfx), TMSoundSourcePosGet(girl, humanPart), vol)
+	PlaySoundAt(TMSfxGetFilenameRandom(tmSfx), HumanPosGet(girl, humanPart), vol)
 end
 
 -------------------------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 -- TrueMoan v2.2 by illa3d
+-- Requires: tm_act.lua, tm_human.lua
 -------------------------------------------------------------------------------------------------
 -- AUTO SEX - AUTOMATICALLY ADJUST INTERACTION PARAMETERS DYNAMICALLY (speed, weight, thrust, depth)
--- Requires tm_act.lua, tm_human.lua
 -------------------------------------------------------------------------------------------------
 -- AUTOSEX: Game Timer (ActAutoSexTickTime) -> AutoSexTick -> AutoSexBodyParamSet (each full hole interaction, 5 params)
 -- 		Get Random time between TM_AutoSexTimeMin and TM_AutoSexTimeMax (config)

@@ -1,4 +1,5 @@
 -- TrueMoan v2.2 by illa3d
+-- Requires: tm_act.lua, tm_autosex.lua
 -- Per-human AUTHORITATIVE stat storage (including EditBody data)
 local TM_HumanStatsList = {}
 

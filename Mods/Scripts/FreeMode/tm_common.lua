@@ -221,6 +221,17 @@ end
 -- HUMAN FUNCTIONS
 -------------------------------------------------------------------------------------------------
 
+-- DEFINITIONS
+-- Used with GetHumanPos, values correspond with "holeName" from OnPenetration, except Penis
+HumanPart = {
+	Penis = "Penis",
+	Mouth = "Mouth",
+	Anus = "Anus",
+	Vagina = "Vagina",
+}
+
+-------------------------------------------------------------------------------------------------
+
 function HumanRemove(human, immediate)
 	if immediate then game.RemoveHuman(human)
 	else HumanReset(human) Delayed(1, function () game.RemoveHuman(human) end) end
@@ -282,6 +293,20 @@ end
 
 function HumanIsCumming(human)
 	return human and human.Penis and game.HasAnim(human.Penis)
+end
+
+function HumanPosGet(human, humanPart)
+	if not human or not humanPart then return Pos(0,0,0) end
+	-- transform is somewhere usually off body location, prefer not to use it
+	function PosGet_Transform(part) return Pos(part.transform.position.x, part.transform.position.y, part.transform.position.z) end
+	function PosGet_PenisBase(part) return Pos(part.PhysicsWorldPos.x, part.PhysicsWorldPos.y, part.PhysicsWorldPos.z) end
+	function PosGet_HoleOutside(part) return Pos(part.m_entry.transform.position.x, part.m_entry.transform.position.y, part.m_entry.transform.position.z) end
+	function PosGet_HoleInside(part) return Pos(part.m_autoTarget.transform.position.x, part.m_autoTarget.transform.position.y, part.m_autoTarget.transform.position.z) end
+	if humanPart == HumanPart.Penis and human.Penis then return PosGet_PenisBase(human.Penis)
+	elseif humanPart == HumanPart.Mouth and human.Mouth then return PosGet_HoleInside(human.Mouth)
+	elseif humanPart == HumanPart.Anus and human.Anus then return PosGet_HoleOutside(human.Anus)
+	elseif humanPart == HumanPart.Vagina and human.Vagina then return PosGet_HoleOutside(human.Vagina)
+	end return Pos(0,0,0)
 end
 
 -------------------------------------------------------------------------------------------------
