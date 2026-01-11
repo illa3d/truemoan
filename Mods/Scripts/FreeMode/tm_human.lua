@@ -22,6 +22,7 @@ TMHumanStats = {
 	SexBodyCount = 0,
 	-- Arousal
 	Arousal = 0,
+	ArousalSeed = 1,
 	Climax = false,
 	-- AutoSex
 	AutoSex = false,
@@ -48,6 +49,7 @@ local function TMHStatsNew(human)
 	clone.LastUpdate = os.time()
 	clone.TMBValue = TMBodyValueCloneDefault() --TMBValue is AUTHORITATIVE source of Human Body customization values
 	clone.SexBody = {}
+	clone.ArousalSeed = GetRandomFloatAround(1, 0.1) -- Add random seed variation 10%
 	clone.AutoSexTier = AutoSexTier_Default
 	TM_HumanStatsList[human] = clone
 end
@@ -131,6 +133,7 @@ function TMHumanStats:UpdateArousal(deltaTime)
 		* ArousalHoleMultiplier(self.SexBodyCount)
 		* (self:IsCumflating() and 2 or 1)
 		* (self:IsFeelingCum() and 1.3 or 1)
+		* self.ArousalSeed
 		self.Arousal = Clamp01(self.Arousal + gain)
 		if self.Arousal >= 0.99 then self.Arousal = 1 end
 	else
