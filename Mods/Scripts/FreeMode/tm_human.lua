@@ -5,7 +5,8 @@ local TM_HumanStatsList = {}
 -- DEFINITION (never update this, USE TMHStatsSet_BodyEdit or BodyEdit functions)
 TMHumanStats = {
 	-- Time
-	LastUpdate = 0,
+	UpdateDelta = 0,
+	UpdateTime = 0,
 	-- Customization
 	TMBValue = nil,
 	NeedsBodyApply = false,
@@ -40,13 +41,17 @@ TMHumanStats = {
 
 function TMHumanStatsCloneDefault() return TableClone(TMHumanStats) end
 
+local TM_UpdateDelta = 0		-- cumulative deltaTime
+local TM_UpdateDeltaMax = 0.25	-- maximum update step
+local TM_UpdateRate = 0.05		-- update tick (20 Hz)
+local TM_UpdateRateStats = 0.1	-- stats update tick (10 Hz)
 -------------------------------------------------------------------------------------------------
 -- HUMAN STATS
 -------------------------------------------------------------------------------------------------
 
 local function TMHStatsNew(human)
 	local clone = TMHumanStatsCloneDefault() -- TMHUmanStats is authoritative source of Stats for each human
-	clone.LastUpdate = os.time()
+	clone.UpdateTime = os.time()
 	clone.TMBValue = TMBodyValueCloneDefault() --TMBValue is AUTHORITATIVE source of Human Body customization values
 	clone.SexBody = {}
 	clone.ArousalSeed = GetRandomFloatAround(1, 0.1) -- Add random seed variation 10%
@@ -71,25 +76,42 @@ end
 
 -- HUMAN STATS UPDATE
 function TMOnUpdate_HumanStats(deltaTime)
+	-- global scheduler cap
+	TM_UpdateDelta = TM_UpdateDelta + deltaTime
+	if TM_UpdateDelta < TM_UpdateRate then return end
+	TM_UpdateDelta = 0
+
 	local Humans = game.GetHumans()
 	local Seen = {}
 
 	for _, human in ipairs(Humans) do
 		Seen[human] = true
+
 		local stats = TMHStatsGet(human)
-		-- Last update / Throttle
-		stats.LastUpdate = os.time()
-		-- TOOD Throttle
-		-- Sexy features
-		stats:UpdateSex(human)
-		stats:UpdateArousal(deltaTime)
-		-- BodyEdit
-		if stats.NeedsBodyApply == true then TMHStats_TMBApply(human) end
+		if stats then
+			-- BodyEdit (never throttled)
+			if stats.NeedsBodyApply then TMHStats_TMBApply(human) end
+
+			if TM_AutoSex then
+				-- per-human update accumulator
+				stats.UpdateDelta = stats.UpdateDelta + deltaTime
+				if stats.UpdateDelta >= TM_UpdateRateStats then
+					-- consume accumulated time
+					local step = math.min(stats.UpdateDelta, TM_UpdateDeltaMax)
+					stats.UpdateDelta = 0
+					stats.UpdateTime = os.time()
+
+					-- logic update (ONCE)
+					stats:UpdateSex(human)
+					stats:UpdateArousal(step)
+				end
+			end
+		end
 	end
 
 	-- Cleanup non existing humans
-	for human, _ in pairs(TM_HumanStatsList) do
-		if Seen[human] ~= true then TMHStatsRemove(human) end
+	for human in pairs(TM_HumanStatsList) do
+		if not Seen[human] then TMHStatsRemove(human) end
 	end
 end
 
