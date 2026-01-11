@@ -20,6 +20,8 @@ label TMMenuHumanStats(human)
 		Return()
 	+ "Climax		| " .. AccBoolYN(TMHStatsGet(human).Climax)
 		Return()
+	+ "Allow moaning	| " .. AccBoolYN(TMHStatsGet(human).AllowMoaning)
+		Return()
 	+ TM_MenuBack
 		Return(2)
 	+ TM_MenuClose_AutoSexStats(human)
@@ -45,18 +47,15 @@ label TMMenuHeyHuman(human)
 	+ "RESET ".. AccStr(human.Name)
 		TMHumanReset(human)
 		Return()
-	+ if not human.m_isMale
-		+ "Penis		| " .. AccStr("OFF") [if not human.Penis.IsActive]
-			HumanPenisSet(human, true)
-			Return(2)
-		+ "Penis		| " .. AccStr("ON") [if human.Penis.IsActive]
-			HumanPenisSet(human, false)
-			Return(2)
-	+ "Penetration	| " .. AccStr("ON") [if not human.m_isMale]
-		HumanMaleSet(human, true)
+	+ "Penetration	| " .. AccBool(not human.m_isMale)
+		HumanMaleSet(human, not human.m_isMale)
 		Return()
-	+ "Penetration	| " .. AccStr("OFF") [if human.m_isMale]
-		HumanMaleSet(human, false)
+	+ if not human.m_isMale
+		+ "Penis		| " .. AccBool(human.Penis.IsActive)
+			HumanPenisSet(human, not human.Penis.IsActive)
+			Return(2)
+	+ "Moaning	| " .. AccBool(TMHStatsGet(human).AllowMoaning)
+		TMHStatsGet(human):AllowMoaningToggle()
 		Return()
 	+ "Look at »" [gold]
 		+ "• Look at " .. AccStr("cam")

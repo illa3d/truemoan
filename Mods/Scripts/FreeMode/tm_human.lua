@@ -10,6 +10,7 @@ TMHumanStats = {
 	TMBValue = nil,
 	NeedsBodyApply = false,
 	-- Sex
+	AllowMoaning = true,
 	IsSexActive = false,
 	-- Where
 	PenisHole = false,
@@ -167,6 +168,10 @@ end
 function TMHumanStats:AutoSexTierSet(autoSexTier)
 	if not autoSexTier then return end
 	self.AutoSexTier = autoSexTier
+end
+
+function TMHumanStats:AllowMoaningToggle()
+	self.AllowMoaning = not self.AllowMoaning
 end
 
 function TMHumanStats:CanStartCumOrClimax()

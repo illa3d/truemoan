@@ -149,7 +149,7 @@ end
 function TMPlayMoan(girl, tmMoan)
 	if not TM_AllowVoice() or not TM_SFX_AllReactions or not girl or girl.m_isMale then return end
 	local stats = TMHStatsGet(girl)
-	if not stats or stats.Climax then return end
+	if not stats or stats.Climax or not stats.AllowMoaning then return end
 	-- if tmMoanSource == TMMoanSource.Sex then -- dynamic
 	-- elseif tmMoanSource == TMMoanSource.Climax then -- dynamic
 	if tmMoan == TMMoan.Cumming and TM_SFX_ReactSex then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_Cumming))
@@ -166,7 +166,7 @@ end
 -- SFX: All sfx is played here. Directly calling: Sex, Futa, Cum, Cumflation, Cumdeflation (the rest is above)
 function TMPlayMoanTier(girl, tmMoanTier)
 	-- don't moan with other voice mods
-	if not TM_AllowVoice() or not TM_SFX_AllReactions or not girl or girl.m_isMale then return end
+	if not TM_AllowVoice() or not TM_SFX_AllReactions or not girl or girl.m_isMale or not TMHStatsGet(girl).AllowMoaning then return end
 	girl.SayCustom("tm_" .. tmMoanTier)
 end
 
