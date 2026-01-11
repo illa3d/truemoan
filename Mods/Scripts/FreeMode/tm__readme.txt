@@ -33,11 +33,11 @@
 - **7x skyboxes** (8/4/2k)
 
 **LATEST DOWNLOADS**
-**TrueMoan_v2.2.zip** [2025-12-27] - Just TrueMoan
-**TrueMoan_v2.2_FLABS_v1.02.zip** [2025-12-27] - TrueMoan + Fauna LABS **(recommended)**
-**TrueMoan_Addon_Skyboxes_4k_v1.0.zip** [2025-12-22]
-:warning:**TrueFacials v0.59_ORIGINAL_SCRIPTS_FIX.zip** [2025-12-29] - Required original files, install if they're missing or modified
-https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
+**TrueMoan_v2.2.zip** - Just TrueMoan
+**TrueMoan_v2.2_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
+**TrueMoan_Addon_Skyboxes_4k_v1.0.zip**
+**Download: ** https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
+:warning: For black screen or issues, see this post **https://discord.com/channels/620113492208517120/1451633202019172462/1451634287987396884** 
 
 **REQUIREMENTS**
 - TrueFacials v0.59
@@ -47,13 +47,43 @@ https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
 - Nf123 Voice Mod, Talk Menu Mod Manager, FaunaLabs
 
 **HOW TO INSTALL**
-- :warning: Mod doesn't work without original `common.lua` and `freemode_main.lua` scripts
-- Backup your config files prior to install
-- Extract archives to game folder (overwrite all files)
-- If config files have new settings, **don't overwrite with your configs**, re-set your values in the new config
+- Backup your old TrueMoan config files prior to install (optional)
+- **Extract to game folder** (overwrite all files)
+- If new version config/tweaks don't look the same as ones you have, **don't just overwrite with your configs**, re-set your values in the new files
 
 **HOW TO UNINSTALL**
 - Delete TrueMoan files in `Mods/Scripts/FreeMode`: `tm_*.*, Voice/tm_*.mp3, Sounds/tm_*.mp3`
+
+---------------------------------------------------------------------------------------------------------
+-- COMMON ISSUES / BLACK SCREEN
+---------------------------------------------------------------------------------------------------------
+
+**:warning: TRUE MOAN COMMON ISSUES, BLACK SCREEN FIX, TIPS & TRICKS :warning:**
+
+**1) TRUE MOAN REQUIRES ORIGINAL COMMON.LUA SCRIPT**
+- make sure it's here: `TrueFacials\Mods\Scripts\FreeMode\Common.lua` 
+- if its missing or overwritten from another mod, get the original one from True Facials installation
+
+**2) LONG PATHS ARE AN ISSUE**
+- move TrueFacials to an less deep folder, long ones can cause black screens with error `DirectoryNotFoundException: Could not find a part of the path`
+- bad path example `"D:\New folder (3)\TrueFacials_Pro _ Characters_0.59 (N)\TrueFacials_Pro + Characters_0.59\TrueFacials_Pro_0.59...`
+- if that still doesnt work, enable long paths in windows registry - https://www.majorgeeks.com/files/details/enable_or_disable_win32_long_paths.html
+
+**3) TRY RUNNING WITHOUT OTHER MODS**
+- mods that overwrite `Commmon.lua` and `freemode_main.lua` are problematic
+- character, map and voice mods should all be compatibile
+- Tested ok with: n123's VoiceMod, TalkMenuModManager, FaunaLABS (integrated, you don't need it separately)
+
+**4) SEND AN ERROR REPORT** (if none of the above works)
+When reporting issues, please include:
+- which True Facials version
+- which True Moan version
+- which mods are installed besides TrueMoan
+- steps to reproduce the issue
+- include True facials `Player.log` file
+`C:\Users\{username}\AppData\LocalLow\HenryTaiwan\TrueFacials\Player.log`
+
+Thanks!
 
 ---------------------------------------------------------------------------------------------------------
 -- ADDITIONAL INFO
