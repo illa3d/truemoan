@@ -179,7 +179,8 @@ function AutoSexSet_TierBySpeed(human, actBody, speed)
 	if not stats or stats.Climax then return end
 	for tier, mm in pairs(AutoSexTierConfig) do
 		if speed >= mm.Min and speed < mm.Max then
-			AutoSexSet(human, true, tier)
+			AutoSexSet(human, true, tier, false)
+			AutoSexSet_SyncPartners(human, stats, actBody)
 			return
 		end
 	end
