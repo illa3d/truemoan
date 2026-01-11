@@ -1,4 +1,4 @@
--- TrueMoan v2.1 by illa3d
+-- TrueMoan v2.2 by illa3d
 -- Per-human AUTHORITATIVE stat storage (including EditBody data)
 local TM_HumanStatsList = {}
 
@@ -6,7 +6,6 @@ local TM_HumanStatsList = {}
 TMHumanStats = {
 	-- Time
 	UpdateDelta = 0,
-	UpdateTime = 0,
 	-- Customization
 	TMBValue = nil,
 	NeedsBodyApply = false,
@@ -51,7 +50,6 @@ local TM_UpdateRateStats = 0.1	-- stats update tick (10 Hz)
 
 local function TMHStatsNew(human)
 	local clone = TMHumanStatsCloneDefault() -- TMHUmanStats is authoritative source of Stats for each human
-	clone.UpdateTime = os.time()
 	clone.TMBValue = TMBodyValueCloneDefault() --TMBValue is AUTHORITATIVE source of Human Body customization values
 	clone.SexBody = {}
 	clone.ArousalSeed = GetRandomFloatAround(1, 0.1) -- Add random seed variation 10%
@@ -75,23 +73,18 @@ function TMHStatsReset(human)
 end
 
 -- HUMAN STATS UPDATE
-function TMOnUpdate_HumanStats(deltaTime)
+function TMOnUpdate_HumanStats(humans, deltaTime)
 	-- global scheduler cap
 	TM_UpdateDelta = TM_UpdateDelta + deltaTime
 	if TM_UpdateDelta < TM_UpdateRate then return end
 	TM_UpdateDelta = 0
-
-	local Humans = game.GetHumans()
 	local Seen = {}
-
-	for _, human in ipairs(Humans) do
+	for _, human in ipairs(humans) do
 		Seen[human] = true
-
 		local stats = TMHStatsGet(human)
 		if stats then
 			-- BodyEdit (never throttled)
 			if stats.NeedsBodyApply then TMHStats_TMBApply(human) end
-
 			if TM_AutoSex then
 				-- per-human update accumulator
 				stats.UpdateDelta = stats.UpdateDelta + deltaTime
@@ -99,8 +92,6 @@ function TMOnUpdate_HumanStats(deltaTime)
 					-- consume accumulated time
 					local step = math.min(stats.UpdateDelta, TM_UpdateDeltaMax)
 					stats.UpdateDelta = 0
-					stats.UpdateTime = os.time()
-
 					-- logic update (ONCE)
 					stats:UpdateSex(human)
 					stats:UpdateArousal(step)

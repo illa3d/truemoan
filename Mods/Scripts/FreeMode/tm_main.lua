@@ -1,4 +1,4 @@
--- TrueMoan v2.1 by illa3d
+-- TrueMoan v2.2 by illa3d
 -------------------------------------------------------------------------------------------------
 -- freemode_main.lua is not required, these functions are overrides (even if it exists in folder)
 -- same function in multiple files, alphabetically last one is used
@@ -43,8 +43,9 @@ end
 function TMOnUpdate()
 	TM_DeltaTime = Timer("TMDeltaTime")
 	ResetTimer("TMDeltaTime")
-	TMOnUpdate_HumanStats(TM_DeltaTime)
-	TMOnUpdate_Humans()
+	local humans = game.GetHumans()
+	TMOnUpdate_HumanStats(humans, TM_DeltaTime)
+	TMOnUpdate_Humans(humans)
 	OnUpdate_ActTweens(TM_DeltaTime)
 end
 
@@ -131,9 +132,9 @@ end
 -- HUMANS UPDATE (every frame)
 --===============================================================================================
 -------------------------------------------------------------------------------------------------
-function TMOnUpdate_Humans()
+function TMOnUpdate_Humans(humans)
 	-- Iterate and call for every human in the scene
-	for _, human in ipairs(game.GetHumans()) do
+	for _, human in ipairs(humans) do
 		TMOnUpdate_Futa(human)
 		TMOnUpdate_AutoSexClimax(human)
 		TMOnUpdate_FinishCumCumflate(human)
