@@ -348,20 +348,19 @@ function TMOnUpdate_AutoSexClimax(human)
 	-- SFX: CLIMAX MOANING in OnPenetration
 	if not TM_AutoSex or not human then return end
 	local stats = TMHStatsGet(human)
-	if not stats or not stats:CanStartClimax() then return end
+	if not stats or not stats:CanStartCumOrClimax() then return end
 	-- CanStartClimax() return self.Autosex and self.IsSexActive and self.Arousal == 1 and not self.Climax and not self.IsCumming 
 
 	-- penis owners never initiate climax, just start & stop cumming
 	if HumanHasPenis(human) then
+		if not TM_AutoCum or stats.IsCumming then return end
 		-- just start cumming and stop after 10 secs
-		if TM_AutoCum and not stats.IsCumming then
-			TMHumanCum(human, 2, 5)
-			Delayed(10, function () TMHumanCumStop(human) end)
-		end
+		TMHumanCum(human, 2, 5)
+		Delayed(10, function () TMHumanCumStop(human) end)
 		return
 	
 	-- female needs to feel cum and the climax starts
-	elseif not stats:IsFeelingCum() then return end
+	elseif not TM_AutoClimax or not stats:IsFeelingCum() then return end
 	
 	-- Just girls can set this, they lead the Climax
 	local delay = 6

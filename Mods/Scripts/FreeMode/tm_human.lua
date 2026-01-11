@@ -156,7 +156,7 @@ function TMHumanStats:AutoSexTierSet(autoSexTier)
 	self.AutoSexTier = autoSexTier
 end
 
-function TMHumanStats:CanStartClimax()
+function TMHumanStats:CanStartCumOrClimax()
 	return self.AutoSex and self.IsSexActive and self.Arousal == 1 and not self.Climax and not self.IsCumming 
 end
 

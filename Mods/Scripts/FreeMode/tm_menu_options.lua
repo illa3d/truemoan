@@ -79,6 +79,13 @@ label TMMenuOptions(human)
 		+ "Wet sex	| " .. AccBool(TM_WetSex)
 			TM_WetSex = not TM_WetSex
 			Return()
+		+ if TM_AutoSex
+			+ "Auto climax	| " .. AccBool(TM_AutoClimax)
+				TM_AutoClimax = not TM_AutoClimax
+				Return()
+			+ "Auto cum	| " .. AccBool(TM_AutoCum)
+				TM_AutoCum = not TM_AutoCum
+				Return()
 		+ "Auto sex	| " .. AccBool(TM_AutoSex)
 			TM_AutoSex = not TM_AutoSex
 			Return()

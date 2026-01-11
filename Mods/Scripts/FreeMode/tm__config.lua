@@ -29,7 +29,8 @@ TM_SpawnAutoSexOn = true			-- AutoSex on for everyone at spawn
 
 -- People: Sex
 TM_AutoSex = true					-- AutoSex feature on/off for all
-TM_AutoCum = true					-- AutoSex AutoCumming when aroused 100%
+TM_AutoCum = true					-- AutoSex Male/Futa AutoCumming when aroused 100%
+TM_AutoClimax = true				-- AutoSex Female Climaxing when aroused 100% and feels cum
 TM_WetSex = true					-- Moisting holes (vag, anus, mouth) during sex and cumming
 TM_Cumflate = false					-- Allow belly inflation by cumming inside
 TM_TweenSex = true					-- Soft transitions on changing sex values (speed, thrust, depth)
