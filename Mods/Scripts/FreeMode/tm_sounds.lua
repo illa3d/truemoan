@@ -1,4 +1,4 @@
--- TrueMoan v2.1 by illa3d
+-- TrueMoan v2.2 by illa3d
 -- Ambience Constants
 local tmAmbienceTrackSec = 140	-- depends on the mp3 file length (all files must be of same length)
 

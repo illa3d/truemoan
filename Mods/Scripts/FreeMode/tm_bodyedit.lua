@@ -1,4 +1,4 @@
--- TrueMoan v2.1 by illa3d
+-- TrueMoan v2.2 by illa3d
 -- Menu in: tm_menu_body.lua
 -------------------------------------------------------------------------------------------------
 -- BODY EDIT DEFINITIONS

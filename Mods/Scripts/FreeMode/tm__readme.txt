@@ -6,8 +6,9 @@
 
 **MOD FEATURES**
 - **Auto Sex Control**
-  - AutoSex/Speed/Thrust/Depth control + random + presets
+  - AutoCum / AutoClimax
   - Smooth transitions (tweening)
+  - Random Speed/Thrust/Depth control + random + presets
   - Cum/Wetness controls + random + presets
 - **TrueFace**
   - Procedural face animation system + presets
@@ -32,8 +33,8 @@
 - **7x skyboxes** (8/4/2k)
 
 **LATEST DOWNLOADS**
-**TrueMoan_v2.1.zip** [2025-12-27] - Just TrueMoan
-**TrueMoan_v2.1_FLABS_v1.02.zip** [2025-12-27] - TrueMoan + Fauna LABS **(recommended)**
+**TrueMoan_v2.2.zip** [2025-12-27] - Just TrueMoan
+**TrueMoan_v2.2_FLABS_v1.02.zip** [2025-12-27] - TrueMoan + Fauna LABS **(recommended)**
 **TrueMoan_Addon_Skyboxes_4k_v1.0.zip** [2025-12-22]
 :warning:**TrueFacials v0.59_ORIGINAL_SCRIPTS_FIX.zip** [2025-12-29] - Required original files, install if they're missing or modified
 https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
@@ -75,10 +76,12 @@ GitHub Repository - https://github.com/illa3d/truemoan
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
 
 [ v2.2 ]
-- Realistic cumming (randomness)
-- Added AutoSex Cumming when aroused 100%
-- Added partner synchronization (set AutoSex tier for partner automatically)
+- Reworked cumming to be more realistic (randomness, delays)
+- AutoSex: AutoCum when aroused 100%
+- AutoSex: AutoCum/AutoClimax options
+- AutoSex: Partner synchronization (sets same AutoSex interaction on partner)
 - Arousal tweaks
+- Performance optimization
 
 [ v2.1 ]
 - Added Futa sex & cum moaning
