@@ -64,11 +64,11 @@ TM_MoanCumBodyTime = 5			-- Cum on body
 TM_WetnessStep = 200			-- Wetness Control step
 
 -- Cum reactions
-TM_BodyDeformUpdateRate = 0.05	-- [0.1] How often per second does the bulging/cumflation/cumdeflation update 
 TM_CumEffectTime = 0.5			-- [0.3-1] How often does a cum effect (moan, wetness) apply while parner cumming inside
 TM_CumPauseTime = 1				-- [0-3 Pause after cumming inside and pull-out (all holes) to start Cum/Cumflation after effects
 
--- Cumflation (belly inflation by cumming inside)
+-- Body deformation
+TM_BodyDeformUpdateRate = 0.05	-- [0.1] How often per second does the bulging/cumflation/cumdeflation update 
+TM_BodyDeformHipSizeLimit = 1.5	-- Maximum amout to increase to (ugly over 1.5)
 TM_CumflateStepUp = 0.005		-- Increment (each 0.1sec once) of hip size increase
 TM_CumflateStepDown = 0.02		-- Decrement (each 0.1sec once) of hip size reduction
-TM_CumflateHipSizeLimit = 1.5	-- Maximum amout to increase to (deformed afer 1.5)

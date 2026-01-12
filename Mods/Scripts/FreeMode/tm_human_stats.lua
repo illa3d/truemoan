@@ -33,11 +33,13 @@ TMHumanStats = {
 	IsCumming = false,
 	CumFrequency = 0,
 	-- Cum reactions
-	CumLastTime = nil,
-	CumLastUpdate = nil,
-	CumEffectLastTime = nil,
-	CumflateHipsSize = nil,
-	CumflateHipsSizeOrig = nil,
+	CumLastTime = 0,
+	CumEffectLastTime = 0,
+	
+	DeformLastTime = 0,
+	DeformHips_Orig = nil,
+	DeformHips_Bulge = nil,
+	DeformHips_Cumflate = nil,
 }
 
 function TMHumanStatsCloneDefault() return TableClone(TMHumanStats) end
@@ -146,7 +148,7 @@ function TMHumanStats:UpdateArousal(deltaTime)
 		local tierMul = AutoSexTierConfig[self.AutoSexTier].Arousal
 		local gain = deltaTime * (TM_HumanArousalIncrease / 100) * tierMul
 		* ArousalHoleMultiplier(self.SexBodyCount)
-		* (self:IsCumflating() and 2 or 1)
+		* (self.IsCumflating and 2 or 1)
 		* (self:IsFeelingCum() and 1.3 or 1)
 		* self.ArousalSeed
 		self.Arousal = Clamp01(self.Arousal + gain)
@@ -179,21 +181,28 @@ function TMHumanStats:CanStartCumOrClimax()
 	return self.AutoSex and self.IsSexActive and self.Arousal == 1 and not self.Climax and not self.IsCumming 
 end
 
--- CUM
-function TMHumanStats:IsFeelingCum()
-	return self.CumLastTime ~= nil
+-- DEFORM
+function TMHumanStats:DeformBackup()
+	if self.DeformHips_Orig == nil then self.DeformHips_Orig = self.TMBValue.Hips end
 end
 
-function TMHumanStats:IsCumflating()
-	return self.CumflateHipsSize ~= nil
+function TMHumanStats:DeformInitCumflate()
+	self:DeformBackup()
+	if self.DeformHips_Cumflate == nil then self.DeformHips_Cumflate = self.DeformHips_Orig end
+end
+
+function TMHumanStats:IsDeflatingDone()
+	self.DeformHips_Orig and self.DeformHips_Cumflate and self.DeformHips_Orig > self.DeformHips_Cumflate
+end
+
+-- CUM
+function TMHumanStats:IsFeelingCum()
+	return self.CumLastTime > 0
 end
 
 function TMHumanStats:CumReset()
-	self.CumLastTime = nil
-	self.CumEffectLastTime = nil
-	self.CumLastUpdate = nil
-	self.CumflateHipsSize = nil
-	self.CumflateHipsSizeOrig = nil
+	self.CumLastTime = 0
+	self.CumEffectLastTime = 0
 end
 
 -------------------------------------------------------------------------------------------------

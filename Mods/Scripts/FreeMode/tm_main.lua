@@ -190,7 +190,7 @@ end
 -------------------------------------------------------------------------------------------------
 
 -- MOUTH EFFECTS
-function TMOnPenetration_Mouth(girl, holeName, inVelocity)
+function TMOnPenetration_Mouth(girl, stats, holeName, inVelocity)
 	if not girl or girl.m_isMale or holeName ~= ActBody.Mouth then return end
 	
 	-- SFX BLOWJOB
@@ -210,7 +210,7 @@ function TMOnPenetration_Mouth(girl, holeName, inVelocity)
 end
 
 -- ANUS, VAGINA EFFECTS
-function TMOnPenetration_AnusVagina(girl, holeName, inVelocity)
+function TMOnPenetration_AnusVagina(girl, stats, holeName, inVelocity)
 	if not girl or girl.m_isMale or holeName ~= ActBody.Vagina and holeName ~= ActBody.Anus then return end
 	
 	-- SFX PLAP
@@ -230,17 +230,12 @@ function TMOnPenetration_AnusVagina(girl, holeName, inVelocity)
 
 	-- BULGING
 	if TM_Bulging then
-		local bulgeKey = "TMBulge" .. girl.Name
-		local lastBulge = Timer(bulgeKey)
-		local insidePercent = ActPenetrationVolumeGet(girl, holeName)
-		if lastBulge > TM_BodyDeformUpdateRate then
-			TMBodyEdit(girl, TMBody.Hips, TM_CumflateHipSizeLimit * insidePercent)
-			-- To much stuttering with both
-			-- TMBodyEdit(girl, TMBody.Waist, TM_CumflateHipSizeLimit * insidePercent)
-			ResetTimer(bulgeKey)
-		end
+		stats.IsBulging = true
+		local deformPercent = ActPenetrationVolumeGet(girl, holeName)
+		TMDeformBodyEffect(girl, stats, deformPercent, true)
 	else
-		--TODO: Reset bulge
+		stats.IsBulging = false
+		TMDeformBodyReset(girl, stats)
 	end
 end
 
@@ -266,8 +261,8 @@ end
 function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	if not girl or girl.m_isMale then return end
 	local stats = TMHStatsGet(girl)
-	TMOnPenetration_Mouth(girl, holeName, inVelocity)
-	TMOnPenetration_AnusVagina(girl, holeName, inVelocity)
+	TMOnPenetration_Mouth(girl, stats, holeName, inVelocity)
+	TMOnPenetration_AnusVagina(girl, stats, holeName, inVelocity)
 	TMOnPenetration_CumInside(girl, stats, holeName)
 
 	if inVelocity < outVelocity then return end -- useless, outVelocity is zero :(
@@ -409,49 +404,90 @@ end
 
 -------------------------------------------------------------------------------------------------
 --===============================================================================================
+-- DEFORM EFFECTS
+--===============================================================================================
+-------------------------------------------------------------------------------------------------
+
+function TMDeformTimerKey(girl) return "TMDeform" .. girl.Name end
+
+function TMDeformBodyEffect(girl, stats, value, isBulgingCall)
+	if not girl or not stats or not value then return end
+	if isBulgingCall and not stats.IsBulging then return end
+	if not isBulgingCall and not stats.IsCumflating then return end
+	
+	local deformKey = TMDeformTimerKey(girl)
+	local lastDeform = Timer(deformKey)
+	if lastDeform < TM_BodyDeformUpdateRate then return end
+	stats.DeformLastTime = lastDeform
+	local hipValue = 0
+
+	stats:DeformBackup()
+	
+	-- Bulging sends normalized values
+	if isBulgingCall then
+		-- take original or cumflated as value
+		local minValue = stats.DeformHips_Cumflate and stats.DeformHips_Cumflate or stats.DeformHips_Orig
+		hipValue = Lerp(minValue, TM_BodyDeformHipSizeLimit, value)
+		stats.DeformHips_Bulge = hipValue
+
+	-- Cumflation sends incremental values
+	elseif 
+		-- take cumflation as minimum value
+		hipValue = ClampValue(value, stats.DeformHips_Orig, TM_BodyDeformHipSizeLimit * 0.8)
+		stats.DeformHips_Cumflate = hipValue
+	end
+	
+	-- Apply the deformation
+	TMBodyEdit(girl, TMBody.Hips, hipValue)
+	ResetTimer(deformKey)
+end
+
+function TMDeformBodyReset(girl, stats)
+	if not girl or not stats then return end
+	if not stats.IsBulging then self.DeformHips_Bulge = nil end 
+	if not stats.IsCumflating then self.DeformHips_Cumflate = nil end
+	if stats.IsCumflating or stats.IsBulging then return end
+	TMBodyEdit(girl, TMBody.Hips, stats.DeformHips_Orig)
+	self.DeformHips_Orig = nil
+end
+
+-------------------------------------------------------------------------------------------------
+--===============================================================================================
 -- CUM INSIDE EFFECTS (every frame)
 --===============================================================================================
 -------------------------------------------------------------------------------------------------
 
-local function TMCumInside_CanPlayEffect(stats)
+local function TMCumInside_CanPlayEffect(stats, lastTime)
 	if not TM_SFX_AllReactions or not TM_SFX_ReactSex then return false end
 	if not stats.CumEffectLastTime then return true end
-	return os.time() - stats.CumEffectLastTime >= TM_CumEffectTime
+	return stats.CumEffectLastTime >= TM_CumEffectTime
 end
 
 -- START OF CUM / CUMFLATION
 function TMOnPenetration_CumInside(girl, stats, holeName)
 	if not girl or girl.m_isMale or not stats then return end
 	-- throttle only if we have a previous update time
-	local now = os.time()
-	if stats.CumLastUpdate and now - stats.CumLastUpdate < TM_BodyDeformUpdateRate then return end
+	local lastTime = Timer(TMDeformTimerKey(girl))
+	if stats.DeformLastTime and stats.DeformLastTime < TM_BodyDeformUpdateRate then return end
+	
 	local partner = SexPartner_Get(girl, holeName)
 	if partner and not HumanIsCumming(partner) then return end
-	stats.CumLastTime = now
-	stats.CumLastUpdate = now
+	stats.CumLastTime = lastTime
+	stats.DeformLastTime = lastTime
 	-- Cum & Cumflation effects (same)
 	if TMCumInside_CanPlayEffect(stats) then
 		-- SFX: CUM INSIDE / CUMFLATION
 		if stats.AllowMoaning then TMPlayMoan(girl, TM_Cumflate and TMMoan.Cumflating or TMMoan.CumInside) end
-		stats.CumEffectLastTime = now
+		stats.CumEffectLastTime = lastTime
 	end
 	-- Cumflation
 	if TM_Cumflate then
-		if stats.CumflateHipsSize == nil then
-			-- run once to intialize cumflation
-			stats.CumflateHipsSizeOrig = stats.TMBValue.Hips
-			stats.CumflateHipsSize = stats.CumflateHipsSizeOrig
-			TMBodyEdit(girl, TMBody.Hips, stats.CumflateHipsSize)
-			return
-		end
-		-- run every other time while penetration is on
-		stats.CumflateHipsSize = math.min(stats.CumflateHipsSize + TM_CumflateStepUp, TM_CumflateHipSizeLimit)
-		TMBodyEdit(girl, TMBody.Hips, stats.CumflateHipsSize)
-	elseif stats.CumflateHipsSize ~= nil then
-		-- Reset cumflation (in case it was switched mid cumflation)
-		TMBodyEdit(girl, TMBody.Hips, stats.CumflateHipsSizeOrig)
-		stats.CumflateHipsSize = nil
-		stats.CumflateHipsSizeOrig = nil
+		stats.IsCumflating = true
+		stats:DeformInitCumflate()
+		TMDeformBodyEffect(human, stats, stats.DeformHips_Cumflate + TM_CumflateStepUp, false)
+	else 
+		stats.IsCumflating = false
+		TMDeformBodyReset(girl, stats)
 	end 
 end
 
@@ -463,28 +499,27 @@ function TMOnUpdate_CumInside_End(girl)
 
 	local now = os.time()
 	-- throttle expensive logic
-	if stats.CumLastUpdate and now - stats.CumLastUpdate < TM_BodyDeformUpdateRate then return end
+	if stats.DeformLastTime and now - stats.DeformLastTime < TM_BodyDeformUpdateRate then return end
 	-- wait after last cum
 	if now - stats.CumLastTime < TM_CumPauseTime then return end
 	-- still having sex
 	if HasSexPartner_HoleAny(girl) then return end
-	stats.CumLastUpdate = now
+	stats.DeformLastTime = now
 
 	-- CUMFLATION DEFLATE
-	if TM_Cumflate and stats.CumflateHipsSizeOrig and stats.CumflateHipsSize then
-		if stats.CumflateHipsSize > stats.CumflateHipsSizeOrig then
+	if TM_Cumflate and stats.DeformHips_Orig and stats.DeformHips_Cumflate then
+		if not stats:IsDeflatingDone() then
 			if TMCumInside_CanPlayEffect(stats) then
 				-- SFX: CUMDEFLATION
 				if stats.AllowMoaning then TMPlayMoan(girl, TMMoan.Cumflating) end
 				if TM_WetSex then WetSet(girl, 50000, ActBody.Vagina) end
 				stats.CumEffectLastTime = now
 			end
-			stats.CumflateHipsSize = math.max(stats.CumflateHipsSize - TM_CumflateStepDown, stats.CumflateHipsSizeOrig)
-			TMBodyEdit(girl, TMBody.Hips, stats.CumflateHipsSize)
+			TMDeformBodyEffect(human, stats, stats.DeformHips_Cumflate - TM_CumflateStepDown, false)
 		else
 			-- Deflate done
-			TMBodyEdit(girl, TMBody.Hips, stats.CumflateHipsSizeOrig)
-			stats:CumReset()
+			TMBodyEdit(girl, TMBody.Hips, stats.DeformHips_Orig)
+			TMDeformBodyReset(girl, stats)
 			TMOnCumInside_EndCumflate(girl)
 		end
 	else
