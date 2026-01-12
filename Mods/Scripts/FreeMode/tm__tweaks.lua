@@ -64,7 +64,7 @@ TM_MoanCumBodyTime = 5			-- Cum on body
 TM_WetnessStep = 200			-- Wetness Control step
 
 -- Cum reactions
-TM_CumStepTime = 0.1			-- [0.1] How often per second does the cumflation/cumdeflation update 
+TM_BodyDeformUpdateRate = 0.05	-- [0.1] How often per second does the bulging/cumflation/cumdeflation update 
 TM_CumEffectTime = 0.5			-- [0.3-1] How often does a cum effect (moan, wetness) apply while parner cumming inside
 TM_CumPauseTime = 1				-- [0-3 Pause after cumming inside and pull-out (all holes) to start Cum/Cumflation after effects
 

@@ -108,6 +108,9 @@ label TMMenuOptions_SexSfx(human)
 	+ "Cumflation	| " .. AccBool(TM_Cumflate)
 		TM_Cumflate = not TM_Cumflate
 		Return()
+	+ "Bulging	| " .. AccBool(TM_Bulging)
+		TM_Bulging = not TM_Bulging
+		Return()
 	+ "Wet sex	| " .. AccBool(TM_WetSex)
 		TM_WetSex = not TM_WetSex
 		Return()

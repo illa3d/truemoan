@@ -138,7 +138,7 @@ function TMOnUpdate_Humans(humans)
 	for _, human in ipairs(humans) do
 		TMOnUpdate_Futa(human)
 		TMOnUpdate_AutoSexClimax(human)
-		TMOnUpdate_FinishCumCumflate(human)
+		TMOnUpdate_CumInside_End(human)
 	end
 end
 
@@ -189,52 +189,58 @@ end
 -- PENETRATION SEX REACTIONS (every frame)
 -------------------------------------------------------------------------------------------------
 
--- BLOWJOB SFX
-function TMOnPenetration_BlowJob(girl, holeName, inVelocity)
-	if not TM_SFX_AllReactions or not TM_SFX_ReactBlowjob or not girl or girl.m_isMale or not TMHStatsGet(girl).AllowMoaning then return end
-	if holeName ~= ActBody.Mouth then return end
-
-	local timerKey = "TMBlowJobSFX_" .. girl.Name
-	local lastBlowJobSfx = Timer(timerKey)
+-- MOUTH EFFECTS
+function TMOnPenetration_Mouth(girl, holeName, inVelocity)
+	if not girl or girl.m_isMale or holeName ~= ActBody.Mouth then return end
 	
-	local speed = Clamp01(inVelocity)
-	local pause = Lerp(GetRandomFloat(0.8, 1.2), 0.2, speed)
-	local distance = ActPenetrationDistanceGet(girl, ActBody.Mouth)
-	
-	if lastBlowJobSfx > pause and distance < 0.08 then
-		local tmSfx = distance < 0.04 and TMSfx.Blowjob_Deep or TMSfx.Blowjob
-		-- SFX: Blowjob
-		TMPlayHumanSFX(girl, tmSfx, holeName)
-		ResetTimer(timerKey)
+	-- SFX BLOWJOB
+	if TM_SFX_AllReactions and TM_SFX_ReactBlowjob and TMHStatsGet(girl).AllowMoaning then
+		local timerKey = "TMBlowJobSFX_" .. girl.Name
+		local lastBlowJobSfx = Timer(timerKey)
+		local speed = Clamp01(inVelocity)
+		local pause = Lerp(GetRandomFloat(0.8, 1.2), 0.2, speed)
+		local distance = ActPenetrationDistanceGet(girl, ActBody.Mouth)
+		if lastBlowJobSfx > pause and distance < 0.08 then
+			local tmSfx = distance < 0.04 and TMSfx.Blowjob_Deep or TMSfx.Blowjob
+			-- SFX: Blowjob
+			TMPlayHumanSFX(girl, tmSfx, holeName)
+			ResetTimer(timerKey)
+		end
 	end
 end
 
--- PLAP SFX
-function TMOnPenetration_Plap(girl, holeName, inVelocity)
-	if not TM_SFX_AllReactions or not TM_SFX_ReactPlap or not girl or girl.m_isMale then return end
-	if holeName ~= ActBody.Vagina and holeName ~= ActBody.Anus then return end
+-- ANUS, VAGINA EFFECTS
+function TMOnPenetration_AnusVagina(girl, holeName, inVelocity)
+	if not girl or girl.m_isMale or holeName ~= ActBody.Vagina and holeName ~= ActBody.Anus then return end
 	
-	local timerKey = "TMPlapSFX_" .. girl.Name
-	local bulgeKey = "TMBulge" .. girl.Name
-	local lastPlapSfx = Timer(timerKey)
-	local lastBulge = Timer(bulgeKey)
-	
-	local speed = Clamp01(inVelocity)
-	local pause = Lerp(GetRandomFloat(0.8, 1.2), 0.3, speed)
-	local distance = ActPenetrationDistanceGet(girl, holeName)
-	local insidePercent = ActPenisFillPercentGet(girl, holeName)
-	
-	if lastBulge > 0.05 then
-		TMBodyEdit(girl, TMBody.Hips, TM_CumflateHipSizeLimit * insidePercent)
-		-- To much stuttering with both
-		-- TMBodyEdit(girl, TMBody.Waist, TM_CumflateHipSizeLimit * insidePercent)
-		ResetTimer(bulgeKey)
+	-- SFX PLAP
+	if TM_SFX_AllReactions and TM_SFX_ReactPlap then
+		local timerKey = "TMPlapSFX_" .. girl.Name
+		local lastPlapSfx = Timer(timerKey)
+		local speed = Clamp01(inVelocity)
+		local pause = Lerp(GetRandomFloat(0.8, 1.2), 0.3, speed)
+		local distance = ActPenetrationDistanceGet(girl, holeName)
+
+		if lastPlapSfx > pause and distance < 0.065 then
+			-- SFX: Sex plap
+			TMPlayHumanSFX(girl, TMSfx.Plap, holeName, speed)
+			ResetTimer(timerKey)
+		end
 	end
-	
-	if lastPlapSfx > pause and distance < 0.065 then
-		-- SFX: Sex plap
-		TMPlayHumanSFX(girl, TMSfx.Plap, holeName, speed)
-		ResetTimer(timerKey)
+
+	-- BULGING
+	if TM_Bulging then
+		local bulgeKey = "TMBulge" .. girl.Name
+		local lastBulge = Timer(bulgeKey)
+		local insidePercent = ActPenetrationVolumeGet(girl, holeName)
+		if lastBulge > TM_BodyDeformUpdateRate then
+			TMBodyEdit(girl, TMBody.Hips, TM_CumflateHipSizeLimit * insidePercent)
+			-- To much stuttering with both
+			-- TMBodyEdit(girl, TMBody.Waist, TM_CumflateHipSizeLimit * insidePercent)
+			ResetTimer(bulgeKey)
+		end
+	else
+		--TODO: Reset bulge
 	end
 end
 
@@ -260,9 +266,9 @@ end
 function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	if not girl or girl.m_isMale then return end
 	local stats = TMHStatsGet(girl)
-	TMOnPenetration_CumCumflate(girl, stats, holeName)
-	TMOnPenetration_BlowJob(girl, holeName, inVelocity)
-	TMOnPenetration_Plap(girl, holeName, inVelocity)
+	TMOnPenetration_Mouth(girl, holeName, inVelocity)
+	TMOnPenetration_AnusVagina(girl, holeName, inVelocity)
+	TMOnPenetration_CumInside(girl, stats, holeName)
 
 	if inVelocity < outVelocity then return end -- useless, outVelocity is zero :(
 
@@ -403,28 +409,28 @@ end
 
 -------------------------------------------------------------------------------------------------
 --===============================================================================================
--- CUM/CUMFLATION REACTIONS (every frame)
+-- CUM INSIDE EFFECTS (every frame)
 --===============================================================================================
 -------------------------------------------------------------------------------------------------
 
-local function TMHCanPlayCumEffect(stats)
+local function TMCumInside_CanPlayEffect(stats)
 	if not TM_SFX_AllReactions or not TM_SFX_ReactSex then return false end
 	if not stats.CumEffectLastTime then return true end
 	return os.time() - stats.CumEffectLastTime >= TM_CumEffectTime
 end
 
 -- START OF CUM / CUMFLATION
-function TMOnPenetration_CumCumflate(girl, stats, holeName)
+function TMOnPenetration_CumInside(girl, stats, holeName)
 	if not girl or girl.m_isMale or not stats then return end
 	-- throttle only if we have a previous update time
 	local now = os.time()
-	if stats.CumLastUpdate and now - stats.CumLastUpdate < TM_CumStepTime then return end
+	if stats.CumLastUpdate and now - stats.CumLastUpdate < TM_BodyDeformUpdateRate then return end
 	local partner = SexPartner_Get(girl, holeName)
 	if partner and not HumanIsCumming(partner) then return end
 	stats.CumLastTime = now
 	stats.CumLastUpdate = now
 	-- Cum & Cumflation effects (same)
-	if TMHCanPlayCumEffect(stats) then
+	if TMCumInside_CanPlayEffect(stats) then
 		-- SFX: CUM INSIDE / CUMFLATION
 		if stats.AllowMoaning then TMPlayMoan(girl, TM_Cumflate and TMMoan.Cumflating or TMMoan.CumInside) end
 		stats.CumEffectLastTime = now
@@ -450,14 +456,14 @@ function TMOnPenetration_CumCumflate(girl, stats, holeName)
 end
 
 -- END OF CUM / CUMFLATION
-function TMOnUpdate_FinishCumCumflate(girl)
+function TMOnUpdate_CumInside_End(girl)
 	if not girl or girl.m_isMale then return end
 	local stats = TMHStatsGet(girl)
 	if not stats or not stats.CumLastTime then return end
 
 	local now = os.time()
 	-- throttle expensive logic
-	if stats.CumLastUpdate and now - stats.CumLastUpdate < TM_CumStepTime then return end
+	if stats.CumLastUpdate and now - stats.CumLastUpdate < TM_BodyDeformUpdateRate then return end
 	-- wait after last cum
 	if now - stats.CumLastTime < TM_CumPauseTime then return end
 	-- still having sex
@@ -467,7 +473,7 @@ function TMOnUpdate_FinishCumCumflate(girl)
 	-- CUMFLATION DEFLATE
 	if TM_Cumflate and stats.CumflateHipsSizeOrig and stats.CumflateHipsSize then
 		if stats.CumflateHipsSize > stats.CumflateHipsSizeOrig then
-			if TMHCanPlayCumEffect(stats) then
+			if TMCumInside_CanPlayEffect(stats) then
 				-- SFX: CUMDEFLATION
 				if stats.AllowMoaning then TMPlayMoan(girl, TMMoan.Cumflating) end
 				if TM_WetSex then WetSet(girl, 50000, ActBody.Vagina) end
@@ -479,12 +485,12 @@ function TMOnUpdate_FinishCumCumflate(girl)
 			-- Deflate done
 			TMBodyEdit(girl, TMBody.Hips, stats.CumflateHipsSizeOrig)
 			stats:CumReset()
-			TMOnCumflatePulloutEffects(girl)
+			TMOnCumInside_EndCumflate(girl)
 		end
 	else
 		-- NORMAL CUM (no cumflation)
 		stats:CumReset()
-		TMOnCumPulloutEffects(girl)
+		TMOnCumInside_EndCum(girl)
 	end
 end
 
@@ -493,7 +499,7 @@ end
 -------------------------------------------------------------------------------------------------
 
 -- CUM REACTION ON PULLOUT
-function TMOnCumPulloutEffects(girl)
+function TMOnCumInside_EndCum(girl)
 	if not girl or girl.m_isMale then return end
 	if TM_WetSex then WetSet(girl, 1000, ActBody.Vagina) end
 	local function Increment(oldValue, newValue) return IncrementMultiplierRandom(oldValue, TM_AutoSexClimaxTimeStep, 0.8, 1.5) end 
@@ -511,7 +517,7 @@ function TMOnCumPulloutEffects(girl)
 end
 
 -- CUMFLATION REACTION ON PULLOUT
-function TMOnCumflatePulloutEffects(girl)
+function TMOnCumInside_EndCumflate(girl)
 	if not girl or girl.m_isMale then return end
 	if TM_WetSex then WetSet(girl, 10000, ActBody.Vagina) end
 	local delay = 0.4
