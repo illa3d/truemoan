@@ -199,7 +199,7 @@ function TMOnPenetration_BlowJob(girl, holeName, inVelocity)
 	
 	local speed = Clamp01(inVelocity)
 	local pause = Lerp(GetRandomFloat(0.8, 1.2), 0.2, speed)
-	local distance = ActGetDistance(girl, ActBody.Mouth)
+	local distance = ActPenetrationDistanceGet(girl, ActBody.Mouth)
 	
 	if lastBlowJobSfx > pause and distance < 0.08 then
 		local tmSfx = distance < 0.04 and TMSfx.Blowjob_Deep or TMSfx.Blowjob
@@ -215,11 +215,21 @@ function TMOnPenetration_Plap(girl, holeName, inVelocity)
 	if holeName ~= ActBody.Vagina and holeName ~= ActBody.Anus then return end
 	
 	local timerKey = "TMPlapSFX_" .. girl.Name
+	local bulgeKey = "TMBulge" .. girl.Name
 	local lastPlapSfx = Timer(timerKey)
+	local lastBulge = Timer(bulgeKey)
 	
 	local speed = Clamp01(inVelocity)
 	local pause = Lerp(GetRandomFloat(0.8, 1.2), 0.3, speed)
-	local distance = ActGetDistance(girl, holeName)
+	local distance = ActPenetrationDistanceGet(girl, holeName)
+	local insidePercent = ActPenisFillPercentGet(girl, holeName)
+	
+	if lastBulge > 0.05 then
+		TMBodyEdit(girl, TMBody.Hips, TM_CumflateHipSizeLimit * insidePercent)
+		-- To much stuttering with both
+		-- TMBodyEdit(girl, TMBody.Waist, TM_CumflateHipSizeLimit * insidePercent)
+		ResetTimer(bulgeKey)
+	end
 	
 	if lastPlapSfx > pause and distance < 0.065 then
 		-- SFX: Sex plap

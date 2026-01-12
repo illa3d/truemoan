@@ -246,14 +246,54 @@ function ActGet(human, body)
 	else return nil end
 end
 
-function ActGetDistance(human, body)
-	if not HasSexPartner(human, body) then return 1000 end
-	if body == ActBody.PenisHand then return 1000 -- TODO Figure out how to find distance
-	elseif body == ActBody.PenisHole then return human.Penis.Hole.DistanceToEntry
-	elseif body == ActBody.Mouth then return human.Mouth.DistanceToEntry
-	elseif body == ActBody.Anus then return human.Anus.DistanceToEntry
-	elseif body == ActBody.Vagina then return human.Vagina.DistanceToEntry
+-------------------------------------------------------------------------------------------------
+-- (NORMALIZED) INTERACTION DETAILS
+-------------------------------------------------------------------------------------------------
+
+-- Raw penetration distance
+function ActPenetrationDistanceGet(human, actBody)
+	if not HasSexPartner(human, actBody) then return 1000 end
+	if actBody == ActBody.PenisHand then return 1000 -- TODO Figure out how to find distance
+	elseif actBody == ActBody.PenisHole then return human.Penis.Hole.DistanceToEntry
+	elseif actBody == ActBody.Mouth then return human.Mouth.DistanceToEntry
+	elseif actBody == ActBody.Anus then return human.Anus.DistanceToEntry
+	elseif actBody == ActBody.Vagina then return human.Vagina.DistanceToEntry
 	else return 1000 end
+end
+
+-- Normalized penetration depth combined with penis volume (body and penis size influenced)
+function ActPenetrationDepthGet(girl, actBody)
+	if not girl or not holenName then return 0 end
+	local partner = SexPartner_Get(girl, actBody)
+	if not partner or not partner.Penis then return 0 end
+	return Clamp01(partner.Penis.InsideLength / partner.Penis.Length)
+end
+
+-- Normalized penetration amount combined with penis volume (body and penis size influenced)
+function ActPenetrationVolumeGet(girl, actBody)
+	if not girl or not actBody then return 0 end
+	local partner = SexPartner_Get(girl, actBody)
+	if not partner or not partner.Penis then return 0 end
+	-- Normalized penetration
+	local penetration01 = partner.Penis.InsideLength / partner.Penis.Length
+	penetration01 = Clamp01(penetration01)
+	-- Body Volume = relative body scale ^ contribution
+	local bodyVolume = (partner.transform.lossyScale.x / girl.transform.lossyScale.x) ^ 0.8
+	-- Penis Volume = length scale ^ contribution
+	local penisLengthVolume = partner.Penis.LengthScale --^ 1
+	-- Volume ratio
+	local volumeRatio = bodyVolume * penisLengthVolume
+	-- Compress influence of small volumes
+	local effectiveVolume = volumeRatio < 1 and volumeRatio ^ 1.8 or volumeRatio
+	-- Size-scaled dead zone
+	local deadZone = 0.30 / effectiveVolume
+	local effectivePenetration = penetration01 - deadZone
+	if effectivePenetration < 0 then effectivePenetration = 0 end
+	-- Linear progression
+	local progression = effectivePenetration * effectiveVolume
+	-- Size-limited maximum bulge
+	local maxBulge = effectiveVolume / (effectiveVolume + 1)
+	return Clamp01(progression * maxBulge)
 end
 
 -------------------------------------------------------------------------------------------------
