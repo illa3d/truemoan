@@ -2,53 +2,109 @@
 -------------------------------------------------------------------------------------------------
 -- HUMAN FUNCTIONS
 -------------------------------------------------------------------------------------------------
--- HUMAN NAMES (used with game.AddRepeatAnim(... and game.RemoveAnim(...)
--- -- Head & Face
--- human.headNames
--- human.browNames
--- human.upperEyelidNames
--- human.lowerEyelidNames
--- human.eyeNames
--- human.noseNames
--- human.cheekNames
--- human.jawNames
--- human.lipsCornerNames
--- human.upperLipsNames
--- human.lowerLipsNames
--- human.tongueNames
--- -- Neck & Upper Torso
--- human.neckNames
--- human.shoulderNames
--- human.chestNames
--- human.breastNames
--- -- Spine & Core
--- human.spineNames
--- human.hipsNames
--- -- Arms & Hands
--- human.upperarmNames
--- human.forearmNames
--- human.handNames
--- human.thumbNames
--- human.indexNames
--- human.middleNames
--- human.ringNames
--- human.pinkyNames
--- -- Lower Body & Legs
--- human.thighNames
--- human.calfNames
--- -- Feet
--- -- human.footNames
--- human.toeNames
--- -- Other / Non-anatomical
--- human.ignoreNames
 
--- DEFINITIONS
 -- Used with GetHumanPos, values correspond with "holeName" from OnPenetration, except Penis
-HumanPart = {
+HumanPos = {
 	Penis = "Penis",
 	Mouth = "Mouth",
 	Anus = "Anus",
 	Vagina = "Vagina",
+}
+
+-- HUMAN PARTS
+-- used with game.AddRepeatAnim(... and game.RemoveAnim(...)
+HumanPart = {
+	-- Penis
+	Penis = "Penis",
+	-- Holes
+	Mouth = "Mouth",
+	Vagina = "Vagina",
+	Anus = "Anus",
+	-- Head & Face
+	Head = "headNames",
+	Brow = "browNames",
+	UpperEyelid = "upperEyelidNames",
+	LowerEyelid = "lowerEyelidNames",
+	Eye = "eyeNames",
+	Nose = "noseNames",
+	Cheek = "cheekNames",
+	Jaw = "jawNames",
+	LipsCorner = "lipsCornerNames",
+	UpperLips = "upperLipsNames",
+	LowerLips = "lowerLipsNames",
+	Tongue = "tongueNames",
+	-- Neck & Upper Torso",
+	Neck = "neckNames",
+	Shoulder = "shoulderNames",
+	Chest = "chestNames",
+	Breast = "breastNames",
+	-- Spine & Core",
+	Spine = "spineNames",
+	Hips = "hipsNames",
+	-- Arms & Hands",
+	Upperarm = "upperarmNames",
+	Forearm = "forearmNames",
+	Hand = "handNames",
+	Thumb = "thumbNames",
+	Index = "indexNames",
+	Middle = "middleNames",
+	Ring = "ringNames",
+	Pinky = "pinkyNames",
+	-- Lower Body & Legs",
+	Thigh = "thighNames",
+	Calf = "calfNames",
+	-- Feet",
+	Foot = "footNames",
+	Toe = "toeNames",
+	-- Other / Non-anatomical",
+	Ignore = "ignoreNames",
+}
+
+local HumanPartFunc = {
+	-- Penis
+	[HumanPart.Penis] = function(h) return h.Penis end,
+	-- Holes
+	[HumanPart.Mouth] = function(h) return h.Mouth end,
+	[HumanPart.Vagina] = function(h) return h.Vagina end,
+	[HumanPart.Anus] = function(h) return h.Anus end,
+	-- Head & Face
+	[HumanPart.Head] = function(h) return h.headNames end,
+	[HumanPart.Brow] = function(h) return h.browNames end,
+	[HumanPart.UpperEyelid] = function(h) return h.upperEyelidNames end,
+	[HumanPart.LowerEyelid] = function(h) return h.lowerEyelidNames end,
+	[HumanPart.Eye] = function(h) return h.eyeNames end,
+	[HumanPart.Nose] = function(h) return h.noseNames end,
+	[HumanPart.Cheek] = function(h) return h.cheekNames end,
+	[HumanPart.Jaw] = function(h) return h.jawNames end,
+	[HumanPart.LipsCorner] = function(h) return h.lipsCornerNames end,
+	[HumanPart.UpperLips] = function(h) return h.upperLipsNames end,
+	[HumanPart.LowerLips] = function(h) return h.lowerLipsNames end,
+	[HumanPart.Tongue] = function(h) return h.tongueNames end,
+	-- Neck & Upper Torso
+	[HumanPart.Neck] = function(h) return h.neckNames end,
+	[HumanPart.Shoulder] = function(h) return h.shoulderNames end,
+	[HumanPart.Chest] = function(h) return h.chestNames end,
+	[HumanPart.Breast] = function(h) return h.breastNames end,
+	-- Spine & Core
+	[HumanPart.Spine] = function(h) return h.spineNames end,
+	[HumanPart.Hips] = function(h) return h.hipsNames end,
+	-- Arms & Hands
+	[HumanPart.Upperarm] = function(h) return h.upperarmNames end,
+	[HumanPart.Forearm] = function(h) return h.forearmNames end,
+	[HumanPart.Hand] = function(h) return h.handNames end,
+	[HumanPart.Thumb] = function(h) return h.thumbNames end,
+	[HumanPart.Index] = function(h) return h.indexNames end,
+	[HumanPart.Middle] = function(h) return h.middleNames end,
+	[HumanPart.Ring] = function(h) return h.ringNames end,
+	[HumanPart.Pinky] = function(h) return h.pinkyNames end,
+	-- Lower Body & Legs
+	[HumanPart.Thigh] = function(h) return h.thighNames end,
+	[HumanPart.Calf] = function(h) return h.calfNames end,
+	-- Feet
+	[HumanPart.Foot] = function(h) return h.footNames end,
+	[HumanPart.Toe] = function(h) return h.toeNames end,
+	-- Other / Non-anatomical
+	[HumanPart.Ignore] = function(h) return h.ignoreNames end,
 }
 
 -------------------------------------------------------------------------------------------------
@@ -116,17 +172,17 @@ function HumanIsCumming(human)
 	return human and human.Penis and game.HasAnim(human.Penis)
 end
 
-function HumanPosGet(human, humanPart)
-	if not human or not humanPart then return Pos(0,0,0) end
+function HumanPosGet(human, humanPos)
+	if not human or not humanPos then return Pos(0,0,0) end
 	-- transform is somewhere usually off body location, prefer not to use it
 	function PosGet_Transform(part) return Pos(part.transform.position.x, part.transform.position.y, part.transform.position.z) end
 	function PosGet_PenisBase(part) return Pos(part.PhysicsWorldPos.x, part.PhysicsWorldPos.y, part.PhysicsWorldPos.z) end
 	function PosGet_HoleOutside(part) return Pos(part.m_entry.transform.position.x, part.m_entry.transform.position.y, part.m_entry.transform.position.z) end
 	function PosGet_HoleInside(part) return Pos(part.m_autoTarget.transform.position.x, part.m_autoTarget.transform.position.y, part.m_autoTarget.transform.position.z) end
-	if humanPart == HumanPart.Penis and human.Penis then return PosGet_PenisBase(human.Penis)
-	elseif humanPart == HumanPart.Mouth and human.Mouth then return PosGet_HoleInside(human.Mouth)
-	elseif humanPart == HumanPart.Anus and human.Anus then return PosGet_HoleOutside(human.Anus)
-	elseif humanPart == HumanPart.Vagina and human.Vagina then return PosGet_HoleOutside(human.Vagina)
+	if humanPos == HumanPos.Penis and human.Penis then return PosGet_PenisBase(human.Penis)
+	elseif humanPos == HumanPos.Mouth and human.Mouth then return PosGet_HoleInside(human.Mouth)
+	elseif humanPos == HumanPos.Anus and human.Anus then return PosGet_HoleOutside(human.Anus)
+	elseif humanPos == HumanPos.Vagina and human.Vagina then return PosGet_HoleOutside(human.Vagina)
 	end return Pos(0,0,0)
 end
 
@@ -174,4 +230,30 @@ function HumanReset(human, resetsex, resetanim, resetpose, resetface)
 	if resetface == nil or resetface then
 		human.Pose(FaceNeutral())
 	end
+end
+
+-------------------------------------------------------------------------------------------------
+-- HUMAN ANIMATION
+-------------------------------------------------------------------------------------------------
+
+function HumanPartGet(human, humanPart)
+	local PartGet = HumanPartFunc[humanPart]
+	return PartGet and PartGet(human) or nil
+end
+
+function HumanAnimHas(human, humanPart)
+	local part = HumanPartGet(human, humanPart)
+	return part and game.HasAnim(part) or false
+end
+
+function HumanAnimRemove(human, humanPart)
+	local part = HumanPartGet(human, humanPart)
+	if part then game.RemoveAnim(part) end
+	return part and true or false
+end
+
+function HumanAnimRepeatAdd(human, humanPart, repeatSec, func)
+	local part = HumanPartGet(human, humanPart)
+	if part then game.AddRepeatAnim(repeatSec, func, part) end
+	return part and true or false
 end
