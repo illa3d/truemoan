@@ -1,238 +1,177 @@
 -- TrueMoan v2.2 by illa3d
--- Requires: tm_act.lua, tm_autosex.lua
--- Per-human AUTHORITATIVE stat storage (including EditBody data)
-local TM_HumanStatsList = {}
+-------------------------------------------------------------------------------------------------
+-- HUMAN FUNCTIONS
+-------------------------------------------------------------------------------------------------
+-- HUMAN NAMES (used with game.AddRepeatAnim(... and game.RemoveAnim(...)
+-- -- Head & Face
+-- human.headNames
+-- human.browNames
+-- human.upperEyelidNames
+-- human.lowerEyelidNames
+-- human.eyeNames
+-- human.noseNames
+-- human.cheekNames
+-- human.jawNames
+-- human.lipsCornerNames
+-- human.upperLipsNames
+-- human.lowerLipsNames
+-- human.tongueNames
+-- -- Neck & Upper Torso
+-- human.neckNames
+-- human.shoulderNames
+-- human.chestNames
+-- human.breastNames
+-- -- Spine & Core
+-- human.spineNames
+-- human.hipsNames
+-- -- Arms & Hands
+-- human.upperarmNames
+-- human.forearmNames
+-- human.handNames
+-- human.thumbNames
+-- human.indexNames
+-- human.middleNames
+-- human.ringNames
+-- human.pinkyNames
+-- -- Lower Body & Legs
+-- human.thighNames
+-- human.calfNames
+-- -- Feet
+-- -- human.footNames
+-- human.toeNames
+-- -- Other / Non-anatomical
+-- human.ignoreNames
 
--- DEFINITION (never update this, USE TMHStatsSet_BodyEdit or BodyEdit functions)
-TMHumanStats = {
-	-- Time
-	UpdateDelta = 0,
-	-- Customization
-	TMBValue = nil,
-	NeedsBodyApply = false,
-	-- Sex
-	AllowMoaning = true,
-	IsSexActive = false,
-	-- Where
-	PenisHole = false,
-	PenisHand = false,
-	Mouth = false,
-	Anus = false,
-	Vagina = false,
-	-- Where list
-	SexBody = nil,
-	SexBodyCount = 0,
-	-- Arousal
-	Arousal = 0,
-	ArousalSeed = 1,
-	Climax = false,
-	-- AutoSex
-	AutoSex = false,
-	AutoSexTier = nil,
-	-- Cum
-	IsCumming = false,
-	CumFrequency = 0,
-	-- Cum reactions
-	CumLastTime = nil,
-	CumLastUpdate = nil,
-	CumEffectLastTime = nil,
-	CumflateHipsSize = nil,
-	CumflateHipsSizeOrig = nil,
+-- DEFINITIONS
+-- Used with GetHumanPos, values correspond with "holeName" from OnPenetration, except Penis
+HumanPart = {
+	Penis = "Penis",
+	Mouth = "Mouth",
+	Anus = "Anus",
+	Vagina = "Vagina",
 }
 
-function TMHumanStatsCloneDefault() return TableClone(TMHumanStats) end
-
-local TM_UpdateDelta = 0		-- cumulative deltaTime
-local TM_UpdateDeltaMax = 0.25	-- maximum update step
-local TM_UpdateRate = 0.05		-- update tick (20 Hz)
-local TM_UpdateRateStats = 0.1	-- stats update tick (10 Hz)
--------------------------------------------------------------------------------------------------
--- HUMAN STATS
 -------------------------------------------------------------------------------------------------
 
-local function TMHStatsNew(human)
-	local clone = TMHumanStatsCloneDefault() -- TMHUmanStats is authoritative source of Stats for each human
-	clone.TMBValue = TMBodyValueCloneDefault() --TMBValue is AUTHORITATIVE source of Human Body customization values
-	clone.SexBody = {}
-	clone.ArousalSeed = GetRandomFloatAround(1, 0.1) -- Add random seed variation 10%
-	clone.AutoSexTier = TM_AutoSexTier_Default
-	TM_HumanStatsList[human] = clone
+function HumanRemove(human, immediate)
+	if immediate then game.RemoveHuman(human)
+	else HumanReset(human) Delayed(1, function () game.RemoveHuman(human) end) end
 end
 
-local function TMHStatsRemove(human)
-	TM_HumanStatsList[human] = nil
+function HumansFreeze(frozen)
+	game.m_freezeAllActors = frozen
 end
 
-function TMHStatsGet(human)
-	if not human then return nil end
-	if TM_HumanStatsList[human] == nil then TMHStatsNew(human) end
-	return TM_HumanStatsList[human]
+-- CLOTHES STUFF
+function HumanClothesRandom(human)
+	if TM_Clothes_Custom == nil or #TM_Clothes_Custom == 0 then return end
+	HumanClothesReplace(human, ListItemRandom(TM_Clothes_Custom))
 end
 
-function TMHStatsReset(human)
-	TMHStatsRemove(human)
-	TMHStatsNew(human)
+function HumanClothesReplace(human, targetCharacterName)
+	if human == nil or targetCharacterName == nil or type(targetCharacterName) ~= "string" then return end
+	game.ReplaceClothing(human, targetCharacterName)
 end
 
--- HUMAN STATS UPDATE
-function TMOnUpdate_HumanStats(humans, deltaTime)
-	-- global scheduler cap
-	TM_UpdateDelta = TM_UpdateDelta + deltaTime
-	if TM_UpdateDelta < TM_UpdateRate then return end
-	TM_UpdateDelta = 0
-	local Seen = {}
-	for _, human in ipairs(humans) do
-		Seen[human] = true
-		local stats = TMHStatsGet(human)
-		if stats then
-			-- BodyEdit (never throttled)
-			if stats.NeedsBodyApply then TMHStats_TMBApply(human) end
-			if TM_AutoSex then
-				-- per-human update accumulator
-				stats.UpdateDelta = stats.UpdateDelta + deltaTime
-				if stats.UpdateDelta >= TM_UpdateRateStats then
-					-- consume accumulated time
-					local step = math.min(stats.UpdateDelta, TM_UpdateDeltaMax)
-					stats.UpdateDelta = 0
-					-- logic update (ONCE)
-					stats:UpdateSex(human)
-					stats:UpdateArousal(step)
-				end
-			end
-		end
-	end
-
-	-- Cleanup non existing humans
-	for human in pairs(TM_HumanStatsList) do
-		if not Seen[human] then TMHStatsRemove(human) end
-	end
-end
-
--------------------------------------------------------------------------------------------------
--- HUMAN STATS SEX UPDATE
--------------------------------------------------------------------------------------------------
--- SEX
-function TMHumanStats:UpdateSex(human)
-	-- check each body interaction for sex activity
-	for _, body in pairs(ActBody) do
-		self:UpdateSexActive(IsSexActive(human, body), body)
-	end
-end
-
-function TMHumanStats:UpdateSexActive(active, actBody)
-	-- set detected body activity and conclude if there's any sex (from all body activities)
-	self[actBody] = active
-	self.IsSexActive = self.PenisHand or self.PenisHole or self.Mouth or self.Anus or self.Vagina
-	-- add or remove current body activity and bodycount (how many activities)
-	if active then
-		if not TableHasValue(self.SexBody, actBody) then table.insert(self.SexBody, actBody) end
-	else TableRemoveValue(self.SexBody, actBody) end
-	self.SexBodyCount = TableCount(self.SexBody)
-end
-
--------------------------------------------------------------------------------------------------
--- HUMAN STATS AROUSAL UPDATE
--------------------------------------------------------------------------------------------------
-
--- AROUSAL
-local function ArousalHoleMultiplier(holeCount)
-	-- diminishing returns: 1 hole = 1.0, 2 = 1.35, 3 = 1.6
-	if holeCount <= 0 then return 0 end
-	return 1 + math.log(holeCount + 1) * 0.6
-end
-
-function TMHumanStats:UpdateArousal(deltaTime)
-	if self.IsSexActive and self.AutoSexTier and self.Climax ~= true and self.IsCumming ~= true then
-		local tierMul = AutoSexTierConfig[self.AutoSexTier].Arousal
-		local gain = deltaTime * (TM_HumanArousalIncrease / 100) * tierMul
-		* ArousalHoleMultiplier(self.SexBodyCount)
-		* (self:IsCumflating() and 2 or 1)
-		* (self:IsFeelingCum() and 1.3 or 1)
-		* self.ArousalSeed
-		self.Arousal = Clamp01(self.Arousal + gain)
-		if self.Arousal >= 0.99 then self.Arousal = 1 end
+function HumanClothes(human, show)
+	if show then
+		human.CustomizeAll(0)
+		-- no simple way of keeping futa penis
+		-- dictionary of characters and their hadpenis
 	else
-		self.Arousal = Clamp01(self.Arousal - deltaTime * (TM_HumanArousalDecrease / 100) * (self.IsCumming and 4 or 1) * self.ArousalSeed)
+		hadpenis = human.Penis.IsActive
+		human.CustomizeAll(99)
+		if hadpenis then HumanPenisSet(human, true)
+		else HumanPenisSet(human, false) end
 	end
+	return show
 end
 
--------------------------------------------------------------------------------------------------
--- HUMAN STATS FUNCTIONS
--------------------------------------------------------------------------------------------------
-
--- AUTOSEX
-function TMHumanStats:AutoSexSet(active)
-	self.AutoSex = active
-	if self.AutoSexTier == nil then self.AutoSexTier = TM_AutoSexTier_Default end
+-- PENIS/VAGINA
+function HumanHasPenis(human)
+	return human and human.Penis and human.Penis.IsActive
 end
 
-function TMHumanStats:AutoSexTierSet(autoSexTier)
-	if not autoSexTier then return end
-	self.AutoSexTier = autoSexTier
+function HumanPenisSet(girl, show)
+	if show then girl.Customize("Penis", 1)
+	else girl.Customize("Penis", 0) end
 end
 
-function TMHumanStats:AllowMoaningToggle()
-	self.AllowMoaning = not self.AllowMoaning
-end
-
-function TMHumanStats:CanStartCumOrClimax()
-	return self.AutoSex and self.IsSexActive and self.Arousal == 1 and not self.Climax and not self.IsCumming 
+function HumanMaleSet(male, isMale)
+	male.m_isMale = isMale
 end
 
 -- CUM
-function TMHumanStats:IsFeelingCum()
-	return self.CumLastTime ~= nil
+function HumanCumEvery(human, sec)
+	game.AddRepeatAnim(sec, || human.Shoot(), human.Penis)
+	return sec
 end
 
-function TMHumanStats:IsCumflating()
-	return self.CumflateHipsSize ~= nil
+function HumanCumStop(human)
+	game.RemoveAnim(human.Penis)
+	return 0
 end
 
-function TMHumanStats:CumReset()
-	self.CumLastTime = nil
-	self.CumEffectLastTime = nil
-	self.CumLastUpdate = nil
-	self.CumflateHipsSize = nil
-	self.CumflateHipsSizeOrig = nil
+function HumanIsCumming(human)
+	return human and human.Penis and game.HasAnim(human.Penis)
+end
+
+function HumanPosGet(human, humanPart)
+	if not human or not humanPart then return Pos(0,0,0) end
+	-- transform is somewhere usually off body location, prefer not to use it
+	function PosGet_Transform(part) return Pos(part.transform.position.x, part.transform.position.y, part.transform.position.z) end
+	function PosGet_PenisBase(part) return Pos(part.PhysicsWorldPos.x, part.PhysicsWorldPos.y, part.PhysicsWorldPos.z) end
+	function PosGet_HoleOutside(part) return Pos(part.m_entry.transform.position.x, part.m_entry.transform.position.y, part.m_entry.transform.position.z) end
+	function PosGet_HoleInside(part) return Pos(part.m_autoTarget.transform.position.x, part.m_autoTarget.transform.position.y, part.m_autoTarget.transform.position.z) end
+	if humanPart == HumanPart.Penis and human.Penis then return PosGet_PenisBase(human.Penis)
+	elseif humanPart == HumanPart.Mouth and human.Mouth then return PosGet_HoleInside(human.Mouth)
+	elseif humanPart == HumanPart.Anus and human.Anus then return PosGet_HoleOutside(human.Anus)
+	elseif humanPart == HumanPart.Vagina and human.Vagina then return PosGet_HoleOutside(human.Vagina)
+	end return Pos(0,0,0)
 end
 
 -------------------------------------------------------------------------------------------------
--- BODY EDIT VALUES
+-- HUMAN POSES
 -------------------------------------------------------------------------------------------------
 
--- Direct access to per-human TMBValue table
-function TMHStatsGet_TMBValue(human)
-	local stats = TMHStatsGet(human)
-	if not stats then return nil end
-	return stats.TMBValue
+function HumanLookAt(human, position)
+	human.Pose(Preset(EyeL(position), EyeR(position)))
 end
 
--- Replace entire TMB table (preset load, copy, etc.)
-function TMHStatsReplace_TMBValue(human, tmbValue)
-	if not tmbValue then return end
-	local stats = TMHStatsGet(human)
-	if not stats then return end
-	stats.TMBValue = TMBodyValueClone(tmbValue)
-	stats.NeedsBodyApply = true
+function HumanFaceAt(human, position)
+	human.Pose(Preset(HeadLookAt(position)))
 end
 
--- Set single body value (called from BodyEdit to modify the AUTHORITATIVE TMBValue)
--- This can be used for directly editing the character
-function TMHStatsSet_BodyEdit(human, tmBody, value, apply)
-	if apply == nil then apply = true end
-	-- don't allow changing values in the table while iterating (lua rules)
-	local stats = TMHStatsGet(human)
-	if not stats or not tmBody then return end
-	stats.TMBValue[tmBody] = value
-	if apply then stats.NeedsBodyApply = true end
+function HumanEyesOpen(human, isopen) -- open = 0, closed = 1
+	if isopen == nil then state = 0
+	else state = isopen and 0 or 1 end
+	human.Pose(Preset(EyelidL(state), EyelidR(state)))
+	return isopen
 end
 
--- BODY APPLY (WRITE-ONLY, AUTHORITATIVE)
-function TMHStats_TMBApply(human)
-	local stats = TMHStatsGet(human)
-	if not stats or not stats.NeedsBodyApply then return end
-	-- don't allow changing values in the table while iterating (lua rules)
-	local snapshot = TMBodyValueClone(stats.TMBValue)
-	for part, value in pairs(snapshot) do TMBodyEdit_Apply(human, part, value) end
-	stats.NeedsBodyApply = false
+function HumanReset(human, resetsex, resetanim, resetpose, resetface)
+	if resetsex == nil or resetsex then
+		if human.Penis ~= nil and human.Penis.Interaction ~= nil then human.Penis.Interaction.AutoActive = false end
+		if human.Mouth.Fucker ~= nil and human.Mouth.Fucker.Penis ~= nil and human.Mouth.Fucker.Penis.Interaction ~= nil then human.Mouth.Fucker.Penis.Interaction.AutoActive = false end
+		if human.Vagina.Fucker ~= nil and human.Vagina.Fucker.Penis ~= nil and human.Vagina.Fucker.Penis.Interaction ~= nil then human.Vagina.Fucker.Penis.Interaction.AutoActive = false end
+		if human.Anus.Fucker ~= nil and human.Anus.Fucker.Penis ~= nil and human.Anus.Fucker.Penis.Interaction ~= nil then human.Anus.Fucker.Penis.Interaction.AutoActive = false end
+	end
+	if resetanim == nil or resetanim then
+		game.RemoveAnim(human)
+		game.RemoveAnim(human.chestNames)
+		game.RemoveAnim(human.breastNames)
+		game.RemoveAnim(human.forearmNames)
+		game.RemoveAnim(human.handNames)
+		game.RemoveAnim(human.m_mouth)
+		game.RemoveAnim(human.headNames)
+		game.RemoveAnim(human.Anus)
+		game.RemoveAnim(human.footNames)
+		game.RemoveAnim(human.thighNames)
+	end
+	if resetpose == nil or resetpose then
+		human.Pose(StandUp())
+	end
+	if resetface == nil or resetface then
+		human.Pose(FaceNeutral())
+	end
 end
