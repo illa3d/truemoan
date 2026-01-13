@@ -193,10 +193,6 @@ function TMHumanStats:DeformInitCumflate()
 	if self.DeformHips_Cumflate == nil then self.DeformHips_Cumflate = self.DeformHips_Orig end
 end
 
-function TMHumanStats:IsDeflatingDone()
-	self.DeformHips_Orig and self.DeformHips_Cumflate and self.DeformHips_Orig > self.DeformHips_Cumflate
-end
-
 -- CUM
 function TMHumanStats:IsFeelingCum()
 	return self.CumLastTime > 0
