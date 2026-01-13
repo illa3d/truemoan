@@ -411,13 +411,15 @@ function TMDeformTimerKey(girl) return "TMDeform" .. girl.Name end
 
 function TMDeformBodyEffect(girl, stats, value, isBulgingCall)
 	if not girl or not stats or value == nil then return end
+	-- ensure original reference
 	stats:DeformBackup()
-	if isBulgingCall then
-		-- Bulging is transient, normalized intent
-		stats.DeformHips_Bulge = Clamp01(value)
+	-- Bulging = normalized pressure
+	if isBulgingCall then stats.DeformHips_Bulge = Clamp01(value)
+	-- Cumflation = incremental delta
 	else
-		-- Cumflation is absolute, bounded elsewhere
-		stats.DeformHips_Cumflate = value
+		local cur = stats.DeformHips_Cumflate or stats.DeformHips_Orig
+		local maxCum = stats.DeformHips_Orig + (TM_BodyDeformHipSizeLimit - stats.DeformHips_Orig) * TM_CumflateMaxRatio
+		stats.DeformHips_Cumflate = ClampValue( cur + value, stats.DeformHips_Orig, maxCum )
 	end
 end
 
@@ -427,11 +429,6 @@ function TMOnUpdate_DeformBody(girl, stats)
 	-- throttle using keyed timer
 	local key = TMDeformTimerKey(girl)
 	if Timer(key) < TM_BodyDeformUpdateRate then return end
-
-	-- must have original reference
-	if not stats.DeformHips_Orig then
-		stats.DeformHips_Orig = stats.TMBValue.Hips
-	end
 
 	local maxValue = TM_BodyDeformHipSizeLimit
 	local baseValue = stats.DeformHips_Cumflate or stats.DeformHips_Orig
@@ -487,7 +484,7 @@ function TMOnPenetration_CumInside(girl, stats, holeName)
 	if TM_Cumflate then
 		stats.IsCumflating = true
 		stats:DeformInitCumflate()
-		TMDeformBodyEffect(girl, stats, stats.DeformHips_Cumflate + TM_CumflateStepUp, false)
+		TMDeformBodyEffect(girl, stats, TM_CumflateStepUp, false)
 	else 
 		stats.IsCumflating = false
 		--TMDeformBodyReset(girl, stats)
@@ -516,7 +513,7 @@ function TMOnUpdate_CumInside_End(girl, stats)
 				if TM_WetSex then WetSet(girl, 50000, ActBody.Vagina) end
 				stats.CumEffectLastTime = now
 			end
-			TMDeformBodyEffect(girl, stats, stats.DeformHips_Cumflate - TM_CumflateStepDown, false)
+			TMDeformBodyEffect(girl, stats, -TM_CumflateStepDown, false)
 		else
 			-- Deflate done
 			--TMBodyEdit(girl, TMBody.Hips, stats.DeformHips_Orig)

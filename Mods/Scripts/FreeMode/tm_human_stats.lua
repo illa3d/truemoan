@@ -185,7 +185,7 @@ end
 
 -- DEFORM
 function TMHumanStats:DeformBackup()
-	if self.DeformHips_Orig == nil then self.DeformHips_Orig = self.TMBValue.Hips end
+	if not self.DeformHips_Orig then self.DeformHips_Orig = self.TMBValue.Hips end
 end
 
 function TMHumanStats:DeformInitCumflate()
