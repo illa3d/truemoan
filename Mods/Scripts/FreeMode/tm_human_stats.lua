@@ -33,10 +33,8 @@ TMHumanStats = {
 	IsCumming = false,
 	CumFrequency = 0,
 	-- Cum reactions
-	CumLastTime = 0,
-	CumEffectLastTime = 0,
-	
-	DeformLastTime = 0,
+	IsFeelingCum = false,
+	DeformHips_LastApplied = nil,
 	DeformHips_Orig = nil,
 	DeformHips_Bulge = nil,
 	DeformHips_Cumflate = nil,
@@ -149,7 +147,7 @@ function TMHumanStats:UpdateArousal(deltaTime)
 		local gain = deltaTime * (TM_HumanArousalIncrease / 100) * tierMul
 		* ArousalHoleMultiplier(self.SexBodyCount)
 		* (self.IsCumflating and 2 or 1)
-		* (self:IsFeelingCum() and 1.3 or 1)
+		* (self.IsFeelingCum and 1.3 or 1)
 		* self.ArousalSeed
 		self.Arousal = Clamp01(self.Arousal + gain)
 		if self.Arousal >= 0.99 then self.Arousal = 1 end
@@ -183,26 +181,18 @@ end
 
 -- DEFORM
 function TMHumanStats:DeformBackup()
-	if self.DeformHips_Orig == nil then self.DeformHips_Orig = self.TMBValue.Hips end
+	if not self.DeformHips_Orig then self.DeformHips_Orig = self.TMBValue.Hips end
 end
 
-function TMHumanStats:DeformInitCumflate()
-	self:DeformBackup()
-	if self.DeformHips_Cumflate == nil then self.DeformHips_Cumflate = self.DeformHips_Orig end
+function TMHumanStats:IsDoneCumflating()
+	return self.DeformHips_Cumflate <= self.DeformHips_Orig
 end
 
-function TMHumanStats:IsDeflatingDone()
-	self.DeformHips_Orig and self.DeformHips_Cumflate and self.DeformHips_Orig > self.DeformHips_Cumflate
-end
-
--- CUM
-function TMHumanStats:IsFeelingCum()
-	return self.CumLastTime > 0
-end
-
-function TMHumanStats:CumReset()
-	self.CumLastTime = 0
-	self.CumEffectLastTime = 0
+function TMHumanStats:DeformReset()
+	self.DeformHips_Orig = nil
+	self.DeformHips_Cumflate = nil
+	self.DeformHips_Bulge = nil
+	self.DeformHips_LastApplied = nil
 end
 
 -------------------------------------------------------------------------------------------------
@@ -239,6 +229,7 @@ end
 -- BODY APPLY (WRITE-ONLY, AUTHORITATIVE)
 function TMHStats_TMBApply(human)
 	local stats = TMHStatsGet(human)
+	-- stats:DeformReset()
 	if not stats or not stats.NeedsBodyApply then return end
 	-- don't allow changing values in the table while iterating (lua rules)
 	local snapshot = TMBodyValueClone(stats.TMBValue)

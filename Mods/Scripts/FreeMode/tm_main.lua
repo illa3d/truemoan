@@ -136,9 +136,11 @@ end
 function TMOnUpdate_Humans(humans)
 	-- Iterate and call for every human in the scene
 	for _, human in ipairs(humans) do
-		TMOnUpdate_Futa(human)
-		TMOnUpdate_AutoSexClimax(human)
-		TMOnUpdate_CumInside_End(human)
+		local stats = TMHStatsGet(human)
+		TMOnUpdate_Futa(human, stats)
+		TMOnUpdate_AutoSexClimax(human, stats)
+		TMOnUpdate_CumInside_End(human, stats)
+		TMOnUpdate_DeformBody(human, stats)
 	end
 end
 
@@ -235,12 +237,12 @@ function TMOnPenetration_AnusVagina(girl, stats, holeName, inVelocity)
 		TMDeformBodyEffect(girl, stats, deformPercent, true)
 	else
 		stats.IsBulging = false
-		TMDeformBodyReset(girl, stats)
+		--TMDeformBodyReset(girl, stats)
 	end
 end
 
 -- FUTA MOANING > ONPENETRATION ROUTER
-function TMOnUpdate_Futa(girl)
+function TMOnUpdate_Futa(girl, stats)
 	if not TM_SFX_AllReactions or not TM_SFX_ReactSex or not TM_SFX_ReactFuta or not girl or girl.m_isMale or not TMHStatsGet(girl).AllowMoaning then return end
 	local function DoFutaMoan(actBody)
 		act = ActGet(girl, actBody)
@@ -355,11 +357,9 @@ end
 --===============================================================================================
 -------------------------------------------------------------------------------------------------
 
-function TMOnUpdate_AutoSexClimax(human)
+function TMOnUpdate_AutoSexClimax(human, stats)
 	-- SFX: CLIMAX MOANING in OnPenetration
-	if not TM_AutoSex or not human then return end
-	local stats = TMHStatsGet(human)
-	if not stats or not stats:CanStartCumOrClimax() then return end
+	if not TM_AutoSex or not human or not stats or not stats:CanStartCumOrClimax() then return end
 	-- CanStartClimax() return self.Autosex and self.IsSexActive and self.Arousal == 1 and not self.Climax and not self.IsCumming 
 
 	-- penis owners never initiate climax, just start & stop cumming
@@ -371,7 +371,7 @@ function TMOnUpdate_AutoSexClimax(human)
 		return
 	
 	-- female needs to feel cum and the climax starts
-	elseif not TM_AutoClimax or not stats:IsFeelingCum() then return end
+	elseif not TM_AutoClimax or not stats.IsFeelingCum then return end
 	
 	-- Just girls can set this, they lead the Climax
 	local delay = 6
@@ -407,48 +407,45 @@ end
 -- DEFORM EFFECTS
 --===============================================================================================
 -------------------------------------------------------------------------------------------------
-
-function TMDeformTimerKey(girl) return "TMDeform" .. girl.Name end
+function TMTimerKey_Deform(girl) return "TMDeform_" .. girl.Name end
+function TMTimerKey_CumInside(girl) return "TMCumInside_" .. girl.Name end
+function TMTimerKey_CumEffect(girl) return "TMCumEffect_" .. girl.Name end
 
 function TMDeformBodyEffect(girl, stats, value, isBulgingCall)
-	if not girl or not stats or not value then return end
-	if isBulgingCall and not stats.IsBulging then return end
-	if not isBulgingCall and not stats.IsCumflating then return end
-	
-	local deformKey = TMDeformTimerKey(girl)
-	local lastDeform = Timer(deformKey)
-	if lastDeform < TM_BodyDeformUpdateRate then return end
-	stats.DeformLastTime = lastDeform
-	local hipValue = 0
-
+	if not girl or not stats or value == nil then return end
+	-- ensure original reference
 	stats:DeformBackup()
-	
-	-- Bulging sends normalized values
-	if isBulgingCall then
-		-- take original or cumflated as value
-		local minValue = stats.DeformHips_Cumflate and stats.DeformHips_Cumflate or stats.DeformHips_Orig
-		hipValue = Lerp(minValue, TM_BodyDeformHipSizeLimit, value)
-		stats.DeformHips_Bulge = hipValue
-
-	-- Cumflation sends incremental values
-	elseif 
-		-- take cumflation as minimum value
-		hipValue = ClampValue(value, stats.DeformHips_Orig, TM_BodyDeformHipSizeLimit * 0.8)
-		stats.DeformHips_Cumflate = hipValue
+	-- Bulging = normalized pressure
+	if isBulgingCall then stats.DeformHips_Bulge = Clamp01(value)
+	-- Cumflation = incremental delta
+	else
+		local cur = stats.DeformHips_Cumflate or stats.DeformHips_Orig
+		local maxCum = stats.DeformHips_Orig + (TM_BodyDeformHipSizeLimit - stats.DeformHips_Orig) * TM_CumflateMaxRatio
+		stats.DeformHips_Cumflate = ClampValue( cur + value, stats.DeformHips_Orig, maxCum )
 	end
-	
-	-- Apply the deformation
-	TMBodyEdit(girl, TMBody.Hips, hipValue)
-	ResetTimer(deformKey)
 end
 
-function TMDeformBodyReset(girl, stats)
+function TMOnUpdate_DeformBody(girl, stats)
 	if not girl or not stats then return end
-	if not stats.IsBulging then self.DeformHips_Bulge = nil end 
-	if not stats.IsCumflating then self.DeformHips_Cumflate = nil end
-	if stats.IsCumflating or stats.IsBulging then return end
-	TMBodyEdit(girl, TMBody.Hips, stats.DeformHips_Orig)
-	self.DeformHips_Orig = nil
+	local deformKey = TMTimerKey_Deform(girl)
+	if Timer(deformKey) < TM_BodyDeformUpdateRate then return end
+	local maxValue = TM_BodyDeformHipSizeLimit
+	local baseValue = stats.DeformHips_Cumflate or stats.DeformHips_Orig
+
+	-- bulge01 is optional / transient
+	local bulge01 = stats.IsBulging and stats.DeformHips_Bulge or nil
+	local targetValue
+	if bulge01 and bulge01 > 0 then
+		targetValue = Lerp(baseValue, maxValue, Clamp01(bulge01))
+	else
+		targetValue = baseValue
+	end
+
+	-- never update unless value changed
+	if stats.DeformHips_LastApplied == targetValue then return end
+	TMBodyEdit(girl, TMBody.Hips, targetValue)
+	stats.DeformHips_LastApplied = targetValue
+	ResetTimer(deformKey)
 end
 
 -------------------------------------------------------------------------------------------------
@@ -457,74 +454,66 @@ end
 --===============================================================================================
 -------------------------------------------------------------------------------------------------
 
-local function TMCumInside_CanPlayEffect(stats, lastTime)
-	if not TM_SFX_AllReactions or not TM_SFX_ReactSex then return false end
-	if not stats.CumEffectLastTime then return true end
-	return stats.CumEffectLastTime >= TM_CumEffectTime
+local function TMCumInside_CanPlayEffect(stats, lastEffect)
+	if not TM_SFX_AllReactions or not TM_SFX_ReactSex or not stats.AllowMoaning then return false end
+	return lastEffect > TM_CumEffectTime
 end
 
 -- START OF CUM / CUMFLATION
 function TMOnPenetration_CumInside(girl, stats, holeName)
 	if not girl or girl.m_isMale or not stats then return end
-	-- throttle only if we have a previous update time
-	local lastTime = Timer(TMDeformTimerKey(girl))
-	if stats.DeformLastTime and stats.DeformLastTime < TM_BodyDeformUpdateRate then return end
 	
+	-- Is partner cumming
 	local partner = SexPartner_Get(girl, holeName)
 	if partner and not HumanIsCumming(partner) then return end
-	stats.CumLastTime = lastTime
-	stats.DeformLastTime = lastTime
+	stats.IsFeelingCum = true
+
 	-- Cum & Cumflation effects (same)
-	if TMCumInside_CanPlayEffect(stats) then
+	local effectKey = TMTimerKey_CumEffect(girl)
+	if TMCumInside_CanPlayEffect(stats, Timer(effectKey)) then
 		-- SFX: CUM INSIDE / CUMFLATION
-		if stats.AllowMoaning then TMPlayMoan(girl, TM_Cumflate and TMMoan.Cumflating or TMMoan.CumInside) end
-		stats.CumEffectLastTime = lastTime
+		TMPlayMoan(girl, TM_Cumflate and TMMoan.Cumflating or TMMoan.CumInside)
+		ResetTimer(effectKey)
 	end
+	
 	-- Cumflation
-	if TM_Cumflate then
+	if TM_Cumflate and Timer(TMTimerKey_Deform(girl)) > TM_BodyDeformUpdateRate then
 		stats.IsCumflating = true
-		stats:DeformInitCumflate()
-		TMDeformBodyEffect(human, stats, stats.DeformHips_Cumflate + TM_CumflateStepUp, false)
-	else 
-		stats.IsCumflating = false
-		TMDeformBodyReset(girl, stats)
-	end 
+		TMDeformBodyEffect(girl, stats, TM_CumflateStepUp, false)
+		-- timer is reset in body deform update
+	end
 end
 
 -- END OF CUM / CUMFLATION
-function TMOnUpdate_CumInside_End(girl)
-	if not girl or girl.m_isMale then return end
-	local stats = TMHStatsGet(girl)
-	if not stats or not stats.CumLastTime then return end
+function TMOnUpdate_CumInside_End(girl, stats)
+	if not girl or girl.m_isMale or not stats then return end
+	
+	if Timer(TMTimerKey_CumInside(girl)) < TM_CumPauseTime then return end
+	if Timer(TMTimerKey_Deform(girl)) < TM_BodyDeformUpdateRate then return end
 
-	local now = os.time()
-	-- throttle expensive logic
-	if stats.DeformLastTime and now - stats.DeformLastTime < TM_BodyDeformUpdateRate then return end
-	-- wait after last cum
-	if now - stats.CumLastTime < TM_CumPauseTime then return end
-	-- still having sex
+	-- Still having sex
 	if HasSexPartner_HoleAny(girl) then return end
-	stats.DeformLastTime = now
 
 	-- CUMFLATION DEFLATE
-	if TM_Cumflate and stats.DeformHips_Orig and stats.DeformHips_Cumflate then
-		if not stats:IsDeflatingDone() then
-			if TMCumInside_CanPlayEffect(stats) then
+	if TM_Cumflate then
+		if stats.IsCumflating and not stats:IsDoneCumflating() then
+			local effectKey = TMTimerKey_CumEffect(girl) 
+			if TMCumInside_CanPlayEffect(stats, Timer(effectKey)) then
 				-- SFX: CUMDEFLATION
 				if stats.AllowMoaning then TMPlayMoan(girl, TMMoan.Cumflating) end
 				if TM_WetSex then WetSet(girl, 50000, ActBody.Vagina) end
-				stats.CumEffectLastTime = now
+				ResetTimer(effectKey)
 			end
-			TMDeformBodyEffect(human, stats, stats.DeformHips_Cumflate - TM_CumflateStepDown, false)
+			TMDeformBodyEffect(girl, stats, -TM_CumflateStepDown, false)
 		else
-			-- Deflate done
-			TMBodyEdit(girl, TMBody.Hips, stats.DeformHips_Orig)
-			TMDeformBodyReset(girl, stats)
+			-- CUMFLATION PULLOUT
+			stats.IsFeelingCum = false
+			stats.IsCumflating = false
 			TMOnCumInside_EndCumflate(girl)
 		end
+	-- CUM PULLOUT
 	else
-		-- NORMAL CUM (no cumflation)
-		stats:CumReset()
+		stats.IsFeelingCum = false
 		TMOnCumInside_EndCum(girl)
 	end
 end

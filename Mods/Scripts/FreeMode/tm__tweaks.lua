@@ -70,5 +70,6 @@ TM_CumPauseTime = 1				-- [0-3 Pause after cumming inside and pull-out (all hole
 -- Body deformation
 TM_BodyDeformUpdateRate = 0.05	-- [0.1] How often per second does the bulging/cumflation/cumdeflation update 
 TM_BodyDeformHipSizeLimit = 1.5	-- Maximum amout to increase to (ugly over 1.5)
+TM_CumflateMaxRatio = 0.85		-- Maximum amount of cumflate (so Bulging is still visible)
 TM_CumflateStepUp = 0.005		-- Increment (each 0.1sec once) of hip size increase
 TM_CumflateStepDown = 0.02		-- Decrement (each 0.1sec once) of hip size reduction
