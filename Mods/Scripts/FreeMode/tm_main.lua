@@ -477,11 +477,10 @@ function TMOnPenetration_CumInside(girl, stats, holeName)
 	end
 	
 	-- Cumflation
-	local deformKey = TMTimerKey_Deform(girl)
-	if TM_Cumflate and Timer(deformKey) > TM_BodyDeformUpdateRate then
+	if TM_Cumflate and Timer(TMTimerKey_Deform(girl)) > TM_BodyDeformUpdateRate then
 		stats.IsCumflating = true
 		TMDeformBodyEffect(girl, stats, TM_CumflateStepUp, false)
-		ResetTimer(deformKey)
+		-- timer is reset in body deform update
 	end
 end
 
@@ -496,8 +495,8 @@ function TMOnUpdate_CumInside_End(girl, stats)
 	if HasSexPartner_HoleAny(girl) then return end
 
 	-- CUMFLATION DEFLATE
-	if TM_Cumflate and stats.DeformHips_Orig and stats.DeformHips_Cumflate then
-		if stats.DeformHips_Cumflate > stats.DeformHips_Orig then
+	if TM_Cumflate then
+		if stats.IsCumflating and not stats:IsDoneCumflating() then
 			local effectKey = TMTimerKey_CumEffect(girl) 
 			if TMCumInside_CanPlayEffect(stats, Timer(effectKey)) then
 				-- SFX: CUMDEFLATION
@@ -512,8 +511,8 @@ function TMOnUpdate_CumInside_End(girl, stats)
 			stats.IsCumflating = false
 			TMOnCumInside_EndCumflate(girl)
 		end
+	-- CUM PULLOUT
 	else
-		-- CUM PULLOUT
 		stats.IsFeelingCum = false
 		TMOnCumInside_EndCum(girl)
 	end

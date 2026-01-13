@@ -184,6 +184,10 @@ function TMHumanStats:DeformBackup()
 	if not self.DeformHips_Orig then self.DeformHips_Orig = self.TMBValue.Hips end
 end
 
+function TMHumanStats:IsDoneCumflating()
+	return self.DeformHips_Cumflate <= self.DeformHips_Orig
+end
+
 function TMHumanStats:DeformReset()
 	self.DeformHips_Orig = nil
 	self.DeformHips_Cumflate = nil
