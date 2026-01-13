@@ -1,4 +1,4 @@
--- TrueMoan v2.2 by illa3d
+-- TrueMoan v2.3 by illa3d
 -- Requires tm_common.lua
 
 -- Ambience Constants

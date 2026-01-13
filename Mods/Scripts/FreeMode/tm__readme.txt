@@ -21,11 +21,11 @@
 - **Sex/Cum reactions**
   - Climax/Arousal mechanic
   - Cum in/on reactions
-  - Cumflation
+  - Bulging/Cumflation
   - Wet Sex
 - **Poses/Animation** (requires FaunaLABS)
 - **6x audio ambiences**
-- **34 Scenes**
+- **35 Scenes**
 - **Improved Menu UX**
 - **Highly Configurable**
 
@@ -33,8 +33,8 @@
 - **7x skyboxes** (8/4/2k)
 
 **LATEST DOWNLOADS**
-**TrueMoan_v2.2.zip** - Just TrueMoan
-**TrueMoan_v2.2_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
+**TrueMoan_v2.3.zip** - Just TrueMoan
+**TrueMoan_v2.3_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
 **TrueMoan_Addon_Skyboxes_4k_v1.0.zip**
 **Download: ** https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
 :warning: For black screen or issues, see this post **https://discord.com/channels/620113492208517120/1451633202019172462/1451634287987396884** 
@@ -104,6 +104,12 @@ GitHub Repository - https://github.com/illa3d/truemoan
 
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
+
+[ v2.3 ]
+- Added bulging option
+- Added mixing of bulging and cumflation
+- Reworked plap to be by penetration depth
+- Fixed interaction speed turning on AutoSex
 
 [ v2.2 ]
 - Reworked cumming to be more realistic (randomness, delays)
