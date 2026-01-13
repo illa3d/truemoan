@@ -184,9 +184,11 @@ function TMHumanStats:DeformBackup()
 	if not self.DeformHips_Orig then self.DeformHips_Orig = self.TMBValue.Hips end
 end
 
-function TMHumanStats:DeformInitCumflate()
-	self:DeformBackup()
-	if self.DeformHips_Cumflate == nil then self.DeformHips_Cumflate = self.DeformHips_Orig end
+function TMHumanStats:DeformReset()
+	self.DeformHips_Orig = nil
+	self.DeformHips_Cumflate = nil
+	self.DeformHips_Bulge = nil
+	self.DeformHips_LastApplied = nil
 end
 
 -------------------------------------------------------------------------------------------------
@@ -223,6 +225,7 @@ end
 -- BODY APPLY (WRITE-ONLY, AUTHORITATIVE)
 function TMHStats_TMBApply(human)
 	local stats = TMHStatsGet(human)
+	-- stats:DeformReset()
 	if not stats or not stats.NeedsBodyApply then return end
 	-- don't allow changing values in the table while iterating (lua rules)
 	local snapshot = TMBodyValueClone(stats.TMBValue)
