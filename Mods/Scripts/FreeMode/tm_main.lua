@@ -224,11 +224,13 @@ function TMOnPenetration_AnusVagina(girl, stats, holeName, inVelocity)
 		local timerKey = "TMPlapSFX_" .. girl.Name
 		local lastPlapSfx = Timer(timerKey)
 		local speed = Clamp01(inVelocity)
-		local pause = Lerp(GetRandomFloat(0.8, 1.2), 0.3, speed)
-		local distance = ActPenetrationDistanceGet(girl, holeName)
-
-		if lastPlapSfx > pause and distance < 0.065 then
+		local pause = Lerp(GetRandomFloat(0.8, 1.2), 0.2, speed)
+		local depth = ActPenetrationDepthGet(girl, holeName)
+		local plapped = false
+		if depth < 0.7 then plapped = false end
+		if lastPlapSfx > pause and depth > 0.9 and not plapped then
 			-- SFX: Sex plap
+			plapped = true
 			TMPlayHumanSFX(girl, TMSfx.Plap, holeName, speed)
 			ResetTimer(timerKey)
 		end

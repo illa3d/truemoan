@@ -262,11 +262,12 @@ function ActPenetrationDistanceGet(human, actBody)
 end
 
 -- Normalized penetration depth combined with penis volume (body and penis size influenced)
-function ActPenetrationDepthGet(girl, actBody)
-	if not girl or not holenName then return 0 end
+function ActPenetrationDepthGet(girl, actBody, clamp)
+	if not girl or not actBody then return 0 end
 	local partner = SexPartner_Get(girl, actBody)
 	if not partner or not partner.Penis then return 0 end
-	return Clamp01(partner.Penis.InsideLength / partner.Penis.Length)
+	local depth = partner.Penis.InsideLength / partner.Penis.Length
+	return clamp == true and Clamp01(depth) or depth
 end
 
 -- Normalized penetration amount combined with penis volume (body and penis size influenced)
@@ -278,9 +279,9 @@ function ActPenetrationVolumeGet(girl, actBody)
 	local penetration01 = partner.Penis.InsideLength / partner.Penis.Length
 	penetration01 = Clamp01(penetration01)
 	-- Body Volume = relative body scale ^ contribution
-	local bodyVolume = (partner.transform.lossyScale.x / girl.transform.lossyScale.x) ^ 0.8
+	local bodyVolume = (partner.transform.lossyScale.x / girl.transform.lossyScale.x) ^ 0.6
 	-- Penis Volume = length scale ^ contribution
-	local penisLengthVolume = partner.Penis.LengthScale --^ 1
+	local penisLengthVolume = partner.Penis.LengthScale ^ 0.6
 	-- Volume ratio
 	local volumeRatio = bodyVolume * penisLengthVolume
 	-- Compress influence of small volumes
