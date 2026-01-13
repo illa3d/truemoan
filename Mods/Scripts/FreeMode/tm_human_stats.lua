@@ -33,15 +33,11 @@ TMHumanStats = {
 	IsCumming = false,
 	CumFrequency = 0,
 	-- Cum reactions
-	CumLastTime = 0,
-	CumEffectLastTime = 0,
-	
-	DeformLastTime = 0,
+	IsFeelingCum = false,
+	DeformHips_LastApplied = nil,
 	DeformHips_Orig = nil,
 	DeformHips_Bulge = nil,
 	DeformHips_Cumflate = nil,
-	
-	DeformHips_LastApplied = nil,
 }
 
 function TMHumanStatsCloneDefault() return TableClone(TMHumanStats) end
@@ -151,7 +147,7 @@ function TMHumanStats:UpdateArousal(deltaTime)
 		local gain = deltaTime * (TM_HumanArousalIncrease / 100) * tierMul
 		* ArousalHoleMultiplier(self.SexBodyCount)
 		* (self.IsCumflating and 2 or 1)
-		* (self:IsFeelingCum() and 1.3 or 1)
+		* (self.IsFeelingCum and 1.3 or 1)
 		* self.ArousalSeed
 		self.Arousal = Clamp01(self.Arousal + gain)
 		if self.Arousal >= 0.99 then self.Arousal = 1 end
@@ -191,16 +187,6 @@ end
 function TMHumanStats:DeformInitCumflate()
 	self:DeformBackup()
 	if self.DeformHips_Cumflate == nil then self.DeformHips_Cumflate = self.DeformHips_Orig end
-end
-
--- CUM
-function TMHumanStats:IsFeelingCum()
-	return self.CumLastTime > 0
-end
-
-function TMHumanStats:CumReset()
-	self.CumLastTime = 0
-	self.CumEffectLastTime = 0
 end
 
 -------------------------------------------------------------------------------------------------
