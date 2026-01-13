@@ -180,7 +180,7 @@ function TMHumanStats:CanStartCumOrClimax()
 end
 
 -- DEFORM
-function TMHumanStats:DeformBackup()
+function TMHumanStats:DeformBackupIfNot()
 	if not self.DeformHips_Orig then self.DeformHips_Orig = self.TMBValue.Hips end
 end
 

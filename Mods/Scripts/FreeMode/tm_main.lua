@@ -215,6 +215,10 @@ end
 function TMOnPenetration_AnusVagina(girl, stats, holeName, inVelocity)
 	if not girl or girl.m_isMale or holeName ~= ActBody.Vagina and holeName ~= ActBody.Anus then return end
 	
+	-- BULGING
+	if TM_Bulging then TMDeformBody_Bulge(girl, stats, ActPenetrationVolumeGet(girl, holeName))
+	else stats.IsBulging = false end
+
 	-- SFX PLAP
 	if TM_SFX_AllReactions and TM_SFX_ReactPlap then
 		local timerKey = "TMPlapSFX_" .. girl.Name
@@ -228,16 +232,6 @@ function TMOnPenetration_AnusVagina(girl, stats, holeName, inVelocity)
 			TMPlayHumanSFX(girl, TMSfx.Plap, holeName, speed)
 			ResetTimer(timerKey)
 		end
-	end
-
-	-- BULGING
-	if TM_Bulging then
-		stats.IsBulging = true
-		local deformPercent = ActPenetrationVolumeGet(girl, holeName)
-		TMDeformBodyEffect(girl, stats, deformPercent, true)
-	else
-		stats.IsBulging = false
-		--TMDeformBodyReset(girl, stats)
 	end
 end
 
@@ -411,40 +405,52 @@ function TMTimerKey_Deform(girl) return "TMDeform_" .. girl.Name end
 function TMTimerKey_CumInside(girl) return "TMCumInside_" .. girl.Name end
 function TMTimerKey_CumEffect(girl) return "TMCumEffect_" .. girl.Name end
 
-function TMDeformBodyEffect(girl, stats, value, isBulgingCall)
-	if not girl or not stats or value == nil then return end
-	-- ensure original reference
-	stats:DeformBackup()
-	-- Bulging = normalized pressure
-	if isBulgingCall then stats.DeformHips_Bulge = Clamp01(value)
-	-- Cumflation = incremental delta
-	else
-		local cur = stats.DeformHips_Cumflate or stats.DeformHips_Orig
-		local maxCum = stats.DeformHips_Orig + (TM_BodyDeformHipSizeLimit - stats.DeformHips_Orig) * TM_CumflateMaxRatio
-		stats.DeformHips_Cumflate = ClampValue( cur + value, stats.DeformHips_Orig, maxCum )
-	end
+function TMDeformBody_Bulge(girl, stats, norm)
+	if not girl or not stats then return end
+	-- turn on or off bulging depending on the value
+	stats.IsBulging = norm ~= nil and norm > 0
+	--clamp or remove bulging value
+	stats.DeformHips_Bulge = stats.IsBulging and Clamp01(norm) or nil
+end
+
+function TMDeformBody_Cumflate(girl, stats, step)
+	if not girl or not stats or step == nil then return end
+	-- backup current values if not already
+	stats:DeformBackupIfNot()
+	-- take old cumflation value or original one
+	local cur = stats.DeformHips_Cumflate or stats.DeformHips_Orig
+	-- take limited max value (so bulging shows)
+	local max = TM_BodyDeformHipSizeLimit * TM_CumflateMaxRatio
+	-- clamp incremented/decremented value
+	stats.DeformHips_Cumflate = ClampValue(cur + step, stats.DeformHips_Orig, max)
 end
 
 function TMOnUpdate_DeformBody(girl, stats)
 	if not girl or not stats then return end
+	-- throttle update
 	local deformKey = TMTimerKey_Deform(girl)
 	if Timer(deformKey) < TM_BodyDeformUpdateRate then return end
+	-- if none of the deformers are active reset back to default
+	if not stats.IsBulging and not stats.IsCumflating then
+		if stats.DeformHips_Orig ~= nil then
+			TMBodyEdit(girl, TMBody.Hips, stats.DeformHips_Orig)
+			stats:DeformReset() end
+		return
+	end
+	-- backup current values if not already
+	stats:DeformBackupIfNot()
 	local maxValue = TM_BodyDeformHipSizeLimit
 	local baseValue = stats.DeformHips_Cumflate or stats.DeformHips_Orig
-
-	-- bulge01 is optional / transient
 	local bulge01 = stats.IsBulging and stats.DeformHips_Bulge or nil
-	local targetValue
-	if bulge01 and bulge01 > 0 then
-		targetValue = Lerp(baseValue, maxValue, Clamp01(bulge01))
-	else
-		targetValue = baseValue
-	end
-
+	local targetValue = baseValue
+	-- if bulging value exists lerp fully towards the max value
+	if bulge01 and bulge01 > 0 then targetValue = Lerp(baseValue, maxValue, bulge01) end
 	-- never update unless value changed
 	if stats.DeformHips_LastApplied == targetValue then return end
+	-- apply to body
 	TMBodyEdit(girl, TMBody.Hips, targetValue)
 	stats.DeformHips_LastApplied = targetValue
+	-- reset the timer for throttling
 	ResetTimer(deformKey)
 end
 
@@ -479,7 +485,7 @@ function TMOnPenetration_CumInside(girl, stats, holeName)
 	-- Cumflation
 	if TM_Cumflate and Timer(TMTimerKey_Deform(girl)) > TM_BodyDeformUpdateRate then
 		stats.IsCumflating = true
-		TMDeformBodyEffect(girl, stats, TM_CumflateStepUp, false)
+		TMDeformBody_Cumflate(girl, stats, TM_CumflateStepUp)
 		-- timer is reset in body deform update
 	end
 end
@@ -504,7 +510,7 @@ function TMOnUpdate_CumInside_End(girl, stats)
 				if TM_WetSex then WetSet(girl, 50000, ActBody.Vagina) end
 				ResetTimer(effectKey)
 			end
-			TMDeformBodyEffect(girl, stats, -TM_CumflateStepDown, false)
+			TMDeformBody_Cumflate(girl, stats, -TM_CumflateStepDown)
 		else
 			-- CUMFLATION PULLOUT
 			stats.IsFeelingCum = false
