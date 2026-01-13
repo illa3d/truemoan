@@ -494,17 +494,14 @@ end
 
 -- END OF CUM / CUMFLATION
 function TMOnUpdate_CumInside_End(girl, stats)
-	if not girl or girl.m_isMale or not stats then return end
+	if not girl or girl.m_isMale or not stats or stats.IsSexActive or not stats.IsFeelingCum then return end
 	
 	if Timer(TMTimerKey_CumInside(girl)) < TM_CumPauseTime then return end
 	if Timer(TMTimerKey_Deform(girl)) < TM_BodyDeformUpdateRate then return end
 
-	-- Still having sex
-	if HasSexPartner_HoleAny(girl) then return end
-
 	-- CUMFLATION DEFLATE
-	if TM_Cumflate then
-		if stats.IsCumflating and not stats:IsDoneCumflating() then
+	if TM_Cumflate and stats.IsCumflating then
+		if not stats:IsDoneCumflating() then
 			local effectKey = TMTimerKey_CumEffect(girl) 
 			if TMCumInside_CanPlayEffect(stats, Timer(effectKey)) then
 				-- SFX: CUMDEFLATION
