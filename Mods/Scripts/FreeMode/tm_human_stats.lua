@@ -40,6 +40,8 @@ TMHumanStats = {
 	DeformHips_Orig = nil,
 	DeformHips_Bulge = nil,
 	DeformHips_Cumflate = nil,
+	
+	DeformHips_LastApplied = nil,
 }
 
 function TMHumanStatsCloneDefault() return TableClone(TMHumanStats) end
