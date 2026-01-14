@@ -9,6 +9,9 @@ local tmSdec = 0
 -- SEX MENU
 ---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol, err-assign-as-eq, malformed-number
 label TMMenuSex(human)
+	+ "Auto options »" [gold]
+		TMMenuSex_Auto(human, TMHStatsGet(human))
+
 	+ if HasSexPartner_Any(human) and IsSexActive_Any(human)
 		-- Quick commands
 		+ "• Switch!" [if not HasSexPartner_PenisHand(human)]
@@ -117,6 +120,51 @@ label TMMenuSex(human)
 	+ TM_MenuClose_AutoSexStats(human)
 stop
 
+
+label TMMenuSex_Auto(human, stats)
+	+ "« " .. AccStr(human.Name) .. " »"[gold]
+		Return()
+	+ if stats.AutoSex
+		+ "| Auto random »" [gold]
+			TMMenuSex_AutoParams(human, stats)
+		+ "| Auto climax	| " .. AccBool(stats.AutoSexClimax)
+			stats.AutoSexClimax = not stats.AutoSexClimax
+			Return()
+		+ "| Auto cum		| " .. AccBool(stats.AutoSexCum)
+			stats.AutoSexCum = not stats.AutoSexCum
+			Return()
+	+ "Auto sex		| " .. AccBool(stats.AutoSex)
+		stats.AutoSex = not stats.AutoSex
+		Return()
+		
+	+ TM_MenuBack
+		Return(2)
+	+ TM_MenuClose_AutoSexStats(human)
+stop
+
+label TMMenuSex_AutoParams(human, stats)
+	+ "« " .. AccStr(human.Name) .. " »"[gold]
+		Return()
+	+ "| Speed		| " .. AccBool(stats.AutoSexSpeed)
+		stats.AutoSexSpeed = not stats.AutoSexSpeed
+		Return()
+	+ "| Weight		| " .. AccBool(stats.AutoSexWeight)
+		stats.AutoSexWeight = not stats.AutoSexWeight
+		Return()
+	+ "| Thrust		| " .. AccBool(stats.AutoSexThrust)
+		stats.AutoSexThrust = not stats.AutoSexThrust
+		Return()
+	+ "| Depth start		| " .. AccBool(stats.AutoSexDepthStart)
+		stats.AutoSexDepthStart = not stats.AutoSexDepthStart
+		Return()
+	+ "| Depth end		| " .. AccBool(stats.AutoSexDepthEnd)
+		stats.AutoSexDepthEnd = not stats.AutoSexDepthEnd
+		Return()
+	+ TM_MenuBack
+		Return(2)
+	+ TM_MenuClose
+stop
+
 -- WETNESS CONTROL
 label TMMenuSex_Wet(human)
 	+ "• Squirt"
@@ -129,11 +177,11 @@ label TMMenuSex_Wet(human)
 		WetSet(human, 500, ActBody.Vagina)
 		Return()
 	+ TM_UP.."Wetness"
-		wett = human.m_vagina.m_wetness + TM_WetnessStep
+		local wett = human.m_vagina.m_wetness + TM_WetnessStep
 		WetSet(human, wett, ActBody.Vagina)
 		Return()
 	+ TM_DN.."Wetness"
-		wett = human.m_vagina.m_wetness - TM_WetnessStep
+		local wett = human.m_vagina.m_wetness - TM_WetnessStep
 		if wett < 0
 			wett = 0
 		WetSet(human, wett, ActBody.Vagina)

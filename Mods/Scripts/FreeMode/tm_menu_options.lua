@@ -1,6 +1,6 @@
 -- TrueMoan v2.3 by illa3d
-TM_UITips_Options = true
-TM_UITip_Options = "Tip: edit defaults in tm-config"
+local TM_UITips_Options = true
+local TM_UITip_Options = "Tip: edit defaults in tm-config"
 local tmOdec = 2
 
 ---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol, err-assign-as-eq, malformed-number
@@ -16,9 +16,9 @@ label TMMenuOptions(human)
 		Return()
 	+ "Audio » | " .. AccBool(TM_SFX_Ambience) [gold]
 		TMMenuOptions_Audio(human)
-	+ "React »" [gold]
+	+ "SFX React »" [gold]
 		TMMenuOptions_React(human)
-	+ "Sex »" [gold]
+	+ "Auto / Sex »" [gold]
 		TMMenuOptions_Sex(human)
 	+ "Click 2x »" [gold]
 		TMMenuOptions_Click2x(human)
@@ -79,23 +79,25 @@ label TMMenuOptions_React(human)
 		TM_UITips_Options = false
 		Return()
 	+ if TM_AllowVoice()
+		+ "« " .. AccStr("Everyone") .. " »" [gold]
+			Return()
 		+ if TM_SFX_AllReactions
-			+ "• React futa		| " .. AccBool(TM_SFX_ReactFuta) [if TM_SFX_ReactSex]
+			+ "| React futa		| " .. AccBool(TM_SFX_ReactFuta) [if TM_SFX_ReactSex]
 				TM_SFX_ReactFuta = not TM_SFX_ReactFuta
 				Return()
-			+ "• React sex		| " .. AccBool(TM_SFX_ReactSex)
+			+ "| React sex		| " .. AccBool(TM_SFX_ReactSex)
 				TM_SFX_ReactSex = not TM_SFX_ReactSex
 				Return()
-			+ "• React fluid		| " .. AccBool(game.FluidReaction)
+			+ "| React fluid		| " .. AccBool(game.FluidReaction)
 				game.FluidReaction = not game.FluidReaction
 				Return()
-			+ "• React blowjob	| " .. AccBool(TM_SFX_ReactBlowjob)
+			+ "| React blowjob	| " .. AccBool(TM_SFX_ReactBlowjob)
 				TM_SFX_ReactBlowjob = not TM_SFX_ReactBlowjob
 				Return()
-			+ "• React plap		| " .. AccBool(TM_SFX_ReactPlap)
+			+ "| React plap		| " .. AccBool(TM_SFX_ReactPlap)
 				TM_SFX_ReactPlap = not TM_SFX_ReactPlap
 				Return()
-		+ "SFX Reactions	| " .. AccBool(TM_SFX_AllReactions)
+		+ "SFX React	| " .. AccBool(TM_SFX_AllReactions)
 			TM_SFX_AllReactions = not TM_SFX_AllReactions
 			Return()
 	+ else
@@ -115,47 +117,49 @@ stop
 
 -- OPTIONS: SEX
 label TMMenuOptions_Sex(human)
+	+ "« " .. AccStr("Everyone") .. " »" [gold]
+		Return()
 	+ if TM_AutoSex
-		+ "• Auto random » " [gold]
-			+ "Auto random (for all):"
+		+ "| Auto random » " [gold]
+			+ "« " .. AccStr("Everyone") .. " »" [gold]
 				Return()
-			+ "• Speed		| " .. AccBool(TM_AutoSex_Speed)
+			+ "| Speed		| " .. AccBool(TM_AutoSex_Speed)
 				TM_AutoSex_Speed = not TM_AutoSex_Speed
 				Return()
-			+ "• Weight		| " .. AccBool(TM_AutoSex_Weight)
+			+ "| Weight		| " .. AccBool(TM_AutoSex_Weight)
 				TM_AutoSex_Weight = not TM_AutoSex_Weight
 				Return()
-			+ "• Thrust		| " .. AccBool(TM_AutoSex_Thrust)
+			+ "| Thrust		| " .. AccBool(TM_AutoSex_Thrust)
 				TM_AutoSex_Thrust = not TM_AutoSex_Thrust
 				Return()
-			+ "• Depth start		| " .. AccBool(TM_AutoSex_DepthStart)
+			+ "| Depth start		| " .. AccBool(TM_AutoSex_DepthStart)
 				TM_AutoSex_DepthStart = not TM_AutoSex_DepthStart
 				Return()
-			+ "• Depth end		| " .. AccBool(TM_AutoSex_DepthEnd)
+			+ "| Depth end		| " .. AccBool(TM_AutoSex_DepthEnd)
 				TM_AutoSex_DepthEnd = not TM_AutoSex_DepthEnd
 				Return()
 			+ TM_MenuBack
 				Return(2)
 			+ TM_MenuClose
-		+ "• Auto climax	| " .. AccBool(TM_AutoSex_Climax)
+		+ "| Auto climax	| " .. AccBool(TM_AutoSex_Climax)
 			TM_AutoSex_Climax = not TM_AutoSex_Climax
 			Return()
-		+ "• Auto cum		| " .. AccBool(TM_AutoSex_Cum)
+		+ "| Auto cum		| " .. AccBool(TM_AutoSex_Cum)
 			TM_AutoSex_Cum = not TM_AutoSex_Cum
 			Return()
-	+ "Auto sex		| " .. AccBool(TM_AutoSex)
+	+ "Auto sex	| " .. AccBool(TM_AutoSex)
 		TM_AutoSex = not TM_AutoSex
 		Return()
-	+ "Cumflation		| " .. AccBool(TM_Cumflate)
+	+ "Cumflation	| " .. AccBool(TM_Cumflate)
 		TM_Cumflate = not TM_Cumflate
 		Return()
-	+ "Bulging		| " .. AccBool(TM_Bulging)
+	+ "Bulging	| " .. AccBool(TM_Bulging)
 		TM_Bulging = not TM_Bulging
 		Return()
-	+ "Wet sex		| " .. AccBool(TM_WetSex)
+	+ "Wet sex	| " .. AccBool(TM_WetSex)
 		TM_WetSex = not TM_WetSex
 		Return()
-	+ "Tween sex		| " .. AccBool(TM_TweenSex) .. " (".. FDec(SexTweenTime(), tmOdec) .."s)"
+	+ "Tween sex	| " .. AccBool(TM_TweenSex) .. " (".. FDec(SexTweenTime(), tmOdec) .."s)"
 		TM_TweenSex = not TM_TweenSex
 		Return()
 	+ TM_MenuBack
@@ -168,19 +172,19 @@ label TMMenuOptions_Click2x(human)
 	+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 		TM_UITips_Options = false
 		Return()
-	+ "Delay		| " .. FDec(TM_DoubleClickTime, tmOdec) .. "s"
+	+ "Delay			| " .. FDec(TM_DoubleClickTime, tmOdec) .. "s"
 		-- human "To change this setting edit tm-config"
 		Return()
-	+ "Reset		| " .. AccBool(TM_DoubleClickReset)
+	+ "Reset			| " .. AccBool(TM_DoubleClickReset)
 		TM_DoubleClickReset = not TM_DoubleClickReset
 		Return()
-	+ "Undress	| " .. AccBool(TM_DoubleClickUndress)
+	+ "Undress		| " .. AccBool(TM_DoubleClickUndress)
 		TM_DoubleClickUndress = not TM_DoubleClickUndress
 		Return()
-	+ "Moaning	| " .. AccBool(TM_DoubleClickMoan) [if not TMMOD_VoiceMod]
+	+ "Moaning		| " .. AccBool(TM_DoubleClickMoan) [if not TMMOD_VoiceMod]
 		TM_DoubleClickMoan = not TM_DoubleClickMoan
 		Return()
-	+ "In other mods | " .. AccBool(TM_DoubleClickInOtherMods)
+	+ "In other mods	| " .. AccBool(TM_DoubleClickInOtherMods)
 		TM_DoubleClickInOtherMods = not TM_DoubleClickInOtherMods
 		Return()
 	+ TM_MenuBack

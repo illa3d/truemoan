@@ -319,7 +319,7 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 
 	-- Pause between moans
 	local pause = 1
-	if stats and stats.Climax then
+	if stats and stats.IsClimax then
 		pause = 0.03
 	elseif tier == TMMoanTier.Max then
 		pause = 0.05
@@ -337,7 +337,7 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	if lastMoanTime > pause then
 		if TM_SFX_AllReactions and TM_SFX_ReactSex and stats and stats.AllowMoaning then
 			-- SFX: CLIMAX MOANING
-			if stats and stats.Climax then TMPlayMoanTier(girl, TMMoanTier[stats.AutoSexTier]) -- follow stats.AutoSexTier with sounds
+			if stats and stats.IsClimax then TMPlayMoanTier(girl, TMMoanTier[stats.AutoSexTier]) -- follow stats.AutoSexTier with sounds
 			-- SFX: SEX MOANING
 			else TMPlayMoanTier(girl, tier) end -- follow penetration speed tier set above
 		end
@@ -360,7 +360,7 @@ end
 function TMOnUpdate_AutoSexClimax(human, stats)
 	-- SFX: CLIMAX MOANING in OnPenetration
 	if not TM_AutoSex or not human or not stats or not stats:CanStartCumOrClimax() then return end
-	-- CanStartClimax() return self.Autosex and self.IsSexActive and self.Arousal == 1 and not self.Climax and not self.IsCumming 
+	-- CanStartClimax() return self.Autosex and self.IsSexActive and self.Arousal == 1 and not self.IsClimax and not self.IsCumming 
 
 	-- penis owners never initiate climax, just start & stop cumming
 	if HumanHasPenis(human) then
@@ -387,11 +387,11 @@ function TMOnUpdate_AutoSexClimax(human, stats)
 		if autoSexTier == AutoSexTier.Idle then
 			-- Penises never end up here for now
 			--if stats.IsCumming and HumanHasPenis(girl) then TMHumanCumStop(girl) end
-			stats.Climax = false
+			stats.IsClimax = false
 		end
 	end
 
-	stats.Climax = true
+	stats.IsClimax = true
 	if TM_WetSex then WetSet(human, 100000, ActBody.Vagina) end
 	AutoSexSet_ClimaxTier(human, AutoSexTier.Max)
 	Delayed(delay, function() AutoSexSet_ClimaxTier(human, AutoSexTier.Wild) end) Increment()

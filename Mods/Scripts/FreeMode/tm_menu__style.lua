@@ -25,20 +25,23 @@ end
 function AccBoolDE (bol)
 	 return FCol(bol and "Enabled" or "Disabled", TM_MenuAccent)
 end
-function AccBoolYN (bol)
-	 return FCol(bol and "Yes" or "No", TM_MenuAccent)
+function AccBoolYN (bol, plain)
+	local label = bol and "Yes" or "No"
+	return plain == true and label or FCol(label, TM_MenuAccent)
 end
 function AccStr (str)
 	return FCol(str, TM_MenuAccent)
 end
-function AccNum (value, decimals)
-	return FCol(FDec(value, decimals), TM_MenuAccent)
+function AccNum (value, decimals, plain)
+	local label = FDec(value, decimals)
+	return plain == true and label or FCol(label, TM_MenuAccent)
 end
 function AccTime (timestamp, decimals)
 	return AccNum((os.time() - timestamp), decimals) .. "s ago"
 end
-function AccNumPC (value, decimals)
-	return FCol((FDec(value * 100, decimals) .. "%"), TM_MenuAccent)
+function AccNumPC (value, decimals, plain)
+	local label = FDec(value * 100, decimals) .. "%"
+	return plain == true and label or FCol(label, TM_MenuAccent)
 end
 function AccTextNum1 (text, value, decimals)
 	return text .. " " .. FCol(FDec(value, decimals), TM_MenuAccent)
@@ -67,20 +70,20 @@ function TMMLabel_AutoSex(human)
 	local stats = TMHStatsGet(human)
 	if not stats then return "" end
 	if not TM_AutoSex then return "OFF (sex options)"
-	elseif not stats.AutoSex then return "OFF"
+	elseif not stats.AutoSex then return AccStr("OFF")
 	else return AccStr(stats.AutoSexTier) end
 end
 
 function TMMLabel_Arousal(human, skipLetter)
 	local stats = TMHStatsGet(human)
 	if not stats then return "" end
-	return (skipLetter and "" or "A ") .. (stats.Climax and AccStr("Climax!") or AccNumPC(stats.Arousal))
+	return (skipLetter and "" or "A ") .. (stats.IsClimax and AccStr("Climax!") or AccNumPC(stats.Arousal))
 end
 
-function TMMLabel_Cum(human)
+function TMMLabel_Cum(human, plain)
 	local stats = TMHStatsGet(human)
 	if not stats then return "" end
-	return AccBoolYN(stats.IsCumming) .. (stats.IsCumming and " | " .. AccNum(stats.CumFrequency, 3) .. "s" or "")
+	return AccBoolYN(stats.IsCumming, plain) .. (stats.IsCumming and (" | " .. AccNum(stats.CumFrequency, 1, plain) .. "s") or "")
 end
 
 function TMMLabel_Holes(human)

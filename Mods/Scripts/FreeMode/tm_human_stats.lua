@@ -8,7 +8,7 @@ TMHumanStats = {
 	-- Time
 	UpdateDelta = 0,
 	-- Customization
-	TMBValue = nil,
+	TMBValue = TMBodyValueCloneDefault(),
 	NeedsBodyApply = false,
 	-- Sex
 	AllowMoaning = true,
@@ -23,17 +23,9 @@ TMHumanStats = {
 	SexBody = nil,
 	SexBodyCount = 0,
 	-- Arousal
+	IsClimax = false,
 	Arousal = 0,
 	ArousalSeed = 1,
-	Climax = false,
-	-- AutoSex
-	AutoSex = false,
-	AutoSexTier = nil,
-	AutoSexSpeed = true,
-	AutoSexThrust = true,
-	AutoSexWeight = true,
-	AutoSexDepthStart = true,
-	AutoSexDepthEnd = true,
 	-- Cum
 	IsCumming = false,
 	CumFrequency = 0,
@@ -43,6 +35,17 @@ TMHumanStats = {
 	DeformHips_Orig = nil,
 	DeformHips_Bulge = nil,
 	DeformHips_Cumflate = nil,
+	-- AutoSex
+	AutoSex = false,
+	AutoSexTier = nil,
+	-- AutoSex parameters
+	AutoSexCum = true,
+	AutoSexClimax = true,
+	AutoSexSpeed = true,
+	AutoSexThrust = true,
+	AutoSexWeight = true,
+	AutoSexDepthStart = true,
+	AutoSexDepthEnd = true,
 }
 
 function TMHumanStatsCloneDefault() return TableClone(TMHumanStats) end
@@ -147,7 +150,7 @@ local function ArousalHoleMultiplier(holeCount)
 end
 
 function TMHumanStats:UpdateArousal(deltaTime)
-	if self.IsSexActive and self.AutoSexTier and self.Climax ~= true and self.IsCumming ~= true then
+	if self.IsSexActive and self.AutoSexTier and self.IsClimax ~= true and self.IsCumming ~= true then
 		local tierMul = AutoSexTierConfig[self.AutoSexTier].Arousal
 		local gain = deltaTime * (TM_HumanArousalIncrease / 100) * tierMul
 		* ArousalHoleMultiplier(self.SexBodyCount)
@@ -181,12 +184,11 @@ function TMHumanStats:AllowMoaningToggle()
 end
 
 function TMHumanStats:CanStartCumOrClimax()
-	return self.AutoSex and self.IsSexActive and self.Arousal == 1 and not self.Climax and not self.IsCumming 
+	return self.AutoSex and self.IsSexActive and self.Arousal == 1 and not self.IsClimax and not self.IsCumming 
 end
 
 -- DEFORM
 function TMHumanStats:DeformBackupIfNot()
-	---@diagnostic disable-next-line
 	if not self.DeformHips_Orig then self.DeformHips_Orig = self.TMBValue.Hips end
 end
 

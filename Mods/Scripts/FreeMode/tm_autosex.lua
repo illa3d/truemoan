@@ -192,7 +192,7 @@ end
 function AutoSexSet_TierBySpeed(human, actBody, speed)
 	if not human or type(speed) ~= "number" then return end
 	local stats = TMHStatsGet(human)
-	if not stats or stats.Climax then return end
+	if not stats or stats.IsClimax then return end
 	for tier, mm in pairs(AutoSexTierConfig) do
 		if speed >= mm.Min and speed < mm.Max then
 			AutoSexSet(human, stats.AutoSex, tier, false)

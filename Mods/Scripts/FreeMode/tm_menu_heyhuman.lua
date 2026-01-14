@@ -2,38 +2,9 @@
 TMEyesOpen = true
 
 ---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol, err-assign-as-eq, malformed-number
-label TMMenuHumanStats(stats)
-	+ "Auto sex	| " .. AccBool(stats.AutoSex)
-		Return()
-	+ "Sex tier	| " .. AccStr(stats.AutoSexTier)
-		Return()
-	+ "Is in sex	| " .. AccBoolYN(stats.IsSexActive)
-		Return()
-	+ TMMLabel_Holes(human) [if stats.IsSexActive]
-		Return()
-	+ "Cumming	| " .. TMMLabel_Cum(human)
-		Return()
-	+ "Feeling cum	| " .. AccBoolYN(stats.IsFeelingCum)
-		Return()
-	+ "Cumflating	| " .. AccBoolYN(stats.IsCumflating)
-		Return()
-	+ "Bulging	| " .. AccBoolYN(stats.IsBulging)
-		Return()
-	+ "Arousal	| " .. AccNumPC(stats.Arousal, 2)
-		Return()
-	+ "Climax		| " .. AccBoolYN(stats.Climax)
-		Return()
-	+ "Allow moaning	| " .. AccBoolYN(stats.AllowMoaning)
-		Return()
-	+ TM_MenuBack
-		Return(2)
-	+ TM_MenuClose_AutoSexStats(human)
-stop
-
 label TMMenuHeyHuman(human)
 	+ "Stats " .. AccStr(human.Name) .. " »" [gold]
-		TMMenuHumanStats(TMHStatsGet(human))
-
+		TMMenuHumanStats(human, TMHStatsGet(human))
 	+ "DELETE ".. AccStr(human.Name)
 		+ AccStr("may crash the game If")
 			Return()
@@ -53,13 +24,13 @@ label TMMenuHeyHuman(human)
 	+ "Penetration	| " .. AccBool(not human.m_isMale)
 		HumanMaleSet(human, not human.m_isMale)
 		Return()
+	+ "Moaning	| " .. AccBool(TMHStatsGet(human).AllowMoaning)
+		TMHStatsGet(human):AllowMoaningToggle()
+		Return()
 	+ if not human.m_isMale
 		+ "Penis		| " .. AccBool(human.Penis.IsActive)
 			HumanPenisSet(human, not human.Penis.IsActive)
 			Return(2)
-	+ "Moaning	| " .. AccBool(TMHStatsGet(human).AllowMoaning)
-		TMHStatsGet(human):AllowMoaningToggle()
-		Return()
 	+ "Look at »" [gold]
 		+ "• Look at " .. AccStr("cam")
 			HumanLookAt(human, CameraPos())
@@ -84,6 +55,30 @@ label TMMenuHeyHuman(human)
 		Return()
 	+ "Clothes " .. AccStr("off")
 		HumanClothes(human, false)	
+		Return()
+	+ TM_MenuBack
+		Return(2)
+	+ TM_MenuClose_AutoSexStats(human)
+stop
+
+label TMMenuHumanStats(human, stats)
+	+ "• Cumflating!" [if stats.IsCumflating]
+		Return()
+	+ "• Bulging!" [if stats.IsBulging]
+		Return()
+	+ "• Feeling cum!" [if stats.IsFeelingCum]
+		Return()
+	+ "• Cumming!" [if stats.IsCumming]
+		Return()
+	+ "• Climax!" [if stats.IsClimax]
+		Return()
+	+ "Sex		| " .. TMMLabel_Holes(human) [if stats.IsSexActive]
+		Return()
+	+ "Arousal	| " .. AccNumPC(stats.Arousal, 2, true) [if stats.Arousal > 0]
+		Return()
+	+ "Moaning	| " .. AccBoolYN(stats.AllowMoaning, true)
+		Return()
+	+ "Auto sex	| " .. AccBoolYN(stats.AutoSex, true) .. " | " .. stats.AutoSexTier
 		Return()
 	+ TM_MenuBack
 		Return(2)
