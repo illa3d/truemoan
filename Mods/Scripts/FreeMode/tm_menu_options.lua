@@ -30,7 +30,7 @@ label TMMenuOptions(human)
 	+ else
 		+ AccStr("PLUGINS »") [gold]
 			+ if TMMOD_FaunaLabs
-				+ "Fauna LABS »" [if TMMOD_FauneaLabs] [gold]
+				+ "Fauna LABS »" [if TMMOD_FaunaLabs] [gold]
 					TMMOD_Jump(TMMOD_Menu_FaunaLabs, human, hitTri)
 			+ else
 				+ AccStr("(consider FaunaLABS)")
