@@ -2,7 +2,7 @@
 --                                               TRUE MOAN                                             --
 ---------------------------------------------------------------------------------------------------------
 
-**Supports: VoiceMod/TalkMenuMM/FaunaLABS | Auto Sex Control | BodyEdit | Realistic Sounds | Sex/BJ/Climax/Cum reactions | Animation | Poses | Ambient Audio | Skyboxes | Improved Menu |**
+**AutoSex Control | BodyEdit | Realistic Sounds | Sex Reactions | Bulging | Cumflation | Animation | Poses | Ambient Audio | Skyboxes | Improved Menu |**
 
 **MOD FEATURES**
 - **Auto Sex Control**
@@ -13,16 +13,14 @@
 - **TrueFace**
   - Procedural face animation system + presets
 - **Body Edit**
-  - Reduce/enlarge body beyond slider limits
-  - Copy/Paste, Presets
+  - Tweak body beyond limits
+  - Generate, Copy/Paste, Presets
 - **Realistic Moans & SFX**
   - **Generic Voice** for all characters
   - Blowjob & Sex sound effects
 - **Sex/Cum reactions**
   - Climax/Arousal mechanic
-  - Cum in/on reactions
-  - Bulging/Cumflation
-  - Wet Sex
+  - Wet/Cum/Bulging/Cumflation reactions
 - **Poses/Animation** (requires FaunaLABS)
 - **6x audio ambiences**
 - **35 Scenes**
@@ -37,6 +35,8 @@
 **TrueMoan_v2.3_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
 **TrueMoan_Addon_Skyboxes_4k_v1.0.zip**
 **Download: ** https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
+**Sound replacers** by @salemvonzombeh https://discord.com/channels/620113492208517120/1460768562338726090
+
 :warning: For black screen or issues, see this post **https://discord.com/channels/620113492208517120/1451633202019172462/1451634287987396884** 
 
 **REQUIREMENTS**
@@ -44,7 +44,7 @@
 - FaunaLABS v1.02 (for full experience)
 
 **SUPPORTED MODS**
-- Nf123 Voice Mod, Talk Menu Mod Manager, FaunaLabs
+- Nf123 Voice Mod, Talk Menu Mod Manager, FaunaLabs, AllVoiceMods(for now)
 
 **HOW TO INSTALL**
 - Backup your old TrueMoan config files prior to install (optional)
@@ -109,6 +109,7 @@ Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/Fre
 - Added bulging option
 - Added mixing of bulging and cumflation
 - Reworked plap to be by penetration depth
+- Moaning toggle per human
 - Fixed interaction speed turning on AutoSex
 
 [ v2.2 ]
