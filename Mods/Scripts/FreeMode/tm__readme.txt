@@ -31,13 +31,13 @@
 - **7x skyboxes** (8/4/2k)
 
 **LATEST DOWNLOADS**
-**TrueMoan_v2.3.zip** - Just TrueMoan
-**TrueMoan_v2.3_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
+**TrueMoan_v2.3a.zip** - Just TrueMoan
+**TrueMoan_v2.3a_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
 **TrueMoan_Addon_Skyboxes_4k_v1.0.zip**
 **Download: ** https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
-**Sound replacers** by @salemvonzombeh https://discord.com/channels/620113492208517120/1460768562338726090
+**Sound replacers:** https://discord.com/channels/620113492208517120/1460768562338726090 by @salemvonzombeh 
 
-:warning: For black screen or issues, see this post **https://discord.com/channels/620113492208517120/1451633202019172462/1451634287987396884** 
+:warning: For black screen or issues, see **https://discord.com/channels/620113492208517120/1451633202019172462/1451634287987396884** :warning: 
 
 **REQUIREMENTS**
 - TrueFacials v0.59
@@ -90,7 +90,8 @@ Thanks!
 ---------------------------------------------------------------------------------------------------------
 
 **INTEGRATED MODS**
-- `faunaLABS_v1.02 - TMMM Ready.zip` @faunap https://discord.com/channels/620113492208517120/1358287146791866446/1454138284841369701
+- `faunaLABS_v1.02 - TMMM Ready.zip` https://discord.com/channels/620113492208517120/1358287146791866446/1454138284841369701 by @faunap 
+- Selected Plaps & Blowjob moans used from https://discord.com/channels/620113492208517120/1446590801009180804 by @xlmumblelx 
 
 **CONFIG FILES** `Mods/Scripts/FreeMod`
 - Config & defaults: `tm__config.lua`
@@ -105,7 +106,7 @@ GitHub Repository - https://github.com/illa3d/truemoan
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
 
-[ v2.3 ]
+**[ v2.3 ]**
 - Added bulging option
 - Added mixing of bulging and cumflation
 - Reworked plap to be by penetration depth
