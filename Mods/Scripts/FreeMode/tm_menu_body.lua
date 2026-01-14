@@ -1,8 +1,9 @@
 -- TrueMoan v2.3 by illa3d
 -- Code in: tm_bodyedit.lua
 -- Body edit decimals
-tmBdec = 2
+local tmBdec = 2
 
+---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol
 label TMMenuBody(human)
 	+ "Edit safe	| " .. AccBool(TM_BodyEditSafe) .. (TM_BodyEditSafe and "" or "(can crash app)")
 		TM_BodyEditSafe = not TM_BodyEditSafe

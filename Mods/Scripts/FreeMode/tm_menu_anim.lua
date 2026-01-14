@@ -1,6 +1,7 @@
 -- TrueMoan v2.3 by illa3d
-tmAdec = 2 -- decimals
+local tmAdec = 2 -- decimals
 
+---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol
 label TMMenuAnim(human)
 	-- FAUNA
 	+ if TMMOD_FaunaLabs

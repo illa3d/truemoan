@@ -99,6 +99,7 @@ Thanks!
 - Custom poses: `tm__poses.lua`
 - Character clothes: `tm__clothes.lua`
 - Music: `tm__music.lua`
+- Tweaks: `tm__tweaks.lua` (you may break things)
 
 **SOURCE**
 GitHub Repository - https://github.com/illa3d/truemoan
@@ -279,3 +280,43 @@ Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/Fre
 - @faunap: FreeModeHG v0.3 - faunap_edit_0.2.zip - https://discord.com/channels/620113492208517120/1312401584910631054/1355724274224205984
 - @masterchief_87971: Natural AutoBJ AutoThrust - https://discord.com/channels/620113492208517120/1312401584910631054/1355675724932972634
 - @callmedrjones6911: Face expression looping - https://discord.com/channels/620113492208517120/1312401584910631054/1349562400105431090
+
+---------------------------------------------------------------------------------------------------------
+VSCODE + LUA (by sumaneko) extension
+---------------------------------------------------------------------------------------------------------
+With diagnostics enabled, you need to wrap all talk menu labels like this
+Make sure you define it for just the block, because if you don't re-enable,
+all regular functions below will not be under diagnostics.
+
+---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol, err-assign-as-eq, malformed-number
+label MenuName(human, hitTri)
+stop 
+---@diagnostic enable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol, err-assign-as-eq, malformed-number
+
+And define your globals in VSCode/DATA/user-data/User/settings.json
+
+    "Lua.codeLens.enable": true,
+    "Lua.diagnostics.globals": [
+        "_G",
+        "game",
+        "label",
+        "load",
+        "math",
+        "next",
+        "os",
+        "pairs",
+        "ipairs",
+        "table",
+        "type",
+        "TargetActor",
+        "fauna_LABS_Menu",
+        "TM_AddFunctionHook",
+        "TM_AddFunctionOverride",
+        "TM_AddMenuMod",
+        "TM_CurrentStickiedMod",
+        "TM_ModMenu",
+        "TM_RemoveFunctionHook",
+        "TM_RemoveFunctionOverride",
+        "VM_VoiceMod_Enable",
+        "VM_VoiceMod_Enabled"
+    ]

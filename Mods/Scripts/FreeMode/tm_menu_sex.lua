@@ -1,12 +1,13 @@
 -- TrueMoan v2.3 by illa3d
 -- Sex speed decimals
-tmSdecSpd = 1
-tmSdec = 0
+local tmSdecSpd = 1
+local tmSdec = 0
 
 -- function TMIsAutoSexTurboNeeded(interaction, isHand) return not TM_AutoSexTurbo and ActSpeedGet(interaction, isHand) > ActAutoSexNormalMinMax.Speed.Max end
 -- function TMIsAutoSexNormalNeeded(interaction, isHand) return TM_AutoSexTurbo and ActSpeedGet(interaction, isHand) < ActAutoSexNormalMinMax.Speed.Max end
 
 -- SEX MENU
+---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol, err-assign-as-eq, malformed-number
 label TMMenuSex(human)
 	+ if HasSexPartner_Any(human) and IsSexActive_Any(human)
 		-- Quick commands

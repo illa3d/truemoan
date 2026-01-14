@@ -4,8 +4,8 @@
 ------------------------------------------------------------------------------------------------
 -- PRESETS DISPLAYED IN TALK MENU/BODY/SIZE
 ------------------------------------------------------------------------------------------------
+---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol
 label TMMenuBodySize(human)
-
 	-- # PRESETS START #
 	+ "• Fairy Dildo" [if human.Penis.IsActive] [gold]
 		HumanClothes(human, false)
@@ -77,6 +77,7 @@ label TMMenuBodyType(human)
 		Return(2)
 	+ TM_MenuClose
 stop
+---@diagnostic enable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol
 
 ------------------------------------------------------------------------------------------------
 -- RANDOM PRESETS ON SPAWN
@@ -208,4 +209,5 @@ TMBEPreset_Skinny = {
 	[TMBody.Nipples]	= 0,
 	[TMBody.Breasts]	= -0.8,
 	[TMBody.Muscle]		= 0.3,
+	---@diagnostic disable: miss-symbol
 }

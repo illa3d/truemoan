@@ -1,4 +1,5 @@
 -- FreemodeHG version 0.3 ~ fauna_LABS_v1.02 (partial menu extract)
+---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol, err-assign-as-eq, malformed-number
 label TMMenuFaunaFaceLab(human, hitTri)
 -- + "faceLAB.."[gold]
 	+ "0.5"

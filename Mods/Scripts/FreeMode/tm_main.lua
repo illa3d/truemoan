@@ -25,7 +25,9 @@ function TMOnStart_GenericChat()
 	if not TM_AllowVoice() then return end
 	local timerKey = "TMGenericChat"
 	ResetTimer(timerKey, math.random(-10, 0))
+	---@diagnostic disable: undefined-global, miss-symbol, unknown-symbol
 	local speaker = game.GetRandomHuman(|h| h.CanSpeak)
+	---@diagnostic enable: undefined-global, miss-symbol, unknown-symbol
 	if speaker ~= nil then speaker.Say("Greeting") end
 	TM_AllowGenericChat = true
 end
@@ -58,7 +60,9 @@ function TMOnUpdate_GenericChat()
 	local lastChatTime = Timer(timerKey)
 	if lastChatTime > game.ChatIntervals then
 		ResetTimer(timerKey, math.random(-7, 0))
+		---@diagnostic disable: undefined-global, miss-symbol, unknown-symbol
 		local speaker = game.GetRandomHuman(|h| h.CanSpeak and ((h.FaceMood >= 0 and h.HasVoice("Like") == true) or (h.FaceMood < 0 and h.HasVoice("Dislike") == true)))
+		---@diagnostic enable: undefined-global, miss-symbol, unknown-symbol
 		if speaker ~= nil then
 			speaker.Say(speaker.FaceMood >= 0 and "Like" or "Dislike")
 		end
@@ -331,7 +335,7 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 
 	-- Play
 	if lastMoanTime > pause then
-		if TM_SFX_AllReactions and TM_SFX_ReactSex and stats.AllowMoaning then
+		if TM_SFX_AllReactions and TM_SFX_ReactSex and stats and stats.AllowMoaning then
 			-- SFX: CLIMAX MOANING
 			if stats and stats.Climax then TMPlayMoanTier(girl, TMMoanTier[stats.AutoSexTier]) -- follow stats.AutoSexTier with sounds
 			-- SFX: SEX MOANING

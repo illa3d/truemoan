@@ -1,4 +1,5 @@
 -- FreemodeHG version 0.3 ~ fauna_LABS_v1.02 (partial menu extract)
+---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol
 label TMMenuFaunaAnim_Bouncing(human)
 -- + "Bouncing.." [if game.HasAnim(human.breastNames) == false][gold]
 	+ "Bouncing | 0.97 > 1"

@@ -181,6 +181,7 @@ end
 
 -- DEFORM
 function TMHumanStats:DeformBackupIfNot()
+	---@diagnostic disable-next-line
 	if not self.DeformHips_Orig then self.DeformHips_Orig = self.TMBValue.Hips end
 end
 

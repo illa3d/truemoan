@@ -4,6 +4,7 @@
 -- MAIN MENU
 -------------------------------------------------------------------------------------------------
 
+---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol, err-assign-as-eq, malformed-number
 label TMTalkMenu(human, hitTri)
 	+ "OPTIONS »" ..(game.m_freezeAllActors and " (paused)" or "") [gold]
 		TMMenuOptions(human)

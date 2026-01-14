@@ -135,7 +135,7 @@ function HumanClothes(human, show)
 		-- no simple way of keeping futa penis
 		-- dictionary of characters and their hadpenis
 	else
-		hadpenis = human.Penis.IsActive
+		local hadpenis = human.Penis.IsActive
 		human.CustomizeAll(99)
 		if hadpenis then HumanPenisSet(human, true)
 		else HumanPenisSet(human, false) end
@@ -159,7 +159,9 @@ end
 
 -- CUM
 function HumanCumEvery(human, sec)
+	---@diagnostic disable: exp-in-action, undefined-global, err-nonstandard-symbol, miss-exp, miss-symbol, unknown-symbol
 	game.AddRepeatAnim(sec, || human.Shoot(), human.Penis)
+	---@diagnostic enable: exp-in-action, undefined-global, err-nonstandard-symbol, miss-exp, miss-symbol, unknown-symbol
 	return sec
 end
 

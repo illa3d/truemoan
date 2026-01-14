@@ -10,7 +10,7 @@
 -------------------------------------------------------------------------------------------------
 
 -- AutoSex Variabless
-local ActAutoSexTimers = ActAutoSexTimers or {}
+local ActAutoSexTimers = {}
 local ActAutoSexTickTime = 0.25 -- seconds (game timer frequency)
 
 -------------------------------------------------------------------------------------------------
@@ -200,7 +200,9 @@ function AutoSexAnim_NameGet(human) return human.calfNames end
 function HasAutoSexAnim(human) return human and game.HasAnim(AutoSexAnim_NameGet(human)) end
 function AutoSexAnim_Add(human)
 	if HasAutoSexAnim(human) then return end
+	---@diagnostic disable: exp-in-action, undefined-global, err-nonstandard-symbol, miss-exp, miss-symbol, unknown-symbol
 	game.AddRepeatAnim(ActAutoSexTickTime, || AutoSex_OnTick(human), AutoSexAnim_NameGet(human))
+	---@diagnostic enable: exp-in-action, undefined-global, err-nonstandard-symbol, miss-exp, miss-symbol, unknown-symbol
 end
 function AutoSexAnim_Remove(human) game.RemoveAnim(AutoSexAnim_NameGet(human)) end
 function AutoSexAnim_Handle(human)

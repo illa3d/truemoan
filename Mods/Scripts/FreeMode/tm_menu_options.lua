@@ -1,8 +1,9 @@
 -- TrueMoan v2.3 by illa3d
 TM_UITips_Options = true
 TM_UITip_Options = "Tip: edit defaults in tm-config"
-tmOdec = 2
+local tmOdec = 2
 
+---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol, err-assign-as-eq, malformed-number
 -- OPTIONS MAIN
 label TMMenuOptions(human)
 	+ "Pause | " .. AccBool(game.m_freezeAllActors)
