@@ -115,6 +115,37 @@ stop
 
 -- OPTIONS: SEX
 label TMMenuOptions_Sex(human)
+	+ if TM_AutoSex
+		+ "• Auto random » " [gold]
+			+ "Auto random (for all):"
+				Return()
+			+ "• Speed		| " .. AccBool(TM_AutoSex_Speed)
+				TM_AutoSex_Speed = not TM_AutoSex_Speed
+				Return()
+			+ "• Weight		| " .. AccBool(TM_AutoSex_Weight)
+				TM_AutoSex_Weight = not TM_AutoSex_Weight
+				Return()
+			+ "• Thrust		| " .. AccBool(TM_AutoSex_Thrust)
+				TM_AutoSex_Thrust = not TM_AutoSex_Thrust
+				Return()
+			+ "• Depth start		| " .. AccBool(TM_AutoSex_DepthStart)
+				TM_AutoSex_DepthStart = not TM_AutoSex_DepthStart
+				Return()
+			+ "• Depth end		| " .. AccBool(TM_AutoSex_DepthEnd)
+				TM_AutoSex_DepthEnd = not TM_AutoSex_DepthEnd
+				Return()
+			+ TM_MenuBack
+				Return(2)
+			+ TM_MenuClose
+		+ "• Auto climax	| " .. AccBool(TM_AutoSex_Climax)
+			TM_AutoSex_Climax = not TM_AutoSex_Climax
+			Return()
+		+ "• Auto cum		| " .. AccBool(TM_AutoSex_Cum)
+			TM_AutoSex_Cum = not TM_AutoSex_Cum
+			Return()
+	+ "Auto sex		| " .. AccBool(TM_AutoSex)
+		TM_AutoSex = not TM_AutoSex
+		Return()
 	+ "Cumflation		| " .. AccBool(TM_Cumflate)
 		TM_Cumflate = not TM_Cumflate
 		Return()
@@ -123,16 +154,6 @@ label TMMenuOptions_Sex(human)
 		Return()
 	+ "Wet sex		| " .. AccBool(TM_WetSex)
 		TM_WetSex = not TM_WetSex
-		Return()
-	+ if TM_AutoSex
-		+ "• Auto climax	| " .. AccBool(TM_AutoClimax)
-			TM_AutoClimax = not TM_AutoClimax
-			Return()
-		+ "• Auto cum		| " .. AccBool(TM_AutoCum)
-			TM_AutoCum = not TM_AutoCum
-			Return()
-	+ "Auto sex		| " .. AccBool(TM_AutoSex)
-		TM_AutoSex = not TM_AutoSex
 		Return()
 	+ "Tween sex		| " .. AccBool(TM_TweenSex) .. " (".. FDec(SexTweenTime(), tmOdec) .."s)"
 		TM_TweenSex = not TM_TweenSex

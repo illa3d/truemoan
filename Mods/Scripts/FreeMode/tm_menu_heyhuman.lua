@@ -2,28 +2,28 @@
 TMEyesOpen = true
 
 ---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol, err-assign-as-eq, malformed-number
-label TMMenuHumanStats(human)
-	+ "Auto sex	| " .. AccBool(TMHStatsGet(human).AutoSex)
+label TMMenuHumanStats(stats)
+	+ "Auto sex	| " .. AccBool(stats.AutoSex)
 		Return()
-	+ "Sex tier	| " .. AccStr(TMHStatsGet(human).AutoSexTier)
+	+ "Sex tier	| " .. AccStr(stats.AutoSexTier)
 		Return()
-	+ "Is in sex	| " .. AccBoolYN(TMHStatsGet(human).IsSexActive)
+	+ "Is in sex	| " .. AccBoolYN(stats.IsSexActive)
 		Return()
-	+ TMMLabel_Holes(human) [if TMHStatsGet(human).IsSexActive]
+	+ TMMLabel_Holes(human) [if stats.IsSexActive]
 		Return()
 	+ "Cumming	| " .. TMMLabel_Cum(human)
 		Return()
-	+ "Feeling cum	| " .. AccBoolYN(TMHStatsGet(human).IsFeelingCum)
+	+ "Feeling cum	| " .. AccBoolYN(stats.IsFeelingCum)
 		Return()
-	+ "Cumflating	| " .. AccBoolYN(TMHStatsGet(human).IsCumflating)
+	+ "Cumflating	| " .. AccBoolYN(stats.IsCumflating)
 		Return()
-	+ "Bulging	| " .. AccBoolYN(TMHStatsGet(human).IsBulging)
+	+ "Bulging	| " .. AccBoolYN(stats.IsBulging)
 		Return()
-	+ "Arousal	| " .. AccNumPC(TMHStatsGet(human).Arousal, 2)
+	+ "Arousal	| " .. AccNumPC(stats.Arousal, 2)
 		Return()
-	+ "Climax		| " .. AccBoolYN(TMHStatsGet(human).Climax)
+	+ "Climax		| " .. AccBoolYN(stats.Climax)
 		Return()
-	+ "Allow moaning	| " .. AccBoolYN(TMHStatsGet(human).AllowMoaning)
+	+ "Allow moaning	| " .. AccBoolYN(stats.AllowMoaning)
 		Return()
 	+ TM_MenuBack
 		Return(2)
@@ -32,7 +32,7 @@ stop
 
 label TMMenuHeyHuman(human)
 	+ "Stats " .. AccStr(human.Name) .. " »" [gold]
-		TMMenuHumanStats(human)
+		TMMenuHumanStats(TMHStatsGet(human))
 
 	+ "DELETE ".. AccStr(human.Name)
 		+ AccStr("may crash the game If")

@@ -29,6 +29,11 @@ TMHumanStats = {
 	-- AutoSex
 	AutoSex = false,
 	AutoSexTier = nil,
+	AutoSexSpeed = true,
+	AutoSexThrust = true,
+	AutoSexWeight = true,
+	AutoSexDepthStart = true,
+	AutoSexDepthEnd = true,
 	-- Cum
 	IsCumming = false,
 	CumFrequency = 0,

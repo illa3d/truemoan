@@ -28,14 +28,21 @@ TM_SpawnRandomBody = false			-- Randomizes body types on start (overwrites body 
 TM_SpawnAutoSexOn = true			-- AutoSex on for everyone at spawn
 
 -- People: Sex
-TM_AutoSex = true					-- AutoSex feature on/off for all
-TM_AutoCum = true					-- AutoSex Male/Futa AutoCumming when aroused 100%
-TM_AutoClimax = true				-- AutoSex Female Climaxing when aroused 100% and feels cum
 TM_WetSex = true					-- Moisting holes (vag, anus, mouth) during sex and cumming
 TM_Bulging = false					-- Allow belly bulging by penetration
 TM_Cumflate = false					-- Allow belly inflation by cumming inside
 TM_TweenSex = true					-- Soft transitions on changing sex values (speed, thrust, depth)
 TM_TweenTime = 1					-- [0 = off, max 3] Time in seconds to transition between sex values (speed, thrust, depth)
+
+-- People: Auto Sex
+TM_AutoSex = true					-- AutoSex feature on/off for all
+TM_AutoSex_Cum = true				-- AutoSex Male/Futa AutoCumming when aroused 100%
+TM_AutoSex_Climax = true			-- AutoSex Female Climaxing when aroused 100% and feels cum
+TM_AutoSex_Speed = true				-- AutoSex randomize Speed
+TM_AutoSex_Weight = true			-- AutoSex randomize Weight (male vs female)
+TM_AutoSex_Thrust = true			-- AutoSex randomize Thrust
+TM_AutoSex_DepthStart = true		-- AutoSex randomize Depth end
+TM_AutoSex_DepthEnd = true			-- AutoSex randomize Depth end
 
 -- SFX: Ambience
 TM_SFX_Ambience = true				-- Ambient sounds

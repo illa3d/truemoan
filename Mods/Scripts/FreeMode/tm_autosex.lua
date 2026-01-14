@@ -133,6 +133,27 @@ end
 -- AUTOSEX
 -------------------------------------------------------------------------------------------------
 
+function AutoSex_AllowParam(stats, actParam)
+	if not stats then return AutoSex_AllowGlobal(actParam) end
+	if actParam == ActParam.Speed then return TM_AutoSex_Speed and stats.AutoSexSpeed
+	elseif actParam == ActParam.Weight then return TM_AutoSex_Weight and stats.AutoSexWeight
+	elseif actParam == ActParam.Thrust then return TM_AutoSex_Thrust and stats.AutoSexThrust
+	elseif actParam == ActParam.DepthStart then return TM_AutoSex_DepthStart and stats.AutoSexDepthStart
+	elseif actParam == ActParam.DepthEnd then return TM_AutoSex_DepthEnd and stats.AutoSexDepthEnd end
+	return false
+end
+
+function AutoSex_AllowGlobal(actParam)
+	if actParam == ActParam.Speed then return TM_AutoSex_Speed
+	elseif actParam == ActParam.Weight then return TM_AutoSex_Weight
+	elseif actParam == ActParam.Thrust then return TM_AutoSex_Thrust
+	elseif actParam == ActParam.DepthStart then return TM_AutoSex_DepthStart
+	elseif actParam == ActParam.DepthEnd then return TM_AutoSex_DepthEnd end
+	return false
+end
+
+-------------------------------------------------------------------------------------------------
+
 function HasAutoSex(human)
 	local stats = TMHStatsGet(human)
 	return stats and stats.AutoSex
@@ -164,6 +185,8 @@ function AutoSexToggle(human)
 	-- AutoSex is ON, minimum tier toggles to OFF
 	else AutoSexSet(human, false) end
 end
+
+-------------------------------------------------------------------------------------------------
 
 -- AutoSexTier set by UI speed controls
 function AutoSexSet_TierBySpeed(human, actBody, speed)
@@ -231,16 +254,16 @@ function AutoSex_OnTick(human)
 	local stats = TMHStatsGet(human)
 	if not stats or not stats.AutoSex then return end
 	-- Start setting all parameters that are in use
-	if stats.PenisHole then AutoSex_OnTickParamsSet(human, ActBody.PenisHole) end
-	if stats.PenisHand then AutoSex_OnTickParamsSet(human, ActBody.PenisHand) end
+	if stats.PenisHole then AutoSex_OnTickParamsSet(human, stats, ActBody.PenisHole) end
+	if stats.PenisHand then AutoSex_OnTickParamsSet(human, stats, ActBody.PenisHand) end
 	-- Holes (set params only if male doesn't override) -- just because females can't find partner via hand
-	if stats.Mouth and not HasAutoSex_Body(human, ActBody.Mouth) then AutoSex_OnTickParamsSet(human, ActBody.Mouth) end
-	if stats.Anus and not HasAutoSex_Body(human, ActBody.Anus) then AutoSex_OnTickParamsSet(human, ActBody.Anus) end
-	if stats.Vagina and not HasAutoSex_Body(human, ActBody.Vagina) then AutoSex_OnTickParamsSet(human, ActBody.Vagina) end
+	if stats.Mouth and not HasAutoSex_Body(human, ActBody.Mouth) then AutoSex_OnTickParamsSet(human, stats, ActBody.Mouth) end
+	if stats.Anus and not HasAutoSex_Body(human, ActBody.Anus) then AutoSex_OnTickParamsSet(human, stats, ActBody.Anus) end
+	if stats.Vagina and not HasAutoSex_Body(human, ActBody.Vagina) then AutoSex_OnTickParamsSet(human, stats, ActBody.Vagina) end
 end
 
 -- START INTERACTION PARAMETER SET (Calculate timer against ticker and fire events for each active interaction)
-function AutoSex_OnTickParamsSet(human, body)
+function AutoSex_OnTickParamsSet(human, stats, body)
 	if not TM_AutoSex or not human then return end
 	-- Stats
 	local interaction = ActGet(human, body)
@@ -258,7 +281,7 @@ function AutoSex_OnTickParamsSet(human, body)
 	-- Iterate through all timers, execute ones that have timeouted
 	for actParam, paramSetFunc in pairs(ActParamFunctionSet) do
 		-- If AutoSex drift is 0, don't animate parameters
-		if AutoSexDrift(actParam) > 0 then
+		if AutoSex_AllowParam(stats, actParam) and AutoSexDrift(actParam) > 0 then
 			-- Init or subtract interaction timer (for all parameters)
 			bodyTimers[actParam] = (bodyTimers[actParam] or 0) - ActAutoSexTickTime
 			if bodyTimers[actParam] <= 0 then

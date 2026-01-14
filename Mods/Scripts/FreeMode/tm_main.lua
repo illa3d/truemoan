@@ -364,14 +364,14 @@ function TMOnUpdate_AutoSexClimax(human, stats)
 
 	-- penis owners never initiate climax, just start & stop cumming
 	if HumanHasPenis(human) then
-		if not TM_AutoCum or stats.IsCumming then return end
+		if not TM_AutoSex_Cum or stats.IsCumming then return end
 		-- just start cumming and stop after 10 secs
 		TMHumanCum(human, 2, 5)
 		Delayed(10, function () TMHumanCumStop(human) end)
 		return
 	
 	-- female needs to feel cum and the climax starts
-	elseif not TM_AutoClimax or not stats.IsFeelingCum then return end
+	elseif not TM_AutoSex_Climax or not stats.IsFeelingCum then return end
 	
 	-- Just girls can set this, they lead the Climax
 	local delay = 6
