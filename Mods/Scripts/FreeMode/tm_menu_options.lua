@@ -13,12 +13,12 @@ label TMMenuOptions(human)
 	+ "Show UI" [if not TM_UIVisible]
 		TM_UIVisible = ShowUI(true)
 		Return()
-	+ "Music »" [gold]
-		TMMenuList_Music(TM_MusicTracks)
-	+ "Ambience » | " .. AccBool(TM_SFX_Ambience) [gold]
-		TMMenuOptions_Ambience(human)
-	+ "Sex / SFX »" [gold]
-		TMMenuOptions_SexSfx(human)
+	+ "Audio » | " .. AccBool(TM_SFX_Ambience) [gold]
+		TMMenuOptions_Audio(human)
+	+ "React »" [gold]
+		TMMenuOptions_React(human)
+	+ "Sex »" [gold]
+		TMMenuOptions_Sex(human)
 	+ "Click 2x »" [gold]
 		TMMenuOptions_Click2x(human)
 	+ "Spawn »" [gold]
@@ -30,7 +30,7 @@ label TMMenuOptions(human)
 	+ else
 		+ AccStr("PLUGINS »") [gold]
 			+ if TMMOD_FaunaLabs
-				+ "Fauna LABS »" [if TMMOD_FaunaLabs] [gold]
+				+ "Fauna LABS »" [if TMMOD_FauneaLabs] [gold]
 					TMMOD_Jump(TMMOD_Menu_FaunaLabs, human, hitTri)
 			+ else
 				+ AccStr("(consider FaunaLABS)")
@@ -47,14 +47,14 @@ label TMMenuOptions(human)
 stop
 
 -- OPTIONS: Ambience
-label TMMenuOptions_Ambience(human)
+label TMMenuOptions_Audio(human)
 	+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 		TM_UITips_Options = false
 		Return()
-	+ "Refresh"
+	+ "• Refresh"
 		Return()
 	+ if TM_SFX_Ambience
-		+ "Next ambience"
+		+ "• Next ambience"
 			TMPlayAmbienceNext()
 			Return()
 		+ "Ambience " .. AccStr(TM_AmbienceTrack) .. " | " .. AccBool(TM_SFX_Ambience) .. " (in ".. AccNum(TMAmbienceLeftSec()) .. "s)"
@@ -65,31 +65,33 @@ label TMMenuOptions_Ambience(human)
 			TM_SFX_Ambience = true
 			TMPlayAmbienceCurrent()
 			Return()
+	+ "Music »" [gold]
+		TMMenuList_Music(TM_MusicTracks)
 	+ TM_MenuBack
 		Return(2)
 	+ TM_MenuClose
 stop
 
--- OPTIONS: SEX/SFX
-label TMMenuOptions_SexSfx(human)
+-- OPTIONS: SFX
+label TMMenuOptions_React(human)
 	+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 		TM_UITips_Options = false
 		Return()
 	+ if TM_AllowVoice()
 		+ if TM_SFX_AllReactions
-			+ "React futa		| " .. AccBool(TM_SFX_ReactFuta) [if TM_SFX_ReactSex]
+			+ "• React futa		| " .. AccBool(TM_SFX_ReactFuta) [if TM_SFX_ReactSex]
 				TM_SFX_ReactFuta = not TM_SFX_ReactFuta
 				Return()
-			+ "React sex		| " .. AccBool(TM_SFX_ReactSex)
+			+ "• React sex		| " .. AccBool(TM_SFX_ReactSex)
 				TM_SFX_ReactSex = not TM_SFX_ReactSex
 				Return()
-			+ "React fluid		| " .. AccBool(game.FluidReaction)
+			+ "• React fluid		| " .. AccBool(game.FluidReaction)
 				game.FluidReaction = not game.FluidReaction
 				Return()
-			+ "React blowjob	| " .. AccBool(TM_SFX_ReactBlowjob)
+			+ "• React blowjob	| " .. AccBool(TM_SFX_ReactBlowjob)
 				TM_SFX_ReactBlowjob = not TM_SFX_ReactBlowjob
 				Return()
-			+ "React plap		| " .. AccBool(TM_SFX_ReactPlap)
+			+ "• React plap		| " .. AccBool(TM_SFX_ReactPlap)
 				TM_SFX_ReactPlap = not TM_SFX_ReactPlap
 				Return()
 		+ "SFX Reactions	| " .. AccBool(TM_SFX_AllReactions)
@@ -99,32 +101,39 @@ label TMMenuOptions_SexSfx(human)
 		+ "SFX True Moan	| Disabled (VoiceMod)"
 			Return()
 	+ if TMMOD_VoiceMod
-		+ "SFX VoiceMod		| " .. AccBoolDE(VM_VoiceMod_Enabled)
-			if VM_VoiceMod_Enabled
-				VM_VoiceMod_Disable()
-			else
-				VM_VoiceMod_Enable()
+		+ "SFX VoiceMod	| " .. AccBoolDE(VM_VoiceMod_Enabled) [if VM_VoiceMod_Enabled]
+			VM_VoiceMod_Disable()
 			Return()
-	+ "Cumflation	| " .. AccBool(TM_Cumflate)
+		+ "SFX VoiceMod	| " .. AccBoolDE(VM_VoiceMod_Enabled) [if not VM_VoiceMod_Enabled]
+			VM_VoiceMod_Enable()
+			Return()
+	+ TM_MenuBack
+		Return(2)
+	+ TM_MenuClose
+stop
+
+-- OPTIONS: SEX
+label TMMenuOptions_Sex(human)
+	+ "Cumflation		| " .. AccBool(TM_Cumflate)
 		TM_Cumflate = not TM_Cumflate
 		Return()
-	+ "Bulging	| " .. AccBool(TM_Bulging)
+	+ "Bulging		| " .. AccBool(TM_Bulging)
 		TM_Bulging = not TM_Bulging
 		Return()
-	+ "Wet sex	| " .. AccBool(TM_WetSex)
+	+ "Wet sex		| " .. AccBool(TM_WetSex)
 		TM_WetSex = not TM_WetSex
 		Return()
 	+ if TM_AutoSex
-		+ "Auto climax	| " .. AccBool(TM_AutoClimax)
+		+ "• Auto climax	| " .. AccBool(TM_AutoClimax)
 			TM_AutoClimax = not TM_AutoClimax
 			Return()
-		+ "Auto cum	| " .. AccBool(TM_AutoCum)
+		+ "• Auto cum		| " .. AccBool(TM_AutoCum)
 			TM_AutoCum = not TM_AutoCum
 			Return()
-	+ "Auto sex	| " .. AccBool(TM_AutoSex)
+	+ "Auto sex		| " .. AccBool(TM_AutoSex)
 		TM_AutoSex = not TM_AutoSex
 		Return()
-	+ "Tween sex	| " .. AccBool(TM_TweenSex) .. " (".. FDec(SexTweenTime(), tmOdec) .."s)"
+	+ "Tween sex		| " .. AccBool(TM_TweenSex) .. " (".. FDec(SexTweenTime(), tmOdec) .."s)"
 		TM_TweenSex = not TM_TweenSex
 		Return()
 	+ TM_MenuBack
