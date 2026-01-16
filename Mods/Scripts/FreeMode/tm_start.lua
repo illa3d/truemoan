@@ -1,4 +1,4 @@
--- TrueMoan v2.3 by illa3d
+-- TrueMoan v2.4 by illa3d
 -------------------------------------------------------------------------------------------------
 -- This script is connection between TrueFacials calls, TMMM mod and TrueMoan
 -- MODS SUPPORTED: TalkMenuModManager, nf123 VoiceMod, Fauna LABS

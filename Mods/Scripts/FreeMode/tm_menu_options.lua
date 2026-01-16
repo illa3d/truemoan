@@ -1,4 +1,4 @@
--- TrueMoan v2.3 by illa3d
+-- TrueMoan v2.4 by illa3d
 local TM_UITips_Options = true
 local TM_UITip_Options = "Tip: edit defaults in tm-config"
 local tmOdec = 2
@@ -123,11 +123,11 @@ label TMMenuOptions_Sex(human)
 		+ "| Auto random » " [gold]
 			+ "« " .. AccStr("Everyone") .. " »" [gold]
 				Return()
+			+ "| M vs F		| " .. AccBool(TM_AutoSex_Weight)
+				TM_AutoSex_Weight = not TM_AutoSex_Weight
+				Return()
 			+ "| Speed		| " .. AccBool(TM_AutoSex_Speed)
 				TM_AutoSex_Speed = not TM_AutoSex_Speed
-				Return()
-			+ "| Weight		| " .. AccBool(TM_AutoSex_Weight)
-				TM_AutoSex_Weight = not TM_AutoSex_Weight
 				Return()
 			+ "| Thrust		| " .. AccBool(TM_AutoSex_Thrust)
 				TM_AutoSex_Thrust = not TM_AutoSex_Thrust

@@ -31,8 +31,8 @@
 - **7x skyboxes** (8/4/2k)
 
 **LATEST DOWNLOADS**
-**TrueMoan_v2.3a.zip** - Just TrueMoan
-**TrueMoan_v2.3a_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
+**TrueMoan_v2.4.zip** - Just TrueMoan
+**TrueMoan_v2.4_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
 **TrueMoan_Addon_Skyboxes_4k_v1.0.zip**
 **Download: ** https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
 **Sound replacers:** https://discord.com/channels/620113492208517120/1460768562338726090 by @salemvonzombeh 
@@ -107,7 +107,12 @@ GitHub Repository - https://github.com/illa3d/truemoan
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
 
-**[ v2.3 ]**
+[ v2.4 ]
+- Plap improvements
+- AutoSex toggle parameters for everyone in options (speed, weight, thrust, depth)
+- AutoSex toggle parameters per character Sex/Auto Options
+
+[ v2.3 ]
 - Added bulging option
 - Added mixing of bulging and cumflation
 - Reworked plap to be by penetration depth

@@ -1,4 +1,4 @@
--- TrueMoan v2.3 by illa3d
+-- TrueMoan v2.4 by illa3d
 -- Sex speed decimals
 local tmSdecSpd = 1
 local tmSdec = 0
@@ -145,11 +145,11 @@ stop
 label TMMenuSex_AutoParams(human, stats)
 	+ "« " .. AccStr(human.Name) .. " »"[gold]
 		Return()
+	+ "| M vs F		| " .. AccBool(stats.AutoSexWeight)
+		stats.AutoSexWeight = not stats.AutoSexWeight
+		Return()
 	+ "| Speed		| " .. AccBool(stats.AutoSexSpeed)
 		stats.AutoSexSpeed = not stats.AutoSexSpeed
-		Return()
-	+ "| Weight		| " .. AccBool(stats.AutoSexWeight)
-		stats.AutoSexWeight = not stats.AutoSexWeight
 		Return()
 	+ "| Thrust		| " .. AccBool(stats.AutoSexThrust)
 		stats.AutoSexThrust = not stats.AutoSexThrust
@@ -333,13 +333,13 @@ label TMMenuSex_Control(human, interaction, actBody, isHand)
 				+ "RESET Thrust | " .. AccNumPC(ActThrustGet(interaction, isHand), tmSdec)
 					ActThrustSet(interaction, 0)
 					Return()
-				+ TM_UP.."Male"
+				+ TM_UP.."M vs F"
 					ActWeightSet_Step(interaction, TM_SexMaleStep, true)
 					Return()
-				+ TM_DN.."Male"
+				+ TM_DN.."M vs F"
 					ActWeightSet_Step(interaction, TM_SexMaleStep, false)
 					Return()
-				+ "TOGGLE Male | " .. AccNumPC(ActWeightGet(interaction, isHand), tmSdec)
+				+ "TOGGLE M vs F | " .. AccNumPC(ActWeightGet(interaction, isHand), tmSdec)
 					ActWeightSet_Toggle(interaction)
 					Return()
 				+ "Random" [gold]
