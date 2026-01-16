@@ -67,6 +67,9 @@ TM_WetnessStep = 200			-- Wetness Control step
 TM_CumEffectTime = 0.5			-- [0.3-1] How often does a cum effect (moan, wetness) apply while parner cumming inside
 TM_CumPauseTime = 1				-- [0-3 Pause after cumming inside and pull-out (all holes) to start Cum/Cumflation after effects
 
+-- Plap
+TM_PlapDistanceLimit = 0.065	-- Distance in penetration to sound plap
+
 -- Body deformation
 TM_BodyDeformUpdateRate = 0.05	-- [0.1] How often per second does the bulging/cumflation/cumdeflation update 
 TM_BodyDeformHipSizeLimit = 1.5	-- Maximum amout to increase to (ugly over 1.5)

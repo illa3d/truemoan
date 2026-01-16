@@ -225,18 +225,13 @@ function TMOnPenetration_AnusVagina(girl, stats, holeName, inVelocity)
 
 	-- SFX PLAP
 	if TM_SFX_AllReactions and TM_SFX_ReactPlap then
-		local timerKey = "TMPlapSFX_" .. girl.Name
-		local lastPlapSfx = Timer(timerKey)
 		local speed = Clamp01(inVelocity)
-		local pause = Lerp(GetRandomFloat(0.8, 1.2), 0.2, speed)
-		local depth = ActPenetrationDepthGet(girl, holeName)
-		local plapped = false
-		if depth < 0.7 then plapped = false end
-		if lastPlapSfx > pause and depth > 0.9 and not plapped then
-			-- SFX: Sex plap
-			plapped = true
+		local dist = ActPenetrationDistanceGet(girl, holeName)
+		if stats.Plap[holeName] and dist > TM_PlapDistanceLimit then
+			stats.Plap[holeName] = false
+		elseif not stats.Plap[holeName] and dist < TM_PlapDistanceLimit then
+			stats.Plap[holeName] = true
 			TMPlayHumanSFX(girl, TMSfx.Plap, holeName, speed)
-			ResetTimer(timerKey)
 		end
 	end
 end
@@ -245,7 +240,7 @@ end
 function TMOnUpdate_Futa(girl, stats)
 	if not TM_SFX_AllReactions or not TM_SFX_ReactSex or not TM_SFX_ReactFuta or not girl or girl.m_isMale or not TMHStatsGet(girl).AllowMoaning then return end
 	local function DoFutaMoan(actBody)
-		act = ActGet(girl, actBody)
+		local act = ActGet(girl, actBody)
 		if not act or not ActActiveGet(act, actBody == ActBody.PenisHand) then return end
 		TMOnPenetration(girl, actBody, ActSpeedGet(act, false)/3, 0, SexPartner_Get(girl, actBody))
 	end

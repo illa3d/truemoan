@@ -38,6 +38,7 @@ TMHumanStats = {
 	-- AutoSex
 	AutoSex = false,
 	AutoSexTier = nil,
+	Plap = nil,
 	-- AutoSex parameters
 	AutoSexCum = true,
 	AutoSexClimax = true,
@@ -47,8 +48,15 @@ TMHumanStats = {
 	AutoSexDepthStart = true,
 	AutoSexDepthEnd = true,
 }
-
 function TMHumanStatsCloneDefault() return TableClone(TMHumanStats) end
+
+-- PLAP DEFINITION
+TMHumanStatsPlapDefault = {
+	[ActBody.Vagina] = false,
+	[ActBody.Anus] = false
+}
+function TMHumanStatsPlapCloneDefault() return TableClone(TMHumanStatsPlapDefault) end
+
 
 local TM_UpdateDelta = 0		-- cumulative deltaTime
 local TM_UpdateDeltaMax = 0.25	-- maximum update step
@@ -62,6 +70,7 @@ local function TMHStatsNew(human)
 	local clone = TMHumanStatsCloneDefault() -- TMHUmanStats is authoritative source of Stats for each human
 	clone.TMBValue = TMBodyValueCloneDefault() --TMBValue is AUTHORITATIVE source of Human Body customization values
 	clone.SexBody = {}
+	clone.Plap = TMHumanStatsPlapCloneDefault()
 	clone.ArousalSeed = GetRandomFloatAround(1, 0.1) -- Add random seed variation 10%
 	clone.AutoSexTier = TM_AutoSexTier_Default
 	TM_HumanStatsList[human] = clone

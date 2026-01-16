@@ -114,7 +114,7 @@ label TMMenuSex(human)
 		AutoSexToggle(human)
 		Return()
 	+ "Auto sex	| " .. TMMLabel_AutoSex(human) [if not TM_AutoSex]
-		TMMenuOptions_SexSfx(human)
+		TMMenuOptions_Sex(human)
 	+ TM_MenuBack
 		Return(2)
 	+ TM_MenuClose_AutoSexStats(human)
