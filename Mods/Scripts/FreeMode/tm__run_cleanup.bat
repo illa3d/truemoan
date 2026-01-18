@@ -11,7 +11,7 @@ set FILES_LIST="tm_a_presets.lua"^
  "tm_a_presets_illa3d.lua"^
  "tm_common_faunap.lua"^
  "tm_CONFIG.lua"^
- "tm_interaction.lua"
+ "tm_interaction.lua"^
  "tm_main README.txt"^
  "tm_main_freemodehg_faunap.lua"^
  "tm_main_freemodehg_faunap_readme.txt"^
@@ -20,7 +20,8 @@ set FILES_LIST="tm_a_presets.lua"^
  "tm_main_masterchief.lua"^
  "tm_main_masterchief_readme.txt"^
  "tm_menu_facelab_faunap.lua"^
- "tm_menu_illa3d.lua"
+ "tm_menu_illa3d.lua"^
+ "freemode__tm_main.lua"
 
 rem === Display file list ===
 for %%F in (!FILES_LIST!) do echo %%~F
