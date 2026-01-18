@@ -17,6 +17,8 @@ label TMMenuPose(human)
 			TMMenuList_Poses(human, TMMenuItems_Fauna_Sit)
 		+ AccStr(TMMenuTag_Fauna) .. "Stand »" [gold]
 			TMMenuList_Poses(human, TMMenuItems_Fauna_Stand)
+		+ AccStr(TMMenuTag_VoidBranding) .. "Void.Branding »" [gold]
+			TMMenuList_Poses(human, TMMenuItems_VoidBranding)
 	+ else
 		+ AccStr("(more with faunalabs)") [gold]
 			-- human "Why didn't you download the TrueMoan bundled with FaunaLABS?\nI'd run away but there's no pose for it."
