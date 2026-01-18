@@ -68,6 +68,9 @@ label TMMenuOptions_Audio(human)
 			Return()
 	+ "Music »" [gold]
 		TMMenuList_Music(TM_MusicTracks)
+	+ "Stop Music"
+		StopMusic()
+		Return()
 	+ TM_MenuBack
 		Return(2)
 	+ TM_MenuClose
