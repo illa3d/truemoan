@@ -27,13 +27,13 @@ function TM_TrueMoan_Enable()
 	if TMMOD_TrueMoan then return end
 	if type(TM_AddFunctionOverride) == "function" then 
 		-- TalkMenuModManager: Add function hooks
-		TM_AddFunctionHook(TMModName, "Start", 0, "_TMStart", true, false)
-		TM_AddFunctionHook(TMModName, "OnGameUpdate", 0, "_TMOnGameUpdate", true, false)
-		TM_AddFunctionHook(TMModName, "OnCreateHuman", 1, "_TMOnCreateHuman", true, true)
-		TM_AddFunctionHook(TMModName, "OnRemoveHuman", 1, "_TMOnRemoveHuman", true, true)
-		TM_AddFunctionHook(TMModName, "OnHumanClick", 2, "_TMOnHumanClick", true, true)
-		TM_AddFunctionHook(TMModName, "OnFluidHit", 3, "_TMOnFluidHit", 200, false)
-		TM_AddFunctionHook(TMModName, "OnPenetration", 5, "_TMOnPenetration", 200, false)
+		TM_AddFunctionHook(TMModName, "Start", 0, "_TMStart")
+		TM_AddFunctionHook(TMModName, "OnGameUpdate", 0, "_TMOnGameUpdate")
+		TM_AddFunctionHook(TMModName, "OnCreateHuman", 1, "_TMOnCreateHuman")
+		TM_AddFunctionHook(TMModName, "OnRemoveHuman", 1, "_TMOnRemoveHuman")
+		TM_AddFunctionHook(TMModName, "OnHumanClick", 2, "_TMOnHumanClick")
+		TM_AddFunctionHook(TMModName, "OnFluidHit", 3, "_TMOnFluidHit")
+		TM_AddFunctionHook(TMModName, "OnPenetration", 5, "_TMOnPenetration")
 		if type(TM_AddMenuMod) == "function" then TM_AddMenuMod(TMModName, TMMenuName) end
 		TMMOD_TrueMoan = true
 	else

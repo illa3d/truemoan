@@ -7,7 +7,7 @@
 -- TrueMoan module global switches
 function TM_AllowVoice() return VM_VoiceMod_Enabled ~= true end
 TM_UIVisible = true -- TrueFacials UI
-TM_AllowGenericChat = false
+TM_GenChatInit = false
 TM_DeltaTime = 0
 
 ------------------------------------------------------------------------------------------------
@@ -29,7 +29,7 @@ function TMOnStart_GenericChat()
 	local speaker = game.GetRandomHuman(|h| h.CanSpeak)
 	---@diagnostic enable: undefined-global, miss-symbol, unknown-symbol
 	if speaker ~= nil then speaker.Say("Greeting") end
-	TM_AllowGenericChat = true
+	TM_GenChatInit = true
 end
 
 function TMOnHumanSingleClick(human, hittri)
@@ -54,18 +54,15 @@ end
 
 -- Generic chat update function (every frame)
 function TMOnUpdate_GenericChat()
+	if not TM_AllowVoice() or not TM_GenChatInit == true then return end
 	local timerKey = "TMGenericChat"
-	-- don't talk with other voice mods
-	if not TM_AllowVoice() or not TM_AllowGenericChat then return end
 	local lastChatTime = Timer(timerKey)
 	if lastChatTime > game.ChatIntervals then
 		ResetTimer(timerKey, math.random(-7, 0))
 		---@diagnostic disable: undefined-global, miss-symbol, unknown-symbol
 		local speaker = game.GetRandomHuman(|h| h.CanSpeak and ((h.FaceMood >= 0 and h.HasVoice("Like") == true) or (h.FaceMood < 0 and h.HasVoice("Dislike") == true)))
 		---@diagnostic enable: undefined-global, miss-symbol, unknown-symbol
-		if speaker ~= nil then
-			speaker.Say(speaker.FaceMood >= 0 and "Like" or "Dislike")
-		end
+		if speaker ~= nil then speaker.Say(speaker.FaceMood >= 0 and "Like" or "Dislike") end
 	end
 end
 
@@ -76,8 +73,10 @@ function TMOnCreateHuman(human)
 	if TM_SpawnNoFuta then Delayed(0.05, function() HumanPenisSet(human, false) end) end
 	if TM_SpawnReset then Delayed(0.1, function() TMHumanReset(human) end) end
 	if TM_SpawnAutoSexOn then AutoSexSet(human, true) end
+	
+	if not TM_AllowVoice() or not TM_GenChatInit == true then return end
 	game.PlayCharacterMusic(human)
-	if TM_AllowGenericChat then human.Say("Greeting") end
+	human.Say("Greeting")
 end
 
 function TMOnRemoveHuman(human)
@@ -125,7 +124,7 @@ end
 
 -- Stop the human cumming
 function TMHumanCumStop(human)
-	stats = TMHStatsGet(human)
+	local stats = TMHStatsGet(human)
 	if not stats then return end
 	stats.IsCumming = false
 	stats.CumFrequency = 0
@@ -180,7 +179,7 @@ function TMOnFluidHit(hitActor, bodyArea, shootActor)
 	else
 		local genericVoiceKey = "TMFluidHit_Generic_" .. hitActor.Name
 		local lastGenericVoiceTime = Timer(genericVoiceKey)
-		if TM_AllowGenericChat and lastGenericVoiceTime > 500 then
+		if TM_GenChatInit and lastGenericVoiceTime > 500 then
 			hitActor.SayCustom("gen_cumshot")
 			hitActor.Say(hitActor.FaceMood >= 0 and "Like" or "Dislike")
 			ResetTimer(genericVoiceKey)
