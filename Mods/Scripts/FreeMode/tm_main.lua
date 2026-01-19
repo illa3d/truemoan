@@ -274,37 +274,37 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 
 	-- Tier selection + boundary detection
 	if inVelocity > TM_MoanTreshold_Climax then
-		tier = TMMoanTier.Max
+		tier = TMTier.Max
 		pauseMax = 0.1 -- Audio files: ~0.3s + pause
 		tierMax = TM_MoanTreshold_Climax + 1
 		tierMin = TM_MoanTreshold_Climax
 		wetness = 10000
 	elseif inVelocity > TM_MoanTreshold_Wild then
-		tier = TMMoanTier.Wild
+		tier = TMTier.Wild
 		pauseMax = 0.4 -- Audio files: ~0.4s + pause
 		tierMax = TM_MoanTreshold_Climax
 		tierMin = TM_MoanTreshold_Wild
 		wetness = 1000
 	elseif inVelocity > TM_MoanTreshold_Faster then
-		tier = TMMoanTier.Faster
+		tier = TMTier.Faster
 		pauseMax = 0.5 -- Audio files: ~0.5s + pause
 		tierMax = TM_MoanTreshold_Wild
 		tierMin = TM_MoanTreshold_Faster
 		wetness = 100
 	elseif inVelocity > TM_MoanTreshold_Fast then
-		tier = TMMoanTier.Fast
+		tier = TMTier.Fast
 		pauseMax = 0.6 -- Audio files: ~0.5s + pause
 		tierMax = TM_MoanTreshold_Faster
 		tierMin = TM_MoanTreshold_Fast
 		wetness = 10
 	elseif inVelocity > TM_MoanTreshold_Normal then
-		tier = TMMoanTier.Normal
+		tier = TMTier.Normal
 		pauseMax = 1.3 -- Audio files: ~0.8s + pause
 		tierMax = TM_MoanTreshold_Fast
 		tierMin = TM_MoanTreshold_Normal
 		wetness = 5
 	else
-		tier = TMMoanTier.Slow
+		tier = TMTier.Slow
 		pauseMax = 10.0 -- VERY long pauses when not moving
 		tierMax = TM_MoanTreshold_Normal
 		tierMin = 0.0
@@ -315,9 +315,9 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	local pause = 1
 	if stats and stats.IsClimax then
 		pause = 0.03
-	elseif tier == TMMoanTier.Max then
+	elseif tier == TMTier.Max then
 		pause = 0.05
-	elseif tier == TMMoanTier.Wild then
+	elseif tier == TMTier.Wild then
 		pause = 0.08
 	else
 		-- Organic Speed-based pause scaling: longer to zero near tier end
@@ -331,7 +331,7 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	if lastMoanTime > pause then
 		if TM_SFX_AllReactions and TM_SFX_ReactSex and stats and stats.AllowMoaning then
 			-- SFX: CLIMAX MOANING
-			if stats and stats.IsClimax then TMPlayMoanTier(girl, TMMoanTier[stats.AutoSexTier]) -- follow stats.AutoSexTier with sounds
+			if stats and stats.IsClimax then TMPlayMoanTier(girl, TMTier[stats.AutoSexTier]) -- follow stats.AutoSexTier with sounds
 			-- SFX: SEX MOANING
 			else TMPlayMoanTier(girl, tier) end -- follow penetration speed tier set above
 		end
@@ -534,13 +534,14 @@ function TMOnCumInside_EndCum(girl)
 	local function Increment(value) delay = IncrementMultiplierRandom(delay, value, 0.8, 1.1) end
 	-- SFX: CUM PULLOUT
 	if not TM_SFX_AllReactions or not TM_SFX_ReactSex then return end
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Fast) end) Increment(0.5)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Fast) end) Increment(0.5)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Normal) end) Increment(1.5)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Normal) end) Increment(2)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Slow) end) Increment(3)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Slow) end) Increment(4)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Slow) end)
+	TMPlayMoanTier(girl, TMTier.Climax)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Fast) end) Increment(0.5)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Fast) end) Increment(0.5)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Normal) end) Increment(1.5)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Normal) end) Increment(2)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Slow) end) Increment(3)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Slow) end) Increment(4)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Slow) end)
 end
 
 -- CUMFLATION REACTION ON PULLOUT
@@ -551,17 +552,18 @@ function TMOnCumInside_EndCumflate(girl)
 	local function Increment(value) delay = IncrementMultiplierRandom(delay, value, 0.8, 1.1) end
 	-- SFX: CUMFLATION PULLOUT
 	if not TM_SFX_AllReactions or not TM_SFX_ReactSex then return end
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Faster) end) Increment(0.4)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Faster) end) Increment(0.4)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Faster) end) Increment(0.4)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Fast) end) Increment(0.5)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Fast) end) Increment(0.5)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Normal) end) Increment(0.7)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Normal) end) Increment(0.7)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Normal) end) Increment(1)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Normal) end) Increment(1.5)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Slow) end) Increment(1.5)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Slow) end) Increment(4)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Slow) end) Increment(6)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMMoanTier.Slow) end)
+	TMPlayMoanTier(girl, TMTier.Climax)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Faster) end) Increment(0.4)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Faster) end) Increment(0.4)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Faster) end) Increment(0.4)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Fast) end) Increment(0.5)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Fast) end) Increment(0.5)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Normal) end) Increment(0.7)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Normal) end) Increment(0.7)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Normal) end) Increment(1)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Normal) end) Increment(1.5)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Slow) end) Increment(1.5)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Slow) end) Increment(4)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Slow) end) Increment(6)
+	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Slow) end)
 end

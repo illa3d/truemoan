@@ -12,6 +12,7 @@ TMHumanStats = {
 	NeedsBodyApply = false,
 	-- Sex
 	AllowMoaning = true,
+	Voice = "",
 	IsSexActive = false,
 	-- Where
 	PenisHole = false,
