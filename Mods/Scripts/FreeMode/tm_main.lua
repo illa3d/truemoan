@@ -534,7 +534,7 @@ function TMOnCumInside_EndCum(girl)
 	local function Increment(value) delay = IncrementMultiplierRandom(delay, value, 0.8, 1.1) end
 	-- SFX: CUM PULLOUT
 	if not TM_SFX_AllReactions or not TM_SFX_ReactSex then return end
-	TMPlayMoanTier(girl, TMTier.Climax)
+	HumanTalkStop(girl)
 	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Fast) end) Increment(0.5)
 	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Fast) end) Increment(0.5)
 	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Normal) end) Increment(1.5)
@@ -552,7 +552,7 @@ function TMOnCumInside_EndCumflate(girl)
 	local function Increment(value) delay = IncrementMultiplierRandom(delay, value, 0.8, 1.1) end
 	-- SFX: CUMFLATION PULLOUT
 	if not TM_SFX_AllReactions or not TM_SFX_ReactSex then return end
-	TMPlayMoanTier(girl, TMTier.Climax)
+	HumanTalkStop(girl)
 	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Faster) end) Increment(0.4)
 	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Faster) end) Increment(0.4)
 	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Faster) end) Increment(0.4)

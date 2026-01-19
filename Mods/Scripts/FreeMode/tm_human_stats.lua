@@ -74,6 +74,7 @@ local function TMHStatsNew(human)
 	clone.Plap = TMHumanStatsPlapCloneDefault()
 	clone.ArousalSeed = GetRandomFloatAround(1, 0.1) -- Add random seed variation 10%
 	clone.AutoSexTier = TM_AutoSexTier_Default
+	clone.Voice = TMVoiceGet_RandomName()
 	TM_HumanStatsList[human] = clone
 end
 
@@ -189,8 +190,24 @@ function TMHumanStats:AutoSexTierSet(autoSexTier)
 	self.AutoSexTier = autoSexTier
 end
 
-function TMHumanStats:AllowMoaningToggle()
-	self.AllowMoaning = not self.AllowMoaning
+function TMHumanStats:VoiceToggle()
+	-- No voices registered
+	if not TMVoicesHas() then
+		self.AllowMoaning = false
+		return
+	end
+	
+	-- If Voice is OFF, turn it ON
+	if not self.AllowMoaning then
+		self.AllowMoaning = true
+		self.Voice = TM_Voices_Names[#TM_Voices_Names]
+		return
+	end
+	-- Voice is ON, step down tiers
+	if self.Voice ~= TM_Voices_Names[1] then
+		self.Voice = ListItemStep(TM_Voices_Names, self.Voice, -1)
+	-- Voice is ON, minimum tier toggles to OFF
+	else self.AllowMoaning = false end
 end
 
 function TMHumanStats:CanStartCumOrClimax()

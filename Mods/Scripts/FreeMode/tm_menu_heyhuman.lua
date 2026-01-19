@@ -21,16 +21,15 @@ label TMMenuHeyHuman(human)
 	+ "RESET ".. AccStr(human.Name)
 		TMHumanReset(human)
 		Return()
+	+ "Voice		| " .. TMMLabel_Voice(human) [if not human.m_isMale]
+		TMHStatsGet(human):VoiceToggle()
+		Return()
 	+ "Penetration	| " .. AccBool(not human.m_isMale)
 		HumanMaleSet(human, not human.m_isMale)
 		Return()
-	+ "Moaning	| " .. AccBool(TMHStatsGet(human).AllowMoaning)
-		TMHStatsGet(human):AllowMoaningToggle()
-		Return()
-	+ if not human.m_isMale
-		+ "Penis		| " .. AccBool(human.Penis.IsActive)
-			HumanPenisSet(human, not human.Penis.IsActive)
-			Return(2)
+	+ "Penis		| " .. AccBool(human.Penis.IsActive) [if not human.m_isMale]
+		HumanPenisSet(human, not human.Penis.IsActive)
+		Return(2)
 	+ "Look at »" [gold]
 		+ "• Look at " .. AccStr("cam")
 			HumanLookAt(human, CameraPos())
@@ -76,7 +75,7 @@ label TMMenuHumanStats(human, stats)
 		Return()
 	+ "Arousal	| " .. AccNumPC(stats.Arousal, 2, true) [if stats.Arousal > 0]
 		Return()
-	+ "Moaning	| " .. AccBoolYN(stats.AllowMoaning, true)
+	+ "Voice		| " .. TMMLabel_Voice(Human, true)
 		Return()
 	+ "Auto sex	| " .. AccBoolYN(stats.AutoSex, true) .. " | " .. stats.AutoSexTier
 		Return()

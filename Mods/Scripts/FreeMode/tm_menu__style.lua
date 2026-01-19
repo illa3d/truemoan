@@ -60,7 +60,7 @@ function TM_MenuClose_AutoSexStats(human)
 	return TM_MenuClose .. "	" .. TMMLabel_AutoSexStats(human)
 end
 
-function TMMLabel_AutoSexStats(human, skipLetter)
+function TMMLabel_AutoSexStats(human)
 	local stats = TMHStatsGet(human)
 	if not TM_AutoSex or not stats then return "" end
 	return "| Hot " ..TMMLabel_Arousal(human, true).. " | " ..TMMLabel_AutoSex(human)
@@ -72,6 +72,14 @@ function TMMLabel_AutoSex(human)
 	if not TM_AutoSex then return "OFF (sex options)"
 	elseif not stats.AutoSex then return AccStr("OFF")
 	else return AccStr(stats.AutoSexTier) end
+end
+
+function TMMLabel_Voice(human, plain)
+	local stats = TMHStatsGet(human)
+	if not stats then return "" end
+	if not TM_SFX_AllReactions or not TM_SFX_ReactSex then return "OFF (sex options)"
+	elseif not stats.AllowMoaning then return plain == true and "OFF" or AccStr("OFF")
+	else return plain == true and stats.Voice or AccStr(stats.Voice) end
 end
 
 function TMMLabel_Arousal(human, skipLetter)

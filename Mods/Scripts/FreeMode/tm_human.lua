@@ -118,6 +118,11 @@ function HumansFreeze(frozen)
 	game.m_freezeAllActors = frozen
 end
 
+function HumanTalkStop(human)
+	if not human then return end
+	human.StopTalking()
+end
+
 -- CLOTHES STUFF
 function HumanClothesRandom(human)
 	if TM_Clothes_Custom == nil or #TM_Clothes_Custom == 0 then return end

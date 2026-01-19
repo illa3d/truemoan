@@ -14,6 +14,7 @@ local TMSfxPlayedTracks = {}
 
 -- Voices
 TM_Voices = {}
+TM_Voices_Names = {}
 
 -- Moan Tier "Enum" (actual filenames)
 -- VAR NAMES MUST BE SAME AS AutoSexTier
@@ -120,11 +121,14 @@ end
 -- VOICES
 -------------------------------------------------------------------------------------------------
 
+function TMVoicesHas() return #TM_Voices_Names > 0 end
+
 -- Add a new voice definition
 -- tmVoice = { Name = "VoiceName", [TMTier.X] = TMTier.Y, ... }
 function TMVoiceAdd(tmVoice)
-	if type(tmVoice) ~= "table" or  TM_Voices[tmVoice.Name] or not tmVoice.Name or tmVoice.Name == "" then return end
+	if type(tmVoice) ~= "table" or not tmVoice.Name or tmVoice.Name == "" or TM_Voices[tmVoice.Name] then return end
 	TM_Voices[tmVoice.Name] = TableClone(tmVoice)
+	table.insert(TM_Voices_Names, tmVoice.Name)
 end
 
 -- Check if a voice exists by name
@@ -143,6 +147,11 @@ end
 function TMVoiceGet_Random()
 	if  IsTableEmpty(TM_Voices) then return TMVoiceDefault end
 	return TableItemRandom(TM_Voices)
+end
+
+function TMVoiceGet_RandomName()
+	if  IsTableEmpty(TM_Voices_Names) then return TMVoiceDefault.Name end
+	return ListItemRandom(TM_Voices_Names)
 end
 
 function TMVoiceGet_Human(human)
@@ -195,6 +204,7 @@ function TMPlayMoanTier(girl, tmTier)
 	if not stats or not stats.AllowMoaning then return end;
 	local tmVoice = TMVoiceGet_Human(girl)
 	local tier = (tmVoice and tmVoice[tmTier]) and tmVoice[tmTier] or tmTier
+	if stats.IsClimax then girl.SayCustom("tm_" .. tmVoice.Name .. "_" .. TMTier.Climax) end
 	girl.SayCustom("tm_" .. tmVoice.Name .. "_" .. tier)
 end
 
