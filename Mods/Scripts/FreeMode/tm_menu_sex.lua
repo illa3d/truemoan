@@ -1,4 +1,4 @@
--- TrueMoan v2.4 by illa3d
+-- TrueMoan v2.5 by illa3d
 -- Sex speed decimals
 local tmSdecSpd = 1
 local tmSdec = 0

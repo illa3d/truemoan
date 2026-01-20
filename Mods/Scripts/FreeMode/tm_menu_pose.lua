@@ -1,4 +1,4 @@
--- TrueMoan v2.4 by illa3d
+-- TrueMoan v2.5 by illa3d
 ---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol, err-assign-as-eq, malformed-number
 label TMMenuPose(human)
 	-- FAUNA

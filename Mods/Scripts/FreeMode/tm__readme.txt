@@ -107,6 +107,11 @@ GitHub Repository - https://github.com/illa3d/truemoan
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
 
+[ v2.5 ]
+- Added VoicePack suppport + readme + template
+- Added StopMusic in Options
+- Added Void.Branding poses
+
 [ v2.4 ]
 - Plap improvements
 - AutoSex toggle parameters for everyone in options (speed, weight, thrust, depth)

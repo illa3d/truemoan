@@ -1,4 +1,4 @@
--- TrueMoan v2.4 by illa3d
+-- TrueMoan v2.5 by illa3d
 local tmAdec = 2 -- decimals
 
 ---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol

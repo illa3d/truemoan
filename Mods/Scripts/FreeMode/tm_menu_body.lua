@@ -1,4 +1,4 @@
--- TrueMoan v2.4 by illa3d
+-- TrueMoan v2.5 by illa3d
 -- Code in: tm_bodyedit.lua
 -- Body edit decimals
 local tmBdec = 2
