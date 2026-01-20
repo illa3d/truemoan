@@ -86,7 +86,8 @@ function TMSfxGetFilenameRandom(human, tmSfx)
 	local name = tmVoice.Name
 	local files = FloorToInt(tmVoice[tmSfx].Files)
 	local track = GetRandom(1, files)
-	return "tm_" ..name.. "_" ..tmSfx.. " (" .. track .. ")"
+	---@diagnostic disable-next-line
+	return "tm_" ..name:lower().. "_" ..tmSfx.. " (" .. track .. ")"
 end
 
 -------------------------------------------------------------------------------------------------
@@ -179,7 +180,8 @@ function TMPlayMoanTier(girl, tmTier)
 	local tmVoice = TMVoiceGet_Human(girl)
 	local tier = (tmVoice and tmVoice[tmTier]) and tmVoice[tmTier] or tmTier
 	if stats.IsClimax then girl.SayCustom("tm_" .. tmVoice.Name .. "_" .. TMTier.Climax) end
-	girl.SayCustom("tm_" .. tmVoice.Name .. "_" .. tier)
+	---@diagnostic disable-next-line
+	girl.SayCustom("tm_" .. tmVoice.Name:lower() .. "_" .. tier)
 end
 
 -------------------------------------------------------------------------------------------------
