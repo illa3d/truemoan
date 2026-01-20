@@ -2,7 +2,7 @@
 --                                               TRUE MOAN                                             --
 ---------------------------------------------------------------------------------------------------------
 
-**AutoSex Control | BodyEdit | Realistic Sounds | Sex Reactions | Bulging | Cumflation | Animation | Poses | Ambient Audio | Skyboxes | Improved Menu |**
+**AutoSex Control | BodyEdit | Realistic Sounds | Sex Reactions | Voice Packs | Bulging | Cumflation | Animation | Poses | Ambient Audio | Skyboxes | Improved Menu |**
 
 **MOD FEATURES**
 - **Auto Sex Control**
@@ -18,12 +18,13 @@
 - **Realistic Moans & SFX**
   - **Generic Voice** for all characters
   - Blowjob & Sex sound effects
+  - Voice Packs support
 - **Sex/Cum reactions**
   - Climax/Arousal mechanic
   - Wet/Cum/Bulging/Cumflation reactions
 - **Poses/Animation** (requires FaunaLABS)
 - **6x audio ambiences**
-- **35 Scenes**
+- **36 Scenes**
 - **Improved Menu UX**
 - **Highly Configurable**
 
@@ -31,11 +32,11 @@
 - **7x skyboxes** (8/4/2k)
 
 **LATEST DOWNLOADS**
-**TrueMoan_v2.4.zip** - Just TrueMoan
-**TrueMoan_v2.4_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
+**TrueMoan_v2.5.zip** - Just TrueMoan
+**TrueMoan_v2.5_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
 **TrueMoan_Addon_Skyboxes_4k_v1.0.zip**
 **Download: ** https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
-**Sound replacers:** https://discord.com/channels/620113492208517120/1460768562338726090 by @salemvonzombeh 
+**Voice packs:** https://discord.com/channels/620113492208517120/1460768562338726090 by @salemvonzombeh 
 
 :warning: For black screen or issues, see **https://discord.com/channels/620113492208517120/1451633202019172462/1451634287987396884** :warning: 
 
@@ -44,7 +45,7 @@
 - FaunaLABS v1.02 (for full experience)
 
 **SUPPORTED MODS**
-- Nf123 Voice Mod, Talk Menu Mod Manager, FaunaLabs, AllVoiceMods(for now)
+- Nf123 Voice Mod, Talk Menu Mod Manager, FaunaLabs, AllVoiceMods
 
 **HOW TO INSTALL**
 - Backup your old TrueMoan config files prior to install (optional)
@@ -89,6 +90,9 @@ Thanks!
 -- ADDITIONAL INFO
 ---------------------------------------------------------------------------------------------------------
 
+**VOICE PACKS**
+Read me - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_voice_README.txt
+
 **INTEGRATED MODS**
 - `faunaLABS_v1.02 - TMMM Ready.zip` https://discord.com/channels/620113492208517120/1358287146791866446/1454138284841369701 by @faunap 
 - Selected Plaps & Blowjob moans used from https://discord.com/channels/620113492208517120/1446590801009180804 by @xlmumblelx 
@@ -109,8 +113,11 @@ Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/Fre
 
 [ v2.5 ]
 - Added VoicePack suppport + readme + template
-- Added StopMusic in Options
 - Added Void.Branding poses
+- Added StopMusic in Options
+- SFX turned on with VoiceMod by default (plap, suck, suckdeep)
+- Menu polish
+- Bugfixes
 
 [ v2.4 ]
 - Plap improvements

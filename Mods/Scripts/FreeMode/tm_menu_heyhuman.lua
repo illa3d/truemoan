@@ -3,7 +3,7 @@ TMEyesOpen = true
 
 ---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol, err-assign-as-eq, malformed-number
 label TMMenuHeyHuman(human)
-	+ "Stats " .. AccStr(human.Name) .. " »" [gold]
+	+ "STATS " .. AccStr(human.Name) .. " »" [gold]
 		TMMenuHumanStats(human, TMHStatsGet(human))
 	+ "DELETE ".. AccStr(human.Name)
 		+ AccStr("may crash the game If")
@@ -21,15 +21,15 @@ label TMMenuHeyHuman(human)
 	+ "RESET ".. AccStr(human.Name)
 		TMHumanReset(human)
 		Return()
-	+ "Voice		| " .. TMMLabel_Voice(human) [if not human.m_isMale and TM_SFX_VoiceAllow(human)]
-		TMHStatsGet(human):VoiceToggle()
-		Return()
 	+ "Penetration	| " .. AccBool(not human.m_isMale)
 		HumanMaleSet(human, not human.m_isMale)
 		Return()
 	+ "Penis		| " .. AccBool(human.Penis.IsActive) [if not human.m_isMale]
 		HumanPenisSet(human, not human.Penis.IsActive)
 		Return(2)
+	+ "Voice		| " .. TMMLabel_Voice(human) [if TM_SFX_VoiceAllow(human)]
+		TMHStatsGet(human):VoiceToggle()
+		Return()
 	+ "Look at »" [gold]
 		+ "• Look at " .. AccStr("cam")
 			HumanLookAt(human, CameraPos())
@@ -75,7 +75,7 @@ label TMMenuHumanStats(human, stats)
 		Return()
 	+ "Arousal	| " .. AccNumPC(stats.Arousal, 2, true) [if stats.Arousal > 0]
 		Return()
-	+ "Voice		| " .. TMMLabel_Voice(Human, true)
+	+ "Voice		| " .. TMMLabel_Voice(human, true) [if TM_SFX_VoiceAllow(human)]
 		Return()
 	+ "Auto sex	| " .. AccBoolYN(stats.AutoSex, true) .. " | " .. stats.AutoSexTier
 		Return()

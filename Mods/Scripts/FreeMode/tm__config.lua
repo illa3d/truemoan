@@ -45,14 +45,14 @@ TM_AutoSex_DepthStart = true		-- AutoSex randomize Depth end
 TM_AutoSex_DepthEnd = true			-- AutoSex randomize Depth end
 
 -- SFX: Ambience
-TM_SFX_Ambience = true				-- Ambient sounds
-TM_SFX_AmbienceVolume = 0.7			-- [0-1] Ambient volume
-TM_SFX_AmbienceFiles = 6			-- Number of Ambient files (if you add more, change this number)
+TM_SFX_Ambient = true				-- Ambient sounds
+TM_SFX_AmbientVolume = 0.7			-- [0-1] Ambient volume
+TM_SFX_AmbientFiles = 6				-- Number of Ambient files (if you add more, change this number)
 
 -- SFX: Voice/Plap/Suck/Chat
 TM_SFX = true						-- Turns off all SFX/Voice sounds
-TM_SFX_Voice = true					-- React: Moaning everyone
-TM_SFX_VoiceFuta = true				-- React: Moaning chicks with dicks
-TM_SFX_Plap = true					-- React: Plapping when in sex (anal or vaginal)
-TM_SFX_Suck = true					-- React: Grunting while sucking
-TM_SFX_GenericChat = true			-- React: TrueFacials generic chat (original voices)
+TM_SFX_Voice = true					-- Moaning (everyone)
+TM_SFX_VoiceFuta = true				-- Moaning (chicks with dicks)
+TM_SFX_Plap = true					-- Plapping when in sex (anal or vaginal)
+TM_SFX_Suck = true					-- Grunting while sucking
+TM_SFX_GenericChat = true			-- TrueFacials generic chat (original voices)

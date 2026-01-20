@@ -12,7 +12,7 @@ TMHumanStats = {
 	NeedsBodyApply = false,
 	-- Voice
 	IsVoice = true,
-	Voice = "",
+	VoiceName = "",
 	-- Sex
 	IsSexActive = false,
 	PenisHole = false,
@@ -74,7 +74,7 @@ local function TMHStatsNew(human)
 	clone.Plap = TMHumanStatsPlapCloneDefault()
 	clone.ArousalSeed = GetRandomFloatAround(1, 0.2) -- Add random seed variation 10%
 	clone.AutoSexTier = TM_AutoSexTier_Default
-	clone.Voice = TMVoiceGet_RandomName()
+	clone.VoiceName = TMVoiceGet_RandomName()
 	TM_HumanStatsList[human] = clone
 end
 
@@ -106,6 +106,7 @@ function TMOnUpdate_HumanStats(humans, deltaTime)
 		if stats then
 			-- BodyEdit (never throttled)
 			if stats.NeedsBodyApply then TMHStats_TMBApply(human) end
+			if stats.IsCumming and not HumanHasPenis(human) then stats.IsCumming = false end
 			if TM_AutoSex then
 				-- per-human update accumulator
 				stats.UpdateDelta = stats.UpdateDelta + deltaTime
@@ -200,12 +201,12 @@ function TMHumanStats:VoiceToggle()
 	-- If Voice is OFF, turn it ON
 	if not self.IsVoice then
 		self.IsVoice = true
-		self.Voice = TM_Voices_Names[#TM_Voices_Names]
+		self.VoiceName = TM_Voices_Names[#TM_Voices_Names]
 		return
 	end
 	-- Voice is ON, step down tiers
-	if self.Voice ~= TM_Voices_Names[1] then
-		self.Voice = ListItemStep(TM_Voices_Names, self.Voice, -1)
+	if self.VoiceName ~= TM_Voices_Names[1] then
+		self.VoiceName = ListItemStep(TM_Voices_Names, self.VoiceName, -1)
 	-- Voice is ON, minimum tier toggles to OFF
 	else self.IsVoice = false end
 end

@@ -14,7 +14,7 @@ label TMMenuOptions(human)
 	+ "Show UI" [if not TM_UIVisible]
 		TM_UIVisible = ShowUI(true)
 		Return()
-	+ "Audio » | " .. AccBool(TM_SFX_Ambience) [gold]
+	+ "Music / Ambient »"[gold]
 		TMMenuOptions_Audio(human)
 	+ "SFX / Voice »" [gold]
 		TMMenuOptions_React(human)
@@ -30,6 +30,7 @@ label TMMenuOptions(human)
 			TM_ModMenu(human, hitTri)
 	+ else
 		+ AccStr("PLUGINS »") [gold]
+			+ "< Plugins >" [gold]
 			+ if TMMOD_FaunaLabs
 				+ "Fauna LABS »" [if TMMOD_FaunaLabs] [gold]
 					TMMOD_Jump(TMMOD_Menu_FaunaLabs, human, hitTri)
@@ -52,18 +53,18 @@ label TMMenuOptions_Audio(human)
 	+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 		TM_UITips_Options = false
 		Return()
-	+ "• Refresh"
+	+ "< Music / Ambient >" [gold]
 		Return()
-	+ if TM_SFX_Ambience
-		+ "• Next ambience"
+	+ if TM_SFX_Ambient
+		+ "| Next ambient"
 			TMPlayAmbienceNext()
 			Return()
-		+ "Ambience " .. AccStr(TM_AmbienceTrack) .. " | " .. AccBool(TM_SFX_Ambience) .. " (in ".. AccNum(TMAmbienceLeftSec()) .. "s)"
-			TM_SFX_Ambience = false
+		+ "Ambient " .. AccStr(TM_AmbienceTrack) .. " | " .. AccBool(TM_SFX_Ambient) .. " (in ".. AccNum(TMAmbienceLeftSec()) .. "s)"
+			TM_SFX_Ambient = false
 			Return()
 	+ else	
-		+ "Ambience | " .. AccBool(TM_SFX_Ambience) .. (TMAmbienceLeftSec() > 0 and " (in ".. AccNum(TMAmbienceLeftSec()) .. "s)" or "") 
-			TM_SFX_Ambience = true
+		+ "Ambient | " .. AccBool(TM_SFX_Ambient) .. (TMAmbienceLeftSec() > 0 and " (in ".. AccNum(TMAmbienceLeftSec()) .. "s)" or "") 
+			TM_SFX_Ambient = true
 			TMPlayAmbienceCurrent()
 			Return()
 	+ "Music »" [gold]
@@ -81,7 +82,7 @@ label TMMenuOptions_React(human)
 	+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 		TM_UITips_Options = false
 		Return()
-	+ "« " .. AccStr("Everyone") .. " »" [gold]
+	+ "< SFX / Voice | " .. AccStr("Everyone") .. " >" [gold]
 		Return()
 	+ if TM_SFX
 		+ if not VM_VoiceMod_Enabled
@@ -92,14 +93,14 @@ label TMMenuOptions_React(human)
 				+ "|| React fluid	| " .. AccBool(game.FluidReaction)
 					game.FluidReaction = not game.FluidReaction
 					Return()
-				+ "|| Voices futa	| " .. AccBool(TM_SFX_VoiceFuta)
+				+ "|| Voice futa	| " .. AccBool(TM_SFX_VoiceFuta)
 					TM_SFX_VoiceFuta = not TM_SFX_VoiceFuta
 					Return()
-			+ "| Voices		| " .. AccBool(TM_SFX_Voice)
+			+ "| Voice		| " .. AccBool(TM_SFX_Voice)
 				TM_SFX_Voice = not TM_SFX_Voice
 				Return()
 		+ else
-			+ "| Voices		| Disabled (VoiceMod)"
+			+ "| Voice		| Disabled (VoiceMod)"
 				Return()
 		+ "| SFX Suck		| " .. AccBool(TM_SFX_Suck)
 			TM_SFX_Suck = not TM_SFX_Suck
@@ -107,7 +108,7 @@ label TMMenuOptions_React(human)
 		+ "| SFX Plap		| " .. AccBool(TM_SFX_Plap)
 			TM_SFX_Plap = not TM_SFX_Plap
 			Return()
-	+ "SFX ALL		| " .. AccBool(TM_SFX)
+	+ "SFX / Voice		| " .. AccBool(TM_SFX)
 		TM_SFX = not TM_SFX
 		Return()
 	+ if TMMOD_VoiceMod
@@ -124,7 +125,7 @@ stop
 
 -- OPTIONS: SEX
 label TMMenuOptions_Sex(human)
-	+ "« " .. AccStr("Everyone") .. " »" [gold]
+	+ "< Auto sex / Sex | " .. AccStr("Everyone") .. " >" [gold]
 		Return()
 	+ if TM_AutoSex
 		+ "| Auto sex random » " [gold]
@@ -179,6 +180,8 @@ label TMMenuOptions_Click2x(human)
 	+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 		TM_UITips_Options = false
 		Return()
+	+ "< Click 2x >" [gold]
+		Return()
 	+ "Delay			| " .. FDec(TM_DoubleClickTime, tmOdec) .. "s"
 		-- human "To change this setting edit tm-config"
 		Return()
@@ -204,6 +207,7 @@ label TMMenuOptions_Spawn(human)
 	+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 		TM_UITips_Options = false
 		Return()
+	+ "< Spawn >" [gold]
 	+ "AutoSex 		| " .. AccBool(TM_SpawnAutoSexOn)
 		TM_SpawnAutoSexOn = not TM_SpawnAutoSexOn
 		Return()

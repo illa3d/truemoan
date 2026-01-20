@@ -81,7 +81,7 @@ function TMMLabel_Voice(human, plain)
 	if not stats then return "" end
 	if not TM_SFX or not TM_SFX_Voice then return "OFF (options)"
 	elseif not stats.IsVoice then return plain == true and "OFF" or AccStr("OFF")
-	else return plain == true and stats.Voice or AccStr(stats.Voice) end
+	else return plain == true and stats.VoiceName or AccStr(stats.VoiceName) end
 end
 
 function TMMLabel_Arousal(human, skipLetter)

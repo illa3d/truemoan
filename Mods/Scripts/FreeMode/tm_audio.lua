@@ -131,7 +131,7 @@ function TMVoiceGet_Human(human)
 	if human.Name and TMVoiceHas(human.Name) then return TMVoiceGet(human.Name) end
 	-- 2. Voice assigned in stats
 	local stats = TMHStatsGet(human)
-	if stats and stats.Voice and TMVoiceHas(stats.Voice) then return TMVoiceGet(stats.Voice) end
+	if stats and stats.VoiceName and TMVoiceHas(stats.VoiceName) then return TMVoiceGet(stats.VoiceName) end
 	-- 3. Random fallback
 	return TMVoiceGet_Random()
 end
@@ -213,34 +213,34 @@ end
 
 function TMPlayAmbienceNext()
 	local track = 1
-	if (TM_AmbienceTrack == TM_SFX_AmbienceFiles) then track = 1
+	if (TM_AmbienceTrack == TM_SFX_AmbientFiles) then track = 1
 	else track = TM_AmbienceTrack + 1 end
 	TMPlayAmbience(track)
 end
 
 function TMPlayAmbienceRandom()
-	TMPlayAmbience(math.random(1, TM_SFX_AmbienceFiles))
+	TMPlayAmbience(math.random(1, TM_SFX_AmbientFiles))
 end
 
 function TMPlayAmbience(track)
-	if not TM_SFX_Ambience then return end
+	if not TM_SFX_Ambient then return end
 
 	function TMSfxGetFilename(track)
-		track = ClampValue(track, 1, TM_SFX_AmbienceFiles)
+		track = ClampValue(track, 1, TM_SFX_AmbientFiles)
 		return "tm_ambience (" .. track .. ")"
 	end
 
-	-- set next ambience to play
-	TM_AmbienceTrack = ClampValue(track, 1, TM_SFX_AmbienceFiles)
+	-- set next ambient to play
+	TM_AmbienceTrack = ClampValue(track, 1, TM_SFX_AmbientFiles)
 	tmPlayingAmbience = true
 
 	-- Loop playback
 	if tmLoopingAmbience then return end
 	ResetTimer(tmTimerKeyAmbience)
 	tmLoopingAmbience = true
-	PlaySound(TMSfxGetFilename(track), TM_SFX_AmbienceVolume)
+	PlaySound(TMSfxGetFilename(track), TM_SFX_AmbientVolume)
 	Delayed(tmAmbienceTrackSec, function()
 		tmLoopingAmbience = false
-		if TM_SFX_Ambience and tmPlayingAmbience then TMPlayAmbience(TM_AmbienceTrack) end
+		if TM_SFX_Ambient and tmPlayingAmbience then TMPlayAmbience(TM_AmbienceTrack) end
 	end)
 end
