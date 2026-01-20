@@ -91,7 +91,7 @@ Thanks!
 ---------------------------------------------------------------------------------------------------------
 
 **VOICE PACKS**
-Read me - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_voice_README.txt
+Read me - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_voice__README.txt
 
 **INTEGRATED MODS**
 - `faunaLABS_v1.02 - TMMM Ready.zip` https://discord.com/channels/620113492208517120/1358287146791866446/1454138284841369701 by @faunap 
