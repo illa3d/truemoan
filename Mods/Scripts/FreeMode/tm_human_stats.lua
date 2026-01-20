@@ -72,7 +72,7 @@ local function TMHStatsNew(human)
 	clone.TMBValue = TMBodyValueCloneDefault() --TMBValue is AUTHORITATIVE source of Human Body customization values
 	clone.SexBody = {}
 	clone.Plap = TMHumanStatsPlapCloneDefault()
-	clone.ArousalSeed = GetRandomFloatAround(1, 0.1) -- Add random seed variation 10%
+	clone.ArousalSeed = GetRandomFloatAround(1, 0.2) -- Add random seed variation 10%
 	clone.AutoSexTier = TM_AutoSexTier_Default
 	clone.Voice = TMVoiceGet_RandomName()
 	TM_HumanStatsList[human] = clone
@@ -169,7 +169,7 @@ function TMHumanStats:UpdateArousal(deltaTime)
 		* (self.IsFeelingCum and 1.3 or 1)
 		* self.ArousalSeed
 		self.Arousal = Clamp01(self.Arousal + gain)
-		if self.Arousal >= 0.99 then self.Arousal = 1 end
+		if self.Arousal >= 0.9999 then self.Arousal = 1 end
 	else
 		self.Arousal = Clamp01(self.Arousal - deltaTime * (TM_HumanArousalDecrease / 100) * (self.IsCumming and 4 or 1) * self.ArousalSeed)
 	end

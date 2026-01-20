@@ -157,7 +157,6 @@ function TMOnFluidHit(hitActor, bodyArea, shootActor)
 
 	local timerKey = "TMFluidHit_" .. hitActor.Name .. bodyArea
 	local lastTime = Timer(timerKey)
-	local stats = TMHStatsGet(hitActor)
 
 	if lastTime > TM_MoanCumHeadTime and (bodyArea == ActBodyArea.L_Eye or bodyArea == ActBodyArea.Tongue or bodyArea == ActBodyArea.Cheeks) then 
 		TMPlayMoan(hitActor, TMMoan.CumHead)
@@ -206,7 +205,7 @@ function TMOnPenetration_Mouth(girl, stats, holeName, inVelocity)
 		local pause = Lerp(GetRandomFloat(0.8, 1.2), 0.2, speed)
 		local distance = ActPenetrationDistanceGet(girl, ActBody.Mouth)
 		if lastBlowJobSfx > pause and distance < 0.08 then
-			local tmSfx = distance < 0.04 and TMSfx.SuckDeep or TMSfx.Suck
+			local tmSfx = (stats.IsClimax or distance < 0.05 or inVelocity > 0.5) and TMSfx.SuckDeep or TMSfx.Suck
 			-- SFX: Blowjob
 			TMPlayHumanSFX(girl, tmSfx, holeName)
 			ResetTimer(timerKey)
