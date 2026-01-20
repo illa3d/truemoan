@@ -3,6 +3,9 @@
 -- SYSTEM
 -------------------------------------------------------------------------------------------------
 
+-- FLOORING
+function FloorToInt(value) return math.floor(value) end
+
 -- CLAMPING
 function Clamp01(value) return math.max(0, math.min(value, 1)) end
 function ClampValue(value, min, max) return math.max(min, math.min(value, max)) end

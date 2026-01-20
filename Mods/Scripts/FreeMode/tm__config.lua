@@ -47,6 +47,7 @@ TM_AutoSex_DepthEnd = true			-- AutoSex randomize Depth end
 -- SFX: Ambience
 TM_SFX_Ambience = true				-- Ambient sounds
 TM_SFX_AmbienceVolume = 0.7			-- [0-1] Ambient volume
+TM_SFX_AmbienceFiles = 6			-- Number of Ambient files (if you add more, change this number)
 
 -- SFX: Reactions
 TM_SFX_AllReactions = true			-- Turns off all react sounds

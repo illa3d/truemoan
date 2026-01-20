@@ -9,8 +9,7 @@ TM_AmbienceTrack = 0
 -- Ambience Variables
 local tmPlayingAmbience = false
 local tmLoopingAmbience = false
-local tmAmbienceTimer = "TM_AmbienceTimer"
-local TMSfxPlayedTracks = {}
+local tmTimerKeyAmbience = "TM_AmbienceTimer"
 
 -- Voices
 TM_Voices = {}
@@ -28,6 +27,13 @@ TMTier = {
 	Wild = "wild",
 	Max = "max",
 	Climax = "climax",
+}
+
+-- SOUND EFFECTS
+TMSfx = {
+	Plap = "plap",
+	Suck = "suck",
+	SuckDeep = "suckdeep",
 }
 
 -- TM Moan categories
@@ -53,6 +59,9 @@ TMVoiceDefault = {
 	[TMTier.Faster] = TMTier.Faster,
 	[TMTier.Wild] = TMTier.Wild,
 	[TMTier.Max] = TMTier.Max,
+	[TMSfx.Plap] =		{ Files = 20, Volume = 0.7 },
+	[TMSfx.Suck] =		{ Files = 25, Volume = 0.9 },
+	[TMSfx.SuckDeep] =	{ Files = 25, Volume = 0.9 },
 }
 
 -- Cum body area moan tiers (random from)
@@ -65,56 +74,19 @@ TM_Moans_CumInside = { TMTier.Slow, TMTier.Normal, TMTier.Fast }
 TM_Moans_Cumflating = { TMTier.Fast, TMTier.Faster, TMTier.Wild }
 TM_Moans_Cumdeflating = { TMTier.Slow, TMTier.Fast, TMTier.Faster }
 
--- SOUND EFFECTS
-TMSfx = {
-	Ambience = "Ambience",
-	Blowjob = "Blowjob",
-	Blowjob_Deep = "Blowjob_Deep",
-	Plap = "Plap",
-}
-
--- Tracks = number of files: Sounds/tm_sfxname (N).mp3 (modify this to add your own)
-TMSfxData = {
-	[TMSfx.Ambience] =		{ Tracks = 6, Volume = 0 }, -- volume in config
-	[TMSfx.Blowjob] =		{ Tracks = 25, Volume = 0.9 },
-	[TMSfx.Blowjob_Deep] =	{ Tracks = 25, Volume = 0.9 },
-	[TMSfx.Plap] =			{ Tracks = 20, Volume = 0.7 },
-}
-
 -------------------------------------------------------------------------------------------------
 
-function TMSfxGetFilename(tmSfx, track)
-	track = ClampValue(track, 1, TMSfxData[tmSfx].Tracks)
-	return "tm_" .. tmSfx:lower() .. " (" .. track .. ")" end
-function TMSfxGetTrackClamp(tmSfx, track)
-	return ClampValue(track, 1, TMSfxData[tmSfx].Tracks) end
-
--- TRUE RANDOM
-function TMSfxGetFilenameRandom(tmSfx)
-	local data = TMSfxData[tmSfx]
-	if not data or data.Tracks <= 0 then return nil end
-	-- Init remembered tracks
-	if not TMSfxPlayedTracks[tmSfx] then
-		TMSfxPlayedTracks[tmSfx] = { Played = {}, Count = 0 }
+-- RANDOM
+function TMSfxGetFilenameRandom(human, tmSfx)
+	if not human or not tmSfx then return end
+	local tmVoice = TMVoiceGet_Human(human)
+	if not tmVoice or not tmVoice[tmSfx] or not tmVoice[tmSfx].Files or type(tmVoice[tmSfx].Files) ~= "number" or tmVoice[tmSfx].Files < 1 then
+		tmVoice = TMVoiceDefault
 	end
-	local mem = TMSfxPlayedTracks[tmSfx]
-	-- Reset ONLY when all tracks have been used
-	if mem.Count >= data.Tracks then
-		mem.Played = {}
-		mem.Count = 0
-	end
-	-- Hard safety limit (prevent infinite loops)
-	for _ = 1, 20 do
-		local track = math.random(1, data.Tracks)
-		if not mem.Played[track] then
-			mem.Played[track] = true
-			mem.Count = mem.Count + 1
-			return TMSfxGetFilename(tmSfx, track)
-		end
-	end
-	-- Fallback
-	local track = math.random(1, data.Tracks)
-	return TMSfxGetFilename(tmSfx, track)
+	local name = tmVoice.Name
+	local files = FloorToInt(tmVoice[tmSfx].Files)
+	local track = GetRandom(1, files)
+	return "tm_" ..name.. "_" ..tmSfx.. " (" .. track .. ")"
 end
 
 -------------------------------------------------------------------------------------------------
@@ -170,9 +142,11 @@ end
 -------------------------------------------------------------------------------------------------
 function TMPlayHumanSFX(girl, tmSfx, humanPart, volume)
 	if not TM_AllowVoice() or not TM_SFX_AllReactions or not girl or girl.m_isMale then return end
+	local tmVoice = TMVoiceGet_Human(girl)
+	local tmVol = (tmVoice and tmVoice[tmSfx] and tmVoice[tmSfx].Volume) and Clamp01(tmVoice[tmSfx].Volume) or 1
 	-- if defined volume in param, multiply by volume in config. if not defined, just use volume config
-	local vol = volume and (volume * TMSfxData[tmSfx].Volume) or TMSfxData[tmSfx].Volume
-	PlaySoundAt(TMSfxGetFilenameRandom(tmSfx), HumanPosGet(girl, humanPart), vol)
+	local vol = tmVol * (volume and volume or 1)
+	PlaySoundAt(TMSfxGetFilenameRandom(girl, tmSfx), HumanPosGet(girl, humanPart), vol)
 end
 
 -------------------------------------------------------------------------------------------------
@@ -221,7 +195,7 @@ end
 -------------------------------------------------------------------------------------------------
 
 function TMAmbienceLeftSec()
-	return FDec(tmAmbienceTrackSec - Timer(tmAmbienceTimer))
+	return FDec(tmAmbienceTrackSec - Timer(tmTimerKeyAmbience))
 end
 
 function TMStopAmbience()
@@ -234,26 +208,32 @@ end
 
 function TMPlayAmbienceNext()
 	local track = 1
-	if (TM_AmbienceTrack == TMSfxData[TMSfx.Ambience].Tracks) then track = 1
+	if (TM_AmbienceTrack == TM_SFX_AmbienceFiles) then track = 1
 	else track = TM_AmbienceTrack + 1 end
 	TMPlayAmbience(track)
 end
 
 function TMPlayAmbienceRandom()
-	TMPlayAmbience(math.random(1, TMSfxData[TMSfx.Ambience].Tracks))
+	TMPlayAmbience(math.random(1, TM_SFX_AmbienceFiles))
 end
 
 function TMPlayAmbience(track)
 	if not TM_SFX_Ambience then return end
+
+	function TMSfxGetFilename(track)
+		track = ClampValue(track, 1, TM_SFX_AmbienceFiles)
+		return "tm_ambience (" .. track .. ")"
+	end
+
 	-- set next ambience to play
-	TM_AmbienceTrack = TMSfxGetTrackClamp(TMSfx.Ambience, track)
+	TM_AmbienceTrack = ClampValue(track, 1, TM_SFX_AmbienceFiles)
 	tmPlayingAmbience = true
 
 	-- Loop playback
 	if tmLoopingAmbience then return end
-	ResetTimer(tmAmbienceTimer)
+	ResetTimer(tmTimerKeyAmbience)
 	tmLoopingAmbience = true
-	PlaySound(TMSfxGetFilename(TMSfx.Ambience, track), TM_SFX_AmbienceVolume)
+	PlaySound(TMSfxGetFilename(track), TM_SFX_AmbienceVolume)
 	Delayed(tmAmbienceTrackSec, function()
 		tmLoopingAmbience = false
 		if TM_SFX_Ambience and tmPlayingAmbience then TMPlayAmbience(TM_AmbienceTrack) end
