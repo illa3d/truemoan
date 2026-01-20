@@ -7,10 +7,11 @@ echo.
 
 rem === File list, defined outside loops, each file on its own line ===
 set FILES_LIST="tm_a_presets.lua"^
+ "freemode__tm_main.lua"^
+ "tm_CONFIG.lua"^
  "tm_a_presets_faunap.lua"^
  "tm_a_presets_illa3d.lua"^
  "tm_common_faunap.lua"^
- "tm_CONFIG.lua"^
  "tm_interaction.lua"^
  "tm_main README.txt"^
  "tm_main_freemodehg_faunap.lua"^
@@ -19,9 +20,10 @@ set FILES_LIST="tm_a_presets.lua"^
  "tm_main_illa3d_README.txt"^
  "tm_main_masterchief.lua"^
  "tm_main_masterchief_readme.txt"^
+ "tm_menu__items.lua"^
  "tm_menu_facelab_faunap.lua"^
  "tm_menu_illa3d.lua"^
- "freemode__tm_main.lua"
+ "tm_sounds.lua"
 
 rem === Display file list ===
 for %%F in (!FILES_LIST!) do echo %%~F
