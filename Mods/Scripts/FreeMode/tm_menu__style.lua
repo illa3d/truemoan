@@ -63,13 +63,15 @@ end
 function TMMLabel_AutoSexStats(human)
 	local stats = TMHStatsGet(human)
 	if not TM_AutoSex or not stats then return "" end
-	return "| Hot " ..TMMLabel_Arousal(human, true).. " | " ..TMMLabel_AutoSex(human)
+	if stats.IsClimax then return " | " ..TMMLabel_AutoSex(human)
+	else return "| Hot " ..TMMLabel_Arousal(human, true).. " | " ..TMMLabel_AutoSex(human) end
 end
 
 function TMMLabel_AutoSex(human)
+	if not TM_AutoSex then return "OFF (sex options)" end
 	local stats = TMHStatsGet(human)
 	if not stats then return "" end
-	if not TM_AutoSex then return "OFF (sex options)"
+	if stats.IsClimax then return "Climax!"
 	elseif not stats.AutoSex then return AccStr("OFF")
 	else return AccStr(stats.AutoSexTier) end
 end

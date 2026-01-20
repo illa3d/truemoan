@@ -173,7 +173,7 @@ end
 -- Set AutoSex toggle per human
 function AutoSexToggle(human)
 	local stats = TMHStatsGet(human)
-	if not stats then return end
+	if not stats or stats.IsClimax then return end
 	-- If AutoSex is OFF, turn it ON
 	if not stats.AutoSex then
 		AutoSexSet(human, true, TM_AutoSexTier_ToggleMax)
