@@ -38,18 +38,18 @@ TMMenuItems_OrigFaces = {
 -------------------------------------------------------------------------------------------------
 TMMenuTag_VoidBranding = "|vb| "
 TMMenuItems_VoidBranding = {
-	{ name = "Jump", preset = VB_Pose1 },
-	{ name = "Jump", preset = VB_Pose2 },
-	{ name = "Jump", preset = VB_Pose3 },
-	{ name = "Jump", preset = VB_Pose4 },
-	{ name = "Jump", preset = VB_Pose5 },
-	{ name = "Jump", preset = VB_Pose6 },
-	{ name = "Jump", preset = VB_Pose7 },
-	{ name = "Jump", preset = VB_Pose8 },
-	{ name = "Jump", preset = VB_Pose9 },
-	{ name = "Jump", preset = VB_Pose10 },
-	{ name = "Jump", preset = VB_Pose11 },
-	{ name = "Jump", preset = VB_Pose12 },
+	{ name = "Kneel|grab tits", preset = VB_KneelGrabTits },
+	{ name = "Kneel|sexy finger", preset = VB_KneelSexyFinger },
+	{ name = "Kneel|crawl", preset = VB_KneelCrawl },
+	{ name = "Armstand|star", preset = VB_ArmstandStar },
+	{ name = "Jump|salto", preset = VB_JumpSalto },
+	{ name = "Jump|star", preset = VB_JumpStar },
+	{ name = "Jump|double v", preset = VB_JumpDoubleV },
+	{ name = "Stand|double v", preset = VB_StandDoubleV },
+	{ name = "Stand|fold", preset = VB_StandFold },
+	{ name = "Stand|arm up", preset = VB_StandArmUp },
+	{ name = "Stand|bend", preset = VB_StandBend },
+	{ name = "Lay|spread", preset = VB_LaySpread },
 }
 
 -------------------------------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-function VB_Pose1() return Preset(
+function VB_KneelGrabTits() return Preset(
 	Hips(WPos(-0.087, 1.277, -0.267)),
 	HipsRot(35, 26.1, 0.85),
 	Head(-0.108, 0.959, -0.261),
@@ -34,7 +34,7 @@ function VB_Pose1() return Preset(
 	Cheeks(-1, -1)
 ) end
 
-function VB_Pose2() return Preset(
+function VB_KneelSexyFinger() return Preset(
 	Hips(WPos(-0.001, 0.388, 0.241)),
 	HipsRot(1.25, 0, 0.475),
 	Head(0.003, 0.924, -0.381),
@@ -71,7 +71,7 @@ function VB_Pose2() return Preset(
 	Cheeks(-1, -1)
 ) end
 
-function VB_Pose3() return Preset(
+function VB_KneelCrawl() return Preset(
 	Hips(WPos(-0.001, 0.292, 0.161)),
 	HipsRot(-12.325, 0, 1.375),
 	Head(0.011, 0.351, 0.936),
@@ -108,7 +108,7 @@ function VB_Pose3() return Preset(
 	Cheeks(-1, -1)
 ) end
 
-function VB_Pose4() return Preset(
+function VB_ArmstandStar() return Preset(
 	Hips(WPos(0.026, 0.936, -0.757)),
 	HipsRot(),
 	Head(0.388, -0.921, -0.036),
@@ -145,7 +145,7 @@ function VB_Pose4() return Preset(
 	Cheeks(-1, -1)
 ) end
 
-function VB_Pose5() return Preset(
+function VB_JumpSalto() return Preset(
 	Hips(WPos(-0.022, 1.297, -0.258)),
 	HipsRot(-35, 0, -2.6),
 	Head(-0.082, -0.993, 0.082),
@@ -178,7 +178,7 @@ function VB_Pose5() return Preset(
 	Brows(-0.362, -0.362)
 ) end
 
-function VB_Pose6() return Preset(
+function VB_JumpStar() return Preset(
 	Hips(WPos(0.002, 0.996, -0.187)),
 	HipsRot(-26, 0, 2.65),
 	Head(0.004, -0.973, 0.232),
@@ -209,7 +209,7 @@ function VB_Pose6() return Preset(
 	Mouth(-0.304, -0.258, 0, 1, 1, -1, -1, 0.833, 0.833, 0.438, 0.438)
 ) end
 
-function VB_Pose7() return Preset(
+function VB_JumpDoubleV() return Preset(
 	Hips(WPos(-0.004, 1.393, -0.106)),
 	HipsRot(33.5, 26.1, 3.925),
 	Head(-0.157, 0.923, -0.351),
@@ -245,7 +245,7 @@ function VB_Pose7() return Preset(
 	Cheeks(-1, -1)
 ) end
 
-function VB_Pose8() return Preset(
+function VB_StandDoubleV() return Preset(
 	Hips(WPos(-0.01, 1.21, 0.061)),
 	HipsRot(35, -11.25, -25),
 	Head(-0.004, 0.994, -0.105),
@@ -282,7 +282,7 @@ function VB_Pose8() return Preset(
 	Cheeks(1, 1)
 ) end
 
-function VB_Pose9() return Preset(
+function VB_StandFold() return Preset(
 	Hips(WPos(0.068, 0.862, 0.093)),
 	HipsRot(-21.65, 0, -10.55),
 	Head(-0.315, -0.947, 0.058),
@@ -318,7 +318,7 @@ function VB_Pose9() return Preset(
 	Cheeks(-1, -1)
 ) end
 
-function VB_Pose10() return Preset(
+function VB_StandArmUp() return Preset(
 	Hips(WPos(-0.011, 1.101, -0.025)),
 	HipsRot(35, 17.25, 4),
 	Head(0.034, 0.997, -0.075),
@@ -355,7 +355,7 @@ function VB_Pose10() return Preset(
 	Cheeks(-1, -1)
 ) end
 
-function VB_Pose11() return Preset(
+function VB_StandBend() return Preset(
 	Hips(WPos(0.004, 0.898, 0.2)),
 	HipsRot(34.85, 3.75, -9.275),
 	Head(-0.012, 0.887, 0.461),
@@ -392,7 +392,7 @@ function VB_Pose11() return Preset(
 	Cheeks(0.997, 0.997)
 ) end
 
-function VB_Pose12() return Preset(
+function VB_LaySpread() return Preset(
 	Hips(WPos(-0.005, -0.074, 0.005)),
 	HipsRot(-35, 0, -3.15),
 	Head(0.007, 0.229, -0.974),
