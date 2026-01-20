@@ -6,12 +6,13 @@ TO CREATE A NEW VOICE PACK
 1. Copy tm_voice_template.lua, rename and modify
 2. Add audio files
 3. Define remapping for missing audio files
+4. (OPTIONAL) Define SFX sounds (plap, suck, suckdeep)
 
 -----------------------------------------------------------------------------------------------------------------------------
 1. VOICE PACK SCRIPT FILE "tm_voice_{name}.lua"
 -----------------------------------------------------------------------------------------------------------------------------
 EXAMPLE: TrueFacials\Mods\Scripts\FreeMode\tm_voice_chiyoru.lua
-RULES: must contain tm_voice_ in front
+RULES: must begin with tm_voice_
 
 -----------------------------------------------------------------------------------------------------------------------------
 2. AUDIO FILES "tm_{name}_{tier} (#).mp3"
@@ -35,26 +36,48 @@ See exact character names in TalkMenu per character, ie: "Hey, Tifa" (capital le
 3. TIER REMAPPING
 -----------------------------------------------------------------------------------------------------------------------------
 EXAMPLE: [TMTier.Faster] = TMTier.Fast,
-Is telling TrueMoan: There are no "tm_Chiyoru_faster (#).mp3" files use "tm_Chiyoru_fast (#).mp3" files instead
 
+Is telling TrueMoan: There are no "tm_Chiyoru_faster (#).mp3" files use "tm_Chiyoru_fast (#).mp3" files instead
 If you don't have audio files for specific tiers, you need to remap tiers to existing files (else silence)
-Climax is not remapped, it's only played if the audio files exist
+Climax is not remapped, it's only played if the audio files exist. If it doesnt, moans are played instead.
+
+-----------------------------------------------------------------------------------------------------------------------------
+4. (OPTIONAL) SFX SOUNDS (Plap, Suck, SuckDeep)
+-----------------------------------------------------------------------------------------------------------------------------
+If this is not defined in the VoicePack - default Chiyoru SFX will be used
+You must specify: number of files (variants) per SFX, volume per group of SFX.
+
+EXAMPLES:
+[TMSfx.Plap] = { Files = 10, Volume = 0.7 },
+FILES: TrueFacials\Mods\Scripts\FreeMode\Sounds\tm_Chiyoru_plap (10).mp3 (total 10 files, played at volume of 0.7)
+
+[TMSfx.Suck] = { Files = 10, Volume = 0.9 },
+FILES: TrueFacials\Mods\Scripts\FreeMode\Sounds\tm_Chiyoru_suck (10).mp3 (total 10 files, played at volume of 0.9)
+
+[TMSfx.SuckDeep] = { Files = 10, Volume = 0.9 },
+FILES: TrueFacials\Mods\Scripts\FreeMode\Sounds\tm_Chiyoru_suckdeep (10).mp3 (total 10 files, played at volume of 0.9)
+
 
 
 -------------------------------------------------------------------------------------------------------------------------------
 EXAMPLE A
 -------------------------------------------------------------------------------------------------------------------------------
 AUDIO: All audio tiers present
+SFX: All sfx present, 10 files (variants) each
 REMAP: No remap
 
 TMVoiceAdd({
 	Name = "Chiyoru", -- files must have this exact name (upper/lower case matters!)
+	[TMSfx.Plap] =		{ Files = 10, Volume = 0.7 },
+	[TMSfx.Suck] =		{ Files = 10, Volume = 0.9 },
+	[TMSfx.SuckDeep] =	{ Files = 10, Volume = 0.9 },
 })
 
 -------------------------------------------------------------------------------------------------------------------------------
 EXAMPLE B
 -------------------------------------------------------------------------------------------------------------------------------
 NO AUDIO: Faster, Wild and Max
+SFX: All sfx present, 10 files (variants) each
 REMAP: Missing 3 to Fast
 
 TMVoiceAdd({
@@ -62,12 +85,16 @@ TMVoiceAdd({
 	[TMTier.Faster] = TMTier.Fast,
 	[TMTier.Wild] = TMTier.Fast,
 	[TMTier.Max] = TMTier.Fast,
+	[TMSfx.Plap] =		{ Files = 10, Volume = 0.7 },
+	[TMSfx.Suck] =		{ Files = 10, Volume = 0.9 },
+	[TMSfx.SuckDeep] =	{ Files = 10, Volume = 0.9 },
 })
 
 -----------------------------------------------------------------------------------------------------------------------------
 EXAMPLE C
 -----------------------------------------------------------------------------------------------------------------------------
 NO AUDIO: Faster, Wild and Max
+SFX: All sfx present, 10 files (variants) each
 REMAP: All tiers evenly
 
 TMVoiceAdd({
@@ -77,4 +104,7 @@ TMVoiceAdd({
 	[TMTier.Faster] = TMTier.Normal,
 	[TMTier.Wild] = TMTier.Fast,
 	[TMTier.Max] = TMTier.Fast,
+	[TMSfx.Plap] =		{ Files = 20, Volume = 0.7 },
+	[TMSfx.Suck] =		{ Files = 25, Volume = 0.9 },
+	[TMSfx.SuckDeep] =	{ Files = 25, Volume = 0.9 },
 })
