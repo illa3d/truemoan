@@ -10,11 +10,11 @@ TMHumanStats = {
 	-- Customization
 	TMBValue = TMBodyValueCloneDefault(),
 	NeedsBodyApply = false,
-	-- Sex
-	AllowMoaning = true,
+	-- Voice
+	IsVoice = true,
 	Voice = "",
+	-- Sex
 	IsSexActive = false,
-	-- Where
 	PenisHole = false,
 	PenisHand = false,
 	Mouth = false,
@@ -193,13 +193,13 @@ end
 function TMHumanStats:VoiceToggle()
 	-- No voices registered
 	if not TMVoicesHas() then
-		self.AllowMoaning = false
+		self.IsVoice = false
 		return
 	end
 	
 	-- If Voice is OFF, turn it ON
-	if not self.AllowMoaning then
-		self.AllowMoaning = true
+	if not self.IsVoice then
+		self.IsVoice = true
 		self.Voice = TM_Voices_Names[#TM_Voices_Names]
 		return
 	end
@@ -207,7 +207,7 @@ function TMHumanStats:VoiceToggle()
 	if self.Voice ~= TM_Voices_Names[1] then
 		self.Voice = ListItemStep(TM_Voices_Names, self.Voice, -1)
 	-- Voice is ON, minimum tier toggles to OFF
-	else self.AllowMoaning = false end
+	else self.IsVoice = false end
 end
 
 function TMHumanStats:CanStartCumOrClimax()

@@ -130,7 +130,7 @@ label TMMenuList_Music(musicTracks)
 			+ if i % TM_MenuBackButtonEvery == 0
 				+ TM_MenuBack
 					Return(2)
-	+ "Stop Music"
+	+ "Music STOP"
 		StopMusic()
 		Return()
 	+ TM_MenuBack

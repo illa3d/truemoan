@@ -15,7 +15,7 @@ local ActAutoSexTickTime = 0.25 -- seconds (game timer frequency)
 
 -------------------------------------------------------------------------------------------------
 
--- AUTOSEX TIER ENUM
+-- AUTOSEX TIER ENUM (Strings must be same sa TMTier)
 AutoSexTier = {
 	Idle = "Idle",
 	Slow = "Slow",

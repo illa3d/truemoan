@@ -21,7 +21,7 @@ label TMMenuHeyHuman(human)
 	+ "RESET ".. AccStr(human.Name)
 		TMHumanReset(human)
 		Return()
-	+ "Voice		| " .. TMMLabel_Voice(human) [if not human.m_isMale]
+	+ "Voice		| " .. TMMLabel_Voice(human) [if not human.m_isMale and TM_SFX_VoiceAllow(human)]
 		TMHStatsGet(human):VoiceToggle()
 		Return()
 	+ "Penetration	| " .. AccBool(not human.m_isMale)

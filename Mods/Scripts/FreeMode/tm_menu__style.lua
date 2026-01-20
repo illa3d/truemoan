@@ -68,7 +68,7 @@ function TMMLabel_AutoSexStats(human)
 end
 
 function TMMLabel_AutoSex(human)
-	if not TM_AutoSex then return "OFF (sex options)" end
+	if not TM_AutoSex then return "OFF (options)" end
 	local stats = TMHStatsGet(human)
 	if not stats then return "" end
 	if stats.IsClimax then return "Climax!"
@@ -79,8 +79,8 @@ end
 function TMMLabel_Voice(human, plain)
 	local stats = TMHStatsGet(human)
 	if not stats then return "" end
-	if not TM_SFX_AllReactions or not TM_SFX_ReactSex then return "OFF (sex options)"
-	elseif not stats.AllowMoaning then return plain == true and "OFF" or AccStr("OFF")
+	if not TM_SFX or not TM_SFX_Voice then return "OFF (options)"
+	elseif not stats.IsVoice then return plain == true and "OFF" or AccStr("OFF")
 	else return plain == true and stats.Voice or AccStr(stats.Voice) end
 end
 

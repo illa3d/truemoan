@@ -9,7 +9,7 @@ local tmSdec = 0
 -- SEX MENU
 ---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol, err-assign-as-eq, malformed-number
 label TMMenuSex(human)
-	+ "Auto options »" [gold]
+	+ "Auto sex options »" [gold]
 		TMMenuSex_Auto(human, TMHStatsGet(human))
 
 	+ if HasSexPartner_Any(human) and IsSexActive_Any(human)
@@ -125,7 +125,7 @@ label TMMenuSex_Auto(human, stats)
 	+ "« " .. AccStr(human.Name) .. " »"[gold]
 		Return()
 	+ if stats.AutoSex
-		+ "| Auto random »" [gold]
+		+ "| Auto sex random »" [gold]
 			TMMenuSex_AutoParams(human, stats)
 		+ "| Auto climax	| " .. AccBool(stats.AutoSexClimax)
 			stats.AutoSexClimax = not stats.AutoSexClimax

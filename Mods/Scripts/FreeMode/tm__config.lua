@@ -49,9 +49,10 @@ TM_SFX_Ambience = true				-- Ambient sounds
 TM_SFX_AmbienceVolume = 0.7			-- [0-1] Ambient volume
 TM_SFX_AmbienceFiles = 6			-- Number of Ambient files (if you add more, change this number)
 
--- SFX: Reactions
-TM_SFX_AllReactions = true			-- Turns off all react sounds
-TM_SFX_ReactSex = true				-- React: Moaning during sex
-TM_SFX_ReactFuta = true				-- React: Moaning for chicks with dicks
-TM_SFX_ReactBlowjob = true			-- React: Grunting while in Blowjob
-TM_SFX_ReactPlap = true				-- React: Plapping when in sex (anal or vaginal)
+-- SFX: Voice/Plap/Suck/Chat
+TM_SFX = true						-- Turns off all SFX/Voice sounds
+TM_SFX_Voice = true					-- React: Moaning everyone
+TM_SFX_VoiceFuta = true				-- React: Moaning chicks with dicks
+TM_SFX_Plap = true					-- React: Plapping when in sex (anal or vaginal)
+TM_SFX_Suck = true					-- React: Grunting while sucking
+TM_SFX_GenericChat = true			-- React: TrueFacials generic chat (original voices)

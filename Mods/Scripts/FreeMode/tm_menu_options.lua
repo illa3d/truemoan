@@ -16,9 +16,9 @@ label TMMenuOptions(human)
 		Return()
 	+ "Audio » | " .. AccBool(TM_SFX_Ambience) [gold]
 		TMMenuOptions_Audio(human)
-	+ "SFX React »" [gold]
+	+ "SFX / Voice »" [gold]
 		TMMenuOptions_React(human)
-	+ "Auto / Sex »" [gold]
+	+ "AutoSex / Sex »" [gold]
 		TMMenuOptions_Sex(human)
 	+ "Click 2x »" [gold]
 		TMMenuOptions_Click2x(human)
@@ -68,7 +68,7 @@ label TMMenuOptions_Audio(human)
 			Return()
 	+ "Music »" [gold]
 		TMMenuList_Music(TM_MusicTracks)
-	+ "Stop Music"
+	+ "Music STOP"
 		StopMusic()
 		Return()
 	+ TM_MenuBack
@@ -81,36 +81,40 @@ label TMMenuOptions_React(human)
 	+ AccStr(TM_UITip_Options) [if TM_UITips_Options]
 		TM_UITips_Options = false
 		Return()
-	+ if TM_AllowVoice()
-		+ "« " .. AccStr("Everyone") .. " »" [gold]
+	+ "« " .. AccStr("Everyone") .. " »" [gold]
+		Return()
+	+ if TM_SFX
+		+ if not VM_VoiceMod_Enabled
+			+ if TM_SFX_Voice
+				+ "|| Generic chat	| " .. AccBool(TM_SFX_GenericChat)
+					TM_SFX_GenericChat = not TM_SFX_GenericChat
+					Return()
+				+ "|| React fluid	| " .. AccBool(game.FluidReaction)
+					game.FluidReaction = not game.FluidReaction
+					Return()
+				+ "|| Voices futa	| " .. AccBool(TM_SFX_VoiceFuta)
+					TM_SFX_VoiceFuta = not TM_SFX_VoiceFuta
+					Return()
+			+ "| Voices		| " .. AccBool(TM_SFX_Voice)
+				TM_SFX_Voice = not TM_SFX_Voice
+				Return()
+		+ else
+			+ "| Voices		| Disabled (VoiceMod)"
+				Return()
+		+ "| SFX Suck		| " .. AccBool(TM_SFX_Suck)
+			TM_SFX_Suck = not TM_SFX_Suck
 			Return()
-		+ if TM_SFX_AllReactions
-			+ "| React futa		| " .. AccBool(TM_SFX_ReactFuta) [if TM_SFX_ReactSex]
-				TM_SFX_ReactFuta = not TM_SFX_ReactFuta
-				Return()
-			+ "| React sex		| " .. AccBool(TM_SFX_ReactSex)
-				TM_SFX_ReactSex = not TM_SFX_ReactSex
-				Return()
-			+ "| React fluid		| " .. AccBool(game.FluidReaction)
-				game.FluidReaction = not game.FluidReaction
-				Return()
-			+ "| React blowjob	| " .. AccBool(TM_SFX_ReactBlowjob)
-				TM_SFX_ReactBlowjob = not TM_SFX_ReactBlowjob
-				Return()
-			+ "| React plap		| " .. AccBool(TM_SFX_ReactPlap)
-				TM_SFX_ReactPlap = not TM_SFX_ReactPlap
-				Return()
-		+ "SFX React	| " .. AccBool(TM_SFX_AllReactions)
-			TM_SFX_AllReactions = not TM_SFX_AllReactions
+		+ "| SFX Plap		| " .. AccBool(TM_SFX_Plap)
+			TM_SFX_Plap = not TM_SFX_Plap
 			Return()
-	+ else
-		+ "SFX True Moan	| Disabled (VoiceMod)"
-			Return()
+	+ "SFX ALL		| " .. AccBool(TM_SFX)
+		TM_SFX = not TM_SFX
+		Return()
 	+ if TMMOD_VoiceMod
-		+ "SFX VoiceMod	| " .. AccBoolDE(VM_VoiceMod_Enabled) [if VM_VoiceMod_Enabled]
+		+ "VoiceMod voices	| " .. AccBoolDE(VM_VoiceMod_Enabled) [if VM_VoiceMod_Enabled]
 			VM_VoiceMod_Disable()
 			Return()
-		+ "SFX VoiceMod	| " .. AccBoolDE(VM_VoiceMod_Enabled) [if not VM_VoiceMod_Enabled]
+		+ "VoiceMod voices	| " .. AccBoolDE(VM_VoiceMod_Enabled) [if not VM_VoiceMod_Enabled]
 			VM_VoiceMod_Enable()
 			Return()
 	+ TM_MenuBack
@@ -123,7 +127,7 @@ label TMMenuOptions_Sex(human)
 	+ "« " .. AccStr("Everyone") .. " »" [gold]
 		Return()
 	+ if TM_AutoSex
-		+ "| Auto random » " [gold]
+		+ "| Auto sex random » " [gold]
 			+ "« " .. AccStr("Everyone") .. " »" [gold]
 				Return()
 			+ "| M vs F		| " .. AccBool(TM_AutoSex_Weight)

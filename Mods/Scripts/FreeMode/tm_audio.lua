@@ -15,9 +15,7 @@ local tmTimerKeyAmbience = "TM_AmbienceTimer"
 TM_Voices = {}
 TM_Voices_Names = {}
 
--- Moan Tier "Enum" (actual filenames)
--- VAR NAMES MUST BE SAME AS AutoSexTier
--- String values are part-filenames: tm_climax (3).mp3
+-- Voice Tier "Enum" (filename parts) 
 TMTier = {
 	Idle = "slow",
 	Slow = "slow",
@@ -59,9 +57,9 @@ TMVoiceDefault = {
 	[TMTier.Faster] = TMTier.Faster,
 	[TMTier.Wild] = TMTier.Wild,
 	[TMTier.Max] = TMTier.Max,
-	[TMSfx.Plap] =		{ Files = 20, Volume = 0.7 },
-	[TMSfx.Suck] =		{ Files = 25, Volume = 0.9 },
-	[TMSfx.SuckDeep] =	{ Files = 25, Volume = 0.9 },
+	[TMSfx.Plap] = { Files = 20, Volume = 0.7 },
+	[TMSfx.Suck] = { Files = 25, Volume = 0.9 },
+	[TMSfx.SuckDeep] = { Files = 25, Volume = 0.9 },
 }
 
 -- Cum body area moan tiers (random from)
@@ -141,8 +139,8 @@ end
 -------------------------------------------------------------------------------------------------
 -- SFX / SOUND SOURCE POSITION
 -------------------------------------------------------------------------------------------------
-function TMPlayHumanSFX(girl, tmSfx, humanPart, volume)
-	if not TM_AllowVoice() or not TM_SFX_AllReactions or not girl or girl.m_isMale then return end
+function TMPlaySFX(girl, tmSfx, humanPart, volume)
+	if not TM_SFX or not girl or girl.m_isMale then return end
 	local tmVoice = TMVoiceGet_Human(girl)
 	local tmVol = (tmVoice and tmVoice[tmSfx] and tmVoice[tmSfx].Volume) and Clamp01(tmVoice[tmSfx].Volume) or 1
 	-- if defined volume in param, multiply by volume in config. if not defined, just use volume config
@@ -151,32 +149,37 @@ function TMPlayHumanSFX(girl, tmSfx, humanPart, volume)
 end
 
 -------------------------------------------------------------------------------------------------
--- MOANING
+-- VOICES
 -------------------------------------------------------------------------------------------------
+function TM_SFX_VoiceAllow(girl)
+	if VM_VoiceMod_Enabled and VM_VoiceMod_Enabled == true then return false end
+	if not TM_SFX or not TM_SFX_Voice or not girl or girl.m_isMale then return false end
+	return true
+end
 
 function TMPlayMoan(girl, tmMoan)
-	if not TM_AllowVoice() or not TM_SFX_AllReactions or not girl or girl.m_isMale then return end
+	if not TM_SFX_VoiceAllow(girl) then return end
 	local stats = TMHStatsGet(girl)
-	if not stats or stats.IsClimax or not stats.AllowMoaning then return end
+	if not stats or stats.IsClimax or not stats.IsVoice then return end
 	-- if tmMoanSource == TMMoanSource.Sex then -- dynamic
 	-- elseif tmMoanSource == TMMoanSource.IsClimax then -- dynamic
-	if tmMoan == TMMoan.Cumming and TM_SFX_ReactSex then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_Cumming))
-	elseif tmMoan == TMMoan.CumHead then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumHead))
-	elseif tmMoan == TMMoan.CumHole then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumHole))
-	elseif tmMoan == TMMoan.CumBody then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumBody))
-	elseif tmMoan == TMMoan.CumInside and TM_SFX_ReactSex and not stats.IsSexActive then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_CumInside))
-	elseif tmMoan == TMMoan.Cumflating and TM_SFX_ReactSex then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_Cumflating))
-	elseif tmMoan == TMMoan.Cumdeflating and TM_SFX_ReactSex then TMPlayMoanTier(girl, ListItemRandom(TM_Moans_Cumdeflating))
-	elseif tmMoan == TMMoan.DoubleClick then TMPlayMoanTier(girl, TableItemRandom(TMTier))
+	if tmMoan == TMMoan.Cumming then TMPlayTier(girl, ListItemRandom(TM_Moans_Cumming))
+	elseif tmMoan == TMMoan.CumHead then TMPlayTier(girl, ListItemRandom(TM_Moans_CumHead))
+	elseif tmMoan == TMMoan.CumHole then TMPlayTier(girl, ListItemRandom(TM_Moans_CumHole))
+	elseif tmMoan == TMMoan.CumBody then TMPlayTier(girl, ListItemRandom(TM_Moans_CumBody))
+	elseif tmMoan == TMMoan.CumInside and not stats.IsSexActive then TMPlayTier(girl, ListItemRandom(TM_Moans_CumInside))
+	elseif tmMoan == TMMoan.Cumflating then TMPlayTier(girl, ListItemRandom(TM_Moans_Cumflating))
+	elseif tmMoan == TMMoan.Cumdeflating then TMPlayTier(girl, ListItemRandom(TM_Moans_Cumdeflating))
+	elseif tmMoan == TMMoan.DoubleClick then TMPlayTier(girl, TableItemRandom(TMTier))
 	end
 end
 
 -- SFX: All sfx is played here. Directly calling: Sex, Futa, Cum, Cumflation, Cumdeflation (the rest is above)
-function TMPlayMoanTier(girl, tmTier)
+function TMPlayTier(girl, tmTier)
 	-- don't moan with other voice mods
-	if not TM_AllowVoice() or not TM_SFX_AllReactions or not girl or girl.m_isMale then return end
+	if not TM_SFX_VoiceAllow(girl) then return end
 	local stats = TMHStatsGet(girl)
-	if not stats or not stats.AllowMoaning then return end;
+	if not stats or not stats.IsVoice then return end;
 	local tmVoice = TMVoiceGet_Human(girl)
 	local tier = (tmVoice and tmVoice[tmTier]) and tmVoice[tmTier] or tmTier
 	if stats.IsClimax then girl.SayCustom("tm_" .. tmVoice.Name .. "_" .. TMTier.Climax) end

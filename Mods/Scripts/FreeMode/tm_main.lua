@@ -5,7 +5,6 @@
 -- same function in multiple files, alphabetically last one is used
 -------------------------------------------------------------------------------------------------
 -- TrueMoan module global switches
-function TM_AllowVoice() return VM_VoiceMod_Enabled ~= true end
 TM_UIVisible = true -- TrueFacials UI
 TM_GenChatInit = false
 TM_DeltaTime = 0
@@ -22,14 +21,15 @@ function TMOnStart_Ambience()
 end
 
 function TMOnStart_GenericChat()
-	if not TM_AllowVoice() then return end
+	TM_GenChatInit = true
+	if not TM_SFX_GenericChat then return end
 	local timerKey = "TMGenericChat"
 	ResetTimer(timerKey, math.random(-10, 0))
 	---@diagnostic disable: undefined-global, miss-symbol, unknown-symbol
 	local speaker = game.GetRandomHuman(|h| h.CanSpeak)
 	---@diagnostic enable: undefined-global, miss-symbol, unknown-symbol
-	if speaker ~= nil then speaker.Say("Greeting") end
-	TM_GenChatInit = true
+	if not TM_SFX_VoiceAllow(speaker) then return end
+	speaker.Say("Greeting")
 end
 
 function TMOnHumanSingleClick(human, hittri)
@@ -54,7 +54,8 @@ end
 
 -- Generic chat update function (every frame)
 function TMOnUpdate_GenericChat()
-	if not TM_AllowVoice() or not TM_GenChatInit == true then return end
+	-- GENERIC CHAT
+	if not TM_GenChatInit == true or not TM_SFX_GenericChat then return end
 	local timerKey = "TMGenericChat"
 	local lastChatTime = Timer(timerKey)
 	if lastChatTime > game.ChatIntervals then
@@ -62,7 +63,9 @@ function TMOnUpdate_GenericChat()
 		---@diagnostic disable: undefined-global, miss-symbol, unknown-symbol
 		local speaker = game.GetRandomHuman(|h| h.CanSpeak and ((h.FaceMood >= 0 and h.HasVoice("Like") == true) or (h.FaceMood < 0 and h.HasVoice("Dislike") == true)))
 		---@diagnostic enable: undefined-global, miss-symbol, unknown-symbol
-		if speaker ~= nil then speaker.Say(speaker.FaceMood >= 0 and "Like" or "Dislike") end
+		if not TM_SFX_VoiceAllow(speaker) then return end
+		---@diagnostic disable-next-line
+		speaker.Say(speaker.FaceMood >= 0 and "Like" or "Dislike")
 	end
 end
 
@@ -73,13 +76,16 @@ function TMOnCreateHuman(human)
 	if TM_SpawnNoFuta then Delayed(0.05, function() HumanPenisSet(human, false) end) end
 	if TM_SpawnReset then Delayed(0.1, function() TMHumanReset(human) end) end
 	if TM_SpawnAutoSexOn then AutoSexSet(human, true) end
-	
-	if not TM_AllowVoice() or not TM_GenChatInit == true then return end
+	-- MUSIC
+	if not TM_GenChatInit == true then return end
 	game.PlayCharacterMusic(human)
+	-- GENERIC CHAT
+	if not TM_SFX_GenericChat or not TM_SFX_VoiceAllow(human) then return end
 	human.Say("Greeting")
 end
 
 function TMOnRemoveHuman(human)
+	-- MUSIC
 	game.PlayRandomCharacterMusic()
 end
 
@@ -153,7 +159,7 @@ end
 
 -- Updated on fluid hit (cum)
 function TMOnFluidHit(hitActor, bodyArea, shootActor)
-	if game.FluidReaction == false or not hitActor or hitActor.m_isMale == true then return end
+	if not game.FluidReaction or not hitActor or hitActor.m_isMale then return end
 
 	local timerKey = "TMFluidHit_" .. hitActor.Name .. bodyArea
 	local lastTime = Timer(timerKey)
@@ -178,8 +184,7 @@ function TMOnFluidHit(hitActor, bodyArea, shootActor)
 	else
 		local genericVoiceKey = "TMFluidHit_Generic_" .. hitActor.Name
 		local lastGenericVoiceTime = Timer(genericVoiceKey)
-		if TM_GenChatInit and lastGenericVoiceTime > 500 then
-			hitActor.SayCustom("gen_cumshot")
+		if TM_GenChatInit and lastGenericVoiceTime > game.ChatIntervals and TM_SFX_VoiceAllow(hitActor) then
 			hitActor.Say(hitActor.FaceMood >= 0 and "Like" or "Dislike")
 			ResetTimer(genericVoiceKey)
 		elseif lastTime > TM_MoanCumBodyTime then
@@ -198,7 +203,7 @@ function TMOnPenetration_Mouth(girl, stats, holeName, inVelocity)
 	if not girl or girl.m_isMale or holeName ~= ActBody.Mouth then return end
 	
 	-- SFX BLOWJOB
-	if TM_SFX_AllReactions and TM_SFX_ReactBlowjob and TMHStatsGet(girl).AllowMoaning then
+	if TM_SFX and TM_SFX_Suck and TMHStatsGet(girl).IsVoice then
 		local timerKey = "TMBlowJobSFX_" .. girl.Name
 		local lastBlowJobSfx = Timer(timerKey)
 		local speed = Clamp01(inVelocity)
@@ -207,7 +212,7 @@ function TMOnPenetration_Mouth(girl, stats, holeName, inVelocity)
 		if lastBlowJobSfx > pause and distance < 0.08 then
 			local tmSfx = (stats.IsClimax or distance < 0.05 or inVelocity > 0.5) and TMSfx.SuckDeep or TMSfx.Suck
 			-- SFX: Blowjob
-			TMPlayHumanSFX(girl, tmSfx, holeName)
+			TMPlaySFX(girl, tmSfx, holeName)
 			ResetTimer(timerKey)
 		end
 	end
@@ -222,21 +227,21 @@ function TMOnPenetration_AnusVagina(girl, stats, holeName, inVelocity)
 	else stats.IsBulging = false end
 
 	-- SFX PLAP
-	if TM_SFX_AllReactions and TM_SFX_ReactPlap then
+	if TM_SFX and TM_SFX_Plap then
 		local speed = Clamp01(inVelocity)
 		local dist = ActPenetrationDistanceGet(girl, holeName)
 		if stats.Plap[holeName] and dist > TM_PlapDistanceLimit then
 			stats.Plap[holeName] = false
 		elseif not stats.Plap[holeName] and dist < TM_PlapDistanceLimit then
 			stats.Plap[holeName] = true
-			TMPlayHumanSFX(girl, TMSfx.Plap, holeName, speed)
+			TMPlaySFX(girl, TMSfx.Plap, holeName, speed)
 		end
 	end
 end
 
 -- FUTA MOANING > ONPENETRATION ROUTER
 function TMOnUpdate_Futa(girl, stats)
-	if not TM_SFX_AllReactions or not TM_SFX_ReactSex or not TM_SFX_ReactFuta or not girl or girl.m_isMale or not TMHStatsGet(girl).AllowMoaning then return end
+	if not TM_SFX or not TM_SFX_Voice or not TM_SFX_VoiceFuta or not girl or girl.m_isMale or not TMHStatsGet(girl).IsVoice then return end
 	local function DoFutaMoan(actBody)
 		local act = ActGet(girl, actBody)
 		if not act or not ActActiveGet(act, actBody == ActBody.PenisHand) then return end
@@ -328,11 +333,11 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 
 	-- Play
 	if lastMoanTime > pause then
-		if TM_SFX_AllReactions and TM_SFX_ReactSex and stats and stats.AllowMoaning then
+		if TM_SFX and TM_SFX_Voice and stats and stats.IsVoice then
 			-- SFX: CLIMAX MOANING
-			if stats and stats.IsClimax then TMPlayMoanTier(girl, TMTier[stats.AutoSexTier]) -- follow stats.AutoSexTier with sounds
+			if stats and stats.IsClimax then TMPlayTier(girl, TMTier[stats.AutoSexTier]) -- follow stats.AutoSexTier with sounds
 			-- SFX: SEX MOANING
-			else TMPlayMoanTier(girl, tier) end -- follow penetration speed tier set above
+			else TMPlayTier(girl, tier) end -- follow penetration speed tier set above
 		end
 		-- Auto Wetness
 		if TM_WetSex then
@@ -460,7 +465,7 @@ end
 -------------------------------------------------------------------------------------------------
 
 local function TMCumInside_CanPlayEffect(stats, lastEffect)
-	if not TM_SFX_AllReactions or not TM_SFX_ReactSex or not stats.AllowMoaning then return false end
+	if not TM_SFX or not TM_SFX_Voice or not stats.IsVoice then return false end
 	return lastEffect > TM_CumEffectTime
 end
 
@@ -502,7 +507,7 @@ function TMOnUpdate_CumInside_End(girl, stats)
 			local effectKey = TMTimerKey_CumEffect(girl) 
 			if TMCumInside_CanPlayEffect(stats, Timer(effectKey)) then
 				-- SFX: CUMDEFLATION
-				if stats.AllowMoaning then TMPlayMoan(girl, TMMoan.Cumflating) end
+				if stats.IsVoice then TMPlayMoan(girl, TMMoan.Cumflating) end
 				if TM_WetSex then WetSet(girl, 50000, ActBody.Vagina) end
 				ResetTimer(effectKey)
 			end
@@ -532,15 +537,15 @@ function TMOnCumInside_EndCum(girl)
 	local delay = 0.5
 	local function Increment(value) delay = IncrementMultiplierRandom(delay, value, 0.8, 1.1) end
 	-- SFX: CUM PULLOUT
-	if not TM_SFX_AllReactions or not TM_SFX_ReactSex then return end
+	if not TM_SFX or not TM_SFX_Voice then return end
 	HumanTalkStop(girl)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Fast) end) Increment(0.5)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Fast) end) Increment(0.5)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Normal) end) Increment(1.5)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Normal) end) Increment(2)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Slow) end) Increment(3)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Slow) end) Increment(4)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Slow) end)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Fast) end) Increment(0.5)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Fast) end) Increment(0.5)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Normal) end) Increment(1.5)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Normal) end) Increment(2)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Slow) end) Increment(3)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Slow) end) Increment(4)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Slow) end)
 end
 
 -- CUMFLATION REACTION ON PULLOUT
@@ -550,19 +555,19 @@ function TMOnCumInside_EndCumflate(girl)
 	local delay = 0.4
 	local function Increment(value) delay = IncrementMultiplierRandom(delay, value, 0.8, 1.1) end
 	-- SFX: CUMFLATION PULLOUT
-	if not TM_SFX_AllReactions or not TM_SFX_ReactSex then return end
+	if not TM_SFX or not TM_SFX_Voice then return end
 	HumanTalkStop(girl)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Faster) end) Increment(0.4)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Faster) end) Increment(0.4)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Faster) end) Increment(0.4)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Fast) end) Increment(0.5)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Fast) end) Increment(0.5)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Normal) end) Increment(0.7)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Normal) end) Increment(0.7)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Normal) end) Increment(1)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Normal) end) Increment(1.5)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Slow) end) Increment(1.5)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Slow) end) Increment(4)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Slow) end) Increment(6)
-	Delayed(delay, function() TMPlayMoanTier(girl, TMTier.Slow) end)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Faster) end) Increment(0.4)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Faster) end) Increment(0.4)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Faster) end) Increment(0.4)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Fast) end) Increment(0.5)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Fast) end) Increment(0.5)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Normal) end) Increment(0.7)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Normal) end) Increment(0.7)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Normal) end) Increment(1)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Normal) end) Increment(1.5)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Slow) end) Increment(1.5)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Slow) end) Increment(4)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Slow) end) Increment(6)
+	Delayed(delay, function() TMPlayTier(girl, TMTier.Slow) end)
 end
