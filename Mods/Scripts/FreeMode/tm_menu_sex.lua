@@ -1,7 +1,6 @@
 -- TrueMoan v2.5 by illa3d
 -- Sex speed decimals
 local tmSdecSpd = 1
-local tmSdec = 0
 
 -- function TMIsAutoSexTurboNeeded(interaction, isHand) return not TM_AutoSexTurbo and ActSpeedGet(interaction, isHand) > ActAutoSexNormalMinMax.Speed.Max end
 -- function TMIsAutoSexNormalNeeded(interaction, isHand) return TM_AutoSexTurbo and ActSpeedGet(interaction, isHand) < ActAutoSexNormalMinMax.Speed.Max end
@@ -274,7 +273,7 @@ label TMMenuSex_Control(human, interaction, actBody, isHand)
 	+ if TM_ShowSexStyleControl
 		-- THRUST (handjob)
 		+ if human.Penis.m_holdDepth ~= 0
-			+ "| Thrust »	|T " .. AccNumPC(ActThrustGet(interaction, isHand), tmSdec) [gold]
+			+ "| Thrust »	|T " .. AccNumPC(ActThrustGet(interaction, isHand), TM_Dec_Sex) [gold]
 				+ "• Max"
 					ActThrustSet(interaction, 1, isHand)
 					Return()
@@ -296,7 +295,7 @@ label TMMenuSex_Control(human, interaction, actBody, isHand)
 				+ TM_DN.."Thrust"
 					ActThrustSet_Step(interaction, TM_SexThrustStep, false, isHand)
 					Return()
-				+ "RESET Thrust | " .. AccNumPC(ActThrustGet(interaction, isHand), tmSdec)
+				+ "RESET Thrust | " .. AccNumPC(ActThrustGet(interaction, isHand), TM_Dec_Sex)
 					ActThrustSet(interaction, 0, isHand)
 					Return()
 				+ "Random" [gold]
@@ -308,7 +307,7 @@ label TMMenuSex_Control(human, interaction, actBody, isHand)
 
 		-- THRUST / PENIS WEIGHT (oral/vaginal/anal)
 		+ else 
-			+ "| Thrust »	|T " .. AccNumPC(ActThrustGet(interaction, isHand), tmSdec) .. " |M " .. AccNumPC(ActWeightGet(interaction, isHand), tmSdec) [gold]
+			+ "| Thrust »	|T " .. AccNumPC(ActThrustGet(interaction, isHand), TM_Dec_Sex) .. " |M " .. AccNumPC(ActWeightGet(interaction, isHand), TM_Dec_Sex) [gold]
 				+ "• Max"
 					ActThrustSet(interaction, 1)
 					Return()
@@ -330,7 +329,7 @@ label TMMenuSex_Control(human, interaction, actBody, isHand)
 				+ TM_DN.."Thrust"
 					ActThrustSet_Step(interaction, TM_SexThrustStep, false)
 					Return()
-				+ "RESET Thrust | " .. AccNumPC(ActThrustGet(interaction, isHand), tmSdec)
+				+ "RESET Thrust | " .. AccNumPC(ActThrustGet(interaction, isHand), TM_Dec_Sex)
 					ActThrustSet(interaction, 0)
 					Return()
 				+ TM_UP.."M vs F"
@@ -339,7 +338,7 @@ label TMMenuSex_Control(human, interaction, actBody, isHand)
 				+ TM_DN.."M vs F"
 					ActWeightSet_Step(interaction, TM_SexMaleStep, false)
 					Return()
-				+ "TOGGLE M vs F | " .. AccNumPC(ActWeightGet(interaction, isHand), tmSdec)
+				+ "TOGGLE M vs F | " .. AccNumPC(ActWeightGet(interaction, isHand), TM_Dec_Sex)
 					ActWeightSet_Toggle(interaction)
 					Return()
 				+ "Random" [gold]
@@ -351,7 +350,7 @@ label TMMenuSex_Control(human, interaction, actBody, isHand)
 				+ TM_MenuClose
 
 		-- START / END (handjob/oral/vaginal/anal)
-		+ "| Depth »	|S " .. AccNumPC(ActDepthGet(interaction, isHand, true), tmSdec) .. " |E " .. AccNumPC(ActDepthGet(interaction, isHand, false), tmSdec) [gold]
+		+ "| Depth »	|S " .. AccNumPC(ActDepthGet(interaction, isHand, true), TM_Dec_Sex) .. " |E " .. AccNumPC(ActDepthGet(interaction, isHand, false), TM_Dec_Sex) [gold]
 			+ "• Deeper"
 				ActDepthSet_StartEnd(interaction, 0.7, 1.3, isHand)
 				Return()
@@ -376,7 +375,7 @@ label TMMenuSex_Control(human, interaction, actBody, isHand)
 			+ TM_DN.."Start"
 				ActDepthSet_Step(interaction, TM_SexDepthStep, false, isHand, true)
 				Return()
-			+ "RESET Start | " .. AccNumPC(ActDepthGet(interaction, isHand, true), tmSdec)
+			+ "RESET Start | " .. AccNumPC(ActDepthGet(interaction, isHand, true), TM_Dec_Sex)
 				ActDepthSet_Start(interaction, 0.2, isHand)
 				Return()
 			+ TM_UP.."End"
@@ -385,7 +384,7 @@ label TMMenuSex_Control(human, interaction, actBody, isHand)
 			+ TM_DN.."End"
 				ActDepthSet_Step(interaction, TM_SexDepthStep, false, isHand, false)
 				Return()
-			+ "RESET End | " .. AccNumPC(ActDepthGet(interaction, isHand, false), tmSdec)
+			+ "RESET End | " .. AccNumPC(ActDepthGet(interaction, isHand, false), TM_Dec_Sex)
 				ActDepthSet_End(interaction, 1, isHand)
 				Return()
 			+ "Random" [gold]

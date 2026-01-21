@@ -1,7 +1,6 @@
 -- TrueMoan v2.5 by illa3d
 local TM_UITips_Options = true
 local TM_UITip_Options = "Tip: edit defaults in tm-config"
-local tmOdec = 2
 
 ---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol, err-assign-as-eq, malformed-number
 -- OPTIONS MAIN
@@ -167,7 +166,7 @@ label TMMenuOptions_Sex(human)
 	+ "Wet sex	| " .. AccBool(TM_WetSex)
 		TM_WetSex = not TM_WetSex
 		Return()
-	+ "Tween sex	| " .. AccBool(TM_TweenSex) .. " (".. FDec(SexTweenTime(), tmOdec) .."s)"
+	+ "Tween sex	| " .. AccBool(TM_TweenSex) .. " (".. FDec(SexTweenTime(), TM_Dec_Opt) .."s)"
 		TM_TweenSex = not TM_TweenSex
 		Return()
 	+ TM_MenuBack
@@ -182,7 +181,7 @@ label TMMenuOptions_Click2x(human)
 		Return()
 	+ "< Click 2x >" [gold]
 		Return()
-	+ "Delay			| " .. FDec(TM_DoubleClickTime, tmOdec) .. "s"
+	+ "Delay			| " .. FDec(TM_DoubleClickTime, TM_Dec_Opt) .. "s"
 		-- human "To change this setting edit tm-config"
 		Return()
 	+ "Reset			| " .. AccBool(TM_DoubleClickReset)

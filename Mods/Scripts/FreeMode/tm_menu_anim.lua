@@ -1,5 +1,4 @@
 -- TrueMoan v2.5 by illa3d
-local tmAdec = 2 -- decimals
 
 ---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol
 label TMMenuAnim(human)
@@ -7,27 +6,27 @@ label TMMenuAnim(human)
 	+ if TMMOD_FaunaLabs
 		+ TM_MenuBack
 			Return(2)
-		+ AccStr(TMMenuTag_Fauna) .. "SET Speed »	| " .. AccNum(CL_SMult, tmAdec) [gold]
+		+ AccStr(TMMenuTag_Fauna) .. "SET Speed »	| " .. AccNum(CL_SMult, TM_Dec_Anim) [gold]
 			+ TM_UP.."Speed"
 				CL_SMult = CL_SMult + Faun_SpeedIncrement
 				Return()
 			+ TM_DN.."Speed"
 				CL_SMult = CL_SMult - Faun_SpeedIncrement
 				Return()
-			+ "RESET | " .. AccNum(CL_SMult, tmAdec) [gold]
+			+ "RESET | " .. AccNum(CL_SMult, TM_Dec_Anim) [gold]
 				CL_SMult = 1
 				Return()
 			+ TM_MenuBack.. " (applied to new anims)"
 				Return(2)
 			+ TM_MenuClose
-		+ AccStr(TMMenuTag_Fauna) .. "SET Ease »	| " .. AccTextNum2("I", CLV_A, "O", CLV_B, tmAdec) [gold]
+		+ AccStr(TMMenuTag_Fauna) .. "SET Ease »	| " .. AccTextNum2("I", CLV_A, "O", CLV_B, TM_Dec_Anim) [gold]
 			+ TM_UP.."Ease In"
 				CLV_A = CLV_A + Faun_EaseIncrement
 				Return()
 			+ TM_DN.."Ease In"
 				CLV_A = CLV_A - Faun_EaseIncrement
 				Return()
-			+ "RESET Ease In | ".. AccNum(CLV_A, tmAdec) [gold]
+			+ "RESET Ease In | ".. AccNum(CLV_A, TM_Dec_Anim) [gold]
 				CLV_A = 2
 				Return()
 			+ TM_UP.."Ease Out"
@@ -36,7 +35,7 @@ label TMMenuAnim(human)
 			+ TM_DN.."Ease Out"
 				CLV_B = CLV_B - Faun_EaseIncrement
 				Return()
-			+ "RESET Ease Out | " .. AccNum(CLV_B, tmAdec) [gold]
+			+ "RESET Ease Out | " .. AccNum(CLV_B, TM_Dec_Anim) [gold]
 				CLV_B = 2
 				Return()
 			+ TM_MenuBack.. " (applied to new anims)"

@@ -1,7 +1,5 @@
 -- TrueMoan v2.5 by illa3d
 -- Code in: tm_bodyedit.lua
--- Body edit decimals
-local tmBdec = 2
 
 ---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol
 label TMMenuBody(human)
@@ -14,7 +12,7 @@ label TMMenuBody(human)
 	+ "Copy | "  .. AccStr(human.Name)
 		TMBodyCopy(human)
 		Return()
-	+ "| Neck »	|" .. AccTextNum1("N", TMBodyUI(TMBody.Neck), tmBdec) [gold]
+	+ "| Neck »	|" .. AccTextNum1("N", TMBodyUI(TMBody.Neck), TM_Dec_Body) [gold]
 		+ "Step	| " .. AccNum(TMB_StepMultiplier, 2) .. "x"
 			TMBodyStepMultiplierToggle()
 			Return()
@@ -24,13 +22,13 @@ label TMMenuBody(human)
 		+ TM_DN.."Neck"
 			TMBodyEdit_Down(human, TMBody.Neck, TM_BodyStepB)
 			Return()
-		+ "RESET Neck | " .. AccNum(TMBodyUI(TMBody.Neck), tmBdec)
+		+ "RESET Neck | " .. AccNum(TMBodyUI(TMBody.Neck), TM_Dec_Body)
 			TMBodyEdit(human, TMBody.Neck, TMBD_BodyDefault)
 			Return()
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "| Arms »	|" .. AccTextNum2("U", TMBodyUI(TMBody.UpperArms), "F", TMBodyUI(TMBody.Forearms), tmBdec) [gold]
+	+ "| Arms »	|" .. AccTextNum2("U", TMBodyUI(TMBody.UpperArms), "F", TMBodyUI(TMBody.Forearms), TM_Dec_Body) [gold]
 		+ "Step	| " .. AccNum(TMB_StepMultiplier, 2) .. "x"
 			TMBodyStepMultiplierToggle()
 			Return()
@@ -40,7 +38,7 @@ label TMMenuBody(human)
 		+ TM_DN.."Upper arms"
 			TMBodyEdit_Down(human, TMBody.UpperArms, TM_BodyStepB)
 			Return()
-		+ "RESET Upper arms | " .. AccNum(TMBodyUI(TMBody.UpperArms), tmBdec)
+		+ "RESET Upper arms | " .. AccNum(TMBodyUI(TMBody.UpperArms), TM_Dec_Body)
 			TMBodyEdit(human, TMBody.UpperArms, TMBD_BodyDefault)
 			Return()
 		+ TM_UP.."Forearms"
@@ -49,13 +47,13 @@ label TMMenuBody(human)
 		+ TM_DN.."Forearms"
 			TMBodyEdit_Down(human, TMBody.Forearms, TM_BodyStepB)
 			Return()
-		+ "RESET Forearms | " .. AccNum(TMBodyUI(TMBody.Forearms), tmBdec)
+		+ "RESET Forearms | " .. AccNum(TMBodyUI(TMBody.Forearms), TM_Dec_Body)
 			TMBodyEdit(human, TMBody.Forearms, TMBD_BodyDefault)
 			Return()
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "| Legs »	|" .. AccTextNum2("T", TMBodyUI(TMBody.Thigh), "C", TMBodyUI(TMBody.Calf), tmBdec) [gold]
+	+ "| Legs »	|" .. AccTextNum2("T", TMBodyUI(TMBody.Thigh), "C", TMBodyUI(TMBody.Calf), TM_Dec_Body) [gold]
 		+ "Step	| " .. AccNum(TMB_StepMultiplier, 2) .. "x"
 			TMBodyStepMultiplierToggle()
 			Return()
@@ -65,7 +63,7 @@ label TMMenuBody(human)
 		+ TM_DN.."Thigh"
 			TMBodyEdit_Down(human, TMBody.Thigh, TM_BodyStepB)
 			Return()
-		+ "RESET Thigh | " .. AccNum(TMBodyUI(TMBody.Thigh), tmBdec)
+		+ "RESET Thigh | " .. AccNum(TMBodyUI(TMBody.Thigh), TM_Dec_Body)
 			TMBodyEdit(human, TMBody.Thigh, TMBD_BodyDefault)
 			Return()
 		+ TM_UP.."Calf"
@@ -74,13 +72,13 @@ label TMMenuBody(human)
 		+ TM_DN.."Calf"
 			TMBodyEdit_Down(human, TMBody.Calf, TM_BodyStepB)
 			Return()
-		+ "RESET Calf | " .. AccNum(TMBodyUI(TMBody.Calf), tmBdec)
+		+ "RESET Calf | " .. AccNum(TMBodyUI(TMBody.Calf), TM_Dec_Body)
 			TMBodyEdit(human, TMBody.Calf, TMBD_BodyDefault)
 			Return()
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "| Waist »	|" .. AccTextNum2("W", TMBodyUI(TMBody.Waist), "H", TMBodyUI(TMBody.Hips), tmBdec) [gold]
+	+ "| Waist »	|" .. AccTextNum2("W", TMBodyUI(TMBody.Waist), "H", TMBodyUI(TMBody.Hips), TM_Dec_Body) [gold]
 		+ "Step	| " .. AccNum(TMB_StepMultiplier, 2) .. "x"
 			TMBodyStepMultiplierToggle()
 			Return()
@@ -90,7 +88,7 @@ label TMMenuBody(human)
 		+ TM_DN.."Waist"
 			TMBodyEdit_Down(human, TMBody.Waist, TM_BodyStepA)
 			Return()
-		+ "RESET Waist | " .. AccNum(TMBodyUI(TMBody.Waist), tmBdec)
+		+ "RESET Waist | " .. AccNum(TMBodyUI(TMBody.Waist), TM_Dec_Body)
 			TMBodyEdit(human, TMBody.Waist, TMBD_BodyDefault)
 			Return()
 		+ TM_UP.."Hips"
@@ -99,13 +97,13 @@ label TMMenuBody(human)
 		+ TM_DN.."Hips"
 			TMBodyEdit_Down(human, TMBody.Hips, TM_BodyStepA)
 			Return()
-		+ "RESET Hips | " .. AccNum(TMBodyUI(TMBody.Hips), tmBdec)
+		+ "RESET Hips | " .. AccNum(TMBodyUI(TMBody.Hips), TM_Dec_Body)
 			TMBodyEdit(human, TMBody.Hips, TMBD_BodyDefault)
 			Return()
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
-	+ "| Ass »	|" .. AccTextNum1("A", TMBodyUI(TMBody.Ass), tmBdec) [gold]
+	+ "| Ass »	|" .. AccTextNum1("A", TMBodyUI(TMBody.Ass), TM_Dec_Body) [gold]
 		+ "Step	| " .. AccNum(TMB_StepMultiplier, 2) .. "x"
 			TMBodyStepMultiplierToggle()
 			Return()
@@ -115,14 +113,14 @@ label TMMenuBody(human)
 		+ TM_DN.."Ass"
 			TMBodyEdit_Down(human, TMBody.Ass, TM_BodyStepB)
 			Return()
-		+ "RESET Ass | " .. AccNum(TMBodyUI(TMBody.Ass), tmBdec)
+		+ "RESET Ass | " .. AccNum(TMBodyUI(TMBody.Ass), TM_Dec_Body)
 			TMBodyEdit(human, TMBody.Ass, TMBD_BodyDefault)
 			Return()
 		+ TM_MenuBack
 			Return(2)
 		+ TM_MenuClose
 	+ if not human.m_isMale
-		+ "| Breasts »	|" .. AccTextNum2("B", TMBodyUI(TMBody.Breasts), "N", TMBodyUI(TMBody.Nipples), tmBdec) [gold]
+		+ "| Breasts »	|" .. AccTextNum2("B", TMBodyUI(TMBody.Breasts), "N", TMBodyUI(TMBody.Nipples), TM_Dec_Body) [gold]
 			+ "Step	| " .. AccNum(TMB_StepMultiplier, 2) .. "x"
 				TMBodyStepMultiplierToggle()
 				Return()
@@ -132,7 +130,7 @@ label TMMenuBody(human)
 			+ TM_DN.."Breasts"
 				TMBodyEdit_Down(human, TMBody.Breasts, TM_BodyStepB)
 				Return()
-			+ "RESET Breasts | " .. AccNum(TMBodyUI(TMBody.Breasts), tmBdec)
+			+ "RESET Breasts | " .. AccNum(TMBodyUI(TMBody.Breasts), TM_Dec_Body)
 				TMBodyEdit(human, TMBody.Breasts, TMBD_BodyDefault)
 				Return()
 			+ TM_UP.."Nipples"
@@ -141,15 +139,15 @@ label TMMenuBody(human)
 			+ TM_DN.."Nipples"
 				TMBodyEdit_Down(human, TMBody.Nipples, TM_BodyStepA*2)
 				Return()
-			+ "RESET Nipples | " .. AccNum(TMBodyUI(TMBody.Nipples), tmBdec)
+			+ "RESET Nipples | " .. AccNum(TMBodyUI(TMBody.Nipples), TM_Dec_Body)
 				TMBodyEdit(human, TMBody.Nipples, TMBD_BodyDefault)
 				Return()
 			+ TM_MenuBack
 				Return(2)
 			+ TM_MenuClose
 	+ if human.Penis.IsActive
-		+ "| Penis »	|" .. AccTextNum2("S", TMBodyUI(TMBody.PenisSize), "L", TMBodyUI(TMBody.PenisLength), tmBdec) [gold]
-			+ "| Ragdoll »	| " .. AccNum(TMBodyUI(TMBody.PenisRagdoll), tmBdec) [gold]
+		+ "| Penis »	|" .. AccTextNum2("S", TMBodyUI(TMBody.PenisSize), "L", TMBodyUI(TMBody.PenisLength), TM_Dec_Body) [gold]
+			+ "| Ragdoll »	| " .. AccNum(TMBodyUI(TMBody.PenisRagdoll), TM_Dec_Body) [gold]
 				+ "Step	| " .. AccNum(TMB_StepMultiplier, 2) .. "x"
 					TMBodyStepMultiplierToggle()
 					Return()
@@ -159,13 +157,13 @@ label TMMenuBody(human)
 				+ TM_DN.."Ragdoll"
 					TMBodyEdit_Down(human, TMBody.PenisRagdoll, TM_BodyStepB)
 					Return()
-				+ "RESET Ragdoll | " .. AccNum(TMBodyUI(TMBody.PenisRagdoll), tmBdec)
+				+ "RESET Ragdoll | " .. AccNum(TMBodyUI(TMBody.PenisRagdoll), TM_Dec_Body)
 					TMBodyEdit(human, TMBody.PenisRagdoll, TMBD_RagdollSizeDefault)
 					Return()
 				+ TM_MenuBack
 					Return(2)
 				+ TM_MenuClose
-			+ "| Foreskin »	| " .. AccNum(TMBodyUI(TMBody.PenisSkin), tmBdec) [gold]
+			+ "| Foreskin »	| " .. AccNum(TMBodyUI(TMBody.PenisSkin), TM_Dec_Body) [gold]
 				+ "Step	| " .. AccNum(TMB_StepMultiplier, 2) .. "x"
 					TMBodyStepMultiplierToggle()
 					Return()
@@ -175,7 +173,7 @@ label TMMenuBody(human)
 				+ TM_DN.."Foreskin"
 					TMBodyEdit_Down(human, TMBody.PenisSkin, TM_BodyStepB)	
 					Return()
-				+ "RESET Foreskin | " .. AccNum(TMBodyUI(TMBody.PenisSkin), tmBdec)
+				+ "RESET Foreskin | " .. AccNum(TMBodyUI(TMBody.PenisSkin), TM_Dec_Body)
 					TMBodyEdit(human, TMBody.PenisSkin, TMBD_BodyDefault)
 					Return()
 				+ TM_MenuBack
@@ -190,7 +188,7 @@ label TMMenuBody(human)
 			+ TM_DN.."Size"
 				TMBodyEdit_Down(human, TMBody.PenisSize, TM_BodyStepC)
 				Return()
-			+ "RESET Size | " .. AccNum(TMBodyUI(TMBody.PenisSize), tmBdec)
+			+ "RESET Size | " .. AccNum(TMBodyUI(TMBody.PenisSize), TM_Dec_Body, false)
 				TMBodyEdit(human, TMBody.PenisSize, TMBD_BodyDefault)
 				Return()
 			+ TM_UP.."Length"
@@ -199,13 +197,13 @@ label TMMenuBody(human)
 			+ TM_DN.."Length"
 				TMBodyEdit_Down(human, TMBody.PenisLength, TM_BodyStepC)
 				Return()
-			+ "RESET Length | " .. AccNum(TMBodyUI(TMBody.PenisLength), tmBdec)
+			+ "RESET Length | " .. AccNum(TMBodyUI(TMBody.PenisLength), TM_Dec_Body, false)
 				TMBodyEdit(human, TMBody.PenisLength, TMBD_BodyDefault)
 				Return()
 			+ TM_MenuBack
 				Return(2)
 			+ TM_MenuClose
-	+ "| Body »	|" .. AccTextNum2("B", TMBodyUI(TMBody.Body), "M", TMBodyUI(TMBody.Muscle), tmBdec) [gold]
+	+ "| Body »	|" .. AccTextNum2("B", TMBodyUI(TMBody.Body), "M", TMBodyUI(TMBody.Muscle), TM_Dec_Body) [gold]
 		+ "Step	| " .. AccNum(TMB_StepMultiplier, 2) .. "x"
 			TMBodyStepMultiplierToggle()
 			Return()
@@ -215,7 +213,7 @@ label TMMenuBody(human)
 		+ TM_DN.."Body"
 			TMBodyEdit_Down(human, TMBody.Body, TM_BodyStepC)
 			Return()
-		+ "RESET Body | " .. AccNum(TMBodyUI(TMBody.Body), tmBdec)
+		+ "RESET Body | " .. AccNum(TMBodyUI(TMBody.Body), TM_Dec_Body)
 			TMBodyEdit(human, TMBody.Body, TMBD_BodyDefault)
 			Return()
 		+ TM_UP.."Muscle"
@@ -224,7 +222,7 @@ label TMMenuBody(human)
 		+ TM_DN.."Muscle"
 			TMBodyEdit_Down(human, TMBody.Muscle, TM_BodyStepA)
 			Return()
-		+ "RESET Muscle | " .. AccNum(TMBodyUI(TMBody.Muscle), tmBdec)
+		+ "RESET Muscle | " .. AccNum(TMBodyUI(TMBody.Muscle), TM_Dec_Body)
 			TMBodyEdit(human, TMBody.Muscle, TMBD_BodyDefault)
 			Return()
 		+ TM_MenuBack
