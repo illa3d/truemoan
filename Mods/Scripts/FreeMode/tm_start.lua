@@ -10,10 +10,13 @@ TMMenuName = "TMTalkMenu"
 TMMOD_TrueMoan = false
 TMMOD_TalkMenuModManager = false
 TMMOD_VoiceMod = false
+TMMOD_Plugins = false
 TMMOD_FaunaLabs = false
+TMMOD_BetterSpeedsAndFluid = false
 
 -- MOD JUMPING
 TMMOD_Menu_FaunaLabs = "fauna_LABS_Menu"
+TMMOD_Menu_BetterSpeedAndFluid = "BetterSpeedAndFluidTalkMenu"
 function TMMOD_Jump(modMenuName, human, hitTri) Jump(modMenuName, human, hitTri) end
 function TMMOD_AllowDoubleClick()
 	if not TMMOD_TalkMenuModManager or TM_DoubleClickInOtherMods then return true end
@@ -55,6 +58,8 @@ function TMDetectMods()
 	TMMOD_TalkMenuModManager = type(TM_ModMenu) == "function"
 	TMMOD_VoiceMod = type(VM_VoiceMod_Enable) == "function"
 	TMMOD_FaunaLabs = type(fauna_LABS_Menu) == "function"
+	TMMOD_BetterSpeedsAndFluid = type(BetterSpeedAndFluidTalkMenu) == "function"
+	TMMOD_Plugins = TMMOD_FaunaLabs or TMMOD_BetterSpeedsAndFluid
 end
 
 function TM_TrueMoan_Disable()

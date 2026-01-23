@@ -30,15 +30,15 @@ label TMMenuOptions(human)
 	+ else
 		+ AccStr("PLUGINS »") [gold]
 			+ "< Plugins >" [gold]
-			+ if TMMOD_FaunaLabs
-				+ "Fauna LABS »" [if TMMOD_FaunaLabs] [gold]
-					TMMOD_Jump(TMMOD_Menu_FaunaLabs, human, hitTri)
-			+ else
-				+ AccStr("(consider FaunaLABS)")
-					-- human "Fauna LABS brings: Poses, Faces, Animations and more!\nTrue, TrueMoan is truly empty without it!"
-					Return()
-				+ "No plugins"
-					Return()
+			+ "BetterSpeedAndFluid »" [if TMMOD_FaunaLabs] [gold] [if TMMOD_BetterSpeedsAndFluid]
+				TMMOD_Jump(TMMOD_Menu_BetterSpeedAndFluid, human, hitTri)
+			+ "Fauna LABS »" [if TMMOD_FaunaLabs] [gold] [if TMMOD_FaunaLabs]
+				TMMOD_Jump(TMMOD_Menu_FaunaLabs, human, hitTri)
+			+ AccStr("(consider FaunaLABS)") [if not TMMOD_FaunaLabs]
+				-- human "Fauna LABS brings: Poses, Faces, Animations and more!\nTrue, TrueMoan is truly empty without it!"
+				Return()
+			+ "No plugins" [if not TMMOD_Plugins]
+				Return()
 			+ TM_MenuBack
 				Return(2)
 			+ TM_MenuClose
