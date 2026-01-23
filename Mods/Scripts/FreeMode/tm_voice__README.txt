@@ -29,8 +29,9 @@ _wild	- audio length: ~0.4s (optional)
 _max	- audio length: ~0.3s (optional)
 _climax	- audio length: ~10-20s (optional - if climax audio is not present, climax will use regular moans)
 
-If name matches the character (must be exact, ie: Primrose Office) that character will automatically use that voice pack
-See exact character names in TalkMenu per character, ie: "Hey, Tifa" - name is "Tifa"
+If voice pack name matches the character filename, character will automatically use that voice pack
+Character name is filename in TrueFacials\Mods\Characters (letter case matters!)
+EXAMPLE: TrueFacials\Mods\Characters\judy alvarez.tfa - "judy alvarez"
 
 -----------------------------------------------------------------------------------------------------------------------------
 3. TIER REMAPPING

@@ -14,6 +14,7 @@ local tmTimerKeyAmbience = "TM_AmbienceTimer"
 -- Voices
 TM_Voices = {}
 TM_Voices_Names = {}
+TM_Voices_Character = {}
 
 -- Voice Tier "Enum" (filename parts) 
 TMTier = {
@@ -127,8 +128,8 @@ end
 
 function TMVoiceGet_Human(human)
 	if not human then return TMVoiceDefault end
-	-- 1. Voice by human.Name
-	if human.Name and TMVoiceHas(human.Name) then return TMVoiceGet(human.Name) end
+	-- 1. Voice by human.ClothingName
+	if human.ClothingName and TMVoiceHas(human.ClothingName) then return TMVoiceGet(human.ClothingName) end
 	-- 2. Voice assigned in stats
 	local stats = TMHStatsGet(human)
 	if stats and stats.VoiceName and TMVoiceHas(stats.VoiceName) then return TMVoiceGet(stats.VoiceName) end
@@ -136,6 +137,12 @@ function TMVoiceGet_Human(human)
 	return TMVoiceGet_Random()
 end
 
+function TMVoiceSet_Character(human)
+	if not human or not TM_Voices_Character or not TM_Voices_Character[human.ClothingName] or TM_Voices_Character[human.ClothingName] == "" then return end
+	local stats = TMHStatsGet(human)
+	if not stats or not stats.VoiceName then return end
+	stats.VoiceName =  TM_Voices_Character[human.ClothingName]
+end
 -------------------------------------------------------------------------------------------------
 -- SFX / SOUND SOURCE POSITION
 -------------------------------------------------------------------------------------------------

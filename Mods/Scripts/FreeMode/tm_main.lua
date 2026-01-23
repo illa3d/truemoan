@@ -71,6 +71,7 @@ end
 
 function TMOnCreateHuman(human)
 	WetReset_All(human)
+	TMVoiceSet_Character(human)
 	if TM_SpawnRandomBody then TMBEPreset_StartRandom(human) end
 	if TM_SpawnNaked then HumanClothes(human) end
 	if TM_SpawnNoFuta then Delayed(0.05, function() HumanPenisSet(human, false) end) end
