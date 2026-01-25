@@ -37,6 +37,10 @@ function AccBoolYN (bol, plain)
 	local label = bol and "Yes" or "No"
 	return plain == true and label or FCol(label, TM_MenuAccent)
 end
+function AccBoolOC (bol, plain)
+	local label = bol and "Open" or "Closed"
+	return plain == true and label or FCol(label, TM_MenuAccent)
+end
 function AccStr (str)
 	return FCol(str, TM_MenuAccent)
 end

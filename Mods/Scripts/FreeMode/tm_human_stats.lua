@@ -10,6 +10,7 @@ TMHumanStats = {
 	-- Customization
 	TMBValue = TMBodyValueCloneDefault(),
 	NeedsBodyApply = false,
+	EyesOpen = true,
 	-- Voice
 	IsVoice = true,
 	VoiceName = "",

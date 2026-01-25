@@ -138,6 +138,13 @@ function TMHumanCumStop(human)
 	game.RemoveAnim(human.Penis)
 end
 
+function TMHumanEyesToggle(human)
+	local stats = TMHStatsGet(human)
+	if not stats then return end
+	stats.EyesOpen = not stats.EyesOpen
+	HumanEyesOpen(human, stats.EyesOpen)
+end
+
 -------------------------------------------------------------------------------------------------
 --===============================================================================================
 -- HUMANS UPDATE (every frame)

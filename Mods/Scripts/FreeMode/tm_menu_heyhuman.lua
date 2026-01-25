@@ -38,11 +38,8 @@ label TMMenuHeyHuman(human)
 			HumanLookAt(human, CameraPos())
 			HumanFaceAt(human, CameraPos())
 			Return()
-		+ "Eyes | " .. AccStr("Closed")  [if not TMEyesOpen]
-			TMEyesOpen = HumanEyesOpen(human, true)
-			Return()
-		+ "Eyes | " .. AccStr("Open") [if TMEyesOpen]
-			TMEyesOpen = HumanEyesOpen(human, false)
+		+ "Eyes | " .. AccBoolOC(TMHStatsGet(human).EyesOpen)
+			TMHumanEyesToggle(human)
 			Return()
 		+ TM_MenuBack
 			Return(2)
