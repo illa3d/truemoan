@@ -5,8 +5,9 @@
 -------------------------------------------------------------------------------------------------
 
 -- Body Edit Defaults
-TMBD_RagdollSizeDefault = 0.228
-TMBD_BodyDefault = 0
+TMBD_RagdollSize = 0.228
+TMBD_FluidSpeed = 0.1
+TMBD_Body = 0
 TMB_StepMultiplier = 1
 
 -------------------------------------------------------------------------------------------------
@@ -33,7 +34,12 @@ TMBody = {
 	Muscle = "Muscle",
 	Body = "Body",
 	PenisSkin = "PenisSkin", -- this is separate function TMBodyEditPenisRagdoll
-	PenisRagdoll = "PenisRagdoll" -- this is separate function TMBodyEditPenisSkin
+	PenisRagdoll = "PenisRagdoll", -- this is separate function TMBodyEditPenisSkin
+	FluidSpeed = "FluidSpeed",
+	FluidAmount = "FluidAmount",
+	FluidSpread = "FluidSpread",
+	FluidForce = "FluidForce",
+	FluidGravity = "FluidGravity",
 }
 
 -------------------------------------------------------------------------------------------------
@@ -68,7 +74,12 @@ TMBodyValueDefault = {
 	[TMBody.Muscle] = 0,
 	[TMBody.Body] = 0,
 	[TMBody.PenisSkin] = 0,
-	[TMBody.PenisRagdoll] = TMBD_RagdollSizeDefault,
+	[TMBody.PenisRagdoll] = TMBD_RagdollSize,
+	[TMBody.FluidAmount] = 0,
+	[TMBody.FluidForce] = 0,
+	[TMBody.FluidGravity] = 0,
+	[TMBody.FluidSpeed] = TMBD_FluidSpeed,
+	[TMBody.FluidSpread] = 0,
 }
 function TMBodyValueCloneDefault() return TableClone(TMBodyValueDefault) end
 function TMBodyValueClone(tmBodyValue) return TableClone(tmBodyValue) end
@@ -96,6 +107,11 @@ TMBodyParamName = {
 	[TMBody.PenisSize] = "Penis size",
 	[TMBody.Muscle] = "Muscle tone",
 	[TMBody.Body] = "Body size",
+	[TMBody.FluidAmount] = "Fluid amount",
+	[TMBody.FluidForce] = "Fluid force",
+	[TMBody.FluidGravity] = "Fluid gravity",
+	[TMBody.FluidSpeed] = "Fluid speed",
+	[TMBody.FluidSpread] = "Fluid spread",
 }
 
 -- Body Edit Limits (game min max)
@@ -116,6 +132,11 @@ local TMBLimits = {
 	[TMBody.Body] =			{ safemin = 0,		min = -0.9,	max = 10 },
 	[TMBody.PenisSkin] =	{ safemin = 0,		min = 0,	max = 1 },
 	[TMBody.PenisRagdoll] =	{ safemin = 0,		min = 0,	max = 2 },
+	[TMBody.FluidAmount] =	{ safemin = 0,		min = -0.5,	max = 2 },
+	[TMBody.FluidForce] =	{ safemin = 0,		min = -1,	max = 1 },
+	[TMBody.FluidGravity] =	{ safemin = 0,		min = -1,	max = 2 },
+	[TMBody.FluidSpeed] =	{ safemin = 0,		min = 0,	max = 1 },
+	[TMBody.FluidSpread] =	{ safemin = 0,		min = -1,	max = 10 },
 }
 
 -- Body Edit Random Limits (random min max)
@@ -131,11 +152,18 @@ local TMBRandomLimits = {
 	[TMBody.Nipples] =		{ min = -1,	max = 1 },
 	[TMBody.Breasts] =		{ min = -0.8,	max = 1 },
 	[TMBody.Muscle] =		{ min = -0.3,	max = 0.3 },
-	-- [TMBody.PenisLength] =	{ min = 0,	max = 0 }, -- ignored for random
-	-- [TMBody.PenisSize] =	{ min = 0,	max = 0 },
+ 	-- ignored for random
+	-- [TMBody.PenisLength] =	{ min = 0,	max = 0 },
+	-- [TMBody.PenisSize] =		{ min = 0,	max = 0 },
 	-- [TMBody.Body] =			{ min = 0,	max = 0 },
-	-- [TMBody.PenisSkin] =	{ min = 0,	max = 0 },
+	-- [TMBody.PenisSkin] =		{ min = 0,	max = 0 },
 	-- [TMBody.PenisRagdoll] =	{ min = 0,	max = 0 },
+	[TMBody.FluidAmount] =	{ min = -0.5,	max = 2 },
+	[TMBody.FluidForce] =	{ min = -1,	max = 1 },
+	[TMBody.FluidGravity] =	{ min = -1,	max = 2 },
+	[TMBody.FluidSpeed] =	{ min = 0,	max = 1 },
+	[TMBody.FluidSpread] =	{ min = -1,	max = 10 },
+
 }
 
 local TMBodyRandomBlocked = {
@@ -144,6 +172,11 @@ local TMBodyRandomBlocked = {
 	[TMBody.Body]			= true,
 	[TMBody.PenisSkin]		= true,
 	[TMBody.PenisRagdoll]	= true,
+	[TMBody.FluidAmount]	= true,
+	[TMBody.FluidForce]		= true,
+	[TMBody.FluidGravity]	= true,
+	[TMBody.FluidSpeed]		= true,
+	[TMBody.FluidSpread]	= true,
 }
 
 -------------------------------------------------------------------------------------------------
@@ -178,10 +211,18 @@ function TMBodyEditHuman(human)
 	TMBodyValueUI = TMBodyValueClone(tmBodyValues)
 end
 
-function TMBodyEditAllRandom(human)
+function TMBodyEditRandom_Body(human)
 	for part, _ in pairs(TMBody) do
 		if not TMBodyRandomBlocked[part] then TMBodyEditRandom(human, part) end
 	end
+end
+
+function TMBodyEditRandom_Fluid(human)
+	TMBodyEditRandom(human, TMBody.FluidAmount)
+	TMBodyEditRandom(human, TMBody.FluidForce)
+	TMBodyEditRandom(human, TMBody.FluidGravity)
+	TMBodyEditRandom(human, TMBody.FluidSpeed)
+	TMBodyEditRandom(human, TMBody.FluidSpread)
 end
 
 function TMBodyEditRandom(human, tmBody)
@@ -189,18 +230,18 @@ function TMBodyEditRandom(human, tmBody)
 	TMBodyEdit(human, tmBody, TMBodyGetRandom(tmBody))
 end
 
-function TMBodyEdit_Up(human, tmBody, step)
+function TMBodyEdit_Up(human, tmBody, step, linear)
 	if not tmBody then return end
 	local value = TMBodyValueUI[tmBody]
-	local mult = 1 + math.floor(math.abs(value) / 1) -- step function to multiply step for bigger values
+	local mult = (linear == true) and 1 or (1 + math.floor(math.abs(value) / 1)) -- step function to multiply step for bigger values
 	value = value + step * mult * TMB_StepMultiplier
 	TMBodyEdit(human, tmBody, value)
 end
 
-function TMBodyEdit_Down(human, tmBody, step)
+function TMBodyEdit_Down(human, tmBody, step, linear)
 	if not tmBody then return end
 	local value = TMBodyValueUI[tmBody]
-	local mult = 1 + math.floor(math.abs(value) / 1) -- step function to multiply step for bigger values
+	local mult = (linear == true) and 1 or (1 + math.floor(math.abs(value) / 1)) -- step function to multiply step for bigger values
 	value = value - step * mult * TMB_StepMultiplier 
 	TMBodyEdit(human, tmBody, value)
 end

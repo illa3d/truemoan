@@ -62,7 +62,7 @@ label TMMenuSex(human)
 
 	-- PENIS
 	+ if HumanHasPenis(human)
-		+ if game.HasAnim(human.Penis)
+		+ if HumanIsCumming(human)
 			+ "Cum " ..AccStr("stop")
 				TMHumanCumStop(human)
 				Return()
@@ -103,6 +103,7 @@ label TMMenuSex(human)
 	-- PENIS
 	+ if HumanHasPenis(human)
 		+ "| Cum »	| " .. TMMLabel_Cum(human)[gold]
+			TMBodyEditHuman(human)
 			TMMenuSex_Cum(human)
 	-- VAGINA
 	+ elseif not human.m_isMale
@@ -135,7 +136,6 @@ label TMMenuSex_Auto(human, stats)
 	+ "Auto sex		| " .. AccBool(stats.AutoSex)
 		stats.AutoSex = not stats.AutoSex
 		Return()
-		
 	+ TM_MenuBack
 		Return(2)
 	+ TM_MenuClose_AutoSexStats(human)
@@ -194,7 +194,95 @@ label TMMenuSex_Wet(human)
 stop
 
 -- CUM CONTROL
-label TMMenuSex_Cum(human)
+label TMMenuSex_Cum(human, stats)
+	+ "• Sticky"
+		TMBodyEdit(human, TMBody.FluidSpeed, 0)
+		Return()
+	+ "• Normal"
+		TMBodyEdit(human, TMBody.FluidSpeed, 0.5)
+		Return()
+	+ "• Watery"
+		TMBodyEdit(human, TMBody.FluidSpeed, 1)
+		Return()
+	+ TM_UP.."Speed"
+		TMBodyEdit_Up(human, TMBody.FluidSpeed, TM_BodyStepA, true)
+		Return()
+	+ TM_DN.."Speed"
+		TMBodyEdit_Down(human, TMBody.FluidSpeed, TM_BodyStepA, true)
+		Return()
+	+ "RESET Speed | " .. AccNum(TMBodyUI(TMBody.FluidSpeed), TM_Dec_Body)
+		TMBodyEdit(human, TMBody.FluidSpeed, TMBD_FluidSpeed)
+		Return()
+	+ "Random Speed" [gold]
+		TMBodyEditRandom(human, TMBody.FluidSpeed)
+		Return()
+	+ "| Fluid »		|" .. AccTextNum2("A", TMBodyUI(TMBody.FluidAmount), "S", TMBodyUI(TMBody.FluidSpread), TM_Dec_Body) [gold]
+		+ "Step	| " .. AccNum(TMB_StepMultiplier, 2) .. "x"
+			TMBodyStepMultiplierToggle()
+			Return()
+		+ TM_UP.."Amount"
+			TMBodyEdit_Up(human, TMBody.FluidAmount, TM_BodyStepA, true)
+			Return()
+		+ TM_DN.."Amount"
+			TMBodyEdit_Down(human, TMBody.FluidAmount, TM_BodyStepA, true)
+			Return()
+		+ "RESET Amount | " .. AccNum(TMBodyUI(TMBody.FluidAmount), TM_Dec_Body)
+			TMBodyEdit(human, TMBody.FluidAmount, TMBD_Body)
+			Return()
+		+ TM_UP.."Spread"
+			TMBodyEdit_Up(human, TMBody.FluidSpread, TM_BodyStep, true)
+			Return()
+		+ TM_DN.."Spread"
+			TMBodyEdit_Down(human, TMBody.FluidSpread, TM_BodyStep, true)
+			Return()
+		+ "RESET Spread | " .. AccNum(TMBodyUI(TMBody.FluidSpread), TM_Dec_Body)
+			TMBodyEdit(human, TMBody.FluidSpread, TMBD_Body)
+			Return()
+		+ "Random" [gold]
+			TMBodyEditRandom(human, TMBody.FluidAmount)
+			TMBodyEditRandom(human, TMBody.FluidSpread)
+			Return()
+		+ TM_MenuBack
+			Return(2)
+		+ TM_MenuClose
+	+ "| Force »		|" .. AccTextNum2("F", TMBodyUI(TMBody.FluidForce), "G", TMBodyUI(TMBody.FluidGravity), TM_Dec_Body) [gold]
+		+ "Step	| " .. AccNum(TMB_StepMultiplier, 2) .. "x"
+			TMBodyStepMultiplierToggle()
+			Return()
+		+ TM_UP.."Force"
+			TMBodyEdit_Up(human, TMBody.FluidForce, TM_BodyStepA, true)
+			Return()
+		+ TM_DN.."Force"
+			TMBodyEdit_Down(human, TMBody.FluidForce, TM_BodyStepA, true)
+			Return()
+		+ "RESET Force | " .. AccNum(TMBodyUI(TMBody.FluidForce), TM_Dec_Body)
+			TMBodyEdit(human, TMBody.FluidForce, TMBD_Body)
+			Return()
+		+ TM_UP.."Gravity"
+			TMBodyEdit_Up(human, TMBody.FluidGravity, TM_BodyStepA, true)
+			Return()
+		+ TM_DN.."Gravity"
+			TMBodyEdit_Down(human, TMBody.FluidGravity, TM_BodyStepA, true)
+			Return()
+		+ "RESET Gravity | " .. AccNum(TMBodyUI(TMBody.FluidGravity), TM_Dec_Body)
+			TMBodyEdit(human, TMBody.FluidGravity, TMBD_Body)
+			Return()
+		+ "Random" [gold]
+			TMBodyEditRandom(human, TMBody.FluidForce)
+			TMBodyEditRandom(human, TMBody.FluidGravity)
+			Return()
+		+ TM_MenuBack
+			Return(2)
+		+ TM_MenuClose
+	+ "| Cum every »	| " .. TMMLabel_Cum(human)[gold]
+		TMMenuSex_CumEvery(human)
+	+ TM_MenuBack
+		Return(2)
+	+ TM_MenuClose
+stop
+
+-- CUM EVERY
+label TMMenuSex_CumEvery(human)
 	+ "• Cum every 60 sec"
 		TMHumanCum(human, 60)
 		Return()

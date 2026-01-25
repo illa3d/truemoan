@@ -71,7 +71,7 @@ label TMMenuBodyType(human)
 		TMBEPreset_MenuRandom(human)
 		Return()
 	+ "Generate" [gold]
-		TMBodyEditAllRandom(human)
+		TMBodyEditRandom_Body(human)
 		Return()
 	+ TM_MenuBack
 		Return(2)
@@ -114,22 +114,22 @@ end
 ------------------------------------------------------------------------------------------------
 
 TMBEPreset_Reset = {
-	[TMBody.Neck]			= TMBD_BodyDefault,
-	[TMBody.Forearms]		= TMBD_BodyDefault,
-	[TMBody.UpperArms]		= TMBD_BodyDefault,
-	[TMBody.Calf]			= TMBD_BodyDefault,
-	[TMBody.Thigh]			= TMBD_BodyDefault,
-	[TMBody.Hips]			= TMBD_BodyDefault,
-	[TMBody.Waist]			= TMBD_BodyDefault,
-	[TMBody.Ass]			= TMBD_BodyDefault,
-	[TMBody.Nipples]		= TMBD_BodyDefault,
-	[TMBody.Breasts]		= TMBD_BodyDefault,
-	[TMBody.PenisLength]	= TMBD_BodyDefault,
-	[TMBody.PenisSize]		= TMBD_BodyDefault,
-	[TMBody.Muscle]			= TMBD_BodyDefault,
-	[TMBody.Body]			= TMBD_BodyDefault,
-	[TMBody.PenisSkin]		= TMBD_BodyDefault,
-	[TMBody.PenisRagdoll]	= TMBD_RagdollSizeDefault,
+	[TMBody.Neck]			= TMBD_Body,
+	[TMBody.Forearms]		= TMBD_Body,
+	[TMBody.UpperArms]		= TMBD_Body,
+	[TMBody.Calf]			= TMBD_Body,
+	[TMBody.Thigh]			= TMBD_Body,
+	[TMBody.Hips]			= TMBD_Body,
+	[TMBody.Waist]			= TMBD_Body,
+	[TMBody.Ass]			= TMBD_Body,
+	[TMBody.Nipples]		= TMBD_Body,
+	[TMBody.Breasts]		= TMBD_Body,
+	[TMBody.PenisLength]	= TMBD_Body,
+	[TMBody.PenisSize]		= TMBD_Body,
+	[TMBody.Muscle]			= TMBD_Body,
+	[TMBody.Body]			= TMBD_Body,
+	[TMBody.PenisSkin]		= TMBD_Body,
+	[TMBody.PenisRagdoll]	= TMBD_RagdollSize,
 }
 
 ------------------------------------------------------------------------------------------------

@@ -35,7 +35,8 @@ TM_AutoSexDepthEndDrift = 0.3	-- [0-1] How close in percent will be next step fo
 ------------------------------------------------------------------------------------------------------------------
 
 -- Body Edit Increments
-TM_BodyStepA = 0.1				-- nipples hip, waist, muscle
+TM_BodyStep = 0.5				-- fluid(spread)
+TM_BodyStepA = 0.1				-- nipples hip, waist, muscle, fluid(amount,force,speed,gravity)
 TM_BodyStepB = 0.05				-- ass, breast, forearm, upperarm, calf, thigh, neck
 TM_BodyStepC = 0.025			-- body, penis-length, penis-size
 
