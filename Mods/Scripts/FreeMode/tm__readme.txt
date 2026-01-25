@@ -32,8 +32,8 @@
 - **7x skyboxes** (8/4/2k)
 
 **LATEST DOWNLOADS**
-**TrueMoan_v2.5.zip** - Just TrueMoan
-**TrueMoan_v2.5_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
+**TrueMoan_v2.6.zip** - Just TrueMoan
+**TrueMoan_v2.6_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
 **TrueMoan_Addon_Skyboxes_4k_v1.0.zip**
 **Download: ** https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
 **Voice packs:** https://discord.com/channels/620113492208517120/1460768562338726090 by @salemvonzombeh 
@@ -110,6 +110,13 @@ GitHub Repository - https://github.com/illa3d/truemoan
 
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
+
+[ v2.6 ]
+- Added Fluid controls/random/presets (Sex/Cum)
+- Added config for Character default Voice Pack config (tm_voice__config.lua)
+- Added BetterSpeedsAndFluid detection (under Option/Plugins)
+- Fixed human eyes open/close status
+- Menu bugfixes
 
 [ v2.5 ]
 - Added VoicePack suppport + readme + template

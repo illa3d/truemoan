@@ -1,4 +1,4 @@
--- TrueMoan v2.5 by illa3d
+-- TrueMoan v2.6 by illa3d
 -- Requires: all tm_*.lua
 -------------------------------------------------------------------------------------------------
 -- freemode_main.lua is not required, these functions are overrides (even if it exists in folder)
