@@ -112,9 +112,9 @@ GitHub Repository - https://github.com/illa3d/truemoan
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
 
 [ v2.6 ]
-- Added Fluid controls/random/presets (Sex/Cum)
-- Added config for Character default Voice Pack config (tm_voice__config.lua)
-- Added BetterSpeedsAndFluid detection (under Option/Plugins)
+- Added Fluid controls/random/presets `Menu/Sex/Cum`
+- Added config for Character default Voice Pack config `tm_voice__config.lua`
+- Added BetterSpeedsAndFluid mod detection `Menu/Options/Plugins`
 - Fixed human eyes open/close status
 - Menu bugfixes
 
