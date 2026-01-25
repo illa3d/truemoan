@@ -1,21 +1,29 @@
 -- TrueMoan v2.5 by illa3d
 -- Menu in: tm_menu_body.lua
+
+-------------------------------------------------------------------------------------------------
+-- BODY EDIT
+-------------------------------------------------------------------------------------------------
+
+-- AUTHORITATIVE Values for UI
+TMBodyValueUI = {}
+function TMBodyUI(tmBody) return TMBodyValueUI[tmBody] end
+
+-------------------------------------------------------------------------------------------------
+-- COPY PASTE functionality
+-------------------------------------------------------------------------------------------------
+
+TMBodyValueCopy = nil
+TMBodyValueCopyName = ""
+
+function TMBodyHasCopy() return TMBodyValueCopy ~= nil end
+function TMBodyCopy(human) TMBodyValueCopy = TMBodyValueClone(TMBodyValueUI) TMBodyValueCopyName = human.Name end
+function TMBodyPaste(human) TMBodyEdit_Preset(human, TMBodyValueCopy) end
+function TMBodyCopyClear() TMBodyValueCopy = nil TMBodyValueCopyName = "" end
+
 -------------------------------------------------------------------------------------------------
 -- BODY EDIT DEFINITIONS
 -------------------------------------------------------------------------------------------------
-
--- Body Edit Defaults
-TMBD_RagdollSize = 0.228
-TMBD_FluidSpeed = 0.1
-TMBD_Body = 0
-TMB_StepMultiplier = 1
-
--------------------------------------------------------------------------------------------------
--- BODY EDIT VALUES
--------------------------------------------------------------------------------------------------
--- Body Edit Values Definition
--- This is a AUTHORITATIVE UI stats
--- Each human has TM_HumanStats[human].TMBValue
 
 -- Body Edit "Enum"
 TMBody = {
@@ -42,22 +50,39 @@ TMBody = {
 	FluidGravity = "FluidGravity",
 }
 
+-- TrueFacials Body parameter "Enum"
+TMBodyParamName = {
+	[TMBody.Neck] = "Neck size",
+	[TMBody.Forearms] = "Forearms size",
+	[TMBody.UpperArms] = "Upper arms size",
+	[TMBody.Calf] = "Calf size",
+	[TMBody.Thigh] = "Thigh size",
+	[TMBody.Hips] = "Hips size",
+	[TMBody.Waist] = "Waist size",
+	[TMBody.Ass] = "Ass size",
+	[TMBody.Nipples] = "Nipples size",
+	[TMBody.Breasts] = "Breasts size",
+	[TMBody.PenisLength] = "Penis length",
+	[TMBody.PenisSize] = "Penis size",
+	[TMBody.Muscle] = "Muscle tone",
+	[TMBody.Body] = "Body size",
+	[TMBody.FluidAmount] = "Fluid amount",
+	[TMBody.FluidForce] = "Fluid force",
+	[TMBody.FluidGravity] = "Fluid gravity",
+	[TMBody.FluidSpeed] = "Fluid speed",
+	[TMBody.FluidSpread] = "Fluid spread",
+}
+
 -------------------------------------------------------------------------------------------------
-
-TMBodyValueUI = {} -- AUTHORITATIVE UI use only
-function TMBodyUI(tmBody) return TMBodyValueUI[tmBody] end
-
--- COPY PASTE functionality
-TMBodyValueCopy = nil
-TMBodyValueCopyName = ""
-function TMBodyHasCopy() return TMBodyValueCopy ~= nil end
-function TMBodyCopy(human) TMBodyValueCopy = TMBodyValueClone(TMBodyValueUI) TMBodyValueCopyName = human.Name end
-function TMBodyPaste(human) TMBodyEdit_Preset(human, TMBodyValueCopy) end
-function TMBodyCopyClear() TMBodyValueCopy = nil TMBodyValueCopyName = "" end
-
+-- BODY EDIT DEFAULTS
 -------------------------------------------------------------------------------------------------
+TMB_StepMultiplier = 1
+TMBD_RagdollSize = 0.228
+TMBD_FluidSpeed = 0.1
+TMBD_Body = 0
 
---- DEFINITION (never update this)
+-- BODY VALUE DEFAULT (never update this)
+-- Each human has a copy of this in TM_HumanStats[human].TMBValue
 TMBodyValueDefault = {
 	[TMBody.Neck] = 0,
 	[TMBody.Forearms] = 0,
@@ -81,38 +106,21 @@ TMBodyValueDefault = {
 	[TMBody.FluidSpeed] = TMBD_FluidSpeed,
 	[TMBody.FluidSpread] = 0,
 }
+
 function TMBodyValueCloneDefault() return TableClone(TMBodyValueDefault) end
 function TMBodyValueClone(tmBodyValue) return TableClone(tmBodyValue) end
 function TMBodyEdit_ResetUIValues()
 	TMBodyValueUI = TMBodyValueCloneDefault()
 end
+
 function TMBodyEdit_ApplyUIValues(human)
 	local snapshot = TMBodyValueClone(TMBodyValueUI)
 	for part, value in pairs(snapshot) do TMBodyEdit(human, part, value) end
 end
 
--- TrueFacials Body parameter "Enum"
-TMBodyParamName = {
-	[TMBody.Neck] = "Neck size",
-	[TMBody.Forearms] = "Forearms size",
-	[TMBody.UpperArms] = "Upper arms size",
-	[TMBody.Calf] = "Calf size",
-	[TMBody.Thigh] = "Thigh size",
-	[TMBody.Hips] = "Hips size",
-	[TMBody.Waist] = "Waist size",
-	[TMBody.Ass] = "Ass size",
-	[TMBody.Nipples] = "Nipples size",
-	[TMBody.Breasts] = "Breasts size",
-	[TMBody.PenisLength] = "Penis length",
-	[TMBody.PenisSize] = "Penis size",
-	[TMBody.Muscle] = "Muscle tone",
-	[TMBody.Body] = "Body size",
-	[TMBody.FluidAmount] = "Fluid amount",
-	[TMBody.FluidForce] = "Fluid force",
-	[TMBody.FluidGravity] = "Fluid gravity",
-	[TMBody.FluidSpeed] = "Fluid speed",
-	[TMBody.FluidSpread] = "Fluid spread",
-}
+-------------------------------------------------------------------------------------------------
+-- BODY EDIT LIMITS
+-------------------------------------------------------------------------------------------------
 
 -- Body Edit Limits (game min max)
 local TMBLimits = {
