@@ -137,3 +137,27 @@ label TMMenuList_Music(musicTracks)
 		Return(2)
 	+ TM_MenuClose
 stop
+
+-- VOICE
+label TMMenuList_Voice(human)
+	+ "< Voice | " .. human.Name .. ">"
+	+ if TM_Voices_Names == nil or #TM_Voices_Names == 0
+		+ "-empty- "
+			Return()
+	+ else
+		+ TM_MenuBack
+			Return(2)
+		+ for i, item in ipairs(TM_Voices_Names)
+			+ AccStr(i .. ". ") .. item
+				TMVoiceSet(human, item)
+				Return()
+			+ if i % TM_MenuBackButtonEvery == 0
+				+ TM_MenuBack
+					Return(2)
+	+ "Random" [gold]
+		TMVoiceSet_Random(human)
+		Return()
+	+ TM_MenuBack
+		Return(2)
+	+ TM_MenuClose .. "	| Voice: " .. AccStr(TMHStatsGet(human).VoiceName)
+stop

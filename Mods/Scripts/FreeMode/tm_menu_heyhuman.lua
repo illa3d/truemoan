@@ -27,9 +27,12 @@ label TMMenuHeyHuman(human)
 	+ "Penis		| " .. AccBool(human.Penis.IsActive) [if not human.m_isMale]
 		HumanPenisSet(human, not human.Penis.IsActive)
 		Return(2)
-	+ "Voice		| " .. TMMLabel_Voice(human) [if TM_SFX_VoiceAllow(human)]
-		TMHStatsGet(human):VoiceToggle()
-		Return()
+	+ if TM_SFX_VoiceAllow(human)
+		+ "Voice		| " .. TMMLabel_Voice(human) [if TM_Voices_CountLow()]
+			TMHStatsGet(human):VoiceToggle()
+			Return()
+		+ "Voice »	| " .. TMMLabel_Voice(human) [gold] [if not TM_Voices_CountLow()]
+			TMMenuList_Voice(human)
 	+ "Look at »" [gold]
 		+ "• Look at " .. AccStr("cam")
 			HumanLookAt(human, CameraPos())
