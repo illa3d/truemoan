@@ -154,7 +154,7 @@ function TMOnUpdate_Humans(humans)
 	-- Iterate and call for every human in the scene
 	for _, human in ipairs(humans) do
 		local stats = TMHStatsGet(human)
-		TMOnUpdate_Futa(human, stats)
+		TMOnUpdate_PenisAction(human, stats)
 		TMOnUpdate_AutoSexClimax(human, stats)
 		TMOnUpdate_CumInside_End(human, stats)
 		TMOnUpdate_DeformBody(human, stats)
@@ -167,7 +167,7 @@ end
 
 -- Updated on fluid hit (cum)
 function TMOnFluidHit(hitActor, bodyArea, shootActor)
-	if not game.FluidReaction or not hitActor or hitActor.m_isMale then return end
+	if not game.FluidReaction or not hitActor then return end
 
 	local timerKey = "TMFluidHit_" .. hitActor.Name .. bodyArea
 	local lastTime = Timer(timerKey)
@@ -208,7 +208,7 @@ end
 
 -- MOUTH EFFECTS
 function TMOnPenetration_Mouth(girl, stats, holeName, inVelocity)
-	if not girl or girl.m_isMale or holeName ~= ActBody.Mouth then return end
+	if not girl or holeName ~= ActBody.Mouth then return end
 	
 	-- SFX BLOWJOB
 	if TM_SFX and TM_SFX_Suck and TMHStatsGet(girl).IsVoice then
@@ -228,7 +228,7 @@ end
 
 -- ANUS, VAGINA EFFECTS
 function TMOnPenetration_AnusVagina(girl, stats, holeName, inVelocity)
-	if not girl or girl.m_isMale or holeName ~= ActBody.Vagina and holeName ~= ActBody.Anus then return end
+	if not girl or holeName ~= ActBody.Vagina and holeName ~= ActBody.Anus then return end
 	
 	-- BULGING
 	if TM_Bulging then TMDeformBody_Bulge(girl, stats, ActPenetrationVolumeGet(girl, holeName))
@@ -247,17 +247,17 @@ function TMOnPenetration_AnusVagina(girl, stats, holeName, inVelocity)
 	end
 end
 
--- FUTA MOANING > ONPENETRATION ROUTER
-function TMOnUpdate_Futa(girl, stats)
-	if not TM_SFX or not TM_SFX_Voice or not TM_SFX_VoiceFuta or not girl or girl.m_isMale or not TMHStatsGet(girl).IsVoice then return end
+-- PENIS ACTION MOANING (MALE, FUTA) > ONPENETRATION ROUTER
+function TMOnUpdate_PenisAction(human, stats)
+	if not TM_SFX or not TM_SFX_Voice or not human or not HumanHasPenis(human) or (not TM_SFX_VoiceFuta and not human.m_isMale) or (not TM_SFX_VoiceMale and human.m_isMale) then return end
 	local function DoFutaMoan(actBody)
-		local act = ActGet(girl, actBody)
+		local act = ActGet(human, actBody)
 		if not act or not ActActiveGet(act, actBody == ActBody.PenisHand) then return end
-		TMOnPenetration(girl, actBody, ActSpeedGet(act, false)/3, 0, SexPartner_Get(girl, actBody))
+		TMOnPenetration(human, actBody, ActSpeedGet(act, false)/3, 0, SexPartner_Get(human, actBody))
 	end
-	if HasSexPartner(girl, ActBody.PenisHole) then DoFutaMoan(ActBody.PenisHole)
-		-- Detect penis in hole or hand and call OnPenetration
-	elseif HasSexPartner(girl, ActBody.PenisHand) then DoFutaMoan(ActBody.PenisHand) end
+	-- Detect penis in hole or hand and call OnPenetration
+	if HasSexPartner(human, ActBody.PenisHole) then DoFutaMoan(ActBody.PenisHole)
+	elseif HasSexPartner(human, ActBody.PenisHand) then DoFutaMoan(ActBody.PenisHand) end
 end
 
 -------------------------------------------------------------------------------------------------
@@ -267,7 +267,7 @@ end
 -------------------------------------------------------------------------------------------------
 
 function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
-	if not girl or girl.m_isMale then return end
+	if not girl then return end
 	local stats = TMHStatsGet(girl)
 	TMOnPenetration_Mouth(girl, stats, holeName, inVelocity)
 	TMOnPenetration_AnusVagina(girl, stats, holeName, inVelocity)
@@ -478,58 +478,58 @@ local function TMCumInside_CanPlayEffect(stats, lastEffect)
 end
 
 -- START OF CUM / CUMFLATION
-function TMOnPenetration_CumInside(girl, stats, holeName)
-	if not girl or girl.m_isMale or not stats then return end
+function TMOnPenetration_CumInside(human, stats, holeName)
+	if not human or not stats then return end
 	
 	-- Is partner cumming
-	local partner = SexPartner_Get(girl, holeName)
+	local partner = SexPartner_Get(human, holeName)
 	if partner and not HumanIsCumming(partner) then return end
 	stats.IsFeelingCum = true
 
 	-- Cum & Cumflation effects (same)
-	local effectKey = TMTimerKey_CumEffect(girl)
+	local effectKey = TMTimerKey_CumEffect(human)
 	if TMCumInside_CanPlayEffect(stats, Timer(effectKey)) then
 		-- SFX: CUM INSIDE / CUMFLATION
-		TMPlayMoan(girl, TM_Cumflate and TMMoan.Cumflating or TMMoan.CumInside)
+		TMPlayMoan(human, TM_Cumflate and TMMoan.Cumflating or TMMoan.CumInside)
 		ResetTimer(effectKey)
 	end
 	
 	-- Cumflation
-	if TM_Cumflate and Timer(TMTimerKey_Deform(girl)) > TM_BodyDeformUpdateRate then
+	if TM_Cumflate and Timer(TMTimerKey_Deform(human)) > TM_BodyDeformUpdateRate then
 		stats.IsCumflating = true
-		TMDeformBody_Cumflate(girl, stats, TM_CumflateStepUp)
+		TMDeformBody_Cumflate(human, stats, TM_CumflateStepUp)
 		-- timer is reset in body deform update
 	end
 end
 
 -- END OF CUM / CUMFLATION
-function TMOnUpdate_CumInside_End(girl, stats)
-	if not girl or girl.m_isMale or not stats or stats.IsSexActive or not stats.IsFeelingCum then return end
+function TMOnUpdate_CumInside_End(human, stats)
+	if not human or not stats or stats.IsSexActive or not stats.IsFeelingCum then return end
 	
-	if Timer(TMTimerKey_CumInside(girl)) < TM_CumPauseTime then return end
-	if Timer(TMTimerKey_Deform(girl)) < TM_BodyDeformUpdateRate then return end
+	if Timer(TMTimerKey_CumInside(human)) < TM_CumPauseTime then return end
+	if Timer(TMTimerKey_Deform(human)) < TM_BodyDeformUpdateRate then return end
 
 	-- CUMFLATION DEFLATE
 	if TM_Cumflate and stats.IsCumflating then
 		if not stats:IsDoneCumflating() then
-			local effectKey = TMTimerKey_CumEffect(girl) 
+			local effectKey = TMTimerKey_CumEffect(human) 
 			if TMCumInside_CanPlayEffect(stats, Timer(effectKey)) then
 				-- SFX: CUMDEFLATION
-				if stats.IsVoice then TMPlayMoan(girl, TMMoan.Cumflating) end
-				if TM_WetSex then WetSet(girl, 50000, ActBody.Vagina) end
+				if stats.IsVoice then TMPlayMoan(human, TMMoan.Cumflating) end
+				if TM_WetSex then WetSet(human, 50000, ActBody.Vagina) end
 				ResetTimer(effectKey)
 			end
-			TMDeformBody_Cumflate(girl, stats, -TM_CumflateStepDown)
+			TMDeformBody_Cumflate(human, stats, -TM_CumflateStepDown)
 		else
 			-- CUMFLATION PULLOUT
 			stats.IsFeelingCum = false
 			stats.IsCumflating = false
-			TMOnCumInside_EndCumflate(girl)
+			TMOnCumInside_EndCumflate(human)
 		end
 	-- CUM PULLOUT
 	else
 		stats.IsFeelingCum = false
-		TMOnCumInside_EndCum(girl)
+		TMOnCumInside_EndCum(human)
 	end
 end
 
@@ -538,44 +538,44 @@ end
 -------------------------------------------------------------------------------------------------
 
 -- CUM REACTION ON PULLOUT
-function TMOnCumInside_EndCum(girl)
-	if not girl or girl.m_isMale then return end
-	if TM_WetSex then WetSet(girl, 1000, ActBody.Vagina) end
+function TMOnCumInside_EndCum(human)
+	if not human then return end
+	if TM_WetSex then WetSet(human, 1000, ActBody.Vagina) end
 	local function Increment(oldValue, newValue) return IncrementMultiplierRandom(oldValue, TM_AutoSexClimaxTimeStep, 0.8, 1.5) end 
 	local delay = 0.5
 	local function Increment(value) delay = IncrementMultiplierRandom(delay, value, 0.8, 1.1) end
 	-- SFX: CUM PULLOUT
 	if not TM_SFX or not TM_SFX_Voice then return end
-	HumanTalkStop(girl)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Fast) end) Increment(0.5)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Fast) end) Increment(0.5)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Normal) end) Increment(1.5)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Normal) end) Increment(2)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Slow) end) Increment(3)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Slow) end) Increment(4)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Slow) end)
+	HumanTalkStop(human)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Fast) end) Increment(0.5)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Fast) end) Increment(0.5)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Normal) end) Increment(1.5)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Normal) end) Increment(2)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Slow) end) Increment(3)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Slow) end) Increment(4)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Slow) end)
 end
 
 -- CUMFLATION REACTION ON PULLOUT
-function TMOnCumInside_EndCumflate(girl)
-	if not girl or girl.m_isMale then return end
-	if TM_WetSex then WetSet(girl, 10000, ActBody.Vagina) end
+function TMOnCumInside_EndCumflate(human)
+	if not human then return end
+	if TM_WetSex then WetSet(human, 10000, ActBody.Vagina) end
 	local delay = 0.4
 	local function Increment(value) delay = IncrementMultiplierRandom(delay, value, 0.8, 1.1) end
 	-- SFX: CUMFLATION PULLOUT
 	if not TM_SFX or not TM_SFX_Voice then return end
-	HumanTalkStop(girl)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Faster) end) Increment(0.4)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Faster) end) Increment(0.4)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Faster) end) Increment(0.4)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Fast) end) Increment(0.5)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Fast) end) Increment(0.5)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Normal) end) Increment(0.7)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Normal) end) Increment(0.7)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Normal) end) Increment(1)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Normal) end) Increment(1.5)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Slow) end) Increment(1.5)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Slow) end) Increment(4)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Slow) end) Increment(6)
-	Delayed(delay, function() TMPlayTier(girl, TMTier.Slow) end)
+	HumanTalkStop(human)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Faster) end) Increment(0.4)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Faster) end) Increment(0.4)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Faster) end) Increment(0.4)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Fast) end) Increment(0.5)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Fast) end) Increment(0.5)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Normal) end) Increment(0.7)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Normal) end) Increment(0.7)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Normal) end) Increment(1)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Normal) end) Increment(1.5)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Slow) end) Increment(1.5)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Slow) end) Increment(4)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Slow) end) Increment(6)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Slow) end)
 end

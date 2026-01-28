@@ -51,8 +51,9 @@ TM_SFX_AmbientFiles = 6				-- Number of Ambient files (if you add more, change t
 
 -- SFX: Voice/Plap/Suck/Chat
 TM_SFX = true						-- Turns off all SFX/Voice sounds
-TM_SFX_Voice = true					-- Moaning (everyone)
-TM_SFX_VoiceFuta = true				-- Moaning (chicks with dicks)
+TM_SFX_Voice = true					-- Voice (everyone)
+TM_SFX_VoiceMale = false			-- Voice males
+TM_SFX_VoiceFuta = true				-- Voice chicks with dicks
 TM_SFX_Plap = true					-- Plapping when in sex (anal or vaginal)
-TM_SFX_Suck = true					-- Grunting while sucking
+TM_SFX_Suck = true					-- Blowjob sounds
 TM_SFX_GenericChat = true			-- TrueFacials generic chat (original voices)

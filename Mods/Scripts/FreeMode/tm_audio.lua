@@ -159,53 +159,53 @@ end
 -------------------------------------------------------------------------------------------------
 -- SFX / SOUND SOURCE POSITION
 -------------------------------------------------------------------------------------------------
-function TMPlaySFX(girl, tmSfx, humanPart, volume)
-	if not TM_SFX or not girl or girl.m_isMale then return end
-	local tmVoice = TMVoiceGet_Human(girl)
+function TMPlaySFX(human, tmSfx, humanPart, volume)
+	if not TM_SFX or not human then return end
+	local tmVoice = TMVoiceGet_Human(human)
 	local tmVol = (tmVoice and tmVoice[tmSfx] and tmVoice[tmSfx].Volume) and Clamp01(tmVoice[tmSfx].Volume) or 1
 	-- if defined volume in param, multiply by volume in config. if not defined, just use volume config
 	local vol = tmVol * (volume and volume or 1)
-	PlaySoundAt(TMSfxGetFilenameRandom(girl, tmSfx), HumanPosGet(girl, humanPart), vol)
+	PlaySoundAt(TMSfxGetFilenameRandom(human, tmSfx), HumanPosGet(human, humanPart), vol)
 end
 
 -------------------------------------------------------------------------------------------------
 -- VOICES
 -------------------------------------------------------------------------------------------------
-function TM_SFX_VoiceAllow(girl)
+function TM_SFX_VoiceAllow(human)
 	if VM_VoiceMod_Enabled and VM_VoiceMod_Enabled == true then return false end
-	if not TM_SFX or not TM_SFX_Voice or not girl or girl.m_isMale then return false end
+	if not TM_SFX or not TM_SFX_Voice or not human or (not TM_SFX_VoiceMale and human.m_isMale) then return false end
 	return true
 end
 
-function TMPlayMoan(girl, tmMoan)
-	if not TM_SFX_VoiceAllow(girl) then return end
-	local stats = TMHStatsGet(girl)
+function TMPlayMoan(human, tmMoan)
+	if not TM_SFX_VoiceAllow(human) then return end
+	local stats = TMHStatsGet(human)
 	if not stats or stats.IsClimax or not stats.IsVoice then return end
 	-- if tmMoanSource == TMMoanSource.Sex then -- dynamic
 	-- elseif tmMoanSource == TMMoanSource.IsClimax then -- dynamic
-	if tmMoan == TMMoan.Cumming then TMPlayTier(girl, ListItemRandom(TM_Moans_Cumming))
-	elseif tmMoan == TMMoan.CumHead then TMPlayTier(girl, ListItemRandom(TM_Moans_CumHead))
-	elseif tmMoan == TMMoan.CumHole then TMPlayTier(girl, ListItemRandom(TM_Moans_CumHole))
-	elseif tmMoan == TMMoan.CumBody then TMPlayTier(girl, ListItemRandom(TM_Moans_CumBody))
-	elseif tmMoan == TMMoan.CumInside and not stats.IsSexActive then TMPlayTier(girl, ListItemRandom(TM_Moans_CumInside))
-	elseif tmMoan == TMMoan.Cumflating then TMPlayTier(girl, ListItemRandom(TM_Moans_Cumflating))
-	elseif tmMoan == TMMoan.Cumdeflating then TMPlayTier(girl, ListItemRandom(TM_Moans_Cumdeflating))
-	elseif tmMoan == TMMoan.DoubleClick then TMPlayTier(girl, TableItemRandom(TMTier))
+	if tmMoan == TMMoan.Cumming then TMPlayTier(human, ListItemRandom(TM_Moans_Cumming))
+	elseif tmMoan == TMMoan.CumHead then TMPlayTier(human, ListItemRandom(TM_Moans_CumHead))
+	elseif tmMoan == TMMoan.CumHole then TMPlayTier(human, ListItemRandom(TM_Moans_CumHole))
+	elseif tmMoan == TMMoan.CumBody then TMPlayTier(human, ListItemRandom(TM_Moans_CumBody))
+	elseif tmMoan == TMMoan.CumInside and not stats.IsSexActive then TMPlayTier(human, ListItemRandom(TM_Moans_CumInside))
+	elseif tmMoan == TMMoan.Cumflating then TMPlayTier(human, ListItemRandom(TM_Moans_Cumflating))
+	elseif tmMoan == TMMoan.Cumdeflating then TMPlayTier(human, ListItemRandom(TM_Moans_Cumdeflating))
+	elseif tmMoan == TMMoan.DoubleClick then TMPlayTier(human, TableItemRandom(TMTier))
 	end
 end
 
 -- SFX: All sfx is played here. Directly calling: Sex, Futa, Cum, Cumflation, Cumdeflation (the rest is above)
-function TMPlayTier(girl, tmTier)
+function TMPlayTier(human, tmTier)
 	-- don't moan with other voice mods
-	if not TM_SFX_VoiceAllow(girl) then return end
-	local stats = TMHStatsGet(girl)
+	if not TM_SFX_VoiceAllow(human) then return end
+	local stats = TMHStatsGet(human)
 	if not stats or not stats.IsVoice or not stats.VoiceName or stats.VoiceName == "" then return end;
-	local tmVoice = TMVoiceGet_Human(girl)
+	local tmVoice = TMVoiceGet_Human(human)
 	if not tmVoice then return end
 	local tier = stats.IsClimax and TMTier.Climax or (tmVoice and tmVoice[tmTier]) and tmVoice[tmTier] or tmTier
 	---@diagnostic disable-next-line
 	local file = tmVoice.File and tmVoice.File or ("tm_" .. tmVoice.Name:lower())
-	girl.SayCustom(file .. "_" .. tier)
+	human.SayCustom(file .. "_" .. tier)
 end
 
 -------------------------------------------------------------------------------------------------

@@ -92,6 +92,9 @@ label TMMenuOptions_React(human)
 				+ "|| React fluid	| " .. AccBool(game.FluidReaction)
 					game.FluidReaction = not game.FluidReaction
 					Return()
+				+ "|| Voice male	| " .. AccBool(TM_SFX_VoiceMale)
+					TM_SFX_VoiceMale = not TM_SFX_VoiceMale
+					Return()
 				+ "|| Voice futa	| " .. AccBool(TM_SFX_VoiceFuta)
 					TM_SFX_VoiceFuta = not TM_SFX_VoiceFuta
 					Return()
