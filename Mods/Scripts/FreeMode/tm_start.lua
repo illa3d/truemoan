@@ -45,7 +45,7 @@ function TM_TrueMoan_Enable()
 		load([[function OnGameUpdate(human, hitTri) _TMOnGameUpdate(human, hitTri) end]])()
 		load([[function OnCreateHuman(human) _TMOnCreateHuman(human) end]])()
 		load([[function OnRemoveHuman(human) _TMOnRemoveHuman(human) end]])()
-		load([[function OnHumanClick(human, hitTri) _TMOnHumanClick(human, hitTri) end]])()
+		load([[function OnHumanClick(human, hitTri) _TMOnHumanClick_Standalone(human, hitTri) end]])()
 		load([[function OnFluidHit(hitActor, bodyArea, shootActor) _TMOnFluidHit(hitActor, bodyArea, shootActor) end]])()
 		load([[function OnPenetration(girl, holeName, inVelocity, outVelocity, penetrator) _TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator) end]])()
 		TMMOD_TrueMoan = true
@@ -110,8 +110,12 @@ function _TMOnRemoveHuman(human)
 	TMOnRemoveHuman(human)
 end
 
-function _TMOnHumanClick(human, hitTri)
+function _TMOnHumanClick_Standalone(human, hitTri)
 	Jump("TMTalkMenu", human, hitTri)
+	_TMOnHumanClick(human, hitTri)
+end
+
+function _TMOnHumanClick(human, hitTri)
 	_TMOnHumanSingleClick(human, hitTri)
 	if not TMMOD_AllowDoubleClick() then return end
 	local time = Timer("TMDct")
