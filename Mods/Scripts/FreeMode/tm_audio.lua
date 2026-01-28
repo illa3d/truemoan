@@ -111,7 +111,7 @@ end
 
 -- Get a voice table by name
 function TMVoiceGet(tmVoiceName)
-	if not tmVoiceName then return TMVoiceDefault end
+	if not tmVoiceName or not TM_Voices[tmVoiceName] then return TMVoiceDefault end
 	return TM_Voices[tmVoiceName]
 end
 
@@ -186,12 +186,13 @@ function TMPlayTier(girl, tmTier)
 	-- don't moan with other voice mods
 	if not TM_SFX_VoiceAllow(girl) then return end
 	local stats = TMHStatsGet(girl)
-	if not stats or not stats.IsVoice then return end;
+	if not stats or not stats.IsVoice or not stats.VoiceName or stats.VoiceName == "" then return end;
 	local tmVoice = TMVoiceGet_Human(girl)
-	local tier = (tmVoice and tmVoice[tmTier]) and tmVoice[tmTier] or tmTier
-	if stats.IsClimax then girl.SayCustom("tm_" .. tmVoice.Name .. "_" .. TMTier.Climax) end
+	if not tmVoice then return end
+	local tier = stats.IsClimax and TMTier.Climax or (tmVoice and tmVoice[tmTier]) and tmVoice[tmTier] or tmTier
 	---@diagnostic disable-next-line
-	girl.SayCustom("tm_" .. tmVoice.Name:lower() .. "_" .. tier)
+	local file = tmVoice.File and tmVoice.File or ("tm_" .. tmVoice.Name:lower())
+	girl.SayCustom(file .. "_" .. tier)
 end
 
 -------------------------------------------------------------------------------------------------
