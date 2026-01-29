@@ -173,7 +173,7 @@ end
 -------------------------------------------------------------------------------------------------
 function TM_SFX_VoiceAllow(human)
 	if VM_VoiceMod_Enabled and VM_VoiceMod_Enabled == true then return false end
-	if not TM_SFX or not TM_SFX_Voice or not human or (not TM_SFX_VoiceMale and human.m_isMale) then return false end
+	if not TM_SFX or not TM_SFX_Voice or not human or (not TM_SFX_VoiceMale and human.m_isMale) or (not TM_SFX_VoiceFuta and not human.m_isMale and HumanHasPenis(human)) then return false end
 	return true
 end
 
