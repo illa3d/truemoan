@@ -27,6 +27,7 @@ TMTier = {
 	Wild = "wild",
 	Max = "max",
 	Climax = "climax",
+	Cumshot = "cumshot",
 }
 
 -- SOUND EFFECTS
@@ -37,7 +38,7 @@ TMSfx = {
 }
 
 -- TM Moan categories
-TMMoan = {
+TMVoice = {
 	Sex = "Sex", -- dynamic
 	Climax = "Climax", -- dynamic
 	Cumming = "Cumming",
@@ -177,20 +178,20 @@ function TM_SFX_VoiceAllow(human)
 	return true
 end
 
-function TMPlayMoan(human, tmMoan)
+function TMPlayVoice(human, tmVoice)
 	if not TM_SFX_VoiceAllow(human) then return end
 	local stats = TMHStatsGet(human)
 	if not stats or stats.IsClimax or not stats.IsVoice then return end
-	-- if tmMoanSource == TMMoanSource.Sex then -- dynamic
-	-- elseif tmMoanSource == TMMoanSource.IsClimax then -- dynamic
-	if tmMoan == TMMoan.Cumming then TMPlayTier(human, ListItemRandom(TM_Moans_Cumming))
-	elseif tmMoan == TMMoan.CumHead then TMPlayTier(human, ListItemRandom(TM_Moans_CumHead))
-	elseif tmMoan == TMMoan.CumHole then TMPlayTier(human, ListItemRandom(TM_Moans_CumHole))
-	elseif tmMoan == TMMoan.CumBody then TMPlayTier(human, ListItemRandom(TM_Moans_CumBody))
-	elseif tmMoan == TMMoan.CumInside and not stats.IsSexActive then TMPlayTier(human, ListItemRandom(TM_Moans_CumInside))
-	elseif tmMoan == TMMoan.Cumflating then TMPlayTier(human, ListItemRandom(TM_Moans_Cumflating))
-	elseif tmMoan == TMMoan.Cumdeflating then TMPlayTier(human, ListItemRandom(TM_Moans_Cumdeflating))
-	elseif tmMoan == TMMoan.DoubleClick then TMPlayTier(human, TableItemRandom(TMTier))
+	-- if tmVoice == TMVoice.Sex then -- dynamic
+	-- elseif tmVoice == TMVoice.Climax then -- dynamic
+	if tmVoice == TMVoice.Cumming then TMPlayTier(human, TMTier.Cumshot) TMPlayTier(human, ListItemRandom(TM_Moans_Cumming))
+	elseif tmVoice == TMVoice.CumHead then TMPlayTier(human, ListItemRandom(TM_Moans_CumHead))
+	elseif tmVoice == TMVoice.CumHole then TMPlayTier(human, ListItemRandom(TM_Moans_CumHole))
+	elseif tmVoice == TMVoice.CumBody then TMPlayTier(human, ListItemRandom(TM_Moans_CumBody))
+	elseif tmVoice == TMVoice.CumInside and not stats.IsSexActive then TMPlayTier(human, ListItemRandom(TM_Moans_CumInside))
+	elseif tmVoice == TMVoice.Cumflating then TMPlayTier(human, ListItemRandom(TM_Moans_Cumflating))
+	elseif tmVoice == TMVoice.Cumdeflating then TMPlayTier(human, ListItemRandom(TM_Moans_Cumdeflating))
+	elseif tmVoice == TMVoice.DoubleClick then TMPlayTier(human, TableItemRandom(TMTier))
 	end
 end
 

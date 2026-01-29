@@ -39,7 +39,7 @@ end
 function TMOnHumanDoubleClick(human, hittri)
 	if TM_DoubleClickReset then TMHumanReset(human) end
 	if TM_DoubleClickUndress then HumanClothes(human, false) end
-	if TM_DoubleClickMoan then TMPlayMoan(human, TMMoan.DoubleClick) end
+	if TM_DoubleClickMoan then TMPlayVoice(human, TMVoice.DoubleClick) end
 end 
 
 -- Main update function (every frame)
@@ -112,9 +112,9 @@ function TMHumanCum(human, sec, randomMax)
 	local isFirstRun = true
 	game.AddRepeatAnim(stats.CumFrequency, function ()
 		if not stats.IsCumming then return end
-		TMPlayMoan(human, TMMoan.Cumming)
+		TMPlayVoice(human, TMVoice.Cumming)
 		-- randomly pass another moan
-		if math.random() > 0.5 then Delayed(TM_Moans_CummingPause, function () TMPlayMoan(human, TMMoan.Cumming) end) end
+		if math.random() > 0.5 then Delayed(TM_Moans_CummingPause, function () TMPlayVoice(human, TMVoice.Cumming) end) end
 		-- shoot with random delay from moan
 		Delayed(GetRandomFloat(0.2, 0.8), function() human.Shoot() end)
 		if isFirstRun then isFirstRun = false return end
@@ -173,21 +173,21 @@ function TMOnFluidHit(hitActor, bodyArea, shootActor)
 	local lastTime = Timer(timerKey)
 
 	if lastTime > TM_MoanCumHeadTime and (bodyArea == ActBodyArea.L_Eye or bodyArea == ActBodyArea.Tongue or bodyArea == ActBodyArea.Cheeks) then 
-		TMPlayMoan(hitActor, TMMoan.CumHead)
+		TMPlayVoice(hitActor, TMVoice.CumHead)
 		hitActor.AddInvoluntaryAnim("L_Eye_HitClose", 1, 0.7, 0.7, EyelidL(1))
 		ResetTimer(timerKey)
 	elseif lastTime > TM_MoanCumHeadTime and bodyArea == ActBodyArea.R_Eye then 
-		TMPlayMoan(hitActor, TMMoan.CumHead)
+		TMPlayVoice(hitActor, TMVoice.CumHead)
 		hitActor.AddInvoluntaryAnim("R_Eye_HitClose", 1, 0.7, 0.7, EyelidR(1))
 		ResetTimer(timerKey)
 	elseif lastTime > TM_MoanCumHoleTime and bodyArea == ActBodyArea.Lips then 
-		TMPlayMoan(hitActor, TMMoan.CumHole)
+		TMPlayVoice(hitActor, TMVoice.CumHole)
 		hitActor.AddInvoluntaryAnim("OpenMouth", 5, 0.4, 0.4, Mouth(-0.83, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.73, 0, 0.39))
 		Delayed(1, function() hitActor.Swallow() end)
 		ResetTimer(timerKey)
 	elseif lastTime > TM_MoanCumHoleTime and
 		(bodyArea == ActBodyArea.Vagina or bodyArea == ActBodyArea.Anus or bodyArea == ActBodyArea.Breasts) then 
-		TMPlayMoan(hitActor, TMMoan.CumHole)
+		TMPlayVoice(hitActor, TMVoice.CumHole)
 		ResetTimer(timerKey)
 	else
 		local genericVoiceKey = "TMFluidHit_Generic_" .. hitActor.Name
@@ -196,7 +196,7 @@ function TMOnFluidHit(hitActor, bodyArea, shootActor)
 			hitActor.Say(hitActor.FaceMood >= 0 and "Like" or "Dislike")
 			ResetTimer(genericVoiceKey)
 		elseif lastTime > TM_MoanCumBodyTime then
-			TMPlayMoan(hitActor, TMMoan.CumBody)
+			TMPlayVoice(hitActor, TMVoice.CumBody)
 			ResetTimer(timerKey)
 		end
 	end
@@ -490,7 +490,7 @@ function TMOnPenetration_CumInside(human, stats, holeName)
 	local effectKey = TMTimerKey_CumEffect(human)
 	if TMCumInside_CanPlayEffect(stats, Timer(effectKey)) then
 		-- SFX: CUM INSIDE / CUMFLATION
-		TMPlayMoan(human, TM_Cumflate and TMMoan.Cumflating or TMMoan.CumInside)
+		TMPlayVoice(human, TM_Cumflate and TMVoice.Cumflating or TMVoice.CumInside)
 		ResetTimer(effectKey)
 	end
 	
@@ -515,7 +515,7 @@ function TMOnUpdate_CumInside_End(human, stats)
 			local effectKey = TMTimerKey_CumEffect(human) 
 			if TMCumInside_CanPlayEffect(stats, Timer(effectKey)) then
 				-- SFX: CUMDEFLATION
-				if stats.IsVoice then TMPlayMoan(human, TMMoan.Cumflating) end
+				if stats.IsVoice then TMPlayVoice(human, TMVoice.Cumflating) end
 				if TM_WetSex then WetSet(human, 50000, ActBody.Vagina) end
 				ResetTimer(effectKey)
 			end
