@@ -1,4 +1,4 @@
--- TrueMoan v2.6 by illa3d
+-- TrueMoan v2.7 by illa3d
 -- BODYEDIT PRESETS - WARNING, Breasts < -0.8, Body < -0.9 crash the game on some characters
 
 ------------------------------------------------------------------------------------------------

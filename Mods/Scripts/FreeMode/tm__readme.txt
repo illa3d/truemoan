@@ -2,27 +2,24 @@
 --                                               TRUE MOAN                                             --
 ---------------------------------------------------------------------------------------------------------
 
-**AutoSex Control | BodyEdit | Realistic Sounds | Sex Reactions | Voice Packs | Bulging | Cumflation | Animation | Poses | Ambient Audio | Skyboxes | Improved Menu |**
+**AutoSex Control | BodyEdit | Voice Packs | Realistic Sounds | Sex Reactions | Bulging | Cumflation | Animation | Poses | Ambient Audio | Skyboxes | Improved Menu |**
 
 **MOD FEATURES**
 - **Auto Sex Control**
-  - AutoCum / AutoClimax
   - Smooth transitions (tweening)
+  - Arousal/Climax/Cum mechanic
   - Random Speed/Thrust/Depth control + random + presets
   - Cum/Wetness controls + random + presets
-- **TrueFace**
-  - Procedural face animation system + presets
 - **Body Edit**
   - Tweak body beyond limits
   - Generate, Copy/Paste, Presets
 - **Realistic Moans & SFX**
-  - **Generic Voice** for all characters
   - Blowjob & Sex sound effects
   - Voice Packs support
-- **Sex/Cum reactions**
-  - Climax/Arousal mechanic
-  - Wet/Cum/Bulging/Cumflation reactions
-- **Poses/Animation** (requires FaunaLABS)
+- **TrueFace**
+  - Procedural animation system + presets
+- **Bulging/Cumflation**
+- **Poses/Animation** (FaunaLABS)
 - **6x audio ambiences**
 - **36 Scenes**
 - **Improved Menu UX**
@@ -31,10 +28,11 @@
 **ADDONS** (separate downloads)
 - **7x skyboxes** (8/4/2k)
 
-**LATEST DOWNLOADS**
-**TrueMoan_v2.6.zip** - Just TrueMoan
-**TrueMoan_v2.6_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
+**LATEST FILES**
+**TrueMoan_v2.7.zip** - Just TrueMoan
+**TrueMoan_v2.7_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
 **TrueMoan_Addon_Skyboxes_4k_v1.0.zip**
+**TrueMoan_Addon_VoicePack_AllVoiceMods_v1.0.zip** (requires AllVoiceMods mod)
 **Download: ** https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
 **Voice packs:** https://discord.com/channels/620113492208517120/1460768562338726090 by @salemvonzombeh 
 
@@ -45,7 +43,11 @@
 - FaunaLABS v1.02 (for full experience)
 
 **SUPPORTED MODS**
-- Nf123 Voice Mod, Talk Menu Mod Manager, FaunaLabs, AllVoiceMods
+- Nf123 Voice Mod / AllVoiceMods
+- Talk Menu Mod Manager
+- FaunaLabs
+- BetterSpeedAndFluids
+- Snappy Sequences
 
 **HOW TO INSTALL**
 - Backup your old TrueMoan config files prior to install (optional)
@@ -55,30 +57,79 @@
 **HOW TO UNINSTALL**
 - Delete TrueMoan files in `Mods/Scripts/FreeMode`: `tm_*.*, Voice/tm_*.mp3, Sounds/tm_*.mp3`
 
+
+
+---------------------------------------------------------------------------------------------------------
+-- TRUE MOAN VOICE SETUP
+---------------------------------------------------------------------------------------------------------
+When it comes to moaning you've got a plethera of options.
+If you let TrueMoan do the moaning, **all options below can be combined together**.
+
+:warning:**MORE AUDIO FILES, LONGER LOADING**:warning: 
+
+**1) TrueMoan only**
+- 1 Voice pack included - Chiyoru
+
+**2) TrueMoan + TrueMoan Voice Packs**
+Voice Packs: https://discord.com/channels/620113492208517120/1460768562338726090 by @salemvonzombeh 
+- Install individual Voice Packs
+- (optional) edit `tm_voice__config.lua` for character defaults
+
+**3) AllVoiceMods (so far) **(TMMM comes integrated)
+Collection of all VoiceMods in the modding channel (so far), massive respect @xlmumblelx 
+AllVoiceMods: https://discord.com/channels/620113492208517120/1428535347364630742  by @xlmumblelx 
+TrueMoan Addon: https://discord.com/channels/620113492208517120/1451633202019172462/1451633202019172462
+- Install `TrueMoan_Addon_VoicePack_AllVoiceMods_v1.0.zip` 
+- (optional) edit `tm_voice__allvoicemods_config.lua` for allvoicemods character defaults
+- (optional) edit `tm_voice__config.lua` for character defaults (overrides allvoicemods_config)
+- InGame, Disable VoiceMod `TrueMoan/TalkMenu/Options/Voice/VoiceMod` set to `Disabled`
+
+**4) nf123's Voice Mod + Individual VoiceMods** (TMMM comes integrated)
+VoiceMod: https://discord.com/channels/620113492208517120/1358067278746358062 by @nobodyforever123 
+VoiceMods: https://discord.com/channels/620113492208517120/1302940308777996298 by @xlmumblelx @denabuneko ...
+- Install individual voice packs
+- Install `TrueMoan_Addon_VoicePack_AllVoiceMods_v1.0.zip` 
+- Edit `tm_voice__allvoicemods_config.lua`
+  - Disable all unused VoicePack definitions (add -- for each)
+  - Characters will be silent for VoicePacks defined but no mp3 files
+- (optional) edit `tm_voice__config.lua` for character defaults (overrides allvoicemods_config)
+- InGame, disable VoiceMod `TrueMoan/TalkMenu/Options/Voice/VoiceMod` set to `Disabled`
+
+
+
 ---------------------------------------------------------------------------------------------------------
 -- COMMON ISSUES / BLACK SCREEN
 ---------------------------------------------------------------------------------------------------------
 
-**:warning: TRUE MOAN COMMON ISSUES, BLACK SCREEN FIX, TIPS & TRICKS :warning:**
+**:warning: TRUE MOAN COMMON ISSUES, BLACK SCREEN/GREY SCREEN FIX, TIPS & TRICKS :warning:**
+
+**:warning: Bulging/Cumflation realtime body modifications will cause visual artifacts :warning:**
+Known: Cum freezing mid-air or behaving weirdly, Shadow glitching
 
 **1) TRUE MOAN REQUIRES ORIGINAL COMMON.LUA SCRIPT**
 - make sure it's here: `TrueFacials\Mods\Scripts\FreeMode\Common.lua` 
 - if its missing or overwritten from another mod, get the original one from True Facials installation
 
-**2) LONG PATHS ARE AN ISSUE**
+**2) LONG PATHS**
 - move TrueFacials to an less deep folder, long ones can cause black screens with error `DirectoryNotFoundException: Could not find a part of the path`
 - bad path example `"D:\New folder (3)\TrueFacials_Pro _ Characters_0.59 (N)\TrueFacials_Pro + Characters_0.59\TrueFacials_Pro_0.59...`
 - if that still doesnt work, enable long paths in windows registry - https://www.majorgeeks.com/files/details/enable_or_disable_win32_long_paths.html
 
-**3) TRY RUNNING WITHOUT OTHER MODS**
+**3) OLD CONFIGS/TWEAKS**
+- between versions `tm__config.lua` or `tm__tweaks.lua` may change (renamed, added new stuff)
+- if you restored your `tm__config.lua` or `tm__tweaks.lua` without checking if the configs have changed through versions this might cause an issue
+- restore original version configs, re-set your specific configs or tweaks in the new files
+
+**4) TRY RUNNING WITHOUT OTHER MODS**
 - mods that overwrite `Commmon.lua` and `freemode_main.lua` are problematic
 - character, map and voice mods should all be compatibile
 - Tested ok with: n123's VoiceMod, TalkMenuModManager, FaunaLABS (integrated, you don't need it separately)
 
-**4) SEND AN ERROR REPORT** (if none of the above works)
+**5) SEND AN ERROR REPORT** (if none of the above works)
 When reporting issues, please include:
 - which True Facials version
 - which True Moan version
+- did you use old True Moan configs
 - which mods are installed besides TrueMoan
 - steps to reproduce the issue
 - include True facials `Player.log` file
@@ -86,12 +137,15 @@ When reporting issues, please include:
 
 Thanks!
 
+
+
 ---------------------------------------------------------------------------------------------------------
 -- ADDITIONAL INFO
 ---------------------------------------------------------------------------------------------------------
 
-**VOICE PACKS**
-Read me - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_voice__README.txt
+**VOICE SETUP**
+TrueMoan Voice Setup - https://discord.com/channels/620113492208517120/1451633202019172462/1451637694005510305
+How to create VoicePacks - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_voice__README.txt
 
 **INTEGRATED MODS**
 - `faunaLABS_v1.02 - TMMM Ready.zip` https://discord.com/channels/620113492208517120/1358287146791866446/1454138284841369701 by @faunap 
@@ -104,12 +158,22 @@ Read me - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/t
 - Character clothes: `tm__clothes.lua`
 - Music: `tm__music.lua`
 - Tweaks: `tm__tweaks.lua` (you may break things)
+- Default voices: `tm_voices__config.lua`
 
 **SOURCE**
 GitHub Repository - https://github.com/illa3d/truemoan
 
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
+
+[ v2.7 ]
+- Addon: AllVoiceMods(so far) voices in TrueMoan (requires https://discord.com/channels/620113492208517120/1428535347364630742)
+- Added custom filename support for VoicePacks
+- Added male voice option (see tm__config.lua, TM_SFX_VoiceMale)
+- Fixed futa voice option (see tm__config.lua, TM_SFX_VoiceFuta)
+- Added voice sub-menu (when more than 10 voices)
+- VoicePack support for cumshot audio
+- Fixed TMMM menu compatibility
 
 [ v2.6 ]
 - Added Fluid controls/random/presets `Menu/Sex/Cum`
@@ -304,6 +368,8 @@ Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/Fre
 - @faunap: FreeModeHG v0.3 - faunap_edit_0.2.zip - https://discord.com/channels/620113492208517120/1312401584910631054/1355724274224205984
 - @masterchief_87971: Natural AutoBJ AutoThrust - https://discord.com/channels/620113492208517120/1312401584910631054/1355675724932972634
 - @callmedrjones6911: Face expression looping - https://discord.com/channels/620113492208517120/1312401584910631054/1349562400105431090
+
+
 
 ---------------------------------------------------------------------------------------------------------
 VSCODE + LUA (by sumaneko) extension

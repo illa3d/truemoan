@@ -1,4 +1,4 @@
--- TrueMoan v2.6 by illa3d
+-- TrueMoan v2.7 by illa3d
 -- Add specific Voice Pack to a character by default
 -- 1. Find out EXACT voice name in VoicePack script
 --    EXAMPLE: tm_voice_chiyoru.lua - TMVoiceAdd({ Name = "Chiyoru", ...
