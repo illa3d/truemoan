@@ -185,21 +185,18 @@ function AutoSexToggle(human)
 
 	-- Step up tiers
 	if stats.AutoSexUp then
-		if stats.AutoSexTier ~= TM_AutoSexTier_ToggleMax then Up()
-		-- AutoSex is ON, minimum tier toggles to OFF
-		else 
-			-- Maximum tier toggles down (ping pong)
-			Down()
+		-- Maximum tier toggles down (ping pong)
+		if stats:IsAutoSexMax() then
 			stats.AutoSexUp = false
-		end
+			Down()
+		else Up() end
 	-- Step down tiers
 	else
-		if stats.AutoSexTier ~= TM_AutoSexTier_ToggleMin then Down()
-		else 
-			-- Minimum tier toggles to OFF
-			AutoSexSet(human, false)
+		-- Minimum tier toggles to OFF
+		if stats.AutoSexTier == TM_AutoSexTier_ToggleMin then
 			stats.AutoSexUp = true;
-		end
+			AutoSexSet(human, false)
+		else Down() end
 	end
 end
 

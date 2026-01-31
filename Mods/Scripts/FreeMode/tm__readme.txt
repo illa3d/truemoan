@@ -29,8 +29,8 @@
 - **7x skyboxes** (8/4/2k)
 
 **LATEST FILES**
-**TrueMoan_v2.7a.zip** - Just TrueMoan
-**TrueMoan_v2.7a_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
+**TrueMoan_v2.7.zip** - Just TrueMoan
+**TrueMoan_v2.7_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
 **TrueMoan_Addon_Skyboxes_4k_v1.0.zip**
 **TrueMoan_Addon_VoicePack_AllVoiceMods_v1.0.zip** (requires AllVoiceMods mod)
 **Download: ** https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
@@ -40,6 +40,7 @@
 
 **REQUIREMENTS**
 - TrueFacials v0.59
+- FaunaLABS v1.02 (for full experience)
 
 **SUPPORTED MODS**
 - Nf123 Voice Mod / AllVoiceMods

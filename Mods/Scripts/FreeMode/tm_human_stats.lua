@@ -189,7 +189,7 @@ function TMHumanStats:AutoSexSet(active)
 end
 
 function TMHumanStats:IsAutoSexMax()
-	return self.AutoSexTier == TM_AutoSexTier_ToggleMax
+	return self.AutoSexTier == TM_AutoSexTier_ToggleMax or self.AutoSexTier == AutoSexTier.Max
 end
 
 function TMHumanStats:AutoSexTierSet(autoSexTier)
