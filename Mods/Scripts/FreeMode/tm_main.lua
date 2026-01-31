@@ -407,7 +407,7 @@ function TMOnUpdate_AutoSexClimax(human, stats)
 	Delayed(delay, function() AutoSexSet_ClimaxTier(human, AutoSexTier.Fast) end) Increment()
 	Delayed(delay, function() AutoSexSet_ClimaxTier(human, AutoSexTier.Normal) end) Increment()
 	Delayed(delay, function() AutoSexSet_ClimaxTier(human, AutoSexTier.Slow) end) Increment()
-	Delayed(delay, function() AutoSexSet_ClimaxTier(human, AutoSexTier.Idle) end)
+	Delayed(delay, function() AutoSexSet_ClimaxTier(human, AutoSexTier.Idle) WetReset_All(human) end)
 end
 
 -------------------------------------------------------------------------------------------------
@@ -555,7 +555,7 @@ function TMOnCumInside_EndCum(human, stats)
 	Delayed(delay, function() TMPlayTier(human, TMTier.Normal) end) Increment(2)
 	Delayed(delay, function() TMPlayTier(human, TMTier.Slow) end) Increment(3)
 	Delayed(delay, function() TMPlayTier(human, TMTier.Slow) end) Increment(4)
-	Delayed(delay, function() TMPlayTier(human, TMTier.Slow) end)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Slow) WetReset_All(human)end)
 end
 
 -- CUMFLATION REACTION ON PULLOUT
@@ -579,5 +579,5 @@ function TMOnCumInside_EndCumflate(human, stats)
 	Delayed(delay, function() TMPlayTier(human, TMTier.Slow) end) Increment(1.5)
 	Delayed(delay, function() TMPlayTier(human, TMTier.Slow) end) Increment(4)
 	Delayed(delay, function() TMPlayTier(human, TMTier.Slow) end) Increment(6)
-	Delayed(delay, function() TMPlayTier(human, TMTier.Slow) end)
+	Delayed(delay, function() TMPlayTier(human, TMTier.Slow) WetReset_All(human) end)
 end
