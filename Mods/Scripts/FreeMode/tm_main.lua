@@ -518,7 +518,7 @@ function TMOnUpdate_CumInside_End(human, stats)
 			if TMCumInside_CanPlayEffect(stats, Timer(effectKey)) then
 				-- SFX: CUMDEFLATION
 				if stats.IsVoice then TMPlayVoice(human, TMVoice.Cumdeflating) end
-				if TM_WetSex then WetSet(human, 50000, ActBody.Vagina) end
+				if TM_WetSex then stats:AutoSexWetSet(human, 50000) end
 				ResetTimer(effectKey)
 			end
 			TMDeformBody_Cumflate(human, stats, -TM_CumflateStepDown)
@@ -526,12 +526,12 @@ function TMOnUpdate_CumInside_End(human, stats)
 			-- CUMFLATION PULLOUT
 			stats.IsFeelingCum = false
 			stats.IsCumflating = false
-			TMOnCumInside_EndCumflate(human)
+			TMOnCumInside_EndCumflate(human, stats)
 		end
 	-- CUM PULLOUT
 	else
 		stats.IsFeelingCum = false
-		TMOnCumInside_EndCum(human)
+		TMOnCumInside_EndCum(human, stats)
 	end
 end
 
@@ -540,9 +540,9 @@ end
 -------------------------------------------------------------------------------------------------
 
 -- CUM REACTION ON PULLOUT
-function TMOnCumInside_EndCum(human)
+function TMOnCumInside_EndCum(human, stats)
 	if not human then return end
-	if TM_WetSex then WetSet(human, 1000, ActBody.Vagina) end
+	stats:AutoSexWetSet(human, 1000)
 	local function Increment(oldValue, newValue) return IncrementMultiplierRandom(oldValue, TM_AutoSexClimaxTimeStep, 0.8, 1.5) end 
 	local delay = 0.5
 	local function Increment(value) delay = IncrementMultiplierRandom(delay, value, 0.8, 1.1) end
@@ -559,9 +559,9 @@ function TMOnCumInside_EndCum(human)
 end
 
 -- CUMFLATION REACTION ON PULLOUT
-function TMOnCumInside_EndCumflate(human)
+function TMOnCumInside_EndCumflate(human, stats)
 	if not human then return end
-	if TM_WetSex then WetSet(human, 10000, ActBody.Vagina) end
+	stats:AutoSexWetSet(human, 10000)
 	local delay = 0.4
 	local function Increment(value) delay = IncrementMultiplierRandom(delay, value, 0.8, 1.1) end
 	-- SFX: CUMFLATION PULLOUT

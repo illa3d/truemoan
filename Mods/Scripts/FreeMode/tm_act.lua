@@ -201,7 +201,7 @@ function WetGet(girl, body)
 end
 
 function WetSet(girl, value, actBody)
-	if girl == nil or value == nil  or actBody == nil or girl.m_isMale == true then return end
+	if not girl or not value or not actBody or girl.m_isMale then return end
 	if actBody == ActBody.Mouth then girl.m_mouth.m_wetness = value
 	elseif actBody == ActBody.Anus then girl.m_anus.m_wetness = value
 	elseif actBody == ActBody.Vagina then girl.m_vagina.m_wetness = value end

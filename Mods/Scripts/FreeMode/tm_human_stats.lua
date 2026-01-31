@@ -197,6 +197,12 @@ function TMHumanStats:AutoSexTierSet(autoSexTier)
 	self.AutoSexTier = autoSexTier
 end
 
+function TMHumanStats:AutoSexWetSet(girl, value)
+	if self.Anus then WetSet(girl, value, ActBody.Anus) end
+	if self.Vagina then WetSet(girl, value, ActBody.Vagina) end
+	if self.Mouth then WetSet(girl, value, ActBody.Mouth) end
+end
+
 function TMHumanStats:VoiceToggle()
 	-- No voices registered
 	if not TMVoicesHas() then
