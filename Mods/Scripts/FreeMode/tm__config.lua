@@ -55,7 +55,7 @@ TM_SFX = true						-- Turns off all SFX/Voice sounds
 TM_SFX_Suck = true					-- Blowjob sounds
 TM_SFX_Plap = true					-- Plapping when in sex (anal or vaginal)
 TM_SFX_Fart = false					-- Farting when in sex (anal or vaginal)
-TM_SFX_FartChance = 0.7				-- [0-1] Farting sound playback chance
+TM_SFX_FartChance = 0.3				-- [0-1] Farting sound playback chance
 
 TM_SFX_Voice = true					-- Voice (everyone)
 TM_SFX_VoiceMale = false			-- Voice males
