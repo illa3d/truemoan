@@ -17,17 +17,21 @@ FILE RULES: all lowercase letters, must begin with tm_voice_
 -----------------------------------------------------------------------------------------------------------------------------
 2. AUDIO FILES "tm_{name}_{tier} (#).mp3"
 -----------------------------------------------------------------------------------------------------------------------------
+AUDIO FORMAT: mp3, 44000, mono (downmix from stereo), 64-192 kbit (320 is placebo!)
 EXAMPLE: TrueFacials\Mods\Scripts\FreeMode\Voice\tm_chiyoru_slow (1).mp3
 FILE RULES: all lowercase letters, name can have spaces, numbers # as 1,2...10,11..100,101
 
 To best fit to interaction rythm, use following audio length:
-_slow 	- audio length: ~1-5s
-_normal	- audio length: ~0.8s
-_fast	- audio length: ~0.5s
-_faster	- audio length: ~0.5s (optional)
-_wild	- audio length: ~0.4s (optional)
-_max	- audio length: ~0.3s (optional)
-_climax	- audio length: ~10-20s (optional - if climax audio is not present, climax will use regular moans)
+_slow 	 - audio length: ~1-5s
+_normal	 - audio length: ~0.8s
+_fast	 - audio length: ~0.5s
+_faster	 - audio length: ~0.5s (optional)
+_wild	 - audio length: ~0.4s (optional)
+_max	 - audio length: ~0.3s (optional)
+_climax	 - audio length: ~10-20s (optional - if climax audio is not present, uses regular moans)
+_cumshot - audio length: ~10-20s (optional - if cumshot audio is not present, uses regular moans)
+
+Add at least 4 files for each category you're adding else it's repetative.
 
 If voice pack name matches the character filename, character will automatically use that voice pack
 Character name is filename in TrueFacials\Mods\Characters (letter case matters!)
@@ -50,6 +54,9 @@ You must specify: number of files (variants) per SFX, volume per group of SFX.
 FILE RULES: all lowercase letters, name can have spaces, numbers # as 1,2...10,11..100,101
 
 EXAMPLES:
+[TMSfx.Fart] = { Files = 10, Volume = 0.7 },
+FILES: TrueFacials\Mods\Scripts\FreeMode\Sounds\tm_chiyoru_fart (10).mp3 (total 10 files, played at volume of 0.7)
+
 [TMSfx.Plap] = { Files = 10, Volume = 0.7 },
 FILES: TrueFacials\Mods\Scripts\FreeMode\Sounds\tm_chiyoru_plap (10).mp3 (total 10 files, played at volume of 0.7)
 
@@ -70,6 +77,7 @@ REMAP: No remap
 
 TMVoiceAdd({
 	Name = "Chiyoru", -- files must have this name, but all lowercase
+	[TMSfx.Fart] =		{ Files = 10, Volume = 0.7 },
 	[TMSfx.Plap] =		{ Files = 10, Volume = 0.7 },
 	[TMSfx.Suck] =		{ Files = 10, Volume = 0.9 },
 	[TMSfx.SuckDeep] =	{ Files = 10, Volume = 0.9 },
@@ -87,6 +95,7 @@ TMVoiceAdd({
 	[TMTier.Faster] = TMTier.Fast,
 	[TMTier.Wild] = TMTier.Fast,
 	[TMTier.Max] = TMTier.Fast,
+	[TMSfx.Fart] =		{ Files = 10, Volume = 0.7 },
 	[TMSfx.Plap] =		{ Files = 10, Volume = 0.7 },
 	[TMSfx.Suck] =		{ Files = 10, Volume = 0.9 },
 	[TMSfx.SuckDeep] =	{ Files = 10, Volume = 0.9 },
@@ -106,6 +115,7 @@ TMVoiceAdd({
 	[TMTier.Faster] = TMTier.Normal,
 	[TMTier.Wild] = TMTier.Fast,
 	[TMTier.Max] = TMTier.Fast,
+	[TMSfx.Fart] =		{ Files = 10, Volume = 0.7 },
 	[TMSfx.Plap] =		{ Files = 20, Volume = 0.7 },
 	[TMSfx.Suck] =		{ Files = 25, Volume = 0.9 },
 	[TMSfx.SuckDeep] =	{ Files = 25, Volume = 0.9 },
