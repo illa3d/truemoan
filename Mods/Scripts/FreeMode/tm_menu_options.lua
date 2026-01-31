@@ -104,11 +104,14 @@ label TMMenuOptions_React(human)
 		+ else
 			+ "| Voice		| Disabled (VoiceMod)"
 				Return()
-		+ "| SFX Suck		| " .. AccBool(TM_SFX_Suck)
-			TM_SFX_Suck = not TM_SFX_Suck
+		+ "| SFX Fart		| " .. AccBool(TM_SFX_Fart)
+			TM_SFX_Fart = not TM_SFX_Fart
 			Return()
 		+ "| SFX Plap		| " .. AccBool(TM_SFX_Plap)
 			TM_SFX_Plap = not TM_SFX_Plap
+			Return()
+		+ "| SFX Suck		| " .. AccBool(TM_SFX_Suck)
+			TM_SFX_Suck = not TM_SFX_Suck
 			Return()
 	+ "SFX / Voice		| " .. AccBool(TM_SFX)
 		TM_SFX = not TM_SFX

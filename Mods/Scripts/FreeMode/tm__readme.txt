@@ -2,7 +2,7 @@
 --                                               TRUE MOAN                                             --
 ---------------------------------------------------------------------------------------------------------
 
-**AutoSex Control | BodyEdit | Voice Packs | Realistic Sounds | Sex Reactions | Bulging | Cumflation | Animation | Poses | Ambient Audio | Skyboxes | Improved Menu |**
+**AutoSex Control | BodyEdit | Voice Packs | Sex SFX/Reactions | Bulging | Cumflation | Animation | Poses | Ambient Audio | Skyboxes | Improved Menu |**
 
 **MOD FEATURES**
 - **Auto Sex Control**
@@ -14,7 +14,7 @@
   - Tweak body beyond limits
   - Generate, Copy/Paste, Presets
 - **Realistic Moans & SFX**
-  - Blowjob & Sex sound effects
+  - Blowjob, Plap & Fart sound effects
   - Voice Packs support
 - **TrueFace**
   - Procedural animation system + presets
@@ -29,8 +29,8 @@
 - **7x skyboxes** (8/4/2k)
 
 **LATEST FILES**
-**TrueMoan_v2.7.zip** - Just TrueMoan
-**TrueMoan_v2.7_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
+**TrueMoan_v2.8.zip** - Just TrueMoan
+**TrueMoan_v2.8_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
 **TrueMoan_Addon_Skyboxes_4k_v1.0.zip**
 **TrueMoan_Addon_VoicePack_AllVoiceMods_v1.0.zip** (requires AllVoiceMods mod)
 **Download: ** https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
@@ -40,7 +40,6 @@
 
 **REQUIREMENTS**
 - TrueFacials v0.59
-- FaunaLABS v1.02 (for full experience)
 
 **SUPPORTED MODS**
 - Nf123 Voice Mod / AllVoiceMods
@@ -55,7 +54,7 @@
 - If new version config/tweaks don't look the same as ones you have, **don't just overwrite with your configs**, re-set your values in the new files
 
 **HOW TO UNINSTALL**
-- Delete TrueMoan files in `Mods/Scripts/FreeMode`: `tm_*.*, Voice/tm_*.mp3, Sounds/tm_*.mp3`
+- Delete TrueMoan files in ⁨`Mods/Scripts/FreeMode`⁩: ⁨`tm_*.*, Voice/tm_*.mp3, Sounds/tm_*.mp3`⁩
 
 
 
@@ -167,10 +166,16 @@ GitHub Repository - https://github.com/illa3d/truemoan
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
 
 [ v2.8 ]
+- SFX: Added VoicePack fart (fart,plap,suck,suckdeep)
+- Added Fart audio option 
 - Improved Menu/Sex/AutoSex toggle
 - Climax moaning bugfix (when no climax audio file present)
 - Tweaked Arousal to be faster
 - Arousal human variation in options
+- Fix: AutoSex now paused if interaction is stopped
+- Fix: Cumflation now deflates on pullot
+- Fix: Cum inside reaction when interaction active
+- Fix: Wetness now stops after climax/cumflation/
 
 [ v2.7 ]
 - Addon: AllVoiceMods(so far) voices in TrueMoan (requires https://discord.com/channels/620113492208517120/1428535347364630742)

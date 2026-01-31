@@ -1,4 +1,8 @@
 -- TrueMoan v2.7 by illa3d
+
+-- execute once per load for math.random() function
+math.randomseed(os.time())
+
 -------------------------------------------------------------------------------------------------
 -- SYSTEM
 -------------------------------------------------------------------------------------------------
@@ -93,6 +97,9 @@ end
 -------------------------------------------------------------------------------------------------
 -- RANDOM
 -------------------------------------------------------------------------------------------------
+
+-- Returns true/false if chance to win
+function IsRandomChance(chance01) return GetRandomFloat01() < Clamp01(chance01) end
 
 -- Returns a random integer between min and max (inclusive).
 function GetRandom(min, max) return (math.random(min ,max)) end

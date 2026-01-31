@@ -32,6 +32,7 @@ TMTier = {
 
 -- SOUND EFFECTS
 TMSfx = {
+	Fart = "fart",
 	Plap = "plap",
 	Suck = "suck",
 	SuckDeep = "suckdeep",
@@ -60,6 +61,7 @@ TMVoiceDefault = {
 	[TMTier.Faster] = TMTier.Faster,
 	[TMTier.Wild] = TMTier.Wild,
 	[TMTier.Max] = TMTier.Max,
+	[TMSfx.Fart] = { Files = 7, Volume = 0.5 },
 	[TMSfx.Plap] = { Files = 20, Volume = 0.7 },
 	[TMSfx.Suck] = { Files = 25, Volume = 0.9 },
 	[TMSfx.SuckDeep] = { Files = 25, Volume = 0.9 },

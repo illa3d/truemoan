@@ -42,6 +42,7 @@ TMHumanStats = {
 	AutoSexTier = nil,
 	AutoSexUp = false,
 	Plap = nil,
+	Fart = nil,
 	-- AutoSex parameters
 	AutoSexCum = true,
 	AutoSexClimax = true,
@@ -54,11 +55,11 @@ TMHumanStats = {
 function TMHumanStatsCloneDefault() return TableClone(TMHumanStats) end
 
 -- PLAP DEFINITION
-TMHumanStatsPlapDefault = {
+TMHumanStatsHoleDefault = {
 	[ActBody.Vagina] = false,
 	[ActBody.Anus] = false
 }
-function TMHumanStatsPlapCloneDefault() return TableClone(TMHumanStatsPlapDefault) end
+function TMHumanStatsHoleCloneDefault() return TableClone(TMHumanStatsHoleDefault) end
 
 
 local TM_UpdateDelta = 0		-- cumulative deltaTime
@@ -73,7 +74,8 @@ local function TMHStatsNew(human)
 	local clone = TMHumanStatsCloneDefault() -- TMHUmanStats is authoritative source of Stats for each human
 	clone.TMBValue = TMBodyValueCloneDefault() --TMBValue is AUTHORITATIVE source of Human Body customization values
 	clone.SexBody = {}
-	clone.Plap = TMHumanStatsPlapCloneDefault()
+	clone.Plap = TMHumanStatsHoleCloneDefault()
+	clone.Fart = TMHumanStatsHoleCloneDefault()
 	clone.ArousalSeed = GetRandomFloatAround(1, Clamp01(TM_HumanArousalVariation)) -- Add random seed variation 10%
 	clone.AutoSexTier = TM_AutoSexTier_Default
 	clone.VoiceName = TMVoiceGet_RandomName()

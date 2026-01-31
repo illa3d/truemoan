@@ -235,14 +235,30 @@ function TMOnPenetration_AnusVagina(girl, stats, holeName, inVelocity)
 	else stats.IsBulging = false end
 
 	-- SFX PLAP
-	if TM_SFX and TM_SFX_Plap then
+	if TM_SFX then
 		local speed = Clamp01(inVelocity)
 		local dist = ActPenetrationDistanceGet(girl, holeName)
-		if stats.Plap[holeName] and dist > TM_PlapDistanceLimit then
-			stats.Plap[holeName] = false
-		elseif not stats.Plap[holeName] and dist < TM_PlapDistanceLimit then
-			stats.Plap[holeName] = true
-			TMPlaySFX(girl, TMSfx.Plap, holeName, speed)
+
+		-- PLAP
+		if TM_SFX_Plap then 
+			if stats.Plap[holeName] and dist > TM_PlapDistanceLimit then
+				stats.Plap[holeName] = false
+			elseif not stats.Plap[holeName] and dist < TM_PlapDistanceLimit then
+				stats.Plap[holeName] = true
+				TMPlaySFX(girl, TMSfx.Plap, holeName, speed)
+			end
+		end
+
+		if TM_SFX_Fart then
+			-- FART
+			if stats.Fart[holeName] and dist > TM_FartDistanceLimit then
+				stats.Fart[holeName] = false
+			elseif not stats.Fart[holeName] and dist < TM_FartDistanceLimit then
+				stats.Fart[holeName] = true
+				if IsRandomChance(TM_SFX_FartChance) then
+					TMPlaySFX(girl, TMSfx.Fart, holeName, speed)
+				end
+			end
 		end
 	end
 end
