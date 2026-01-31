@@ -105,10 +105,10 @@ AutoSexTierRandom_Default = AutoSexTierConfig_Normal
 
 -- Collection of all the tier parameters, their tier speed and parameter value limits
 AutoSexTierConfig = {		-- speed min max when generating randomly, mid when setting the tier
-	[AutoSexTier.Idle] =	{ Min = 0,		Mid = 0.1,	Max = 0.2,	Arousal = 0.1,	Random = AutoSexTierConfig_Idle },
-	[AutoSexTier.Slow] =	{ Min = 0.3,	Mid = 0.5,	Max = 0.6,	Arousal = 0.3,	Random = AutoSexTierConfig_Slow },
-	[AutoSexTier.Normal] =	{ Min = 0.6,	Mid = 0.7,	Max = 0.8,	Arousal = 0.6,	Random = AutoSexTierConfig_Normal },
-	[AutoSexTier.Fast] =	{ Min = 0.7,	Mid = 0.9,	Max = 1,	Arousal = 1,	Random = AutoSexTierConfig_Fast },
+	[AutoSexTier.Idle] =	{ Min = 0,		Mid = 0.1,	Max = 0.2,	Arousal = 0.2,	Random = AutoSexTierConfig_Idle },
+	[AutoSexTier.Slow] =	{ Min = 0.3,	Mid = 0.5,	Max = 0.6,	Arousal = 0.5,	Random = AutoSexTierConfig_Slow },
+	[AutoSexTier.Normal] =	{ Min = 0.6,	Mid = 0.7,	Max = 0.8,	Arousal = 1,	Random = AutoSexTierConfig_Normal },
+	[AutoSexTier.Fast] =	{ Min = 0.7,	Mid = 0.9,	Max = 1,	Arousal = 1.5,	Random = AutoSexTierConfig_Fast },
 	[AutoSexTier.Faster] =	{ Min = 0.9,	Mid = 1.1,	Max = 1.2,	Arousal = 2,	Random = AutoSexTierConfig_Faster },
 	[AutoSexTier.Wild] =	{ Min = 1,		Mid = 1.3,	Max = 1.5,	Arousal = 3,	Random = AutoSexTierConfig_Wild },
 	[AutoSexTier.Max] =		{ Min = 1.4,	Mid = 1.9,	Max = 2,	Arousal = 4,	Random = AutoSexTierConfig_Climax },

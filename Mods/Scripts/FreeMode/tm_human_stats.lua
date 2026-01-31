@@ -73,7 +73,7 @@ local function TMHStatsNew(human)
 	clone.TMBValue = TMBodyValueCloneDefault() --TMBValue is AUTHORITATIVE source of Human Body customization values
 	clone.SexBody = {}
 	clone.Plap = TMHumanStatsPlapCloneDefault()
-	clone.ArousalSeed = GetRandomFloatAround(1, 0.2) -- Add random seed variation 10%
+	clone.ArousalSeed = GetRandomFloatAround(1, Clamp01(TM_HumanArousalVariation)) -- Add random seed variation 10%
 	clone.AutoSexTier = TM_AutoSexTier_Default
 	clone.VoiceName = TMVoiceGet_RandomName()
 	TM_HumanStatsList[human] = clone
