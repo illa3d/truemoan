@@ -29,8 +29,8 @@
 - **7x skyboxes** (8/4/2k)
 
 **LATEST FILES**
-**TrueMoan_v2.7.zip** - Just TrueMoan
-**TrueMoan_v2.7_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
+**TrueMoan_v2.7a.zip** - Just TrueMoan
+**TrueMoan_v2.7a_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
 **TrueMoan_Addon_Skyboxes_4k_v1.0.zip**
 **TrueMoan_Addon_VoicePack_AllVoiceMods_v1.0.zip** (requires AllVoiceMods mod)
 **Download: ** https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
@@ -40,7 +40,6 @@
 
 **REQUIREMENTS**
 - TrueFacials v0.59
-- FaunaLABS v1.02 (for full experience)
 
 **SUPPORTED MODS**
 - Nf123 Voice Mod / AllVoiceMods
@@ -165,6 +164,12 @@ GitHub Repository - https://github.com/illa3d/truemoan
 
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
+
+[ v2.8 ]
+- Improved Menu/Sex/AutoSex toggle
+- Climax moaning bugfix (when no climax audio file present)
+- Tweaked Arousal to be faster
+- Arousal human variation in options
 
 [ v2.7 ]
 - Addon: AllVoiceMods(so far) voices in TrueMoan (requires https://discord.com/channels/620113492208517120/1428535347364630742)
