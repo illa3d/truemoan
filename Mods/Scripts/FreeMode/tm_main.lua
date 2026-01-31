@@ -343,7 +343,9 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	if lastMoanTime > pause then
 		if TM_SFX and TM_SFX_Voice and stats and stats.IsVoice then
 			-- SFX: CLIMAX MOANING
-			if stats and stats.IsClimax then TMPlayTier(girl, TMTier[stats.AutoSexTier]) -- follow stats.AutoSexTier with sounds
+			if stats and stats.IsClimax then 
+				TMPlayTier(girl, TMTier.Climax) -- start playing climax tier if it exists
+				TMPlayTier(girl, TMTier[stats.AutoSexTier]) -- build climax by AutoSexTier
 			-- SFX: SEX MOANING
 			else TMPlayTier(girl, tier) end -- follow penetration speed tier set above
 		end

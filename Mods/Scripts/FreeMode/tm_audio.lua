@@ -203,7 +203,8 @@ function TMPlayTier(human, tmTier)
 	if not stats or not stats.IsVoice or not stats.VoiceName or stats.VoiceName == "" then return end;
 	local tmVoice = TMVoiceGet_Human(human)
 	if not tmVoice then return end
-	local tier = stats.IsClimax and TMTier.Climax or (tmVoice and tmVoice[tmTier]) and tmVoice[tmTier] or tmTier
+ 	-- VoicePack tier remap
+	local tier = tmVoice[tmTier] and tmVoice[tmTier] or tmTier
 	---@diagnostic disable-next-line
 	local file = tmVoice.File and tmVoice.File or ("tm_" .. tmVoice.Name:lower())
 	human.SayCustom(file .. "_" .. tier)
