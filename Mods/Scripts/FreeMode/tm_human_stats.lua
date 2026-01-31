@@ -40,6 +40,7 @@ TMHumanStats = {
 	-- AutoSex
 	AutoSex = false,
 	AutoSexTier = nil,
+	AutoSexUp = false,
 	Plap = nil,
 	-- AutoSex parameters
 	AutoSexCum = true,
@@ -185,6 +186,10 @@ end
 function TMHumanStats:AutoSexSet(active)
 	self.AutoSex = active
 	if self.AutoSexTier == nil then self.AutoSexTier = TM_AutoSexTier_Default end
+end
+
+function TMHumanStats:IsAutoSexMax()
+	return self.AutoSexTier == TM_AutoSexTier_ToggleMax
 end
 
 function TMHumanStats:AutoSexTierSet(autoSexTier)

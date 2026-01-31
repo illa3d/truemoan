@@ -79,13 +79,14 @@ function TMMLabel_AutoSexStats(human)
 	else return "| Hot " ..TMMLabel_Arousal(human, true).. " | " ..TMMLabel_AutoSex(human) end
 end
 
-function TMMLabel_AutoSex(human)
+function TMMLabel_AutoSex(human, showDirection)
 	if not TM_AutoSex then return "OFF (options)" end
 	local stats = TMHStatsGet(human)
 	if not stats then return "" end
+	local direction = (showDirection == true and not stats:IsAutoSexMax()) and (stats.AutoSexUp and "> " or "< ") or ""
 	if stats.IsClimax then return "Climax!"
 	elseif not stats.AutoSex then return AccStr("OFF")
-	else return AccStr(stats.AutoSexTier) end
+	else return direction .. AccStr(stats.AutoSexTier) end
 end
 
 function TMMLabel_Voice(human, plain)

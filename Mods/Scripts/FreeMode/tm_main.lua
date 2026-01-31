@@ -273,7 +273,8 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 	TMOnPenetration_AnusVagina(girl, stats, holeName, inVelocity)
 	TMOnPenetration_CumInside(girl, stats, holeName)
 
-	if inVelocity < outVelocity then return end -- useless, outVelocity is zero :(
+	-- continue if penetrating inward
+	if inVelocity < outVelocity then return end
 
 	-- Variables
 	local timerKey = "TMSexMoan_" .. girl.Name .. holeName

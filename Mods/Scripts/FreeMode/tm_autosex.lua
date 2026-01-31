@@ -176,14 +176,31 @@ function AutoSexToggle(human)
 	if not stats or stats.IsClimax then return end
 	-- If AutoSex is OFF, turn it ON
 	if not stats.AutoSex then
-		AutoSexSet(human, true, TM_AutoSexTier_ToggleMax)
+		AutoSexSet(human, true, TM_AutoSexTier_ToggleMin)
 		return
 	end
-	-- AutoSex is ON, step down tiers
-	if stats.AutoSexTier ~= TM_AutoSexTier_ToggleMin then
-		AutoSexSet(human, true, ListItemStep(AutoSexTier_Toggle, stats.AutoSexTier, -1))
-	-- AutoSex is ON, minimum tier toggles to OFF
-	else AutoSexSet(human, false) end
+
+	local function Up() AutoSexSet(human, true, ListItemStep(AutoSexTier_Toggle, stats.AutoSexTier, 1)) end
+	local function Down() AutoSexSet(human, true, ListItemStep(AutoSexTier_Toggle, stats.AutoSexTier, -1)) end
+
+	-- Step up tiers
+	if stats.AutoSexUp then
+		if stats.AutoSexTier ~= TM_AutoSexTier_ToggleMax then Up()
+		-- AutoSex is ON, minimum tier toggles to OFF
+		else 
+			-- Maximum tier toggles down (ping pong)
+			Down()
+			stats.AutoSexUp = false
+		end
+	-- Step down tiers
+	else
+		if stats.AutoSexTier ~= TM_AutoSexTier_ToggleMin then Down()
+		else 
+			-- Minimum tier toggles to OFF
+			AutoSexSet(human, false)
+			stats.AutoSexUp = true;
+		end
+	end
 end
 
 -------------------------------------------------------------------------------------------------

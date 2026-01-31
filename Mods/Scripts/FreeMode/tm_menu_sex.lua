@@ -110,7 +110,7 @@ label TMMenuSex(human)
 		+ "| Wet »	|" .. AccTextNum3("V", WetGet(human,ActBody.Vagina), "A", WetGet(human,ActBody.Anus), "M", WetGet(human,ActBody.Mouth))[gold]
 			TMMenuSex_Wet(human)
 	-- AUTO SEX
-	+ "Auto sex	| " .. TMMLabel_AutoSex(human) [if TM_AutoSex]
+	+ "Auto sex	| " .. TMMLabel_AutoSex(human, true) [if TM_AutoSex]
 		AutoSexToggle(human)
 		Return()
 	+ "Auto sex	| " .. TMMLabel_AutoSex(human) [if not TM_AutoSex]

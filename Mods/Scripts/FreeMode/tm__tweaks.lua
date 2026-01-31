@@ -10,8 +10,8 @@
 
 -- AutoSex Default Tiers for UI (Idle, Slow, Normal, Fast, Faster, Wild, Max)
 TM_AutoSexTier_Default = AutoSexTier.Normal		-- Default AutoSex tier for all new characters
-TM_AutoSexTier_ToggleMin = AutoSexTier.Idle		-- UI AutoSex toggle minimum tier (after which is OFF)
-TM_AutoSexTier_ToggleMax = AutoSexTier.Faster	-- UI AutoSex toggle maximum tier (after OFF)
+TM_AutoSexTier_ToggleMin = AutoSexTier.Idle		-- UI AutoSex toggle minimum tier
+TM_AutoSexTier_ToggleMax = AutoSexTier.Wild		-- UI AutoSex toggle maximum tier
 
 -- AutoSex Arousal
 TM_HumanArousalIncrease = 0.7	-- Base rate of arousal increase (multiplied by various factors)
