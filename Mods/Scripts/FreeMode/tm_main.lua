@@ -528,7 +528,7 @@ function TMOnUpdate_CumInside_End(human, stats)
 	if Timer(TMTimerKey_Deform(human)) < TM_BodyDeformUpdateRate then return end
 
 	-- CUMFLATION DEFLATE
-	if TM_Cumflate and stats.IsCumflating then
+	if stats.IsCumflating then -- don't use TM_Cumflate here, always allow
 		if not stats:IsDoneCumflating() then
 			local effectKey = TMTimerKey_CumEffect(human) 
 			if TMCumInside_CanPlayEffect(stats, Timer(effectKey)) then
