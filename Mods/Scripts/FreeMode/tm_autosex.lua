@@ -279,10 +279,10 @@ end
 -- START INTERACTION PARAMETER SET (Calculate timer against ticker and fire events for each active interaction)
 function AutoSex_OnTickParamsSet(human, stats, body)
 	if not TM_AutoSex or not human then return end
-	-- Stats
-	local interaction = ActGet(human, body)
-	if not interaction then return end
 	-- Interaction
+	local interaction = ActGet(human, body)
+	if not interaction or not ActActiveGet(interaction, body == ActBody.PenisHand) then return end
+	-- Stats
 	local stats = TMHStatsGet(human)
 	if not stats or not stats.AutoSex or not stats.AutoSexTier then return end
 	-- Timers structure timers[interaction][actbody][param]
@@ -302,7 +302,7 @@ function AutoSex_OnTickParamsSet(human, stats, body)
 				local tierConfig = AutoSexTier_ConfigGet(stats.AutoSexTier)[actParam]
 				if tierConfig then
 					local isHand = body == ActBody.PenisHand
-					local value = AutoSexValueGen_Random(interaction, actParam, isHand, tierConfig )
+					local value = AutoSexValueGen_Random(interaction, actParam, isHand, tierConfig)
 					-- START RANDOM TWEEN/RAW INTERACTION PARAMETER VALUE (ActAutoSexParams: Speed, Thrust, DepthStart, DepthEnd, Weight)
 					-- If SexTweenAllow() is allowed, this is where the tween starts. If not, raw value is changed directly in the game body property
 					if value ~= nil then paramSetFunc(interaction, value, isHand) end
