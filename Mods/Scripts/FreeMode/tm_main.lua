@@ -369,7 +369,6 @@ end
 function TMOnUpdate_AutoSexClimax(human, stats)
 	-- SFX: CLIMAX MOANING in OnPenetration
 	if not TM_AutoSex or not human or not stats or not stats:CanStartCumOrClimax() then return end
-	-- CanStartClimax() return self.Autosex and self.IsSexActive and self.Arousal == 1 and not self.IsClimax and not self.IsCumming 
 
 	-- penis owners never initiate climax, just start & stop cumming
 	if HumanHasPenis(human) then
@@ -489,7 +488,7 @@ function TMOnPenetration_CumInside(human, stats, holeName)
 	if partner and not HumanIsCumming(partner) then return end
 	stats.IsFeelingCum = true
 
-	-- Cum & Cumflation effects (same)
+	-- Voice Cum & Cumflation effects (same)
 	local effectKey = TMTimerKey_CumEffect(human)
 	if TMCumInside_CanPlayEffect(stats, Timer(effectKey)) then
 		-- SFX: CUM INSIDE / CUMFLATION
@@ -497,7 +496,7 @@ function TMOnPenetration_CumInside(human, stats, holeName)
 		ResetTimer(effectKey)
 	end
 	
-	-- Cumflation
+	-- Cumflation Deform Body
 	if TM_Cumflate and Timer(TMTimerKey_Deform(human)) > TM_BodyDeformUpdateRate then
 		stats.IsCumflating = true
 		TMDeformBody_Cumflate(human, stats, TM_CumflateStepUp)
@@ -507,7 +506,7 @@ end
 
 -- END OF CUM / CUMFLATION
 function TMOnUpdate_CumInside_End(human, stats)
-	if not human or not stats or stats.IsSexActive or not stats.IsFeelingCum then return end
+	if not human or not stats or stats.IsSexActive or not stats.IsFeelingCum or HasSexPartner_Any(human) then return end
 	
 	if Timer(TMTimerKey_CumInside(human)) < TM_CumPauseTime then return end
 	if Timer(TMTimerKey_Deform(human)) < TM_BodyDeformUpdateRate then return end
@@ -518,7 +517,7 @@ function TMOnUpdate_CumInside_End(human, stats)
 			local effectKey = TMTimerKey_CumEffect(human) 
 			if TMCumInside_CanPlayEffect(stats, Timer(effectKey)) then
 				-- SFX: CUMDEFLATION
-				if stats.IsVoice then TMPlayVoice(human, TMVoice.Cumflating) end
+				if stats.IsVoice then TMPlayVoice(human, TMVoice.Cumdeflating) end
 				if TM_WetSex then WetSet(human, 50000, ActBody.Vagina) end
 				ResetTimer(effectKey)
 			end
