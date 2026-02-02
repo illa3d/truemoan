@@ -1,12 +1,11 @@
--- TrueMoan v2.7 by illa3d
+-- TrueMoan v2.9 by illa3d
 ----------------------------------------------------------------------------------------------------------------------------
 TRUE MOAN VOICE PACK SCRIPT README
 -----------------------------------------------------------------------------------------------------------------------------
 TO CREATE A NEW VOICE PACK
 1. Copy tm_voice_template.lua, rename and modify
 2. Add audio files
-3. Define remapping for missing audio files
-4. (OPTIONAL) Define SFX sounds (plap, suck, suckdeep)
+3. Define remapping for missing audio tiers
 
 -----------------------------------------------------------------------------------------------------------------------------
 1. VOICE PACK SCRIPT FILE "tm_voice_{name}.lua"
@@ -46,48 +45,21 @@ Is telling TrueMoan: There are no "tm_chiyoru_faster (#).mp3" files use "tm_chiy
 If you don't have audio files for specific tiers, you need to remap tiers to existing files (else silence)
 Climax is not remapped, it's only played if the audio files exist. If it doesnt, moans are played instead.
 
------------------------------------------------------------------------------------------------------------------------------
-4. (OPTIONAL) SFX SOUNDS (Plap, Suck, SuckDeep)
------------------------------------------------------------------------------------------------------------------------------
-If this is not defined in the VoicePack - default chiyoru SFX will be used
-You must specify: number of files (variants) per SFX, volume per group of SFX.
-FILE RULES: all lowercase letters, name can have spaces, numbers # as 1,2...10,11..100,101
-
-EXAMPLES:
-[TMSfx.Fart] = { Files = 10, Volume = 0.7 },
-FILES: TrueFacials\Mods\Scripts\FreeMode\Sounds\tm_chiyoru_fart (10).mp3 (total 10 files, played at volume of 0.7)
-
-[TMSfx.Plap] = { Files = 10, Volume = 0.7 },
-FILES: TrueFacials\Mods\Scripts\FreeMode\Sounds\tm_chiyoru_plap (10).mp3 (total 10 files, played at volume of 0.7)
-
-[TMSfx.Suck] = { Files = 10, Volume = 0.9 },
-FILES: TrueFacials\Mods\Scripts\FreeMode\Sounds\tm_chiyoru_suck (10).mp3 (total 10 files, played at volume of 0.9)
-
-[TMSfx.SuckDeep] = { Files = 10, Volume = 0.9 },
-FILES: TrueFacials\Mods\Scripts\FreeMode\Sounds\tm_chiyoru_suckdeep (10).mp3 (total 10 files, played at volume of 0.9)
-
-
 
 -------------------------------------------------------------------------------------------------------------------------------
 EXAMPLE A
 -------------------------------------------------------------------------------------------------------------------------------
 AUDIO: All audio tiers present
-SFX: All sfx present, 10 files (variants) each
 REMAP: No remap
 
 TMVoiceAdd({
 	Name = "Chiyoru", -- files must have this name, but all lowercase
-	[TMSfx.Fart] =		{ Files = 10, Volume = 0.7 },
-	[TMSfx.Plap] =		{ Files = 10, Volume = 0.7 },
-	[TMSfx.Suck] =		{ Files = 10, Volume = 0.9 },
-	[TMSfx.SuckDeep] =	{ Files = 10, Volume = 0.9 },
 })
 
 -------------------------------------------------------------------------------------------------------------------------------
 EXAMPLE B
 -------------------------------------------------------------------------------------------------------------------------------
 NO AUDIO: Faster, Wild and Max
-SFX: All sfx present, 10 files (variants) each
 REMAP: Missing 3 to Fast
 
 TMVoiceAdd({
@@ -95,17 +67,12 @@ TMVoiceAdd({
 	[TMTier.Faster] = TMTier.Fast,
 	[TMTier.Wild] = TMTier.Fast,
 	[TMTier.Max] = TMTier.Fast,
-	[TMSfx.Fart] =		{ Files = 10, Volume = 0.7 },
-	[TMSfx.Plap] =		{ Files = 10, Volume = 0.7 },
-	[TMSfx.Suck] =		{ Files = 10, Volume = 0.9 },
-	[TMSfx.SuckDeep] =	{ Files = 10, Volume = 0.9 },
 })
 
 -----------------------------------------------------------------------------------------------------------------------------
 EXAMPLE C
 -----------------------------------------------------------------------------------------------------------------------------
 NO AUDIO: Faster, Wild and Max
-SFX: All sfx present, 10 files (variants) each
 REMAP: All tiers evenly
 
 TMVoiceAdd({
@@ -115,8 +82,4 @@ TMVoiceAdd({
 	[TMTier.Faster] = TMTier.Normal,
 	[TMTier.Wild] = TMTier.Fast,
 	[TMTier.Max] = TMTier.Fast,
-	[TMSfx.Fart] =		{ Files = 10, Volume = 0.7 },
-	[TMSfx.Plap] =		{ Files = 20, Volume = 0.7 },
-	[TMSfx.Suck] =		{ Files = 25, Volume = 0.9 },
-	[TMSfx.SuckDeep] =	{ Files = 25, Volume = 0.9 },
 })
