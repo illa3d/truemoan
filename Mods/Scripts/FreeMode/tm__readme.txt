@@ -54,7 +54,7 @@
 - If new version config/tweaks don't look the same as ones you have, **don't just overwrite with your configs**, re-set your values in the new files
 
 **HOW TO UNINSTALL**
-- Delete TrueMoan files in ⁨`Mods/Scripts/FreeMode`⁩: ⁨`tm_*.*, Voice/tm_*.mp3, Sounds/tm_*.mp3`⁩
+- Delete TrueMoan files in `Mods/Scripts/FreeMode`: `tm_*.*, Voice/tm_*.mp3, Sounds/tm_*.mp3`
 
 
 

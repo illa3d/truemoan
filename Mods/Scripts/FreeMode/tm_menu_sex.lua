@@ -8,7 +8,9 @@ local tmSdecSpd = 1
 -- SEX MENU
 ---@diagnostic disable: exp-in-action, undefined-global, keyword, unknown-symbol, miss-end, miss-symbol, miss-exp, err-nonstandard-symbol, err-assign-as-eq, malformed-number
 label TMMenuSex(human)
-	+ "Auto sex options »" [gold]
+	+ "Auto sex / Sex, ".. AccStr("Everyone") .." »" [gold]
+		TMMenuOptions_Sex(human)
+	+ "Auto sex, " .. AccStr(human.Name) .. " »" [gold]
 		TMMenuSex_Auto(human, TMHStatsGet(human))
 
 	+ if HasSexPartner_Any(human) and IsSexActive_Any(human)
