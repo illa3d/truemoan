@@ -27,8 +27,13 @@ label TMMenuHeyHuman(human)
 	+ "Penis		| " .. AccBool(human.Penis.IsActive) [if not human.m_isMale]
 		HumanPenisSet(human, not human.Penis.IsActive)
 		Return(2)
-	+ if TM_SFX_VoiceAllow(human)
-		+ "Voice		| " .. TMMLabel_Voice(human) [if TM_Voices_CountLow()]
+	+ if TMVoiceAllow(human)
+		+ "Sfx	| " .. TMMLabel_Sfx(human) [if TM_Sfxs_CountLow()]
+			TMHStatsGet(human):SfxToggle()
+			Return()
+		+ "Sfx »	| " .. TMMLabel_Sfx(human) [gold] [if not TM_Sfxs_CountLow()]
+			TMMenuList_Sfx(human)
+		+ "Voice	| " .. TMMLabel_Voice(human) [if TM_Voices_CountLow()]
 			TMHStatsGet(human):VoiceToggle()
 			Return()
 		+ "Voice »	| " .. TMMLabel_Voice(human) [gold] [if not TM_Voices_CountLow()]
@@ -75,7 +80,9 @@ label TMMenuHumanStats(human, stats)
 		Return()
 	+ "Arousal	| " .. AccNumPC(stats.Arousal, 2, true) [if stats.Arousal > 0]
 		Return()
-	+ "Voice		| " .. TMMLabel_Voice(human, true) [if TM_SFX_VoiceAllow(human)]
+	+ "Sfx			| " .. TMMLabel_Sfx(human, true) [if TMSfxAllow(human)]
+		Return()
+	+ "Voice		| " .. TMMLabel_Voice(human, true) [if TMVoiceAllow(human)]
 		Return()
 	+ "Auto sex	| " .. AccBoolYN(stats.AutoSex, true) .. " | " .. stats.AutoSexTier
 		Return()

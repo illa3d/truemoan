@@ -17,6 +17,11 @@ TM_Voices_Names = {}
 TM_Voices_Character = {}
 function TM_Voices_CountLow() return #TM_Voices_Names < 10 end
 
+-- SFX
+TM_Sfxs = {}
+TM_Sfxs_Names = {}
+function TM_Sfxs_CountLow() return #TM_Sfxs_Names < 10 end
+
 -- Voice Tier "Enum" (filename parts) 
 TMTier = {
 	Idle = "slow",
@@ -61,6 +66,10 @@ TMVoiceDefault = {
 	[TMTier.Faster] = TMTier.Faster,
 	[TMTier.Wild] = TMTier.Wild,
 	[TMTier.Max] = TMTier.Max,
+}
+
+TMSfxDefault = {
+	Name = "Chiyoru",
 	[TMSfx.Fart] = { Files = 7, Volume = 0.5 },
 	[TMSfx.Plap] = { Files = 20, Volume = 0.7 },
 	[TMSfx.Suck] = { Files = 25, Volume = 0.9 },
@@ -77,34 +86,118 @@ TM_Moans_CumInside = { TMTier.Slow, TMTier.Normal, TMTier.Fast }
 TM_Moans_Cumflating = { TMTier.Fast, TMTier.Faster, TMTier.Wild }
 TM_Moans_Cumdeflating = { TMTier.Slow, TMTier.Fast, TMTier.Faster }
 
+
+
+-------------------------------------------------------------------------------------------------
+--===============================================================================================
+-- SFX PACKS
+--===============================================================================================
 -------------------------------------------------------------------------------------------------
 
--- RANDOM
+function TMSfxsHas() return #TM_Sfxs_Names > 0 end
+
+-- Add new SFX pack definition
+function TMSfxAdd(tmSfxPack)
+	if type(tmSfxPack) ~= "table" or not tmSfxPack.Name or tmSfxPack.Name == "" or TM_Sfxs[tmSfxPack.Name] then return end
+	TM_Sfxs[tmSfxPack.Name] = TableClone(tmSfxPack)
+	table.insert(TM_Sfxs_Names, tmSfxPack.Name)
+end
+
+-- Check SFX pack by name
+function TMSfxHas(tmSfxName)
+	if not tmSfxName then return false end
+	return TM_Sfxs[tmSfxName] ~= nil
+end
+
+-- Get SFX pack by name
+function TMSfxGet(tmSfxName)
+	if not tmSfxName or not TM_Sfxs[tmSfxName] then return TMSfxDefault end
+	return TM_Sfxs[tmSfxName]
+end
+
+-- Get SFX Pack
+function TMSfxGet_Random()
+	if  IsTableEmpty(TM_Sfxs) then return TMSfxDefault end
+	return TableItemRandom(TM_Sfxs)
+end
+
+-- Get SFX Pack name
+function TMSfxGet_RandomName()
+	if  IsTableEmpty(TM_Sfxs_Names) then return TMSfxDefault.Name end
+	return ListItemRandom(TM_Sfxs_Names)
+end
+
+-- Get SFX Pack
+function TMSfxGet_Human(human)
+	if not human then return TMSfxDefault end
+	-- 1. sfx assigned in stats
+	local stats = TMHStatsGet(human)
+	if stats and stats.SfxName and TMSfxHas(stats.SfxName) then return TMSfxGet(stats.SfxName) end
+	-- 2. Random fallback
+	return TMSfxGet_Random()
+end
+
+-- Get a random filename
 function TMSfxGetFilenameRandom(human, tmSfx)
 	if not human or not tmSfx then return end
-	local tmVoice = TMVoiceGet_Human(human)
-	if not tmVoice or not tmVoice[tmSfx] or not tmVoice[tmSfx].Files or type(tmVoice[tmSfx].Files) ~= "number" or tmVoice[tmSfx].Files < 1 then
-		tmVoice = TMVoiceDefault
+	local sfxPack = TMSfxGet_Human(human)
+	if not sfxPack or not sfxPack[tmSfx] or not sfxPack[tmSfx].Files or type(sfxPack[tmSfx].Files) ~= "number" or sfxPack[tmSfx].Files < 1 then
+		sfxPack = TMSfxDefault
 	end
-	local name = tmVoice.Name
-	local files = FloorToInt(tmVoice[tmSfx].Files)
+	local name = sfxPack.Name
+	local files = FloorToInt(sfxPack[tmSfx].Files)
 	local track = GetRandom(1, files)
 	---@diagnostic disable-next-line
 	return "tm_" ..name:lower().. "_" ..tmSfx.. " (" .. track .. ")"
 end
 
 -------------------------------------------------------------------------------------------------
--- VOICES
+
+function TMSfxSet_Random(human)
+	TMSfxSet(human, TM_Sfxs_Names[GetRandom(0, #TM_Sfxs_Names)])
+end
+
+function TMSfxSet(human, sfxName)
+	if not human or not sfxName or sfxName == "" then return end
+	local stats = TMHStatsGet(human)
+	if not stats then return end
+	stats.SfxName = sfxName
+end
+
+-------------------------------------------------------------------------------------------------
+-- SFX PLAYBACK
+-------------------------------------------------------------------------------------------------
+function TMSfxAllow(human)
+	if not TM_SFX or not human then return false end
+	return true
+end
+
+function TMPlaySFX(human, tmSfx, humanPart, volume)
+	if not TMSfxAllow(human) or not human then return end
+	local stats = TMHStatsGet(human)
+	if not stats or not stats.IsSfx then return end
+	local sfxPack = TMSfxGet_Human(human)
+	local tmVol = (sfxPack and sfxPack[tmSfx] and sfxPack[tmSfx].Volume) and Clamp01(sfxPack[tmSfx].Volume) or 1
+	-- if defined volume in param, multiply by volume in config. if not defined, just use volume config
+	local vol = tmVol * (volume and volume or 1)
+	PlaySoundAt(TMSfxGetFilenameRandom(human, tmSfx), HumanPosGet(human, humanPart), vol)
+end
+
+
+
+-------------------------------------------------------------------------------------------------
+--===============================================================================================
+-- VOICE PACKS
+--===============================================================================================
 -------------------------------------------------------------------------------------------------
 
 function TMVoicesHas() return #TM_Voices_Names > 0 end
 
 -- Add a new voice definition
--- tmVoice = { Name = "VoiceName", [TMTier.X] = TMTier.Y, ... }
-function TMVoiceAdd(tmVoice)
-	if type(tmVoice) ~= "table" or not tmVoice.Name or tmVoice.Name == "" or TM_Voices[tmVoice.Name] then return end
-	TM_Voices[tmVoice.Name] = TableClone(tmVoice)
-	table.insert(TM_Voices_Names, tmVoice.Name)
+function TMVoiceAdd(tmVoicePack)
+	if type(tmVoicePack) ~= "table" or not tmVoicePack.Name or tmVoicePack.Name == "" or TM_Voices[tmVoicePack.Name] then return end
+	TM_Voices[tmVoicePack.Name] = TableClone(tmVoicePack)
+	table.insert(TM_Voices_Names, tmVoicePack.Name)
 end
 
 -- Check if a voice exists by name
@@ -140,6 +233,7 @@ function TMVoiceGet_Human(human)
 	-- 3. Random fallback
 	return TMVoiceGet_Random()
 end
+
 -------------------------------------------------------------------------------------------------
 
 function TMVoiceSet_Random(human)
@@ -159,29 +253,19 @@ function TMVoiceSet_Character(human)
 	if not stats or not stats.VoiceName then return end
 	stats.VoiceName = TM_Voices_Character[human.ClothingName]
 end
--------------------------------------------------------------------------------------------------
--- SFX / SOUND SOURCE POSITION
--------------------------------------------------------------------------------------------------
-function TMPlaySFX(human, tmSfx, humanPart, volume)
-	if not TM_SFX or not human then return end
-	local tmVoice = TMVoiceGet_Human(human)
-	local tmVol = (tmVoice and tmVoice[tmSfx] and tmVoice[tmSfx].Volume) and Clamp01(tmVoice[tmSfx].Volume) or 1
-	-- if defined volume in param, multiply by volume in config. if not defined, just use volume config
-	local vol = tmVol * (volume and volume or 1)
-	PlaySoundAt(TMSfxGetFilenameRandom(human, tmSfx), HumanPosGet(human, humanPart), vol)
-end
 
 -------------------------------------------------------------------------------------------------
--- VOICES
+-- VOICE PLAYBACK
 -------------------------------------------------------------------------------------------------
-function TM_SFX_VoiceAllow(human)
-	if VM_VoiceMod_Enabled and VM_VoiceMod_Enabled == true then return false end
-	if not TM_SFX or not TM_SFX_Voice or not human or (not TM_SFX_VoiceMale and human.m_isMale) or (not TM_SFX_VoiceFuta and not human.m_isMale and HumanHasPenis(human)) then return false end
+function TMVoiceAllow(human)
+	if VM_VoiceMod_Enabled == true then return false end
+	if not TM_SFX or not TM_Voice or not human or (not TM_VoiceMale and human.m_isMale) or (not TM_VoiceFuta and not human.m_isMale and HumanHasPenis(human)) then return false end
 	return true
 end
 
+-- Voice playback
 function TMPlayVoice(human, tmVoice)
-	if not TM_SFX_VoiceAllow(human) then return end
+	if not TMVoiceAllow(human) or not human or not tmVoice then return end
 	local stats = TMHStatsGet(human)
 	if not stats or stats.IsClimax or not stats.IsVoice then return end
 	-- if tmVoice == TMVoice.Sex then -- dynamic
@@ -197,12 +281,12 @@ function TMPlayVoice(human, tmVoice)
 	end
 end
 
--- SFX: All sfx is played here. Directly calling: Sex, Futa, Cum, Cumflation, Cumdeflation (the rest is above)
+-- Voice tier playback (called from: TMPlayVoice, Sex, Futa, Cum, Cumflation, Cumdeflation)
 function TMPlayTier(human, tmTier)
 	-- don't moan with other voice mods
-	if not TM_SFX_VoiceAllow(human) then return end
+	if not TMVoiceAllow(human) then return end
 	local stats = TMHStatsGet(human)
-	if not stats or not stats.IsVoice or not stats.VoiceName or stats.VoiceName == "" then return end;
+	if not stats or not stats.IsVoice then return end
 	local tmVoice = TMVoiceGet_Human(human)
 	if not tmVoice then return end
  	-- VoicePack tier remap
@@ -212,16 +296,24 @@ function TMPlayTier(human, tmTier)
 	human.SayCustom(file .. "_" .. tier)
 end
 
+
+
 -------------------------------------------------------------------------------------------------
+--===============================================================================================
 -- MUSIC
+--===============================================================================================
 -------------------------------------------------------------------------------------------------
 
 function TMPlayMusic(track)
 	Music(track , 0.05, 0)
 end
 
+
+
 -------------------------------------------------------------------------------------------------
+--===============================================================================================
 -- AMBIENCE
+--===============================================================================================
 -------------------------------------------------------------------------------------------------
 
 function TMAmbienceLeftSec()

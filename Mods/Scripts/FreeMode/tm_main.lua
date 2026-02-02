@@ -22,13 +22,13 @@ end
 
 function TMOnStart_GenericChat()
 	TM_GenChatInit = true
-	if not TM_SFX_GenericChat then return end
+	if not TM_GenericChat then return end
 	local timerKey = "TMGenericChat"
 	ResetTimer(timerKey, math.random(-10, 0))
 	---@diagnostic disable: undefined-global, miss-symbol, unknown-symbol
 	local speaker = game.GetRandomHuman(|h| h.CanSpeak)
 	---@diagnostic enable: undefined-global, miss-symbol, unknown-symbol
-	if not TM_SFX_VoiceAllow(speaker) then return end
+	if not TMVoiceAllow(speaker) then return end
 	speaker.Say("Greeting")
 end
 
@@ -55,7 +55,7 @@ end
 -- Generic chat update function (every frame)
 function TMOnUpdate_GenericChat()
 	-- GENERIC CHAT
-	if not TM_GenChatInit == true or not TM_SFX_GenericChat then return end
+	if not TM_GenChatInit == true or not TM_GenericChat then return end
 	local timerKey = "TMGenericChat"
 	local lastChatTime = Timer(timerKey)
 	if lastChatTime > game.ChatIntervals then
@@ -63,7 +63,7 @@ function TMOnUpdate_GenericChat()
 		---@diagnostic disable: undefined-global, miss-symbol, unknown-symbol
 		local speaker = game.GetRandomHuman(|h| h.CanSpeak and ((h.FaceMood >= 0 and h.HasVoice("Like") == true) or (h.FaceMood < 0 and h.HasVoice("Dislike") == true)))
 		---@diagnostic enable: undefined-global, miss-symbol, unknown-symbol
-		if not TM_SFX_VoiceAllow(speaker) then return end
+		if not TMVoiceAllow(speaker) then return end
 		---@diagnostic disable-next-line
 		speaker.Say(speaker.FaceMood >= 0 and "Like" or "Dislike")
 	end
@@ -81,7 +81,7 @@ function TMOnCreateHuman(human)
 	if not TM_GenChatInit == true then return end
 	game.PlayCharacterMusic(human)
 	-- GENERIC CHAT
-	if not TM_SFX_GenericChat or not TM_SFX_VoiceAllow(human) then return end
+	if not TM_GenericChat or not TMVoiceAllow(human) then return end
 	human.Say("Greeting")
 end
 
@@ -192,7 +192,7 @@ function TMOnFluidHit(hitActor, bodyArea, shootActor)
 	else
 		local genericVoiceKey = "TMFluidHit_Generic_" .. hitActor.Name
 		local lastGenericVoiceTime = Timer(genericVoiceKey)
-		if TM_GenChatInit and lastGenericVoiceTime > game.ChatIntervals and TM_SFX_VoiceAllow(hitActor) then
+		if TM_GenChatInit and lastGenericVoiceTime > game.ChatIntervals and TMVoiceAllow(hitActor) then
 			hitActor.Say(hitActor.FaceMood >= 0 and "Like" or "Dislike")
 			ResetTimer(genericVoiceKey)
 		elseif lastTime > TM_MoanCumBodyTime then
@@ -265,7 +265,7 @@ end
 
 -- PENIS ACTION MOANING (MALE, FUTA) > ONPENETRATION ROUTER
 function TMOnUpdate_PenisAction(human, stats)
-	if not TM_SFX or not TM_SFX_Voice or not human or not HumanHasPenis(human) or (not TM_SFX_VoiceFuta and not human.m_isMale) or (not TM_SFX_VoiceMale and human.m_isMale) then return end
+	if not TM_Voice or not human or not HumanHasPenis(human) or (not TM_VoiceFuta and not human.m_isMale) or (not TM_VoiceMale and human.m_isMale) then return end
 	local function DoFutaMoan(actBody)
 		local act = ActGet(human, actBody)
 		if not act or not ActActiveGet(act, actBody == ActBody.PenisHand) then return end
@@ -358,7 +358,7 @@ function TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 
 	-- Play
 	if lastMoanTime > pause then
-		if TM_SFX and TM_SFX_Voice and stats and stats.IsVoice then
+		if TM_Voice and stats and stats.IsVoice then
 			-- SFX: CLIMAX MOANING
 			if stats and stats.IsClimax then 
 				TMPlayTier(girl, TMTier.Climax) -- start playing climax tier if it exists
@@ -491,7 +491,7 @@ end
 -------------------------------------------------------------------------------------------------
 
 local function TMCumInside_CanPlayEffect(stats, lastEffect)
-	if not TM_SFX or not TM_SFX_Voice or not stats.IsVoice then return false end
+	if not TM_Voice or not stats.IsVoice then return false end
 	return lastEffect > TM_CumEffectTime
 end
 
@@ -563,7 +563,7 @@ function TMOnCumInside_EndCum(human, stats)
 	local delay = 0.5
 	local function Increment(value) delay = IncrementMultiplierRandom(delay, value, 0.8, 1.1) end
 	-- SFX: CUM PULLOUT
-	if not TM_SFX or not TM_SFX_Voice then return end
+	if not TM_Voice then return end
 	HumanTalkStop(human)
 	Delayed(delay, function() TMPlayTier(human, TMTier.Fast) end) Increment(0.5)
 	Delayed(delay, function() TMPlayTier(human, TMTier.Fast) end) Increment(0.5)
@@ -581,7 +581,7 @@ function TMOnCumInside_EndCumflate(human, stats)
 	local delay = 0.4
 	local function Increment(value) delay = IncrementMultiplierRandom(delay, value, 0.8, 1.1) end
 	-- SFX: CUMFLATION PULLOUT
-	if not TM_SFX or not TM_SFX_Voice then return end
+	if not TM_Voice then return end
 	HumanTalkStop(human)
 	Delayed(delay, function() TMPlayTier(human, TMTier.Faster) end) Increment(0.4)
 	Delayed(delay, function() TMPlayTier(human, TMTier.Faster) end) Increment(0.4)

@@ -92,9 +92,17 @@ end
 function TMMLabel_Voice(human, plain)
 	local stats = TMHStatsGet(human)
 	if not stats then return "" end
-	if not TM_SFX or not TM_SFX_Voice then return "OFF (options)"
+	if not TM_Voice then return "OFF (options)"
 	elseif not stats.IsVoice then return plain == true and "OFF" or AccStr("OFF")
 	else return plain == true and stats.VoiceName or AccStr(stats.VoiceName) end
+end
+
+function TMMLabel_Sfx(human, plain)
+	local stats = TMHStatsGet(human)
+	if not stats then return "" end
+	if not TM_SFX then return "OFF (options)"
+	elseif not stats.IsSfx then return plain == true and "OFF" or AccStr("OFF")
+	else return plain == true and stats.SfxName or AccStr(stats.SfxName) end
 end
 
 function TMMLabel_Arousal(human, skipLetter)

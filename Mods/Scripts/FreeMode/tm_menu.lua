@@ -161,3 +161,27 @@ label TMMenuList_Voice(human)
 		Return(2)
 	+ TM_MenuClose .. "	| Voice: " .. AccStr(TMHStatsGet(human).VoiceName)
 stop
+
+-- SFX
+label TMMenuList_Sfx(human)
+	+ "< SFX | " .. human.Name .. ">"
+	+ if TM_Sfxs_Names == nil or #TM_Sfxs_Names == 0
+		+ "-empty- "
+			Return()
+	+ else
+		+ TM_MenuBack
+			Return(2)
+		+ for i, item in ipairs(TM_Sfxs_Names)
+			+ AccStr(i .. ". ") .. item
+				TMSfxSet(human, item)
+				Return()
+			+ if i % TM_MenuBackButtonEvery == 0
+				+ TM_MenuBack
+					Return(2)
+	+ "Random" [gold]
+		TMSfxSet_Random(human)
+		Return()
+	+ TM_MenuBack
+		Return(2)
+	+ TM_MenuClose .. "	| Voice: " .. AccStr(TMHStatsGet(human).SfxName)
+stop

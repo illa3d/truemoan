@@ -14,6 +14,8 @@ TMHumanStats = {
 	-- Voice
 	IsVoice = true,
 	VoiceName = "",
+	IsSfx = true,
+	SfxName = "",
 	-- Sex
 	IsSexActive = false,
 	PenisHole = false,
@@ -79,6 +81,7 @@ local function TMHStatsNew(human)
 	clone.ArousalSeed = GetRandomFloatAround(1, Clamp01(TM_HumanArousalVariation)) -- Add random seed variation 10%
 	clone.AutoSexTier = TM_AutoSexTier_Default
 	clone.VoiceName = TMVoiceGet_RandomName()
+	clone.SfxName = TMSfxGet_RandomName()
 	TM_HumanStatsList[human] = clone
 end
 
@@ -223,6 +226,26 @@ function TMHumanStats:VoiceToggle()
 		self.VoiceName = ListItemStep(TM_Voices_Names, self.VoiceName, -1)
 	-- Voice is ON, minimum tier toggles to OFF
 	else self.IsVoice = false end
+end
+
+function TMHumanStats:SfxToggle()
+	-- No voices registered
+	if not TMSfxsHas() then
+		self.IsSfx = false
+		return
+	end
+	
+	-- If Voice is OFF, turn it ON
+	if not self.IsSfx then
+		self.IsSfx = true
+		self.SfxName = TM_Sfxs_Names[#TM_Sfxs_Names]
+		return
+	end
+	-- Voice is ON, step down tiers
+	if self.SfxName ~= TM_Sfxs_Names[1] then
+		self.SfxName = ListItemStep(TM_Sfxs_Names, self.SfxName, -1)
+	-- Voice is ON, minimum tier toggles to OFF
+	else self.IsSfx = false end
 end
 
 function TMHumanStats:CanStartCumOrClimax()

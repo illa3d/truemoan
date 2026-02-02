@@ -83,37 +83,37 @@ label TMMenuOptions_React(human)
 		Return()
 	+ "< SFX / Voice | " .. AccStr("Everyone") .. " >" [gold]
 		Return()
+	+ if VM_VoiceMod_Enabled
+		+ "| Voice		| Disabled (VoiceMod)"
+			Return()
+	+ else
+		+ if TM_Voice
+			+ "| Gen Chat	| " .. AccBool(TM_GenericChat)
+				TM_GenericChat = not TM_GenericChat
+				Return()
+			+ "| React fluid	| " .. AccBool(game.FluidReaction)
+				game.FluidReaction = not game.FluidReaction
+				Return()
+			+ "| Voice male	| " .. AccBool(TM_VoiceMale)
+				TM_VoiceMale = not TM_VoiceMale
+				Return()
+			+ "| Voice futa	| " .. AccBool(TM_VoiceFuta)
+				TM_VoiceFuta = not TM_VoiceFuta
+				Return()
+		+ "Voice	| " .. AccBool(TM_Voice)
+			TM_Voice = not TM_Voice
+			Return()
 	+ if TM_SFX
-		+ if not VM_VoiceMod_Enabled
-			+ if TM_SFX_Voice
-				+ "|| Generic chat	| " .. AccBool(TM_SFX_GenericChat)
-					TM_SFX_GenericChat = not TM_SFX_GenericChat
-					Return()
-				+ "|| React fluid	| " .. AccBool(game.FluidReaction)
-					game.FluidReaction = not game.FluidReaction
-					Return()
-				+ "|| Voice male	| " .. AccBool(TM_SFX_VoiceMale)
-					TM_SFX_VoiceMale = not TM_SFX_VoiceMale
-					Return()
-				+ "|| Voice futa	| " .. AccBool(TM_SFX_VoiceFuta)
-					TM_SFX_VoiceFuta = not TM_SFX_VoiceFuta
-					Return()
-			+ "| Voice		| " .. AccBool(TM_SFX_Voice)
-				TM_SFX_Voice = not TM_SFX_Voice
-				Return()
-		+ else
-			+ "| Voice		| Disabled (VoiceMod)"
-				Return()
-		+ "| SFX Fart		| " .. AccBool(TM_SFX_Fart)
+		+ "| SFX Fart	| " .. AccBool(TM_SFX_Fart)
 			TM_SFX_Fart = not TM_SFX_Fart
 			Return()
-		+ "| SFX Plap		| " .. AccBool(TM_SFX_Plap)
+		+ "| SFX Plap	| " .. AccBool(TM_SFX_Plap)
 			TM_SFX_Plap = not TM_SFX_Plap
 			Return()
-		+ "| SFX Suck		| " .. AccBool(TM_SFX_Suck)
+		+ "| SFX Suck	| " .. AccBool(TM_SFX_Suck)
 			TM_SFX_Suck = not TM_SFX_Suck
 			Return()
-	+ "SFX / Voice		| " .. AccBool(TM_SFX)
+	+ "SFX	| " .. AccBool(TM_SFX)
 		TM_SFX = not TM_SFX
 		Return()
 	+ if TMMOD_VoiceMod

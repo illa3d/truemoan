@@ -49,15 +49,15 @@ TM_SFX_Ambient = true				-- Ambient sounds
 TM_SFX_AmbientVolume = 0.7			-- [0-1] Ambient volume
 TM_SFX_AmbientFiles = 6				-- Number of Ambient files (if you add more, change this number)
 
--- SFX: Voice/Plap/Suck/Chat
+-- SFX: Suck/Plap/Fart
 TM_SFX = true						-- Turns off all SFX/Voice sounds
-
 TM_SFX_Suck = true					-- Blowjob sounds
 TM_SFX_Plap = true					-- Plapping when in sex (anal or vaginal)
-TM_SFX_Fart = false					-- Farting when in sex (anal or vaginal)
+TM_SFX_Fart = true					-- Farting when in sex (anal or vaginal)
 TM_SFX_FartChance = 0.3				-- [0-1] Farting sound playback chance
 
-TM_SFX_Voice = true					-- Voice (everyone)
-TM_SFX_VoiceMale = false			-- Voice males
-TM_SFX_VoiceFuta = true				-- Voice chicks with dicks
-TM_SFX_GenericChat = true			-- TrueFacials generic chat (original voices)
+-- Voice: Voice/Generic Chat
+TM_Voice = true						-- Voice (everyone)
+TM_VoiceMale = false				-- Voice males
+TM_VoiceFuta = true					-- Voice chicks with dicks
+TM_GenericChat = true				-- TrueFacials generic chat (original voices)
