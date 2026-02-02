@@ -1,4 +1,4 @@
--- TrueMoan v2.7 by illa3d
+-- TrueMoan v2.9 by illa3d
 ------------------------------------------------------------------------------------------------------------------
 -- TRUE MOAN DEFAULTS CONFIG (Values changed in options reset after scene load, here you set that permanent)
 ------------------------------------------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ TM_SFX_AmbientFiles = 6				-- Number of Ambient files (if you add more, change t
 TM_SFX = true						-- Turns off all SFX/Voice sounds
 TM_SFX_Suck = true					-- Blowjob sounds
 TM_SFX_Plap = true					-- Plapping when in sex (anal or vaginal)
-TM_SFX_Fart = true					-- Farting when in sex (anal or vaginal)
+TM_SFX_Fart = false					-- Farting when in sex (anal or vaginal)
 TM_SFX_FartChance = 0.3				-- [0-1] Farting sound playback chance
 
 -- Voice: Voice/Generic Chat

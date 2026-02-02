@@ -2,7 +2,7 @@
 --                                               TRUE MOAN                                             --
 ---------------------------------------------------------------------------------------------------------
 
-**AutoSex Control | BodyEdit | Voice Packs | Sex SFX/Reactions | Bulging | Cumflation | Animation | Poses | Ambient Audio | Skyboxes | Improved Menu |**
+**AutoSex Control | BodyEdit | Voice/Sfx Packs | Sex SFX/Reactions | Bulging/Cumflation | Animation | Poses | Ambient Audio | Skyboxes | Improved Menu |**
 
 **MOD FEATURES**
 - **Auto Sex Control**
@@ -15,7 +15,7 @@
   - Generate, Copy/Paste, Presets
 - **Realistic Moans & SFX**
   - Blowjob, Plap & Fart sound effects
-  - Voice Packs support
+  - Voice/Sfx Packs support
 - **TrueFace**
   - Procedural animation system + presets
 - **Bulging/Cumflation**
@@ -29,8 +29,8 @@
 - **7x skyboxes** (8/4/2k)
 
 **LATEST FILES**
-**TrueMoan_v2.8.zip** - Just TrueMoan
-**TrueMoan_v2.8_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
+**TrueMoan_v2.9.zip** - Just TrueMoan
+**TrueMoan_v2.9_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
 **TrueMoan_Addon_Skyboxes_4k_v1.0.zip**
 **TrueMoan_Addon_VoicePack_AllVoiceMods_v1.0.zip** (requires AllVoiceMods mod)
 **Download: ** https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
@@ -144,7 +144,8 @@ Thanks!
 
 **VOICE SETUP**
 TrueMoan Voice Setup - https://discord.com/channels/620113492208517120/1451633202019172462/1451637694005510305
-How to create VoicePacks - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_voice__README.txt
+Create VoicePacks - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_voice__README.txt
+Create SfxPacks - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm_sfx__README.txt
 
 **INTEGRATED MODS**
 - `faunaLABS_v1.02 - TMMM Ready.zip` https://discord.com/channels/620113492208517120/1358287146791866446/1454138284841369701 by @faunap 
@@ -164,6 +165,12 @@ GitHub Repository - https://github.com/illa3d/truemoan
 
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
+
+[ v2.9 ]
+- Separated Sfx from Voice Packs
+- Added support for Sfx Packs
+- Cumflation end bugfix
+- Reduced fart chance
 
 [ v2.8 ]
 - SFX: Added VoicePack fart (fart,plap,suck,suckdeep)

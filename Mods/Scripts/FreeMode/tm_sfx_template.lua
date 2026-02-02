@@ -1,5 +1,5 @@
 -- True Moan SFX Pack
--- See tm_voices_README.txt for details
+-- See tm_sfx_README.txt for details
 TMSfxAdd({
 	-- SFX PACK NAME (can have spaces, can have upper-cases. Files must all be lowercase!)
 	Name = "",
