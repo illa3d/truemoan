@@ -52,9 +52,9 @@ EXAMPLE A
 AUDIO: All audio tiers present
 REMAP: No remap
 
-TMVoiceAdd({
+if TMVoiceAdd == "function" then TMVoiceAdd({
 	Name = "Chiyoru", -- files must have this name, but all lowercase
-})
+}) end
 
 -------------------------------------------------------------------------------------------------------------------------------
 EXAMPLE B
@@ -62,12 +62,12 @@ EXAMPLE B
 NO AUDIO: Faster, Wild and Max
 REMAP: Missing 3 to Fast
 
-TMVoiceAdd({
+if TMVoiceAdd == "function" then TMVoiceAdd({
 	Name = "Chiyoru", -- files must have this name, but all lowercase
 	[TMTier.Faster] = TMTier.Fast,
 	[TMTier.Wild] = TMTier.Fast,
 	[TMTier.Max] = TMTier.Fast,
-})
+}) end
 
 -----------------------------------------------------------------------------------------------------------------------------
 EXAMPLE C
@@ -75,11 +75,11 @@ EXAMPLE C
 NO AUDIO: Faster, Wild and Max
 REMAP: All tiers evenly
 
-TMVoiceAdd({
+if TMVoiceAdd == "function" then TMVoiceAdd({
 	Name = "Chiyoru", -- files must have this name, but all lowercase
 	[TMTier.Normal] = TMTier.Slow,
 	[TMTier.Fast] = TMTier.Normal,
 	[TMTier.Faster] = TMTier.Normal,
 	[TMTier.Wild] = TMTier.Fast,
 	[TMTier.Max] = TMTier.Fast,
-})
+}) end

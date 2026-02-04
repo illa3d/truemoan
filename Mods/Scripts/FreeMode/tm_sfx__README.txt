@@ -52,13 +52,13 @@ EXAMPLE A
 -------------------------------------------------------------------------------------------------------------------------------
 SFX: All sfx types present, 10 of each
 
-TMVoiceAdd({
+if TMSfxAdd == "function" then TMVoiceAdd({
 	Name = "Sloppy", -- files must have this name, but all lowercase
 	[TMSfx.Fart] =		{ Files = 10, Volume = 1 },
 	[TMSfx.Plap] =		{ Files = 10, Volume = 1 },
 	[TMSfx.Suck] =		{ Files = 10, Volume = 1 },
 	[TMSfx.SuckDeep] =	{ Files = 10, Volume = 1 },
-})
+}) end
 
 -------------------------------------------------------------------------------------------------------------------------------
 EXAMPLE B
@@ -66,7 +66,7 @@ EXAMPLE B
 SFX: Only 10 plap files present
 Notice only plap is defined
 
-TMVoiceAdd({
+if TMSfxAdd == "function" then TMVoiceAdd({
 	Name = "Sloppy", -- files must have this name, but all lowercase
 	[TMSfx.Plap] =		{ Files = 10, Volume = 1 },
-})
+}) end
