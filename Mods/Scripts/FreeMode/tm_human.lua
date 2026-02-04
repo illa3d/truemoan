@@ -206,10 +206,8 @@ function HumanFaceAt(human, position)
 end
 
 function HumanEyesOpen(human, isopen) -- open = 0, closed = 1
-	if isopen == nil then state = 0
-	else state = isopen and 0 or 1 end
+	local state = isopen == true and 0 or 1
 	human.Pose(Preset(EyelidL(state), EyelidR(state)))
-	return isopen
 end
 
 function HumanReset(human, resetsex, resetanim, resetpose, resetface)
