@@ -54,7 +54,14 @@ REMAP: No remap
 
 if type(TMVoiceAdd) == "function" then TMVoiceAdd({
 	Name = "Chiyoru", -- files must have this name, but all lowercase
+	IsMale = false, -- you can set this to true to be a male only Voice Pack or don't define it at all (empty line)
 }) end
+
+if type(TMVoiceAdd) == "function" then TMVoiceAdd({
+	Name = "Leon", -- files must have this name, but all lowercase
+	IsMale = true, -- Male Voice Pack!
+}) end
+
 
 -------------------------------------------------------------------------------------------------------------------------------
 EXAMPLE B
