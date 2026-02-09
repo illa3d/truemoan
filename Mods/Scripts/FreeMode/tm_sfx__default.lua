@@ -1,6 +1,6 @@
 -- True Moan SFX Pack
 -- See tm_voice_README.txt for details
-if TMSfxAdd == "function" then TMSfxAdd({
+if type(TMSfxAdd ) == "function" then TMSfxAdd({
 	Name = "TrueMoan",
 	[TMSfx.Fart] =		{ Files = 7, Volume = 0.7 },
 	[TMSfx.Plap] =		{ Files = 20, Volume = 0.7 },

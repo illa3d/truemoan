@@ -52,12 +52,12 @@ EXAMPLE A
 AUDIO: All audio tiers present
 REMAP: No remap
 
-if TMVoiceAdd == "function" then TMVoiceAdd({
+if type(TMVoiceAdd) == "function" then TMVoiceAdd({
 	Name = "Chiyoru", -- files must have this name, but all lowercase
 	IsMale = false, -- you can set this to true to be a male only Voice Pack or don't define it at all (empty line)
 })
 
-if TMVoiceAdd == "function" then TMVoiceAdd({
+if type(TMVoiceAdd) == "function" then TMVoiceAdd({
 	Name = "Leon", -- files must have this name, but all lowercase
 	IsMale = true, -- Male Voice Pack!
 })
@@ -69,7 +69,7 @@ EXAMPLE B
 NO AUDIO: Faster, Wild and Max
 REMAP: Missing 3 to Fast
 
-if TMVoiceAdd == "function" then TMVoiceAdd({
+if type(TMVoiceAdd) == "function" then TMVoiceAdd({
 	Name = "Chiyoru", -- files must have this name, but all lowercase
 	[TMTier.Faster] = TMTier.Fast,
 	[TMTier.Wild] = TMTier.Fast,
@@ -82,7 +82,7 @@ EXAMPLE C
 NO AUDIO: Faster, Wild and Max
 REMAP: All tiers evenly
 
-if TMVoiceAdd == "function" then TMVoiceAdd({
+if type(TMVoiceAdd) == "function" then TMVoiceAdd({
 	Name = "Chiyoru", -- files must have this name, but all lowercase
 	[TMTier.Normal] = TMTier.Slow,
 	[TMTier.Fast] = TMTier.Normal,

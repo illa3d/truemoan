@@ -1,6 +1,6 @@
 -- True Moan SFX Pack
 -- See tm_sfx_README.txt for details
-if TMSfxAdd == "function" then TMSfxAdd({
+if type(TMSfxAdd ) == "function" then TMSfxAdd({
 	-- SFX PACK NAME (can have spaces, can have upper-cases. Files must all be lowercase!)
 	Name = "",
 	-- SFX (remove sfx below for withch you didnt add files, else it disables the SFX!)

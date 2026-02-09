@@ -1,6 +1,6 @@
 -- True Moan Voice Pack
 -- See tm_voice_README.txt for details
-if TMVoiceAdd == "function" then TMVoiceAdd({
+if type(TMVoiceAdd) == "function" then TMVoiceAdd({
 	-- VOICE PACK NAME (can have spaces, can have upper-cases. Files must all be lowercase!)
 	Name = "",
 	-- VOICE PACK SEX (if IsMale is not existing or IsMale = false - Female Voice Pack. If IsMale = true - MALE Voice Pack)
