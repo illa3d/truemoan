@@ -66,22 +66,22 @@ If you let TrueMoan do the moaning, **all options below can be combined together
 
 :warning:**MORE AUDIO FILES, LONGER LOADING**:warning: 
 
-**1) TrueMoan only**
+**1) TrueMoan**
 - 1 Voice pack included - Chiyoru
 
-**2) TrueMoan + TrueMoan Voice Packs**
+**2) TrueMoan + TrueMoan Voice Packs / Sfx Packs**
 Voice Packs: https://discord.com/channels/620113492208517120/1460768562338726090 by @salemvonzombeh 
-- Install individual Voice Packs
+- Install individual Voice Packs / Sfx Packs
 - (optional) edit `tm_voice__config.lua` for character defaults
 
-**3) AllVoiceMods (so far) **(TMMM comes integrated)
+**3) TrueMoan + AllVoiceMods audio files**
 Collection of all VoiceMods in the modding channel (so far), massive respect @xlmumblelx 
 AllVoiceMods: https://discord.com/channels/620113492208517120/1428535347364630742  by @xlmumblelx 
 TrueMoan Addon: https://discord.com/channels/620113492208517120/1451633202019172462/1451633202019172462
 - Install `TrueMoan_Addon_VoicePack_AllVoiceMods_v1.0.zip` 
 - (optional) edit `tm_voice__allvoicemods_config.lua` for allvoicemods character defaults
 - (optional) edit `tm_voice__config.lua` for character defaults (overrides allvoicemods_config)
-- InGame, Disable VoiceMod `TrueMoan/TalkMenu/Options/Voice/VoiceMod` set to `Disabled`
+- (if voicemod) InGame, Disable VoiceMod `TrueMoan/TalkMenu/Options/Voice/VoiceMod` set to `Disabled`
 
 **4) nf123's Voice Mod + Individual VoiceMods** (TMMM comes integrated)
 VoiceMod: https://discord.com/channels/620113492208517120/1358067278746358062 by @nobodyforever123 
