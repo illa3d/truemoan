@@ -33,10 +33,10 @@ label TMMenuHeyHuman(human)
 			Return()
 		+ "Sfx »	| " .. TMMLabel_Sfx(human) [gold] [if not TM_Sfxs_CountLow()]
 			TMMenuList_Sfx(human)
-		+ "Voice	| " .. TMMLabel_Voice(human) [if TM_Voices_CountLow()]
+		+ "Voice	| " .. TMMLabel_Voice(human) [if TM_Voices_CountLow(human.m_isMale)]
 			TMHStatsGet(human):VoiceToggle()
 			Return()
-		+ "Voice »	| " .. TMMLabel_Voice(human) [gold] [if not TM_Voices_CountLow()]
+		+ "Voice »	| " .. TMMLabel_Voice(human) [gold] [if not TM_Voices_CountLow(human.m_isMale)]
 			TMMenuList_Voice(human)
 	+ "Look at »" [gold]
 		+ "• Look at " .. AccStr("cam")

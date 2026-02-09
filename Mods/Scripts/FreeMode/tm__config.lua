@@ -26,7 +26,7 @@ TM_SpawnReset = false				-- Characters reset when spawned / changing (no sucking
 TM_SpawnNoFuta = false				-- Females spawn without penises (no sucking lol)
 TM_SpawnRandomBody = false			-- Randomizes body types on start (overwrites body sizes from saves/captures!!)
 TM_SpawnAutoSexOn = true			-- AutoSex on for everyone at spawn
-TM_SpawnMalesPenetrable = true		-- Make males females at spawn. Some males still can't do blowjobs...
+TM_SpawnMalesPenetrable = false		-- Make males females at spawn. Some males still can't do blowjobs...
 
 -- People: Sex
 TM_WetSex = true					-- Moisting holes (vag, anus, mouth) during sex and cumming
@@ -59,6 +59,6 @@ TM_SFX_FartChance = 0.3				-- [0-1] Farting sound playback chance
 
 -- Voice: Voice/Generic Chat
 TM_Voice = true						-- Voice (everyone)
-TM_VoiceMale = false				-- Voice males
+TM_VoiceMale = true					-- Voice males
 TM_VoiceFuta = true					-- Voice chicks with dicks
 TM_GenericChat = true				-- TrueFacials generic chat (original voices)

@@ -12,10 +12,18 @@ local tmLoopingAmbience = false
 local tmTimerKeyAmbience = "TM_AmbienceTimer"
 
 -- Voices
-TM_Voices = {}
-TM_Voices_Names = {}
+TM_Voices = {
+	[false] = {}, -- Female
+	[true]  = {}, -- Male
+}
+
+TM_Voices_Names = {
+	[false] = {}, -- Female
+	[true]  = {}, -- Male
+}
+
 TM_Voices_Character = {}
-function TM_Voices_CountLow() return #TM_Voices_Names < 10 end
+function TM_Voices_CountLow(isMale) return #TM_Voices_Names[isMale] < 10 end
 
 -- SFX
 TM_Sfxs = {}
@@ -59,6 +67,19 @@ TMVoice = {
 
 TMVoiceDefault = {
 	Name = "Chiyoru",
+	IsMale = false,
+	[TMTier.Idle] = TMTier.Idle,
+	[TMTier.Slow] = TMTier.Slow,
+	[TMTier.Normal] = TMTier.Normal,
+	[TMTier.Fast] = TMTier.Fast,
+	[TMTier.Faster] = TMTier.Faster,
+	[TMTier.Wild] = TMTier.Wild,
+	[TMTier.Max] = TMTier.Max,
+}
+
+TMVoiceDefaultMale = {
+	Name = "Leon",
+	IsMale = true,
 	[TMTier.Idle] = TMTier.Idle,
 	[TMTier.Slow] = TMTier.Slow,
 	[TMTier.Normal] = TMTier.Normal,
@@ -191,53 +212,60 @@ end
 --===============================================================================================
 -------------------------------------------------------------------------------------------------
 
-function TMVoicesHas() return #TM_Voices_Names > 0 end
+function TMVoicesHas(isMale) return #TM_Voices_Names[isMale] > 0 end
 
 -- Add a new voice definition
 function TMVoiceAdd(tmVoicePack)
-	if type(tmVoicePack) ~= "table" or not tmVoicePack.Name or tmVoicePack.Name == "" or TM_Voices[tmVoicePack.Name] then return end
-	TM_Voices[tmVoicePack.Name] = TableClone(tmVoicePack)
-	table.insert(TM_Voices_Names, tmVoicePack.Name)
+	local isMale = tmVoicePack.IsMale == true
+	if type(tmVoicePack) ~= "table" or not tmVoicePack.Name or tmVoicePack.Name == "" or TM_Voices[isMale][tmVoicePack.Name] then return end
+	if TM_Voices[isMale] == nil then TM_Voices[isMale] = {} end
+	TM_Voices[isMale][tmVoicePack.Name] = TableClone(tmVoicePack)
+	table.insert(TM_Voices_Names[isMale], tmVoicePack.Name)
 end
 
 -- Check if a voice exists by name
-function TMVoiceHas(tmVoiceName)
+function TMVoiceHas(tmVoiceName, isMale)
+	isMale = isMale == true
 	if not tmVoiceName then return false end
-	return TM_Voices[tmVoiceName] ~= nil
+	return TM_Voices[isMale][tmVoiceName] ~= nil
 end
 
 -- Get a voice table by name
-function TMVoiceGet(tmVoiceName)
-	if not tmVoiceName or not TM_Voices[tmVoiceName] then return TMVoiceDefault end
-	return TM_Voices[tmVoiceName]
+function TMVoiceGet(tmVoiceName, isMale)
+	isMale = isMale == true
+	if not tmVoiceName or not TM_Voices[isMale][tmVoiceName] then return isMale and TMVoiceDefaultMale or TMVoiceDefault end
+	return TM_Voices[isMale][tmVoiceName]
 end
 
 -- Get a random registered voice or default
-function TMVoiceGet_Random()
-	if  IsTableEmpty(TM_Voices) then return TMVoiceDefault end
-	return TableItemRandom(TM_Voices)
+function TMVoiceGet_Random(isMale)
+	isMale = isMale == true
+	if  IsTableEmpty(TM_Voices[isMale]) then return isMale and TMVoiceDefaultMale or TMVoiceDefault end
+	return TableItemRandom(TM_Voices[isMale])
 end
 
-function TMVoiceGet_RandomName()
-	if  IsTableEmpty(TM_Voices_Names) then return TMVoiceDefault.Name end
-	return ListItemRandom(TM_Voices_Names)
+function TMVoiceGet_RandomName(isMale)
+	isMale = isMale == true
+	if  IsTableEmpty(TM_Voices_Names[isMale]) then return isMale and TMVoiceDefaultMale.Name or TMVoiceDefault.Name end
+	return ListItemRandom(TM_Voices_Names[isMale])
 end
 
 function TMVoiceGet_Human(human)
 	if not human then return TMVoiceDefault end
 	-- 1. Voice by human.ClothingName
-	if human.ClothingName and TMVoiceHas(human.ClothingName) then return TMVoiceGet(human.ClothingName) end
+	if human.ClothingName and TMVoiceHas(human.ClothingName, human.m_isMale) then return TMVoiceGet(human.ClothingName, human.m_isMale) end
 	-- 2. Voice assigned in stats
 	local stats = TMHStatsGet(human)
-	if stats and stats.VoiceName and TMVoiceHas(stats.VoiceName) then return TMVoiceGet(stats.VoiceName) end
+	if stats and stats.VoiceName and TMVoiceHas(stats.VoiceName, human.m_isMale) then return TMVoiceGet(stats.VoiceName, human.m_isMale) end
 	-- 3. Random fallback
-	return TMVoiceGet_Random()
+	return TMVoiceGet_Random(human.m_isMale)
 end
 
 -------------------------------------------------------------------------------------------------
 
 function TMVoiceSet_Random(human)
-	TMVoiceSet(human, TM_Voices_Names[GetRandom(0, #TM_Voices_Names)])
+	local isMale = human.m_isMale
+	TMVoiceSet(human, TM_Voices_Names[isMale][GetRandom(0, #TM_Voices_Names[isMale])])
 end
 
 function TMVoiceSet(human, voiceName)

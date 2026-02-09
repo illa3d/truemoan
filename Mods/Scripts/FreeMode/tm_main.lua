@@ -70,6 +70,7 @@ function TMOnUpdate_GenericChat()
 end
 
 function TMOnCreateHuman(human)
+	if TM_SpawnMalesPenetrable and IsHumanMale(human) then HumanMaleSet(human, false) end
 	WetReset_All(human)
 	TMVoiceSet_Character(human)
 	if TM_SpawnRandomBody then TMBEPreset_StartRandom(human) end
@@ -77,7 +78,6 @@ function TMOnCreateHuman(human)
 	if TM_SpawnNoFuta then Delayed(0.05, function() HumanPenisSet(human, false) end) end
 	if TM_SpawnReset then Delayed(0.1, function() TMHumanReset(human) end) end
 	if TM_SpawnAutoSexOn then AutoSexSet(human, true) end
-	if TM_SpawnMalesPenetrable and IsHumanMale(human) then HumanMaleSet(human, false) end
 	-- MUSIC
 	if not TM_GenChatInit == true then return end
 	game.PlayCharacterMusic(human)
