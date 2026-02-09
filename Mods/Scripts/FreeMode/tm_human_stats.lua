@@ -217,15 +217,17 @@ function TMHumanStats:VoiceToggle()
 		return
 	end
 	
+	local isMale = TMVoiceMaleGet(self.IsMale)
+	
 	-- If Voice is OFF, turn it ON
 	if not self.IsVoice then
 		self.IsVoice = true
-		self.VoiceName = TM_Voices_Names[self.IsMale][#TM_Voices_Names[self.IsMale]]
+		self.VoiceName = TM_Voices_Names[isMale][#TM_Voices_Names[isMale]]
 		return
 	end
 	-- Voice is ON, step down tiers
-	if self.VoiceName ~= TM_Voices_Names[self.IsMale][1] then
-		self.VoiceName = ListItemStep(TM_Voices_Names[self.IsMale], self.VoiceName, -1)
+	if self.VoiceName ~= TM_Voices_Names[isMale][1] then
+		self.VoiceName = ListItemStep(TM_Voices_Names[isMale], self.VoiceName, -1)
 	-- Voice is ON, minimum tier toggles to OFF
 	else self.IsVoice = false end
 end
