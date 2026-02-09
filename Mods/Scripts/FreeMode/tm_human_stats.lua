@@ -12,6 +12,7 @@ TMHumanStats = {
 	NeedsBodyApply = false,
 	EyesOpen = true,
 	-- Voice
+	IsMale = false,
 	IsVoice = true,
 	VoiceName = "",
 	IsSfx = true,
@@ -140,6 +141,7 @@ end
 -------------------------------------------------------------------------------------------------
 -- SEX
 function TMHumanStats:UpdateSex(human)
+	self.IsMale = human.m_isMale
 	-- check each body interaction for sex activity
 	for _, body in pairs(ActBody) do
 		self:UpdateSexActive(IsSexActive(human, body), body)

@@ -26,6 +26,7 @@ TM_SpawnReset = false				-- Characters reset when spawned / changing (no sucking
 TM_SpawnNoFuta = false				-- Females spawn without penises (no sucking lol)
 TM_SpawnRandomBody = false			-- Randomizes body types on start (overwrites body sizes from saves/captures!!)
 TM_SpawnAutoSexOn = true			-- AutoSex on for everyone at spawn
+TM_SpawnMalesPenetrable = true		-- Make males females at spawn. Some males still can't do blowjobs...
 
 -- People: Sex
 TM_WetSex = true					-- Moisting holes (vag, anus, mouth) during sex and cumming
