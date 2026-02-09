@@ -216,9 +216,9 @@ function TMVoicesHas(isMale) return #TM_Voices_Names[isMale] > 0 end
 
 -- Add a new voice definition
 function TMVoiceAdd(tmVoicePack)
+	if type(tmVoicePack) ~= "table" or not tmVoicePack.Name or tmVoicePack.Name == "" then return end
 	local isMale = tmVoicePack.IsMale == true
-	if type(tmVoicePack) ~= "table" or not tmVoicePack.Name or tmVoicePack.Name == "" or TM_Voices[isMale][tmVoicePack.Name] then return end
-	if TM_Voices[isMale] == nil then TM_Voices[isMale] = {} end
+	if TM_Voices[isMale][tmVoicePack.Name] then return end
 	TM_Voices[isMale][tmVoicePack.Name] = TableClone(tmVoicePack)
 	table.insert(TM_Voices_Names[isMale], tmVoicePack.Name)
 end
