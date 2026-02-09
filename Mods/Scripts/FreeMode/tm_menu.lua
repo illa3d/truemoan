@@ -141,6 +141,7 @@ stop
 -- VOICE
 label TMMenuList_Voice(human)
 	+ "< Voice | " .. human.Name .. ">"
+		Return()
 	+ if TM_Voices_Names[human.m_isMale] == nil or #TM_Voices_Names[human.m_isMale] == 0
 		+ "-empty- "
 			Return()
@@ -165,6 +166,7 @@ stop
 -- SFX
 label TMMenuList_Sfx(human)
 	+ "< SFX | " .. human.Name .. ">"
+		Return()
 	+ if TM_Sfxs_Names == nil or #TM_Sfxs_Names == 0
 		+ "-empty- "
 			Return()
