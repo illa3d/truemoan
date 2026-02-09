@@ -158,8 +158,12 @@ function HumanPenisSet(girl, show)
 	else girl.Customize("Penis", 0) end
 end
 
-function HumanMaleSet(male, isMale)
-	male.m_isMale = isMale
+function IsHumanMale(human)
+	return human.m_isMale
+end
+
+function HumanMaleSet(human, isMale)
+	human.m_isMale = isMale
 end
 
 -- CUM

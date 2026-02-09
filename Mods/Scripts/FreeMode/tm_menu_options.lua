@@ -228,6 +228,9 @@ label TMMenuOptions_Spawn(human)
 	+ "No futa		| " .. AccBool(TM_SpawnNoFuta)
 		TM_SpawnNoFuta = not TM_SpawnNoFuta
 		Return()
+	+ "Male Penetrable	| " .. AccBool(TM_SpawnMalesPenetrable)
+		TM_SpawnMalesPenetrable = not TM_SpawnMalesPenetrable
+		Return()
 	+ TM_MenuBack
 		Return(2)
 	+ TM_MenuClose
