@@ -64,5 +64,4 @@ TM_VoiceFuta = true					-- Voice chicks with dicks
 TM_GenericChat = true				-- TrueFacials generic chat (original voices)
 
 -- Voice Packs
-TM_VoicePacks_SeparateMale = true	-- Separate male and female voices by sex (only if Voice Pack has IsMale = true flag set)
-									-- If using with TM_SpawnMalesPenetrable, set this to false (so you can choose all the voices)
+TM_VoicePacks_SeparateMale = true	-- Separate male and female voices by sex (set to false if TM_SpawnMalesPenetrable = true)
