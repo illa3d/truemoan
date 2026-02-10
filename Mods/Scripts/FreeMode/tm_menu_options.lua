@@ -88,19 +88,19 @@ label TMMenuOptions_React(human)
 			Return()
 	+ else
 		+ if TM_Voice
-			+ "| Gen Chat	| " .. AccBool(TM_GenericChat)
+			+ "| Gen Chat	  | " .. AccBool(TM_GenericChat)
 				TM_GenericChat = not TM_GenericChat
 				Return()
-			+ "| React fluid	| " .. AccBool(game.FluidReaction)
+			+ "| React fluid	  | " .. AccBool(game.FluidReaction)
 				game.FluidReaction = not game.FluidReaction
 				Return()
-			+ "| Voice male	| " .. AccBool(TM_VoiceMale)
+			+ "| Voice male	  | " .. AccBool(TM_VoiceMale)
 				TM_VoiceMale = not TM_VoiceMale
 				Return()
-			+ "| Voice futa	| " .. AccBool(TM_VoiceFuta)
+			+ "| Voice futa	  | " .. AccBool(TM_VoiceFuta)
 				TM_VoiceFuta = not TM_VoiceFuta
 				Return()
-			+ "| Voice by sex	| " .. AccBool(TM_VoiceBySex)
+			+ "| Voice by sex | " .. AccBool(TM_VoiceBySex)
 				TM_VoiceBySex = not TM_VoiceBySex
 				Return()
 		+ "Voice	| " .. AccBool(TM_Voice)
