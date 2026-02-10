@@ -36,7 +36,7 @@ label TMMenuHeyHuman(human)
 			Return()
 		+ "Voice »	| " .. TMMLabel_Voice(human) [gold] [if not TMVoices_CountLow(human.m_isMale)]
 			TMMenuList_Voice(human)
-	+ "Penetration	| " .. AccBool(not human.m_isMale)
+	+ "Sex		| " .. AccBoolSX(human.m_isMale)
 		TMHumanMaleSet(human, not human.m_isMale)
 		Return()
 	+ "Look at »" [gold]

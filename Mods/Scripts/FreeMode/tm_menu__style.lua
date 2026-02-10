@@ -30,6 +30,9 @@ TM_Dec_Sex = 0
 function AccBool (bol)
 	 return FCol(bol and "ON" or "OFF", TM_MenuAccent)
 end
+function AccBoolSX (bol)
+	 return FCol(bol and "Male" or "Female", TM_MenuAccent)
+end
 function AccBoolDE (bol)
 	 return FCol(bol and "Enabled" or "Disabled", TM_MenuAccent)
 end
