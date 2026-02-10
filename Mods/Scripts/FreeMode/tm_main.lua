@@ -103,6 +103,14 @@ function TMHumanReset(human)
 	HumanReset(human)
 end
 
+function TMHumanMaleSet(human, isMale)
+	if not human then return end
+	HumanMaleSet(human, isMale)
+	local stats = TMHStatsGet(human)
+	if not stats then return end
+	stats:IsMaleSet(human)
+end
+
 -- Cum with a provided sec frequency (min 2, max 60), if randomMax is provided, random cum will select between 2 and randomMax
 function TMHumanCum(human, sec, randomMax)
 	if not human or not human.Penis then return end

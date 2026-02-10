@@ -210,6 +210,12 @@ function TMHumanStats:AutoSexWetSet(girl, value)
 	if self.Mouth then WetSet(girl, value, ActBody.Mouth) end
 end
 
+function TMHumanStats:IsMaleSet(human)
+	self.IsMale = human.m_isMale
+	self.IsVoice = true
+	self.VoiceName = TMVoiceGet_RandomName()
+end
+
 function TMHumanStats:VoiceToggle()
 	-- No voices registered
 	if not TMVoicesHas() then

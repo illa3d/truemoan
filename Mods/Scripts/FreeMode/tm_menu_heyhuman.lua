@@ -21,23 +21,24 @@ label TMMenuHeyHuman(human)
 	+ "RESET ".. AccStr(human.Name)
 		TMHumanReset(human)
 		Return()
-	+ "Penetration	| " .. AccBool(not human.m_isMale)
-		HumanMaleSet(human, not human.m_isMale)
-		Return()
 	+ "Penis		| " .. AccBool(human.Penis.IsActive) [if not human.m_isMale]
 		HumanPenisSet(human, not human.Penis.IsActive)
 		Return(2)
 	+ if TMVoiceAllow(human)
-		+ "Sfx		| " .. TMMLabel_Sfx(human) [if TM_Sfxs_CountLow()]
-			TMHStatsGet(human):SfxToggle()
-			Return()
-		+ "Sfx »	| " .. TMMLabel_Sfx(human) [gold] [if not TM_Sfxs_CountLow()]
-			TMMenuList_Sfx(human)
+		+ if not human.m_isMale
+			+ "Sfx		| " .. TMMLabel_Sfx(human) [if TM_Sfxs_CountLow()]
+				TMHStatsGet(human):SfxToggle()
+				Return()
+			+ "Sfx »	| " .. TMMLabel_Sfx(human) [gold] [if not TM_Sfxs_CountLow()]
+				TMMenuList_Sfx(human)
 		+ "Voice		| " .. TMMLabel_Voice(human) [if TM_Voices_CountLow()]
 			TMHStatsGet(human):VoiceToggle()
 			Return()
 		+ "Voice »	| " .. TMMLabel_Voice(human) [gold] [if not TM_Voices_CountLow()]
 			TMMenuList_Voice(human)
+	+ "Penetration	| " .. AccBool(not human.m_isMale)
+		TMHumanMaleSet(human, not human.m_isMale)
+		Return()
 	+ "Look at »" [gold]
 		+ "• Look at " .. AccStr("cam")
 			HumanLookAt(human, CameraPos())
