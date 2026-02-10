@@ -15,12 +15,10 @@ local tmTimerKeyAmbience = "TM_AmbienceTimer"
 TM_Voices = {}
 TM_Voices_Names = {}
 TM_Voices_Character = {}
-function TM_Voices_CountLow() return #TM_Voices_Names < 10 end
 
 -- SFX
 TM_Sfxs = {}
 TM_Sfxs_Names = {}
-function TM_Sfxs_CountLow() return #TM_Sfxs_Names < 10 end
 
 -- Voice Tier "Enum" (filename parts) 
 TMTier = {
@@ -59,6 +57,8 @@ TMVoice = {
 
 TMVoiceDefault = {
 	Name = "Chiyoru",
+	IsMale = false,
+	File = "",
 	[TMTier.Idle] = TMTier.Idle,
 	[TMTier.Slow] = TMTier.Slow,
 	[TMTier.Normal] = TMTier.Normal,
@@ -66,6 +66,19 @@ TMVoiceDefault = {
 	[TMTier.Faster] = TMTier.Faster,
 	[TMTier.Wild] = TMTier.Wild,
 	[TMTier.Max] = TMTier.Max,
+}
+
+TMVoiceDefaultMale = {
+	Name = "Leon",
+	IsMale = true,
+	File = "",
+	[TMTier.Idle] = TMTier.Idle,
+	[TMTier.Slow] = TMTier.Slow,
+	[TMTier.Normal] = TMTier.Normal,
+	[TMTier.Fast] = TMTier.Fast,
+	[TMTier.Faster] = TMTier.Fast,
+	[TMTier.Wild] = TMTier.Fast,
+	[TMTier.Max] = TMTier.Fast,
 }
 
 TMSfxDefault = {
@@ -94,7 +107,8 @@ TM_Moans_Cumdeflating = { TMTier.Slow, TMTier.Fast, TMTier.Faster }
 --===============================================================================================
 -------------------------------------------------------------------------------------------------
 
-function TMSfxsHas() return #TM_Sfxs_Names > 0 end
+function TMSfxs_Has() return #TM_Sfxs_Names > 0 end
+function TMSfxs_CountLow() return #TM_Sfxs_Names < 10 end
 
 -- Add new SFX pack definition
 function TMSfxAdd(tmSfxPack)
@@ -191,7 +205,41 @@ end
 --===============================================================================================
 -------------------------------------------------------------------------------------------------
 
-function TMVoicesHas() return #TM_Voices_Names > 0 end
+function TMVoiceSexMatch(voice, isMale)
+	if not TM_VoiceBySex then return true end
+	-- Male human: only male voices
+	if isMale then return voice.IsMale == true end
+	-- Female human: any voice that is NOT explicitly male
+	return voice.IsMale ~= true
+end
+
+-- Returns list of voice NAMES filtered by sex
+function TMVoices_Get(isMale)
+	local list = {}
+	for _, name in ipairs(TM_Voices_Names) do
+		local v = TM_Voices[name]
+		if v and TMVoiceSexMatch(v, isMale) then
+			table.insert(list, name)
+		end
+	end
+	return list
+end
+
+-- Returns list of voice TABLES filtered by sex
+function TMVoicesNames_Get(isMale)
+	local list = {}
+	for _, v in pairs(TM_Voices) do
+		if TMVoiceSexMatch(v, isMale) then
+			table.insert(list, v)
+		end
+	end
+	return list
+end
+
+-------------------------------------------------------------------------------------------------
+
+function TMVoices_CountLow(isMale) return #TMVoices_Get(isMale) < 10 end
+function TMVoices_Has(isMale) return #TMVoices_Get(isMale) > 0 end
 
 -- Add a new voice definition
 function TMVoiceAdd(tmVoicePack)
@@ -201,43 +249,53 @@ function TMVoiceAdd(tmVoicePack)
 end
 
 -- Check if a voice exists by name
-function TMVoiceHas(tmVoiceName)
+function TMVoiceHas(tmVoiceName, isMale)
 	if not tmVoiceName then return false end
-	return TM_Voices[tmVoiceName] ~= nil
+	local v = TM_Voices[tmVoiceName]
+	if not v then return false end
+	return TMVoiceSexMatch(v, isMale)
 end
 
 -- Get a voice table by name
-function TMVoiceGet(tmVoiceName)
-	if not tmVoiceName or not TM_Voices[tmVoiceName] then return TMVoiceDefault end
-	return TM_Voices[tmVoiceName]
+function TMVoiceGet(tmVoiceName, isMale)
+	local v = tmVoiceName and TM_Voices[tmVoiceName]
+	if not v or not TMVoiceSexMatch(v, isMale) then return isMale and TMVoiceDefaultMale or TMVoiceDefault end
+	return v
 end
 
 -- Get a random registered voice or default
-function TMVoiceGet_Random()
-	if  IsTableEmpty(TM_Voices) then return TMVoiceDefault end
-	return TableItemRandom(TM_Voices)
+function TMVoiceGet_Random(isMale)
+	local list = TMVoicesNames_Get(isMale)
+	if IsTableEmpty(list) then return isMale and TMVoiceDefaultMale or TMVoiceDefault end
+	return ListItemRandom(list)
 end
 
-function TMVoiceGet_RandomName()
-	if  IsTableEmpty(TM_Voices_Names) then return TMVoiceDefault.Name end
-	return ListItemRandom(TM_Voices_Names)
+function TMVoiceGet_RandomName(isMale)
+	local list = TMVoices_Get(isMale)
+	if IsTableEmpty(list) then return isMale and TMVoiceDefaultMale.Name or TMVoiceDefault.Name end
+	return ListItemRandom(list)
 end
 
 function TMVoiceGet_Human(human)
 	if not human then return TMVoiceDefault end
-	-- 1. Voice by human.ClothingName
-	if human.ClothingName and TMVoiceHas(human.ClothingName) then return TMVoiceGet(human.ClothingName) end
-	-- 2. Voice assigned in stats
+	local isMale = human.m_isMale
+	-- 1. ClothingName
+	if human.ClothingName and TMVoiceHas(human.ClothingName, isMale) then return TMVoiceGet(human.ClothingName, isMale) end
+	-- 2. Stats
 	local stats = TMHStatsGet(human)
-	if stats and stats.VoiceName and TMVoiceHas(stats.VoiceName) then return TMVoiceGet(stats.VoiceName) end
+	if stats and stats.VoiceName and TMVoiceHas(stats.VoiceName, isMale) then return TMVoiceGet(stats.VoiceName, isMale) end
 	-- 3. Random fallback
-	return TMVoiceGet_Random()
+	return TMVoiceGet_Random(isMale)
 end
+
 
 -------------------------------------------------------------------------------------------------
 
 function TMVoiceSet_Random(human)
-	TMVoiceSet(human, TM_Voices_Names[GetRandom(0, #TM_Voices_Names)])
+	if not human then return end
+	local list = TMVoices_Get(human.m_isMale)
+	if IsTableEmpty(list) then return end
+	TMVoiceSet(human, ListItemRandom(list))
 end
 
 function TMVoiceSet(human, voiceName)
@@ -292,7 +350,7 @@ function TMPlayTier(human, tmTier)
  	-- VoicePack tier remap
 	local tier = tmVoice[tmTier] and tmVoice[tmTier] or tmTier
 	---@diagnostic disable-next-line
-	local file = tmVoice.File and tmVoice.File or ("tm_" .. tmVoice.Name:lower())
+	local file = (tmVoice.File and tmVoice.File ~= "") and tmVoice.File or ("tm_" .. tmVoice.Name:lower())
 	human.SayCustom(file .. "_" .. tier)
 end
 

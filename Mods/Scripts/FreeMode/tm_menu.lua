@@ -140,15 +140,16 @@ stop
 
 -- VOICE
 label TMMenuList_Voice(human)
+	local voices = TMVoices_Get(human.m_isMale)
 	+ "< Voice | " .. human.Name .. ">"
 		Return()
-	+ if TM_Voices_Names == nil or #TM_Voices_Names == 0
+	+ if voices == nil or #voices == 0
 		+ "-empty- "
 			Return()
 	+ else
 		+ TM_MenuBack
 			Return(2)
-		+ for i, item in ipairs(TM_Voices_Names)
+		+ for i, item in ipairs(voices)
 			+ AccStr(i .. ". ") .. item
 				TMVoiceSet(human, item)
 				Return()

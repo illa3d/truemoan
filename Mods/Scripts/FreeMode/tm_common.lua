@@ -33,6 +33,15 @@ end
 -- LISTS
 -------------------------------------------------------------------------------------------------
 
+-- Check if list has value
+function ListHasValue(list, value)
+	if not list then return false end
+	for i = 1, #list do
+		if list[i] == value then return true end
+	end
+	return false
+end
+
 -- Steps forward/backward in an ordered list. dir=1 next, dir = -1 previous
 function ListItemStep(list, current, dir)
 	if type(list) ~= "table" or current == nil or (dir ~= 1 and dir ~= -1) then return current end

@@ -81,7 +81,7 @@ local function TMHStatsNew(human)
 	clone.Fart = TMHumanStatsHoleCloneDefault()
 	clone.ArousalSeed = GetRandomFloatAround(1, Clamp01(TM_HumanArousalVariation)) -- Add random seed variation 10%
 	clone.AutoSexTier = TM_AutoSexTier_Default
-	clone.VoiceName = TMVoiceGet_RandomName()
+	clone.VoiceName = TMVoiceGet_RandomName(human.m_isMale)
 	clone.SfxName = TMSfxGet_RandomName()
 	TM_HumanStatsList[human] = clone
 end
@@ -213,32 +213,37 @@ end
 function TMHumanStats:IsMaleSet(human)
 	self.IsMale = human.m_isMale
 	self.IsVoice = true
-	self.VoiceName = TMVoiceGet_RandomName()
+	self.VoiceName = TMVoiceGet_RandomName(self.IsMale)
 end
 
 function TMHumanStats:VoiceToggle()
-	-- No voices registered
-	if not TMVoicesHas() then
+	local voices = TMVoices_Get(self.IsMale)
+
+	-- No voices available → force OFF
+	if not voices or #voices == 0 then
 		self.IsVoice = false
 		return
 	end
-	
-	-- If Voice is OFF, turn it ON
-	if not self.IsVoice then
+
+	-- TURN ON or RECOVER from invalid voice
+	if not self.IsVoice or not self.VoiceName or not ListHasValue(voices, self.VoiceName) then
 		self.IsVoice = true
-		self.VoiceName = TM_Voices_Names[#TM_Voices_Names]
+		self.VoiceName = voices[#voices]
 		return
 	end
-	-- Voice is ON, step down tiers
-	if self.VoiceName ~= TM_Voices_Names[1] then
-		self.VoiceName = ListItemStep(TM_Voices_Names, self.VoiceName, -1)
-	-- Voice is ON, minimum tier toggles to OFF
-	else self.IsVoice = false end
+
+	-- Try stepping down
+	local prev = self.VoiceName
+	local next = ListItemStep(voices, prev, -1)
+
+	-- If stepping fails or does not move → OFF
+	if not next or next == prev then self.IsVoice = false
+	else self.VoiceName = next end
 end
 
 function TMHumanStats:SfxToggle()
 	-- No voices registered
-	if not TMSfxsHas() then
+	if not TMSfxs_Has() then
 		self.IsSfx = false
 		return
 	end

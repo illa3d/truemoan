@@ -26,15 +26,15 @@ label TMMenuHeyHuman(human)
 		Return(2)
 	+ if TMVoiceAllow(human)
 		+ if not human.m_isMale
-			+ "Sfx		| " .. TMMLabel_Sfx(human) [if TM_Sfxs_CountLow()]
+			+ "Sfx		| " .. TMMLabel_Sfx(human) [if TMSfxs_CountLow()]
 				TMHStatsGet(human):SfxToggle()
 				Return()
-			+ "Sfx »	| " .. TMMLabel_Sfx(human) [gold] [if not TM_Sfxs_CountLow()]
+			+ "Sfx »	| " .. TMMLabel_Sfx(human) [gold] [if not TMSfxs_CountLow()]
 				TMMenuList_Sfx(human)
-		+ "Voice		| " .. TMMLabel_Voice(human) [if TM_Voices_CountLow()]
+		+ "Voice		| " .. TMMLabel_Voice(human) [if TMVoices_CountLow(human.m_isMale)]
 			TMHStatsGet(human):VoiceToggle()
 			Return()
-		+ "Voice »	| " .. TMMLabel_Voice(human) [gold] [if not TM_Voices_CountLow()]
+		+ "Voice »	| " .. TMMLabel_Voice(human) [gold] [if not TMVoices_CountLow(human.m_isMale)]
 			TMMenuList_Voice(human)
 	+ "Penetration	| " .. AccBool(not human.m_isMale)
 		TMHumanMaleSet(human, not human.m_isMale)

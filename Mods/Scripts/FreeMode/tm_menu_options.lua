@@ -100,6 +100,9 @@ label TMMenuOptions_React(human)
 			+ "| Voice futa	| " .. AccBool(TM_VoiceFuta)
 				TM_VoiceFuta = not TM_VoiceFuta
 				Return()
+			+ "| Voice by sex	| " .. AccBool(TM_VoiceBySex)
+				TM_VoiceBySex = not TM_VoiceBySex
+				Return()
 		+ "Voice	| " .. AccBool(TM_Voice)
 			TM_Voice = not TM_Voice
 			Return()
