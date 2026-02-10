@@ -1,4 +1,4 @@
--- TrueMoan v2.9 by illa3d
+-- TrueMoan v3.0 by illa3d
 ------------------------------------------------------------------------------------------------------------------
 -- TRUE MOAN DEFAULTS CONFIG (Values changed in options reset after scene load, here you set that permanent)
 ------------------------------------------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ TM_SFX_FartChance = 0.3				-- [0-1] Farting sound playback chance
 
 -- Voice: Voice/Generic Chat
 TM_Voice = true						-- Voice (everyone)
-TM_VoiceBySex = true				-- Separate male and female voices by sex (set to false if using TM_SpawnMalesPenetrable = true)
+TM_VoiceBySex = true				-- Separate male and female voices by sex (set to false if using TM_SpawnMaleAsFemale = true)
 TM_VoiceMale = true					-- Voice males
 TM_VoiceFuta = true					-- Voice chicks with dicks
 TM_GenericChat = true				-- TrueFacials generic chat (original voices)

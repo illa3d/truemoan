@@ -1,4 +1,4 @@
--- TrueMoan v2.9 by illa3d
+-- TrueMoan v3.0 by illa3d
 local TM_UITips_Options = true
 local TM_UITip_Options = "Tip: edit defaults in tm-config"
 
@@ -231,7 +231,7 @@ label TMMenuOptions_Spawn(human)
 	+ "No futa		| " .. AccBool(TM_SpawnNoFuta)
 		TM_SpawnNoFuta = not TM_SpawnNoFuta
 		Return()
-	+ "Male Penetrable	| " .. AccBool(TM_SpawnMaleAsFemale)
+	+ "Male as Female	| " .. AccBool(TM_SpawnMaleAsFemale)
 		TM_SpawnMaleAsFemale = not TM_SpawnMaleAsFemale
 		Return()
 	+ TM_MenuBack
