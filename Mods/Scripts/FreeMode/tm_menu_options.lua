@@ -84,7 +84,7 @@ label TMMenuOptions_React(human)
 	+ "< SFX / Voice | " .. AccStr("Everyone") .. " >" [gold]
 		Return()
 	+ if VM_VoiceMod_Enabled
-		+ "| Voice		| Disabled (VoiceMod)"
+		+ "Voice	| Disabled (VoiceMod)"
 			Return()
 	+ else
 		+ if TM_Voice
@@ -106,6 +106,13 @@ label TMMenuOptions_React(human)
 		+ "Voice	| " .. AccBool(TM_Voice)
 			TM_Voice = not TM_Voice
 			Return()
+	+ if TMMOD_VoiceMod
+		+ "VoiceMod	| " .. AccBoolDE(VM_VoiceMod_Enabled) [if VM_VoiceMod_Enabled]
+			VM_VoiceMod_Disable()
+			Return()
+		+ "VoiceMod	| " .. AccBoolDE(VM_VoiceMod_Enabled) [if not VM_VoiceMod_Enabled]
+			VM_VoiceMod_Enable()
+			Return()
 	+ if TM_SFX
 		+ "| SFX Fart	| " .. AccBool(TM_SFX_Fart)
 			TM_SFX_Fart = not TM_SFX_Fart
@@ -119,13 +126,6 @@ label TMMenuOptions_React(human)
 	+ "SFX	| " .. AccBool(TM_SFX)
 		TM_SFX = not TM_SFX
 		Return()
-	+ if TMMOD_VoiceMod
-		+ "VoiceMod voices	| " .. AccBoolDE(VM_VoiceMod_Enabled) [if VM_VoiceMod_Enabled]
-			VM_VoiceMod_Disable()
-			Return()
-		+ "VoiceMod voices	| " .. AccBoolDE(VM_VoiceMod_Enabled) [if not VM_VoiceMod_Enabled]
-			VM_VoiceMod_Enable()
-			Return()
 	+ TM_MenuBack
 		Return(2)
 	+ TM_MenuClose

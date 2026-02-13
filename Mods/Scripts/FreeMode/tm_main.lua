@@ -201,7 +201,7 @@ function TMOnFluidHit(hitActor, bodyArea, shootActor)
 	else
 		local genericVoiceKey = "TMFluidHit_Generic_" .. hitActor.Name
 		local lastGenericVoiceTime = Timer(genericVoiceKey)
-		if TM_GenChatInit and lastGenericVoiceTime > game.ChatIntervals and TMVoiceAllow(hitActor) then
+		if TM_GenChatInit and TM_GenericChat and lastGenericVoiceTime > game.ChatIntervals and TMVoiceAllow(hitActor) then
 			hitActor.Say(hitActor.FaceMood >= 0 and "Like" or "Dislike")
 			ResetTimer(genericVoiceKey)
 		elseif lastTime > TM_MoanCumBodyTime then

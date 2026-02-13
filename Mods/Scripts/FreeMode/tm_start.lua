@@ -31,12 +31,13 @@ function TM_TrueMoan_Enable()
 	if type(TM_AddFunctionOverride) == "function" then 
 		-- TalkMenuModManager: Add function hooks
 		TM_AddFunctionHook(TMModName, "Start", 0, "_TMStart")
-		TM_AddFunctionHook(TMModName, "OnGameUpdate", 0, "_TMOnGameUpdate")
 		TM_AddFunctionHook(TMModName, "OnCreateHuman", 1, "_TMOnCreateHuman")
 		TM_AddFunctionHook(TMModName, "OnRemoveHuman", 1, "_TMOnRemoveHuman")
 		TM_AddFunctionHook(TMModName, "OnHumanClick", 2, "_TMOnHumanClick")
-		TM_AddFunctionHook(TMModName, "OnFluidHit", 3, "_TMOnFluidHit")
-		TM_AddFunctionHook(TMModName, "OnPenetration", 5, "_TMOnPenetration")
+		-- Override freemode_main.lua voice functions, priority 199 is less than VoiceMod's 200
+		TM_AddFunctionOverride(TMModName, "OnGameUpdate", 0, "_TMOnGameUpdate", 199, true)
+		TM_AddFunctionOverride(TMModName, "OnFluidHit", 3, "_TMOnFluidHit", 199, true)
+		TM_AddFunctionOverride(TMModName, "OnPenetration", 5, "_TMOnPenetration", 199, true)
 		if type(TM_AddMenuMod) == "function" then TM_AddMenuMod(TMModName, TMMenuName) end
 		TMMOD_TrueMoan = true
 	else
@@ -67,12 +68,12 @@ function TM_TrueMoan_Disable()
 	if type(TM_RemoveFunctionOverride) == "function" then 
 		-- TalkMenuModManager: Add function hooks
 		TM_RemoveFunctionHook("_TMStart")
-		TM_RemoveFunctionHook("_TMOnGameUpdate")
 		TM_RemoveFunctionHook("_TMOnCreateHuman")
 		TM_RemoveFunctionHook("_TMOnRemoveHuman")
 		TM_RemoveFunctionHook("_TMOnHumanClick")
-		TM_RemoveFunctionHook("_TMOnFluidHit")
-		TM_RemoveFunctionHook("_TMOnPenetration")
+		TM_RemoveFunctionOverride("_TMOnGameUpdate")
+		TM_RemoveFunctionOverride("_TMOnFluidHit")
+		TM_RemoveFunctionOverride("_TMOnPenetration")
 		TMMOD_TrueMoan = false
 	end
 end
