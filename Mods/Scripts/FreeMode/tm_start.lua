@@ -14,6 +14,14 @@ TMMOD_Plugins = false
 TMMOD_FaunaLabs = false
 TMMOD_BetterSpeedsAndFluid = false
 
+local function TMDetectMods()
+	TMMOD_TalkMenuModManager = type(TM_ModMenu) == "function"
+	TMMOD_VoiceMod = type(VM_VoiceMod_Enable) == "function"
+	TMMOD_FaunaLabs = type(fauna_LABS_Menu) == "function"
+	TMMOD_BetterSpeedsAndFluid = type(BetterSpeedAndFluidTalkMenu) == "function"
+	TMMOD_Plugins = TMMOD_FaunaLabs or TMMOD_BetterSpeedsAndFluid
+end
+
 -- MOD JUMPING
 TMMOD_Menu_FaunaLabs = "fauna_LABS_Menu"
 TMMOD_Menu_BetterSpeedAndFluid = "BetterSpeedAndFluidTalkMenu"
@@ -28,7 +36,8 @@ end
 -------------------------------------------------------------------------------------------------
 function TM_TrueMoan_Enable()
 	if TMMOD_TrueMoan then return end
-	if type(TM_AddFunctionOverride) == "function" then 
+	TMDetectMods()
+	if type(TM_AddFunctionHook) == "function" and type(TM_AddFunctionOverride) == "function" then 
 		-- TalkMenuModManager: Add function hooks
 		TM_AddFunctionHook(TMModName, "Start", 0, "_TMStart")
 		TM_AddFunctionHook(TMModName, "OnCreateHuman", 1, "_TMOnCreateHuman")
@@ -38,6 +47,9 @@ function TM_TrueMoan_Enable()
 		TM_AddFunctionOverride(TMModName, "OnGameUpdate", 0, "_TMOnGameUpdate", 199, true)
 		TM_AddFunctionOverride(TMModName, "OnFluidHit", 3, "_TMOnFluidHit", 199, true)
 		TM_AddFunctionOverride(TMModName, "OnPenetration", 5, "_TMOnPenetration", 199, true)
+		-- VoiceMod SFX compatibility
+		if TMMOD_VoiceMod then TM_AddFunctionHook(TMModName, "OnPenetration", 5, "_TMOnPenetrationVM") end
+		-- ADD TMMM Menu
 		if type(TM_AddMenuMod) == "function" then TM_AddMenuMod(TMModName, TMMenuName) end
 		TMMOD_TrueMoan = true
 	else
@@ -51,16 +63,6 @@ function TM_TrueMoan_Enable()
 		load([[function OnPenetration(girl, holeName, inVelocity, outVelocity, penetrator) _TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator) end]])()
 		TMMOD_TrueMoan = true
 	end
-	TMDetectMods()
-end
-
-function TMDetectMods()
-	-- Detect other mods
-	TMMOD_TalkMenuModManager = type(TM_ModMenu) == "function"
-	TMMOD_VoiceMod = type(VM_VoiceMod_Enable) == "function"
-	TMMOD_FaunaLabs = type(fauna_LABS_Menu) == "function"
-	TMMOD_BetterSpeedsAndFluid = type(BetterSpeedAndFluidTalkMenu) == "function"
-	TMMOD_Plugins = TMMOD_FaunaLabs or TMMOD_BetterSpeedsAndFluid
 end
 
 function TM_TrueMoan_Disable()
@@ -71,6 +73,7 @@ function TM_TrueMoan_Disable()
 		TM_RemoveFunctionHook("_TMOnCreateHuman")
 		TM_RemoveFunctionHook("_TMOnRemoveHuman")
 		TM_RemoveFunctionHook("_TMOnHumanClick")
+		TM_RemoveFunctionHook("_TMOnPenetrationVM") -- VoiceMod SFX compatibility
 		TM_RemoveFunctionOverride("_TMOnGameUpdate")
 		TM_RemoveFunctionOverride("_TMOnFluidHit")
 		TM_RemoveFunctionOverride("_TMOnPenetration")
@@ -126,7 +129,7 @@ end
 
 function _TMOnHumanSingleClick(human, hitTri)
 	-- TrueMoan: Unused
-	TMOnHumanSingleClick(human, hitTri) 
+	TMOnHumanSingleClick(human, hitTri)
 end
 
 function _TMOnHumanDoubleClick(human, hitTri)
@@ -142,6 +145,13 @@ end
 
 -- ON PENETRATION
 function _TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
+	if VM_VoiceMod_Enabled == true then return end -- Don't run if VoiceMod is enabled
 	-- TrueMoan: Sex Moaning
+ 	TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
+end
+
+-- ON PENETRATION VOICEMOD (exclusively used with VoiceMod for SFX support)
+function _TMOnPenetrationVM(girl, holeName, inVelocity, outVelocity, penetrator)
+	if VM_VoiceMod_Enabled ~= true then return end -- Don't run if VoiceMod is disabled
  	TMOnPenetration(girl, holeName, inVelocity, outVelocity, penetrator)
 end

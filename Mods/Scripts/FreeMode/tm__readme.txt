@@ -29,8 +29,8 @@
 - **7x skyboxes** (8/4/2k)
 
 **LATEST FILES**
-**TrueMoan_v3.0a.zip** - Just TrueMoan
-**TrueMoan_v3.0a_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
+**TrueMoan_v3.0b.zip** - Just TrueMoan
+**TrueMoan_v3.0b_FLABS_v1.02.zip** - TrueMoan + Fauna LABS **(recommended)**
 **TrueMoan_Addon_Skyboxes_4k_v1.0.zip**
 **TrueMoan_Addon_VoicePack_AllVoiceMods_v1.0.zip** (requires AllVoiceMods mod)
 **Download: ** https://drive.google.com/drive/folders/1XMsyMxDT6qCclCX4SPoU6H769uouaD6c
@@ -166,8 +166,9 @@ GitHub Repository - https://github.com/illa3d/truemoan
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
 
-[ v3.0a ]
+[ v3.0b ]
 - Generic Chat bugfixes
+- VoiceMod SFX support bugfix
 
 [ v3.0 ]
 - Added Default Male VoicePack (Leon, thanks @xlmumblelx / @Meowulf)
