@@ -81,7 +81,7 @@ label TMMenuHumanStats(human, stats)
 		Return()
 	+ "Arousal	| " .. AccNumPC(stats.Arousal, 2, true) [if stats.Arousal > 0]
 		Return()
-	+ "Sfx			| " .. TMMLabel_Sfx(human, true) [if TMSfxAllow(human)]
+	+ "Sfx		| " .. TMMLabel_Sfx(human, true) [if TMSfxAllow(human)]
 		Return()
 	+ "Voice		| " .. TMMLabel_Voice(human, true) [if TMVoiceAllow(human)]
 		Return()
