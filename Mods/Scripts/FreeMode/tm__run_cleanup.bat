@@ -24,6 +24,7 @@ set FILES_LIST="freemode__tm_main.lua"^
  "tm_menu_facelab_faunap.lua"^
  "tm_menu_illa3d.lua"^
  "tm_sounds.lua"^
+ "tm_voice__config.lua"
  "tm_voice_chiyoru.lua"
 
 
