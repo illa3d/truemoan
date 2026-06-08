@@ -62,4 +62,5 @@ TM_Voice = true						-- Voice (everyone)
 TM_VoiceBySex = true				-- Separate male and female voices by sex (set to false if using TM_SpawnMaleAsFemale = true)
 TM_VoiceMale = true					-- Voice males
 TM_VoiceFuta = true					-- Voice chicks with dicks
-TM_GenericChat = true				-- TrueFacials generic chat (original voices)
+TM_GenericChat = true				-- TrueFacials characters generic chat (original voices)
+TM_GenericMusic = true				-- TrueFacials character generic music (original music)

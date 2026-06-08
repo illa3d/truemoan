@@ -80,7 +80,7 @@ function TMOnCreateHuman(human)
 	if TM_SpawnAutoSexOn then AutoSexSet(human, true) end
 	-- MUSIC
 	if not TM_GenChatInit == true then return end
-	game.PlayCharacterMusic(human)
+	if TM_GenericMusic then game.PlayCharacterMusic(human) end
 	-- GENERIC CHAT
 	if not TM_GenericChat or not TMVoiceAllow(human) then return end
 	human.Say("Greeting")
@@ -88,7 +88,7 @@ end
 
 function TMOnRemoveHuman(human)
 	-- MUSIC
-	game.PlayRandomCharacterMusic()
+	if TM_GenericMusic then game.PlayRandomCharacterMusic() end
 end
 
 
