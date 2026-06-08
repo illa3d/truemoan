@@ -1,4 +1,4 @@
--- TrueMoan v3.0 by illa3d
+-- TrueMoan v3.1 by illa3d
 local TM_UITips_Options = true
 local TM_UITip_Options = "Tip: edit defaults in tm-config"
 

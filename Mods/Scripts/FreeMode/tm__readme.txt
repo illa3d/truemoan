@@ -166,6 +166,11 @@ GitHub Repository - https://github.com/illa3d/truemoan
 **LATEST CHANGES**
 Full Changelog - https://github.com/illa3d/truemoan/blob/master/Mods/Scripts/FreeMode/tm__readme.txt
 
+[ v3.1 ]
+- Added Config option for generic character music
+- Increased arousal decay
+- Fixed default character voices config (Renamed tm_voice_config.lua to tm__voice_config.lua)
+
 [ v3.0b ]
 - Generic Chat bugfixes
 - VoiceMod SFX support bugfix
